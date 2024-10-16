@@ -1,0 +1,30 @@
+<html><head><title>color - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="color" name="color"></a></p>
+<h1><span class="mw-headline">color</span></h1>
+<p><span id="color" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">color</strong></b></td>
+<td valign="top">(s):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function converts hexcode string <i>s</i> into a color/alpha tuple. Leading # marks are ignored. Colors can be rgb or rgba, with each element having either one or two digits. (So the strings can be 3, 4, 6, or 8 digits long, not including the optional #.) A missing alpha is interpreted as 255, fully opaque.</p>
+<p>For example, color('#123a') returns (17, 34, 51, 170), while color('c0c0c0') returns (192, 192, 192, 255).</p>
+<p>Note that as of Ren'Py 5.6.0, functions requiring a color accept the hex string form of specification directly, with no need to use this color function.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> PaleVioletRed <span class="sym">=</span> <span class="kwd">Solid</span><span class="sym">(</span><span class="kwd">color</span><span class="sym">(</span><span class="str">"#DB7093"</span><span class="sym">))</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

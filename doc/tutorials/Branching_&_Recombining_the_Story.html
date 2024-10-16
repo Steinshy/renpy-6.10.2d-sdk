@@ -1,0 +1,176 @@
+<html><head><title>Branching &amp;amp; Recombining the Story - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a></p><table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Branching_.26_Recombining_the_Story"><span class="tocnumber">1</span> <span class="toctext">Branching &amp; Recombining the Story</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Branching_with_Jump"><span class="tocnumber">1.1</span> <span class="toctext">Branching with Jump</span></a></li>
+<li class="toclevel-2"><a href="#Branching_with_Call"><span class="tocnumber">1.2</span> <span class="toctext">Branching with Call</span></a></li>
+<li class="toclevel-2"><a href="#Reaching_the_End"><span class="tocnumber">1.3</span> <span class="toctext">Reaching the End</span></a></li>
+<li class="toclevel-2"><a href="#A_Note_on_Organization"><span class="tocnumber">1.4</span> <span class="toctext">A Note on Organization</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><a id="Branching_.26_Recombining_the_Story" name="Branching_.26_Recombining_the_Story"></a></p>
+<h2><span class="mw-headline">Branching &amp; Recombining the Story</span></h2>
+<p>Short branches can be accomplished entirely with the menu statement by including the entire branch indented after the menu option. For longer branches, however, this will get cumbersome. The solution is to use labels and the <a href="../reference/The_Ren%27Py_Language#jump" title="renpy/doc/reference/The Ren&apos;Py Language">jump statement</a> or the <a href="../reference/The_Ren%27Py_Language#call" title="renpy/doc/reference/The Ren&apos;Py Language">call statement</a>.</p>
+<p>The first thing that you'll have to decide is whether you're going to use call or jump. Jump simply changes where in the script Ren'Py is executing, and that's it. The new place of execution in the script can only move forward; there's no such thing as returning from a jump, though you could always jump to a label after the original jump. Thus you can't easily re-use jump-branches from multiple places in your script. For a visual novel, jump will probably be sufficient.</p>
+<p>Call, by contrast, saves information about where you were, so that the branch being called can automatically return to the right place. With call, you can easily re-use branches. Dating sims will probably want to use call.</p>
+<p>You can, of course, use both types of branching in the same visual novel (or dating sim). Mixing and matching is fine, so long as any single branch is only either a call-branch or a jump-branch..</p>
+<p><a id="Branching_with_Jump" name="Branching_with_Jump"></a></p>
+<h3><span class="mw-headline">Branching with Jump</span></h3>
+<p>The first step of branches using jump is to mark places in your script using the <a href="../reference/The_Ren%27Py_Language#label" title="renpy/doc/reference/The Ren&apos;Py Language">label statement</a>:</p>
+<pre>
+<span class="kwa">label</span> jewelry_store<span class="sym">:</span>
+b <span class="str">"Let's go to the jewelry store. I'd like to buy you something."</span>
+
+s <span class="str">"You're so sweet!"</span>
+</pre>
+<p>Next, you add the jump to the branch:</p>
+<pre>
+s <span class="str">"What do you want to do?"</span>
+
+<span class="kwa">menu</span><span class="sym">:</span>
+    <span class="str">"Let's go to the jewelry store"</span><span class="sym">:</span>
+        <span class="kwa">jump</span> jewelry_store
+        <span class="slc">#we'll never go past the jump statement, since it doesn't return</span>
+    <span class="str">"Let's do nothing"</span><span class="sym">:</span>
+        s <span class="str">"This is boring."</span>
+</pre>
+<p>Congratulations, you've branched with jump!</p>
+<p>Unless this branch runs to the end of the game, you will probably want your branch to jump to other places in the script. This is done in the same way; branches are not special and you can jump to anywhere you want even though you're in a branch. For example, suppose that in the above example you want to go back to after the menu from the branch. First, you add a label after the menu so that you have somewhere to jump to:</p>
+<pre>
+s <span class="str">"What do you want to do?"</span>
+
+<span class="kwa">menu</span><span class="sym">:</span>
+    <span class="str">"Let's go to the jewelry store"</span><span class="sym">:</span>
+        <span class="kwa">jump</span> jewelry_store
+        <span class="slc">#we'll never go past the jump statement, since it doesn't return</span>
+    <span class="str">"Let's do nothing"</span><span class="sym">:</span>
+        s <span class="str">"This is boring."</span>
+
+<span class="kwa">label</span> what_to_do<span class="sym">:</span>
+b <span class="str">"Well, now what?"</span>
+</pre>
+<p>Then you add a jump to the end of the branch:</p>
+<pre>
+<span class="kwa">label</span> jewelry_store<span class="sym">:</span>
+b <span class="str">"Let's go to the jewelry store. I'd like to buy you something."</span>
+
+s <span class="str">"You're so sweet!"</span>
+
+b <span class="str">"I am."</span>
+
+s <span class="str">"Well, that's enough. Let's go back."</span>
+
+<span class="kwa">jump</span> what_to_do
+</pre>
+<p>Please note that labels have to be unique within a Ren'Py script.</p>
+<p><a id="Branching_with_Call" name="Branching_with_Call"></a></p>
+<h3><span class="mw-headline">Branching with Call</span></h3>
+<p>The first step of branches using call is to mark a branch in your script using the <a href="../reference/The_Ren%27Py_Language#label" title="renpy/doc/reference/The Ren&apos;Py Language">label statement</a> and the <a href="../reference/The_Ren%27Py_Language#return" title="renpy/doc/reference/The Ren&apos;Py Language">return statement</a>:</p>
+<pre>
+<span class="kwa">label</span> jewelry_store<span class="sym">:</span>
+    b <span class="str">"Let's go to the jewelry store. I'd like to buy you something."</span>
+
+    s <span class="str">"You're so sweet!"</span>
+
+    etc<span class="sym">.</span>
+
+    <span class="kwa">return</span>
+</pre>
+<p>(NOTE: it's very important that a call-branch should never be entered either with a jump or by normal script flow. If it is, the return statement at the end of the branch will cause the game to immediately end. A return statement outside of a call is actually the correct way to end the game: the metaphore is that since the game came from the starting menu, a return statement in the main story would go back to the starting menu.)</p>
+<p>Next, you add the jump to the branch:</p>
+<pre>
+s <span class="str">"What do you want to do?"</span>
+
+<span class="kwa">menu</span><span class="sym">:</span>
+    <span class="str">"Let's go to the jewelry store"</span><span class="sym">:</span>
+        <span class="kwa">call</span> jewelry_store
+        s <span class="str">"That was fun"</span>
+    <span class="str">"Let's do nothing"</span><span class="sym">:</span>
+        <span class="kwa">pass</span>
+</pre>
+<p>Congratulations, you've branched with call! Unfortunately, you're not done.</p>
+<p>You don't need to do anything while you're still writing your game, but when you're ready to release your game, you'll need to run the "Add From to Calls" tool in the Ren'Py launcher to add labels below your call statement and from clauses to all of your call statements.</p>
+<p><a id="Reaching_the_End" name="Reaching_the_End"></a></p>
+<h3><span class="mw-headline">Reaching the End</span></h3>
+<p>Your story may have more than one ending, or just a single ending. Games with just a single ending and no choices are often called <i>Kinetic Novels</i> rather than <i>Visual Novels</i>, just for clarity.</p>
+<p>Regardless, when the player gets to the end, you'll probably want to make it a bit of a special event. Perhaps with a specially drawn picture or an animation, but at least a screen saying "THE END".</p>
+<p>If your game has more than one ending, it's worth considering giving each ending a name, or at least numbering the endings. This helps when people are discussing your game, since they can be sure that they're talking about the same ending without having to actually describe it (and so risk giving out spoilers.)</p>
+<p>Imagine your story is about characters getting together and planning a party. You've a lovely finishing image of all your characters whooping it up, which you declared in the usual way:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> party ending <span class="sym">=</span> <span class="str">"party.jpg"</span>
+
+</pre>
+<p><br />
+If your ending has a line of text being shown, the ending scene is really easy to write:</p>
+<pre>
+<span class="str">"Chris smiled."</span>
+c <span class="str">"Well, that seems to be that!"</span>
+
+<span class="kwa">scene</span> party ending
+<span class="str">"And everyone partied happily.</span>   <span class="esc">\n\n</span><span class="str">Ending 3 - Neighbourhood Party"</span>
+
+<span class="kwa">return</span>
+</pre>
+<p>The "return" tells Ren'Py to go back to what it was doing before the player started playing - which was showing the main screen.</p>
+<p>Ren'Py always waits for a response from the player when it shows text, so this works fine.</p>
+<p>However, if you want to show an image without having part of the screen taken up with the dialogue box, then there is a problem.</p>
+<p>If you write:</p>
+<p><br /></p>
+<pre>
+<span class="str">"Chris smiled."</span>
+c <span class="str">"Well, that seems to be that!"</span>
+
+<span class="kwa">scene</span> party ending
+
+<span class="kwa">return</span>
+</pre>
+<p>Then you will find that the party image will be shown only briefly before the game returns to the main screen. We need to tell Ren'Py to pause so that the player can enjoy the art.</p>
+<p>Happily that's easily done: the instruction is <b>$ renpy.pause()</b>.</p>
+<p>Like so:</p>
+<pre>
+<span class="str">"Chris smiled."</span>
+c <span class="str">"Well, that seems to be that!"</span>
+
+<span class="kwa">scene</span> party ending
+
+$ renpy<span class="sym">.</span><span class="kwa">pause</span><span class="sym">()</span>
+
+<span class="kwa">return</span>
+</pre>
+<p>Now the picture will be shown until the player clicks the mouse.</p>
+<p><a id="A_Note_on_Organization" name="A_Note_on_Organization"></a></p>
+<h3><span class="mw-headline">A Note on Organization</span></h3>
+<p>There is no consensus on the best way to organize branches. It is, however, recommended that you come up with some way to organize your branches and stick to it.</p>
+<p>If you use multiple files to organize your script, please bear in mind that labels are visible from any file, so jumping to a label in a different file is exactly the same as jumping to a label in the same file. Since labels have to be unique in a Ren'Py script, this means that you can't re-use labels in different files of the same Ren'Py game.</p>
+<table align="center" border="1" cellpadding="10" cellspacing="1" style="background: #fff0e0; text-align: center;" width="80%">
+<tr>
+<td width="30%">Previous:<br />
+<a href="../tutorials/Remembering_User_Choices.html" title="renpy/doc/tutorials/Remembering User Choices">Remembering User Choices</a></td>
+<td width="40%"><b><a href="../tutorials/Ren%27Py_Web_Tutorial.html" title="renpy/doc/tutorials/Ren&apos;Py Web Tutorial">Ren'Py Web Tutorial</a></b></td>
+<td width="30%">Next:<br />
+<a href="../tutorials/Adding_Music_%26_Sound_Effects.html" title="renpy/doc/tutorials/Adding Music &amp; Sound Effects">Adding Music &amp; Sound Effects</a></td>
+</tr>
+</table>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a></p></div>
+	</body></html>

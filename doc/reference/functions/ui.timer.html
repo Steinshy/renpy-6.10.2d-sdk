@@ -1,0 +1,32 @@
+<html><head><title>ui.timer - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.timer" name="ui.timer"></a></p>
+<h1><span class="mw-headline">ui.timer</span></h1>
+<p><span id="ui.timer" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.timer</strong></b></td>
+<td valign="top">(seconds, function, repeat=False, args=(), kwargs={}):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This sets up a timer that will call <i>function</i> after <i>seconds</i> seconds have elapsed. If <i>repeat</i> is true, then the function is called every <i>seconds</i> seconds thereafter.</p>
+<p><i>args</i> and <i>kwargs</i> are the positional and keyword arguments supplied to the function, respectively.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="slc"># Jump to too_slow if the next interaction lasts longer than 30 seconds. Note that</span>
+<span class="slc"># this is a really bad thing to do in menus, since people may read your game at</span>
+<span class="slc"># different paces.</span>
+
+$ ui<span class="sym">.</span><span class="kwd">timer</span><span class="sym">(</span><span class="num">30.0</span><span class="sym">,</span> ui<span class="sym">.</span><span class="kwd">jumps</span><span class="sym">(</span><span class="str">"too_slow"</span><span class="sym">))</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

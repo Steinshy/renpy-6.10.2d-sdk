@@ -1,0 +1,98 @@
+<html><head><title>Thinking in Ren&amp;#39;Py - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a></p><table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Thinking_in_Ren.27Py"><span class="tocnumber">1</span> <span class="toctext">Thinking in Ren'Py</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Ren.27Py_Is_Easy"><span class="tocnumber">1.1</span> <span class="toctext">Ren'Py Is Easy</span></a></li>
+<li class="toclevel-2"><a href="#Programming"><span class="tocnumber">1.2</span> <span class="toctext">Programming</span></a></li>
+<li class="toclevel-2"><a href="#Indentation"><span class="tocnumber">1.3</span> <span class="toctext">Indentation</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><a id="Thinking_in_Ren.27Py" name="Thinking_in_Ren.27Py"></a></p>
+<h2><span class="mw-headline">Thinking in Ren'Py</span></h2>
+<div id="easy" />
+<p><a id="Ren.27Py_Is_Easy" name="Ren.27Py_Is_Easy"></a></p>
+<h3><span class="mw-headline">Ren'Py Is Easy</span></h3>
+<p>Ren'Py is probably the easiest way to write visual novels that exists. Yet many people who see a Ren'Py script for the first time are scared. How can this be?</p>
+<p>The answer is simple: Ren'Py is designed to make writing <i>complete</i> visual novels as easy as possible. It's not designed to make <i>starting</i> visual novels as easy as possible. What's the difference? A visual novel is a long and fairly complex story. An easy tool for small projects often gets in your way on large projects. Consider a hand trowel and a shovel: if you want to plant a petunia in a window box, the short handle and small spade of a trowel make it easy to handle. But if you want to dig a hole in your back yard to plant a tree, the long handle and big spade of the shovel will let you finish in 1/10th the time and effort. It's not that either one is easier than the other: they're each easier for the problem they're meant to solve.</p>
+<p>And let's not kid ourselves: writing a visual novel is much more like planting a tree. A visual novel which takes only half an hour to play might easily have 10,000 words and several branches in it. Writing 10,000 words of a story which branches and recombines is real work. Some of the games made with Ren'Py have 30,000 words. Professional visual novels have 100,000+ words. That's <i>a lot of work</i>.</p>
+<p>The goal of Ren'Py is to require as little <i>extra</i> work as possible. That's why Ren'Py might seem a little scary at first. The features of Ren'Py which make it as easy as possible to deal with a 50,000 word visual novel may seem unnecessary when you've only written 50 words. If you keep writing, it will seem necessary soon enough.</p>
+<p>So, even if Ren'Py might look a little scary right now, please trust us that Ren'Py is the easiest way to write a visual novel. Because if you start, pretty soon you're going to be wrestling with your plot and characters and the choices and the branches, and the Ren'Py script will be so natural when dealing with them that you'll barely notice it.</p>
+<p>(originally written by Chris Lansdown)</p>
+<div id="programming" />
+<p><a id="Programming" name="Programming"></a></p>
+<h3><span class="mw-headline">Programming</span></h3>
+<p>You don't need to know any programming, or be able to program, to use Ren'Py. It is, however, true that even a basic Ren'Py visual novel requires a few programming statements in python. Don't worry about this. In this tutorial we'll show you all of the python statements that you'll need to use, and you'll be able either to copy them directly or copy them and modify the names or filenames, and where that's relevant, we'll explain how to do it.</p>
+<p>You won't need to understand python code at all to write a visual novel; you'll only need to be able to copy and paste it.</p>
+<p>If you are a programmer, or have a programmer on your team, you can go to the trouble of understanding the python that you'll need, but it probably won't win you much. On the other hand, if you want to use the python to do something unique and cool, we will provide links into the reference manual so you can do this if you want.</p>
+<div id="indentation" />
+<p><a id="Indentation" name="Indentation"></a></p>
+<h3><span class="mw-headline">Indentation</span></h3>
+<p>The biggest problem with computers, and consequently with Ren'Py, is that they're not intelligent. Computers can't understand human communication, so we have to do all of the work to make the computer understand us. It's not fair, but in any relationship the one with less to lose always wins. Since the computer is an inanimate object, it has nothing to lose at all.</p>
+<p>So we need to figure out ways to communicate with the computer that the computer understands. Most of the time this isn't too bad. For example, we use <i>variables</i> to hold values. We're used to giving things names, so this doesn't strain us very much. Writing something like:</p>
+<pre>
+$ gift <span class="sym">=</span> <span class="str">"swimsuit"</span>
+</pre>
+<p>might be unusual, but it's just a formalized way of doing what we're used to doing. In this case, it's the same thing as saying, "I'm buying the swimsuit for my girlfriend", except in computerish rather than in English.</p>
+<p>So far, so good. The big problem with communicating with computers is <i>context</i>. We're so used to dealing with this that for most people it's unconscious. When you say "I tipped the waiter" and "I tipped the cow", you know that in the first one "tipped" means that you gave the waiter money and in the second one it means that you pushed the cow. You know this because of <i>context</i>: you normally give waiters money, but rarely push them over, whereas cows have no use for money. Computers have no concept of context, so we have to come up with some way to fake it.</p>
+<p>Ren'Py uses is indentation as its solution to this problem. Indentation is the amount of "white space" (spaces) before the words on a line. For example:</p>
+<pre>
+<span class="str">"This line isn't indented."</span>
+    <span class="str">"This line is indented 4 spaces."</span>
+        <span class="str">"This line is indented 8 spaces."</span>
+    <span class="str">"This line is also indented 4 spaces."</span>
+            <span class="str">"And this line is indented 12 spaces."</span>
+<span class="str">"Whereas this line isn't indented at all."</span>
+</pre>
+<p>In Ren'Py, we use this to give the Ren'Py engine context, so it can figure out what we mean. All of the statements next to each other with the same (or greater) indentation are in the same context. We call all of these statements a "block". For example, in a bit we'll talk about "init blocks". This just means all of the lines which are indented after an init statement:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="slc"># This is in the init block</span>
+    <span class="slc"># this line is also in the init block</span>
+<span class="slc"># this line is NOT in the init block</span>
+</pre>
+<p>It's also possible for blocks to be nested in each other like those russian dolls that open to reveal a smaller doll:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="slc"># This is in the init block</span>
+    <span class="slc"># this line is also in the init block</span>
+    <span class="kwa">python</span><span class="sym">:</span>
+        <span class="slc"># this line is both in the python block and the init block</span>
+        <span class="slc"># as it's written here, it's not possible to be in the python block</span>
+        <span class="slc">#  but not the init block.</span>
+    <span class="slc"># this line is still in the init block, but not the python block, so</span>
+    <span class="slc">#  we say that the python block is "closed", since no more statements</span>
+    <span class="slc">#  can go in it. But we can still put statements in the init block.</span>
+<span class="slc"># this line is NOT in the init block</span>
+</pre>
+<p>Don't worry about getting the hang of indentation and blocks now, it will make a lot more sense as you continue reading the tutorial and see real examples. Conveniently, you don't need to understand it before then, either.&#160;:)</p>
+<table align="center" border="1" cellpadding="10" cellspacing="1" style="background: #fff0e0; text-align: center;" width="80%">
+<tr>
+<td width="30%">Previous:<br />
+<a href="../tutorials/Getting_Started.html" title="renpy/doc/tutorials/Getting Started">Getting Started</a></td>
+<td width="40%"><b><a href="../tutorials/Ren%27Py_Web_Tutorial.html" title="renpy/doc/tutorials/Ren&apos;Py Web Tutorial">Ren'Py Web Tutorial</a></b></td>
+<td width="30%">Next:<br />
+<a href="../tutorials/Ren%27Py_Script_Structure.html" title="renpy/doc/tutorials/Ren&apos;Py Script Structure">Ren'Py Script Structure</a></td>
+</tr>
+</table>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a></p></div>
+	</body></html>

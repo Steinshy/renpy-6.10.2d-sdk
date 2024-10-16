@@ -1,0 +1,35 @@
+<html><head><title>renpy.get all labels - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.get_all_labels" name="renpy.get_all_labels"></a></p>
+<h1><span class="mw-headline">renpy.get_all_labels</span></h1>
+<p><span id="renpy.get_all_labels" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.get_all_labels</strong></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns the set of all labels defined in the program, including labels defined for internal use in the libraries.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    ui<span class="sym">.</span><span class="kwd">vbox</span><span class="sym">(</span>xalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">)</span>
+
+    <span class="kwa">for</span> i <span class="kwa">in</span> renpy<span class="sym">.</span><span class="kwd">get_all_labels</span><span class="sym">():</span>
+         <span class="kwa">if</span> i<span class="sym">.</span><span class="kwd">startswith</span><span class="sym">(</span><span class="str">"warp_"</span><span class="sym">):</span>
+             ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span>i<span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">jumps</span><span class="sym">(</span>i<span class="sym">))</span>
+
+    ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+    ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

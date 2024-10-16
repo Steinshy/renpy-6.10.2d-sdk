@@ -1,0 +1,40 @@
+<html><head><title>Python Modules - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Python_Modules" name="Python_Modules"></a></p>
+<h1><span class="mw-headline">Python Modules</span></h1>
+<p>It's possible to write python modules, and import them into Ren'Py. These python modules define their own namespace, which is different from the namespace in which python-in-Ren'Py executes. Objects defined in python modules do not participate in rollback, although they may be saved if they are reachable from the main Ren'Py store.</p>
+<p>Python modules may be placed in the game directory, while python packages are subdirectories of the game directory containing __init__.py files. The only encoding we support is utf-8.</p>
+<p>We suggest beginning each module with:</p>
+<pre>
+<span class="kwa">import</span> renpy<span class="sym">.</span>store <span class="kwa">as</span> store
+<span class="kwa">import</span> renpy<span class="sym">.</span>exports <span class="kwa">as</span> renpy
+</pre>
+<p>This makes the store, the namespace in which python-in-Ren'Py executes, available as <tt>store</tt>. It also makes the various functions documented in this manual available under <tt>renpy</tt>. (A simple <tt>import renpy</tt> will not do this, it will access the internals of Ren'Py instead. Sorry for the additional complexity.)</p>
+<p>In general, objects created inside python modules do not participate in rollback. This means that you should not change such objects after their initial creation. If you want to produce an object that participates in rollback, you can use the equivalents defined in the <tt>store</tt> module: <tt>store.list</tt>, <tt>store.dict</tt>, <tt>store.set</tt>, <tt>store.object</tt>. You can also create a class inheriting from <tt>store.object</tt>, and objects of that class will participate in rollback.</p>
+<p>It's probably easier to not change objects that are created in python modules.</p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<p>As a trivial example, we could have the following module, which is placed in magic.py in the game directory.</p>
+<pre>
+<span class="kwa">import</span> renpy<span class="sym">.</span>store <span class="kwa">as</span> store
+<span class="kwa">import</span> renpy<span class="sym">.</span>exports <span class="kwa">as</span> renpy
+
+<span class="kwa">def</span> <span class="kwd">add</span><span class="sym">(</span>a<span class="sym">,</span> b<span class="sym">):</span>
+    <span class="kwa">return</span> a <span class="sym">+</span> b
+</pre>
+<p>In a Ren'Py script file, we can import the module using an import statement:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ <span class="kwa">import</span> magic
+</pre>
+<p>You can then call methods from the module:</p>
+<pre>
+$ result <span class="sym">=</span> magic<span class="sym">.</span><span class="kwd">add</span><span class="sym">(</span><span class="num">1</span><span class="sym">,</span> <span class="num">2</span><span class="sym">)</span>
+
+<span class="str">"1 + 2 = %(result)d"</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

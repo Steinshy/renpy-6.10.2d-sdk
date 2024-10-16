@@ -1,0 +1,44 @@
+<html><head><title>SizeZoom - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="SizeZoom" name="SizeZoom"></a></p>
+<h1><span class="mw-headline">SizeZoom</span></h1>
+<p><span id="SizeZoom" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">SizeZoom</strong></b></td>
+<td valign="top">(start, end, time, after_child=None, time_warp=None, bilinear=True, opaque=True, anim_timebase=False, repeat=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p><br />
+This causes the child displayable to be zoomed to a size that is linearly interpolated between the <i>start</i> and <i>end</i> sizes. The zoom will take <i>time</i> seconds, after which it will be shown at the end size, unless an <i>after_child</i> is given.</p>
+<p>The start and end rectangles must fit completely inside the size of the child, otherwise an error will occur.</p>
+<p><i>start</i> - The starting size, a (width, height) tuple.</p>
+<p><i>end</i> - The end size, a (width, height) tuple.</p>
+<p><i>time</i> - The amount of time it will take to interpolate from the start to the end rectangle.</p>
+<p><i>after_child</i> - If present, a second child widget. This displayable will be rendered after the zoom completes. Use this to snap to a sharp displayable after the zoom is done.</p>
+<p><i>time_warp</i> - If not None, a function that takes a fractional period (between 0.0 and 0.1), and returns a fractional period. Use this to implement non-linear zooms. This function may be pickled, so it cannot be a lambda or other non-top-level function.</p>
+<p><i>bilinear</i> - If True, the default, this will use bilinear filtering. If false, this will use ugly yet fast nearest neighbor filtering.</p>
+<p><i>opaque</i> - If True and bilinear is True, this will use a very efficient method that does not support transparency. If False, this supports transparency, but is less efficient.</p>
+<p><i>anim_timebase</i> is true to use the animation timebase, false to use the displayable timebase.</p>
+<p><i>repeat</i>- causes the zoom to repeat every <i>time</i> seconds.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">scene</span> bg whitehouse <span class="kwa">at</span> <span class="kwd">Zoom</span><span class="sym">((</span><span class="num">800</span><span class="sym">,</span> <span class="num">600</span><span class="sym">), (</span><span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">800</span><span class="sym">,</span> <span class="num">600</span><span class="sym">), (</span><span class="num">225</span><span class="sym">,</span> <span class="num">150</span><span class="sym">,</span> <span class="num">400</span><span class="sym">,</span> <span class="num">300</span><span class="sym">),</span> <span class="num">1.0</span><span class="sym">)</span>
+
+<span class="str">"We can zoom into images..."</span>
+
+<span class="kwa">scene</span> bg whitehouse <span class="kwa">at</span> <span class="kwd">Zoom</span><span class="sym">((</span><span class="num">800</span><span class="sym">,</span> <span class="num">600</span><span class="sym">), (</span><span class="num">225</span><span class="sym">,</span> <span class="num">150</span><span class="sym">,</span> <span class="num">400</span><span class="sym">,</span> <span class="num">300</span><span class="sym">), (</span><span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">800</span><span class="sym">,</span> <span class="num">600</span><span class="sym">),</span> <span class="num">1.0</span><span class="sym">)</span>
+
+<span class="str">"... and zoom back out of them again."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

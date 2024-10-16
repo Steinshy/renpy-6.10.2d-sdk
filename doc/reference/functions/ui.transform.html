@@ -1,0 +1,29 @@
+<html><head><title>ui.transform - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.transform" name="ui.transform"></a></p>
+<h1><span class="mw-headline">ui.transform</span></h1>
+<p><span id="ui.transform" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.transform</strong></b></td>
+<td valign="top">(function=None, alpha=1, rotate=None, zoom=1, xzoom=1, yzoom=1, style='transform', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Wraps its child in a <a href="../../reference/functions/Transform.html" title="renpy/doc/reference/functions/Transform">Transform</a>, allowing the child to be rotated, zoomed, and alpha-modified. Parameters are as for <a href="../../reference/functions/Transform.html" title="renpy/doc/reference/functions/Transform">Transform</a>.</p>
+</div>
+<pre>
+<span class="slc"># Displays a textbutton rotated 90 degrees.</span>
+
+<span class="kwa">python</span><span class="sym">:</span>
+   <span class="kwa">transform</span> <span class="sym">=</span> ui<span class="sym">.</span><span class="kwa">transform</span><span class="sym">()</span>
+   ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Hello, World"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="kwa">True</span><span class="sym">))</span>
+   <span class="kwa">transform</span><span class="sym">.</span>rotate <span class="sym">=</span> <span class="num">90</span>
+   <span class="kwa">transform</span><span class="sym">.</span><span class="kwd">update</span><span class="sym">()</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,49 @@
+<html><head><title>Voice Support - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Voice_Support" name="Voice_Support"></a></p>
+<h1><span class="mw-headline">Voice Support</span></h1>
+<p>Ren'Py includes support for adding voice acting to a game. This is done through two additional statements.</p>
+<p>The <tt>voice</tt> "<i>filename</i>" statement plays the voice file given in <i>filename</i>.</p>
+<p>The <tt>voice sustain</tt> statement continues playing the previous voice file.</p>
+<p>A voice file is played at the start of the first interaction following a voice statement. It is terminated at the start of the next interaction, unless a <tt>voice sustain</tt> statement is given that continues playing it.</p>
+<pre>
+voice <span class="str">"eileen1.ogg"</span>
+e <span class="str">"I'm now saying something."</span>
+
+<span class="str">"But she stopped saying it, because this statement started."</span>
+
+voice <span class="str">"eileen2.ogg"</span>
+e <span class="str">"Now I'm saying something else..."</span>
+
+voice sustain
+e <span class="str">"And I'll keep saying it!"</span>
+</pre>
+<p><b>Function Equivalents.</b> There are two functions corresponding to the two voice statements.</p>
+<p><span id="voice" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>voice</b></td>
+<td valign="top">(filename):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Plays the voice in <i>filename</i>. Equivalent to <tt>voice</tt>.</p>
+</div>
+<p><span id="voice_sustain" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>voice_sustain</b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Continues playing the current voice file. Equivalent to <tt>voice sustain</tt>.</p>
+</div>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

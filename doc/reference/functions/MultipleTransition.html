@@ -1,0 +1,41 @@
+<html><head><title>MultipleTransition - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="MultipleTransition" name="MultipleTransition"></a></p>
+<h1><span class="mw-headline">MultipleTransition</span></h1>
+<p><span id="MultipleTransition" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">MultipleTransition</strong></b></td>
+<td valign="top">(args):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a transition that consists of one or more transitions. <i>args</i> must be a list of odd length, containing at least 3 elements. Odd elements of this list are considered to be displayables, while even elements are transitions. When used, this causes the first element (a displayable) to transition to the third element (a displayable), using the second element as the transition. If the fourth and fifth elements are present, a transition will occur from the third element (a displayable) to the fifth element (a displayable) using the fourth element (a transition).</p>
+<p>There are two special values that will be recognized as displayables. <i>False</i> will be replaced with a displayable containing the scene before the transition, while <i>True</i> will be replaced with a displayable containing the scene after the transition.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ teleport <span class="sym">=</span> <span class="kwd">MultipleTransition</span><span class="sym">([</span><span class="kwa">False</span><span class="sym">,</span> dissolve<span class="sym">,</span> <span class="str">"#fff"</span><span class="sym">,</span> dissolve<span class="sym">,</span> <span class="kwa">False</span><span class="sym">,</span>
+                                     dissolve<span class="sym">,</span> <span class="str">"#fff"</span><span class="sym">,</span> dissolve<span class="sym">,</span>
+                                     <span class="kwa">True</span><span class="sym">,</span> dissolve<span class="sym">,</span> <span class="str">"#fff"</span><span class="sym">,</span> dissolve<span class="sym">,</span> <span class="kwa">True</span><span class="sym">])</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+    <span class="kwa">scene</span> bg ship
+
+    <span class="str">"I'm on my ship."</span>
+
+    <span class="kwa">scene</span> bg surface
+    <span class="kwa">with</span> teleport
+
+    <span class="str">"And now I'm down on the planet's surface."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,36 @@
+<html><head><title>renpy.music.set pan - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.music.set_pan" name="renpy.music.set_pan"></a></p>
+<h1><span class="mw-headline">renpy.music.set_pan</span></h1>
+<p><span id="renpy.music.set_pan" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.music.set_pan</strong></b></td>
+<td valign="top">(pan, delay, channel="music"):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function allows sound and music to be panned between the two stereo channels.</p>
+<p><i>pan</i> - A number between -1 and 1 that control the placement of the audio. If this is -1, then all audio is sent to the left channel. If it's 0, then the two channels are equally balanced. If it's 1, then all audio is sent to the right ear.</p>
+<p><i>delay</i> - The amount of time it takes for the panning to occur.</p>
+<p><i>channel</i> - The channel the panning takes place on. This can be a sound or a music channel. Often, this is channel 7, the default music channel.</p>
+</div>
+<pre>
+play music <span class="str">"2f-final.ogg"</span>
+<span class="str">"Now we're playing some music."</span>
+
+$ renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">set_pan</span><span class="sym">(-</span><span class="num">1</span><span class="sym">,</span> <span class="num">1</span><span class="sym">)</span>
+<span class="str">"It's only coming out of the left channel."</span>
+
+$ renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">set_pan</span><span class="sym">(</span><span class="num">1</span><span class="sym">,</span> <span class="num">2</span><span class="sym">)</span>
+<span class="str">"Now it's only out of the right channel."</span>
+
+$ renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">set_pan</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">1</span><span class="sym">)</span>
+<span class="str">"And now it's centered."</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

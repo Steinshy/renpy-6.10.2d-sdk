@@ -1,0 +1,39 @@
+<html><head><title>renpy.image - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.image" name="renpy.image"></a></p>
+<h1><span class="mw-headline">renpy.image</span></h1>
+<p><span id="renpy.image" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.image</strong></b></td>
+<td valign="top">(name, img):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is used to execute the image statment. It takes as arguments an image name and an image object, and associates the image name with the image object.</p>
+<p>Like the image statment, this function should only be executed in init blocks.</p>
+<p><i>name</i> - The image name, a tuple of strings.</p>
+<p><i>img</i> - The displayable that is associated with that name. If this is a string or tuple, it is interpreted as an argument to Image.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">python</span><span class="sym">:</span>
+        <span class="kwa">for</span> character <span class="kwa">in</span> <span class="sym">[</span><span class="str">'eileen'</span><span class="sym">,</span> <span class="str">'alice'</span><span class="sym">,</span> <span class="str">'lucy'</span><span class="sym">]:</span>
+            <span class="kwa">for expression in</span> <span class="sym">[</span><span class="str">'happy'</span><span class="sym">,</span> <span class="str">'concerned'</span><span class="sym">,</span> <span class="str">'vhappy'</span><span class="sym">]:</span>
+                <span class="slc"># image files are named as eileen_happy.png, etc.</span>
+                renpy<span class="sym">.</span><span class="kwa">image</span><span class="sym">((</span>character<span class="sym">,</span> <span class="kwa">expression</span><span class="sym">),</span>
+                            <span class="str">"%s_%s.png"</span> <span class="sym">% (</span>character<span class="sym">,</span> <span class="kwa">expression</span><span class="sym">))</span>
+
+<span class="kwa">show</span> eileen happy
+<span class="str">"I find myself strangely happy to see Eileen in this example."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

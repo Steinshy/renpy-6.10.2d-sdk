@@ -1,0 +1,28 @@
+<html><head><title>renpy.take screenshot - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.take_screenshot" name="renpy.take_screenshot"></a></p>
+<h1><span class="mw-headline">renpy.take_screenshot</span></h1>
+<p><span id="renpy.take_screenshot" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.take_screenshot</strong></b></td>
+<td valign="top">(size=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function should be called before <a href="../../reference/functions/renpy.save.html" title="renpy/doc/reference/functions/renpy.save">renpy.save</a>, to take the screenshot that will be used as part of a savegame. This is called automatically when entering the game menu, but it may make sense to call it manually if you force a save.</p>
+<p><i>size</i> -- The size of the screenshot. If None, defaults to (<a href="../../reference/Configuration_Variables#config.thumbnail_width" title="renpy/doc/reference/Configuration Variables">config.thumbnail_width</a>, <a href="../../reference/Configuration_Variables#config.thumbnail_height" title="renpy/doc/reference/Configuration Variables">config.thumbnail_height</a>).</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    renpy<span class="sym">.</span><span class="kwd">take_screenshot</span><span class="sym">()</span>
+    renpy<span class="sym">.</span><span class="kwd">save</span><span class="sym">(</span><span class="str">"forced_save"</span><span class="sym">)</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,107 @@
+<html><head><title>Character - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="Character" name="Character"></a></p>
+<h1><span class="mw-headline">Character</span></h1>
+<p><span id="Character" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">Character</strong></b></td>
+<td valign="top">(name, kind=adv, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Creates a new character object. This object is suitable for use as the first argument of a two-argument say statement. When it is used as such, it shows a window containing the character name and the second argument to the say statement. This behavior is customized by passing parameters to this function.</p>
+<p><i>name</i> is the name of the character that is speaking. It can be either a string containing the character name, or None to indicate that the label should not be shown. A name value consisting of a single space (" ") indicates that the label should be a blank line, which allows a narrator character to line up narration with character dialogue. name is the only requirement to Character.</p>
+<p><i>kind</i>, if supplied, gives the name of another Character object. The default values for all the settings of the newly-created character object are taken from that character object. If not given, defaults to <tt>adv</tt>. Another useful value is <tt>nvl</tt>, which by default causes nvl-mode interactions.</p>
+<p><b>Keyword Arguments.</b> In addition to name, <tt>Character</tt> takes keyword arguments that control its behavior.</p>
+<p><i>dynamic</i> - If true, then <i>name</i> is interpreted as a string containing a python expression that is evaluated to yield the name of the character.</p>
+<p><i>image</i> - If true, then <i>name</i> is interpreted as an image. This image is added to the dialogue window in place of the label.</p>
+<p><i>condition</i> - If present, this should be a string containing a python expression. This expression is evaluated whenever a line is said through this character object. If it evaluates to false, the line is not shown to the user.</p>
+<p><i>interact</i> - If true, the default, causes an interaction to occur when a line is shown to the user. If false, the interaction does not take place, and ui.interact (or some other means) must be called to cause an interaction to occur.</p>
+<p><i>with_none</i> - If True, causes a "with None" statement to be run after each interaction. If None (the default), checks <a href="../../reference/Configuration_Variables#config.implicit_with_none" title="renpy/doc/reference/Configuration Variables">config.implicit_with_none</a> to determine if a "with None" should be run.</p>
+<p><i>type</i> - The type of interaction. See <a href="../../reference/functions/renpy.last_interact_type.html" title="renpy/doc/reference/functions/renpy.last interact type">renpy.last_interact_type</a> for how this is used.</p>
+<p><b>Prefixes and Suffixes.</b> The following keyword arguments can be used to add a prefix or suffix to everything said through a character object. These can be used when lines of dialogue need to be enclosed in quotes, as the preferred alternative to adding those quotes to every line of dialogue in the script.</p>
+<p><i>who_prefix</i> - Text that is prepended to the name of the character when forming the label of the dialogue.</p>
+<p><i>who_suffix</i> - Text that is appended to the name of the character when forming the label of the dialogue.</p>
+<p><i>what_prefix</i> - Text that is prepended to the line of dialogue before it is shown to the user.</p>
+<p><i>what_suffix</i> - Thext that is appended to the line of dialogue before it is shown to the user.</p>
+<p><b>Click-to-continue.</b> These keyword arguements are used to control the click-to-continue indicator:</p>
+<p><i>ctc</i> - If present, this argument takes a displayable that is used as the click-to-continue indicator. If not present or None, then no click-to-continue indicator is displayed.</p>
+<p><i>ctc_pause</i> - If given, a click-to-continue indicator that's shown when the display of text has been paused with the {p} or {w} text tags.</p>
+<p><i>ctc_timedpause</i> - If given and not None, a click-to-continue indicator that is displayed when a {p} or {w} tag has a time associated with it. One can use ctc_pause=Null() to disable ctc_pause only in the case of a timed pause.</p>
+<p><i>ctc_position</i> - If "nestled", the click-to-continue indicator is displayed nestled in with the end of the text. If "fixed", the click-to-continue indicator is displayed directly on the screen, with its various position properties determining where it is actually shown.</p>
+<p><b>Functions.</b> The following are keyword arguments that allow one to massively customize the behavior of a character object:</p>
+<p><i>show_function</i> - The function that is called to display each step of a dialogue to the user. (A dialogue may be broken down into steps by pause text tags.) It should have the same signature as <a href="../../reference/functions/renpy.show_display_say.html" title="renpy/doc/reference/functions/renpy.show display say">renpy.show_display_say</a>.</p>
+<p><i>predict_function</i> - The function that is called to predict the images from this dialogue. It should have the signature of <a href="../../reference/functions/renpy.predict_display_say.html" title="renpy/doc/reference/functions/renpy.predict display say">renpy.predict_display_say</a>.</p>
+<p><i>callback</i> - A callback or list of callbacks that are called at various points during the the process of displaying dialogue. The callback is called with a single positional argument, which indicates the event that occured, and the following keyword arguments:</p>
+<ul>
+<li><i>interact</i> - True if this dialogue is being displayed interactively.</li>
+<li><i>type</i> - The value of <i>type</i> supplied to Character.</li>
+</ul>
+<p>Additional keyword arguments and unknown events should be ignored, for future expansion. The events that cause the callback to be called are:</p>
+<ul>
+<li>"begin" - called at the start of showing dialogue.</li>
+<li>"show" - called before each segment of dialogue is shown.</li>
+<li>"show_done" - called after each segment of dialog is shown (but before the interaction occurs).</li>
+<li>"slow_done" - called when slow text finishes showing.</li>
+<li>"end" - called at the end of showing dialogue.</li>
+</ul>
+<p>Note that when interact=False, slow_done can occur after end. If <i>callback</i> is not given or None, it defaults to <a href="../../reference/Configuration_Variables#config.character_callback" title="renpy/doc/reference/Configuration Variables">config.character_callback</a>, if not None. The character callbacks in <a href="../../reference/Configuration_Variables#config.all_character_callbacks" title="renpy/doc/reference/Configuration Variables">config.all_character_callbacks</a> are called for all characters, before any more specific callbacks.</p>
+<p><b>Default Show Function</b> The following are keyword arguments that are processed by the default show_function.</p>
+<p><i>show_two_window</i> - Places the name of the character saying the dialogue into its own window.</p>
+<p><i>show_side_image</i> - Specifies a displayable that is show with this dialogue. The displayable should set its position properties in a way to place it where the user wants it. Similarly, the window properties should be set in a way that provides room for the side image.</p>
+<p><i>show_two_window_vbox_properties</i> - If supplied, a dictionary containing properties that are added to the vbox containing both windows, when show_two_window is true.</p>
+<p><i>show_who_window_properties</i> - If supplied, a dictionary containing properties that are added to the window containing the name of who is speaking, when show_two_window is true.</p>
+<p><i>show_say_vbox_properties</i> - If supplied, a dictionary containing properties that are added to the vbox inside the main window.</p>
+<p><i>show_transform</i> - If supplied, a transform that is applied to window(s) being shown.</p>
+<p><b><a href="../../tutorials/Style_Customization.html" title="renpy/doc/tutorials/Style Customization">Styles</a>.</b> The following keyword arguments control the styles used by parts of the dialogue:</p>
+<p><i>who_style</i> - Defaults to 'say_label', the style of the label.</p>
+<p><i>what_style</i> - Defaults to 'say_dialogue', the style of the text being said.</p>
+<p><i>window_style</i> - Defaults to 'say_window', the style of the window containing the dialogue.</p>
+<p><b>Additional Keyword Arguments.</b> Additional keyword arguments are interpreted as follows:</p>
+<ul>
+<li>Keyword arguments beginning with "window_" are intepreted as properties of the window containing the dialogue, with the window_" prefix stripped off.</li>
+<li>Keyword arguments beginning with "what_" are interpreted as properties of the text being said, with the "what_" prefix stripped off.</li>
+<li>Keyword arguments begining with "show_" are supplied as keyword arguments to the <i>show_function</i> and <i>predict_function</i>, with the "show_" prefix stripped off.</li>
+<li>Keyword arguments beginning with "cb_" are supplied as keyword arguments to the <i>callback</i> function(s), with the "cb_" prefix stripped off.</li>
+<li>All other keyword arguments are interpreted as <a href="../../reference/List_of_Properties.html" title="renpy/doc/reference/List of Properties">properties</a> of the label. (<b>color</b> is the most common property passed as a keyword in this function.)</li>
+</ul>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ e <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span>u<span class="str">'Eileen'</span><span class="sym">,</span> color<span class="sym">=(</span><span class="num">200</span><span class="sym">,</span> <span class="num">255</span><span class="sym">,</span> <span class="num">200</span><span class="sym">,</span> <span class="num">255</span><span class="sym">),</span>
+                    show_function<span class="sym">=</span>side_show_say<span class="sym">,</span>
+                    show_predict_function<span class="sym">=</span>side_show_predict_say<span class="sym">,</span>
+                    show_side<span class="sym">=</span><span class="str">"cyan.png"</span><span class="sym">)</span>
+    $ equote <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">'Eileen'</span><span class="sym">,</span>  color<span class="sym">=(</span><span class="num">200</span><span class="sym">,</span> <span class="num">255</span><span class="sym">,</span> <span class="num">200</span><span class="sym">,</span> <span class="num">255</span><span class="sym">),</span>
+                         who_suffix <span class="sym">=</span> <span class="str">':'</span><span class="sym">,</span> what_prefix<span class="sym">=</span><span class="str">'"'</span><span class="sym">,</span> what_suffix<span class="sym">=</span><span class="str">'"'</span><span class="sym">)</span>
+    $ ectc <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">'Eileen'</span><span class="sym">,</span> color<span class="sym">=(</span><span class="num">200</span><span class="sym">,</span> <span class="num">255</span><span class="sym">,</span> <span class="num">200</span><span class="sym">,</span> <span class="num">255</span><span class="sym">),</span>
+                       ctc <span class="sym">=</span> anim<span class="sym">.</span><span class="kwd">Blink</span><span class="sym">(</span><span class="str">"arrow.png"</span><span class="sym">))</span>
+
+e <span class="str">"Ren'Py is a language and engine for writing and playing visual</span>
+<span class="str">       novel games."</span>
+
+equote <span class="str">"By supplying what_prefix and what_suffix arguments</span>
+<span class="str">        to a Character object, we can automatically add</span>
+<span class="str">        things before each line of text."</span>
+equote <span class="str">"This is a lot easier than having to put those</span>
+<span class="str">        quotes in by hand."</span>
+equote <span class="str">"We can also use who_prefix and who_suffix to</span>
+<span class="str">        add text to the name of the speaker."</span>
+
+ectc <span class="str">"Finally, we demonstrate a click to continue</span>
+<span class="str">      indicator. In this example, it's nestled in with the</span>
+<span class="str">      text."</span>
+ectc <span class="str">"This also demonstrates the use of the anim.Blink</span>
+<span class="str">      function."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

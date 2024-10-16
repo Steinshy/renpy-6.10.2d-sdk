@@ -1,0 +1,32 @@
+<html><head><title>ConditionSwitch - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ConditionSwitch" name="ConditionSwitch"></a></p>
+<h1><span class="mw-headline">ConditionSwitch</span></h1>
+<p><span id="ConditionSwitch" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ConditionSwitch</strong></b></td>
+<td valign="top">(*args, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a wrapper around <a href="../../reference/functions/DynamicDisplayable.html" title="renpy/doc/reference/functions/DynamicDisplayable">DynamicDisplayable</a> that displays the first displayable matching a condition. It takes an even number of positional arguments, with odd arguments being strings containing python conditions, and odd arguments being displayables. On each interaction, it evaluates the conditions in order to find the first that is true, and then displays that displayable. It is an error for no condition to be true.</p>
+<p>If supplied, keyword arguments are used to position the chosen displayable.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> bg waterfront <span class="sym">=</span> <span class="kwd">ConditionSwitch</span><span class="sym">(</span>
+        <span class="str">"time_of_day == 'day'"</span><span class="sym">,</span> <span class="str">"waterfront_day.jpg"</span><span class="sym">,</span>
+        <span class="str">"time_of_day == 'night'"</span><span class="sym">,</span> <span class="str">"waterfront_night.jpg"</span><span class="sym">,</span>
+        <span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

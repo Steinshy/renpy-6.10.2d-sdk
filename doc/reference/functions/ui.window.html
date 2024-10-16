@@ -1,0 +1,35 @@
+<html><head><title>ui.window - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.window" name="ui.window"></a></p>
+<h1><span class="mw-headline">ui.window</span></h1>
+<p><span id="ui.window" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.window</strong></b></td>
+<td valign="top">(**properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A window contains a single widget. It draws that window atop a background and with appropriate amounts of margin and padding, taken from the window properties supplied to this call. The next widget created is added to this window.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    <span class="slc"># Single-child widget, contains the following ui.vbox</span>
+    ui<span class="sym">.</span><span class="kwa">window</span><span class="sym">()</span>
+
+    <span class="slc"># Multiple-child widget - all new widgets following this will be</span>
+    <span class="slc"># added as children to it, until the next ui.close</span>
+    ui<span class="sym">.</span><span class="kwd">vbox</span><span class="sym">()</span>
+    ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span><span class="str">"To get to the next screen, click the 'Continue' button."</span><span class="sym">)</span>
+    ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

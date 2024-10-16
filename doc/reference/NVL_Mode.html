@@ -1,0 +1,144 @@
+<html><head><title>NVL Mode - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="NVL_Mode" name="NVL_Mode"></a></p>
+<h1><span class="mw-headline">NVL Mode</span></h1>
+<p>NVL mode is a mode in which Ren'Py shows more than one line of dialogue on the screen at once. This is used to better emulate the Japanese visual novel format, whereas the default settings of Ren'Py emulate the Japanese adventure format.</p>
+<p>To use NVL-mode, one must declare Characters with a kind of `nvl`, or with a kind that has a kind of `nvl`. For example:</p>
+<p>The narrator can also be made an NVLCharacter, by setting the narrator variable to an NVLCharacter with the name of None.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ e <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Eileen"</span><span class="sym">,</span> color<span class="sym">=</span><span class="str">"#c8ffc8"</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">)</span>
+    $ narrator <span class="sym">=</span> <span class="kwd">NVLCharacter</span><span class="sym">(</span><span class="kwa">None</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">)</span>
+</pre>
+<p>When dialogue is spoken with an NVL-mode Character, it is added to the end of a buffer, and then the entire contents of that buffer are shown to the user. The buffer can be cleared using the <tt>nvl clear</tt> statement. It should be cleared before the first use.</p>
+<pre>
+nvl clear
+
+e <span class="str">"This is the first line of the first screen."</span>
+
+e <span class="str">"This is the second line of the first screen."</span>
+
+nvl clear
+
+e <span class="str">"This is the first line of the second screen."</span>
+
+e <span class="str">"This is the second line of the second screen."</span>
+
+</pre>
+<p>The <tt>nvl show</tt> <i>transition</i> statement causes a transition to occur from the previous screen to a screen with the buffer shown. The <tt>nvl hide</tt> <i>transition</i> statement causes a transition to occur from a screen with the buffer shown to a screen without the buffer shown.</p>
+<p><b>Menus.</b> The <tt>nvl_menu</tt> function shows a menu in NVL-mode. To use it, it should be assigned to <tt>menu</tt> in an init block, using code like:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ <span class="kwa">menu</span> <span class="sym">=</span> nvl_menu
+</pre>
+<p>As nvl-mode menus are shown without being added to the buffer, we suggest clearing the buffer (using <tt>nvl clear</tt>) immediately after each menu.</p>
+<p><a id="Functions" name="Functions"></a></p>
+<h3><span class="mw-headline">Functions</span></h3>
+<p>For each of the nvl-mode statements, there is an equivalent python function. There is also a function with no statement equivalent.</p>
+<p><span id="nvl_clear" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>nvl_clear</b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Equivalent to <tt>nvl clear</tt>.</p>
+</div>
+<p><span id="nvl_hide" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>nvl_hide</b></td>
+<td valign="top">(transition):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Equivalent to <tt>nvl hide</tt> <i>transition</i>.</p>
+</div>
+<p><span id="nvl_show" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>nvl_show</b></td>
+<td valign="top">(transition):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Equivalent to <tt>nvl show</tt> <i>transition</i>.</p>
+</div>
+<p><span id="nvl_erase" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/nvl_erase.html" title="renpy/doc/reference/functions/nvl erase">nvl_erase</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Calling this function erases the bottom line on the NVL-mode screen. If there are no lines on the NVL-mode screen, does nothing. This can be used to replace the bottom line with something else, or to re-show it with different text.</p>
+</div>
+<p><span id="nvl_window" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>nvl_window</b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Displays the current NVL page without causing an interaction to occur.</p>
+</div>
+<p><a id="Variables" name="Variables"></a></p>
+<h3><span class="mw-headline">Variables</span></h3>
+<p><span id="config.nvl_page_ctc" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.nvl_page_ctc</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is expected to be a displayable that gives a click-to-continue indicator that is to be used when the current line of NVL-mode dialogue is followed by a `nvl clear` statement.</p>
+</div>
+<p><span id="config.nvl_page_ctc_position" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.nvl_page_ctc_position</b></td>
+<td valign="top">= "nestled"</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Gives the position of the click-to-continue indicator when when config.nvl_page_ctc is used. See the <i>ctc_position</i> argument to <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> for legal values.</p>
+</div>
+<p><span id="config.nvl_paged_rollback" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.nvl_paged_rollback</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When true, changes the rollback mechanism to display entire pages of rollback at a time. For this to work, page-ends need to be predictable, which generally means nvl clear statements should immediately follow nvl-mode dialogue. (As opposed to occuring only after a page has finished.) This doesn't work well when mixing ADV and NVL modes, as the idea of a page isn't well-defined in that case.</p>
+</div>
+<p><span id="nvl_variant" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>nvl_variant</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is a value that all of the styles used in nvl_mode are indexed by. For example, if nvl_variant is set to "foo", then style.nvl_window["foo"] will be used instead of style.nvl_window.</p>
+</div>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

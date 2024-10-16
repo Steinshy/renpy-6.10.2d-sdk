@@ -1,0 +1,74 @@
+<html><head><title>Developer Tools - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Developer_Tools"><span class="tocnumber">1</span> <span class="toctext">Developer Tools</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Shift.2BE_Editor_Support"><span class="tocnumber">1.1</span> <span class="toctext">Shift+E Editor Support</span></a></li>
+<li class="toclevel-2"><a href="#Shift.2BD_Developer_Menu"><span class="tocnumber">1.2</span> <span class="toctext">Shift+D Developer Menu</span></a></li>
+<li class="toclevel-2"><a href="#Shift.2BR_Reloading"><span class="tocnumber">1.3</span> <span class="toctext">Shift+R Reloading</span></a></li>
+<li class="toclevel-2"><a href="#Shift.2BI_Style_Inspecting"><span class="tocnumber">1.4</span> <span class="toctext">Shift+I Style Inspecting</span></a></li>
+<li class="toclevel-2"><a href="#Shift.2BY_Style_Dumping"><span class="tocnumber">1.5</span> <span class="toctext">Shift+Y Style Dumping</span></a></li>
+<li class="toclevel-2"><a href="#.3E_Fast_Skipping"><span class="tocnumber">1.6</span> <span class="toctext">&gt; Fast Skipping</span></a></li>
+<li class="toclevel-2"><a href="#Warping_to_a_Line"><span class="tocnumber">1.7</span> <span class="toctext">Warping to a Line</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><a id="Developer_Tools" name="Developer_Tools"></a></p>
+<h1><span class="mw-headline">Developer Tools</span></h1>
+<p>Ren'Py includes a number of features to make a developer's life easier. Many of them need the variable <a href="../reference/Configuration_Variables#config.developer" title="renpy/doc/reference/Configuration Variables">config.developer</a> to be set to True to operate.</p>
+<p><a id="Shift.2BE_Editor_Support" name="Shift.2BE_Editor_Support"></a></p>
+<h2><span class="mw-headline">Shift+E Editor Support</span></h2>
+<p>The <a href="../reference/Configuration_Variables#config.editor" title="renpy/doc/reference/Configuration Variables">config.editor</a> variable allows a developer to specify an editor command that is run when the launch_editor keypress (by default, shift-E) occurs.</p>
+<p>Please see <a href="../reference/Integrating_SciTE_with_Ren%27Py.html" title="renpy/doc/reference/Integrating SciTE with Ren&apos;Py">Integrating SciTE with Ren'Py</a> for information about how to use Ren'Py with the customized SciTE text editor.</p>
+<p>See <a href="../reference/Integrating_Crimson_Editor_with_Ren%27Py.html" title="renpy/doc/reference/Integrating Crimson Editor with Ren&apos;Py">Integrating Crimson Editor with Ren'Py</a> for information on how to use Ren'Py with Crimson Editor.</p>
+<p><a id="Shift.2BD_Developer_Menu" name="Shift.2BD_Developer_Menu"></a></p>
+<h2><span class="mw-headline">Shift+D Developer Menu</span></h2>
+<p>When <a href="../reference/Configuration_Variables#config.developer" title="renpy/doc/reference/Configuration Variables">config.developer</a> is true, hitting shift+D will display a developer menu that provides easy access to some of the features given below.</p>
+<p><a id="Shift.2BR_Reloading" name="Shift.2BR_Reloading"></a></p>
+<h2><span class="mw-headline">Shift+R Reloading</span></h2>
+<p>When <a href="../reference/Configuration_Variables#config.developer" title="renpy/doc/reference/Configuration Variables">config.developer</a> is true, hitting shift+R will save the current game, reload the game script, and reload the game. This will often place you at the last unchanged statement encountered before shift+R was pressed.</p>
+<p>This allows the developer to make script changes with an external editor, and not have to exit and restart Ren'Py to see the effect of the changes.</p>
+<p>Note that game state, which includes variable values and scene lists, is preserved across the reload. This means that if one of those statements is changed, it is necessary to rollback and re-execute the statement to see its new effect.</p>
+<p><a id="Shift.2BI_Style_Inspecting" name="Shift.2BI_Style_Inspecting"></a></p>
+<h2><span class="mw-headline">Shift+I Style Inspecting</span></h2>
+<p>When <a href="../reference/Configuration_Variables#config.developer" title="renpy/doc/reference/Configuration Variables">config.developer</a> is true, pressing shift+I will cause style inspection to occur. This will display a list of displayables underneath the mouse. For each displayable, it will display the type, the style used, and the size it is being rendered at.</p>
+<p><a id="Shift.2BY_Style_Dumping" name="Shift.2BY_Style_Dumping"></a></p>
+<h2><span class="mw-headline">Shift+Y Style Dumping</span></h2>
+<p>When <a href="../reference/Configuration_Variables#config.developer" title="renpy/doc/reference/Configuration Variables">config.developer</a> is True, pressing the dump_styles key (by default, shift-Y), will write a description of every style Ren'Py knows about to the file `styles.txt`. This description includes every property that is part of the style, the value of that property, and the style the property is inherited from.</p>
+<p><a id=".3E_Fast_Skipping" name=".3E_Fast_Skipping"></a></p>
+<h2><span class="mw-headline">&gt; Fast Skipping</span></h2>
+<p>When <a href="../reference/Configuration_Variables#config.developer" title="renpy/doc/reference/Configuration Variables">config.developer</a> is True, pressing the fast_skip key (by default, '&gt;') causes the the game to immediately skip to the next important interaction. For this purpose, an important interaction is one that is not caused by a say statement, transition, or pause command. Usually, this means skipping to the next menu, but it will also stop when user-defined forms of interaction occur.</p>
+<p><a id="Warping_to_a_Line" name="Warping_to_a_Line"></a></p>
+<h2><span class="mw-headline">Warping to a Line</span></h2>
+<p>Ren'Py supports warping to a line in the script, without the developer to play through the entire game to get there. While this warping technique has a number of warnings associated with it, it still may be useful in providing a live preview.</p>
+<p>To invoke warping, run Ren'Py with the `--warp` command-line argument followed by a filename:line combination, to specify where you would like to warp to. For example:</p>
+<pre>
+run_game --warp script.rpy:458
+</pre>
+<p>When warping is invoked, Ren'Py does a number of things. It first finds all of the scene statements in the program. It then tries to find a path from the scene statements to every reachable statement in the game. It then picks the reachable statement closest to, but before or at, the given line. It works backwards from that statement to a scene statement, recording the path it took. Ren'Py then executes the scene statement and any show or hide statements found along that path. Finally, it transfers control to the found statement.</p>
+<p>There are a number of fairly major caveats to the warp feature. The first is that it only examines a single path, which means that while the path may be representative of some route of execution, it's possible that there may be a bug along some other route. In general, the path doesn't consider game logic, so it's also possible to have a path that isn't actually reachable. (This is only really a problem on control-heavy games, espcially those that use a lot of python code.</p>
+<p>The biggest problem, though, is that no python code is executed before the statement that is warped to. This means that all variables will be uninitalized, which can lead to crashes when they are used. To overcome this, one can define a label `after_warp`, which is called after a warp but before the warped-to statement executes. The code reached by this label can set up variables in the program, and then return to the preview.</p>
+<p>The warp feature requires <a href="../reference/Configuration_Variables#config.developer" title="renpy/doc/reference/Configuration Variables">config.developer</a> to be True to operate.</p>
+<p>When using renpy.sh or renpy.py from the SDK to run Ren'Py, you will also need to give the <i>--game</i> option. For example:</p>
+<pre>
+./renpy.sh --game ./the_question/game/ --warp script.rpy:98
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

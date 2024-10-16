@@ -1,0 +1,42 @@
+<html><head><title>ui.imagebutton - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.imagebutton" name="ui.imagebutton"></a></p>
+<h1><span class="mw-headline">ui.imagebutton</span></h1>
+<p><span id="ui.imagebutton" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.imagebutton</strong></b></td>
+<td valign="top">(idle_image, hover_image, clicked=None, image_style='image_button_image', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a button that contains two images. The first is the idle image, which is used when the mouse is not over the image, while the second is the hover image, which is used when the mouse is over the image. If the button is clicked or otherwise selected, then the clicked argument is called. If it returns a value, that value is returned from <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+<p><i>idle_image</i> - The file name of the image used when this button is idle (doesn't have the mouse pointer over it, or focus from keyboard or joystick). Must be specified.</p>
+<p><i>hover_image</i> - The file name of the image used when this button is hovered (the mouse pointer is over it, or the user has focused it with keyboard or joystick). Must be specified.</p>
+<p><i>clicked</i> - The function that is called when this button is clicked.</p>
+<p><i>hovered</i> - A function that is called with no arguments when this button is clicked. If it returns a non-None value, then that value is returned from <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+<p><i>unhovered</i> - A function that is called with no arguments when this button loses focus.</p>
+<p><i>image_style</i> - The style that is applied to the images that are used as part of the imagebutton.</p>
+<p><i>role</i> - The role this button undertakes. This can be the empty string, or "selected_".</p>
+<p><i>insensitive_image</i> - If specified, the file name of the image used when this button is disabled (clicked is None).</p>
+<p><i>activate_image</i> - If specified, the file name of the image used when this button is activated (the mouse button is being held down over it, or equivalents for keyboard and joystick).</p>
+<p><i>selected_idle_image</i>, <i>selected_hover_image</i>, <i>selected_insensitive_image</i> and <i>selected_activate_image</i> also exist. They are the equivalents of <i>idle_image</i>, <i>hover_image</i>, <i>insensitive_image</i> and <i>activate_image</i> which are used when this button is selected (represents the current state, like the "Save Game" button on the save game screen).</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    ui<span class="sym">.</span><span class="kwd">frame</span><span class="sym">(</span>xalign<span class="sym">=</span><span class="num">.5</span><span class="sym">,</span>yalign<span class="sym">=</span><span class="num">.5</span><span class="sym">)</span>
+    ui<span class="sym">.</span><span class="kwd">imagebutton</span><span class="sym">(</span><span class="str">"button.png"</span><span class="sym">,</span> <span class="str">"button_hover.png"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="num">1</span><span class="sym">))</span>
+    ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+    <span class="slc"># Tip : You can use the same image twice if you don't want any hover effect.</span>
+<span class="slc">#</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

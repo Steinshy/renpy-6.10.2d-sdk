@@ -1,0 +1,129 @@
+<html><head><title>Main and Game Menus - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Main_and_Game_Menus"><span class="tocnumber">1</span> <span class="toctext">Main and Game Menus</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Main_Menu"><span class="tocnumber">1.1</span> <span class="toctext">Main Menu</span></a></li>
+<li class="toclevel-2"><a href="#Game_Menu"><span class="tocnumber">1.2</span> <span class="toctext">Game Menu</span></a></li>
+<li class="toclevel-2"><a href="#Entering_the_Game_Menu"><span class="tocnumber">1.3</span> <span class="toctext">Entering the Game Menu</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><a id="Main_and_Game_Menus" name="Main_and_Game_Menus"></a></p>
+<h1><span class="mw-headline">Main and Game Menus</span></h1>
+<p>This section describes how the content of the various menus can be customized. If you just want to change the look of the menus (to the extent made possible by the style system), use <a href="../reference/Themes.html" title="renpy/doc/reference/Themes">themes</a> or <a href="../reference/Properties_and_Styles.html" title="renpy/doc/reference/Properties and Styles">styles</a>. In particular, if you want to change the image background to the main menu and game menu, use the properties <i>mm_root</i> and <i>gm_root</i> in a <a href="../reference/Themes.html" title="renpy/doc/reference/Themes">theme</a>.</p>
+<p>To change just the text of menu items, consider using <a href="../reference/Configuration_Variables#config.translations" title="renpy/doc/reference/Configuration Variables">config.translations</a>. To change the screens on the menus, you'll need to change the contents of the <a href="../reference/Configuration_Variables#config.main_menu" title="renpy/doc/reference/Configuration Variables">config.main_menu</a> and <a href="../reference/Configuration_Variables#config.game_menu" title="renpy/doc/reference/Configuration Variables">config.game_menu</a> variables. Otherwise, you'll want to use a <a href="../reference/Layouts.html" title="renpy/doc/reference/Layouts">layout</a> that changes the look of the menus, or write your own layout.</p>
+<p><a id="Main_Menu" name="Main_Menu"></a></p>
+<h2><span class="mw-headline">Main Menu</span></h2>
+<p>The main menu can be customized by setting the <a href="../reference/Configuration_Variables#config.main_menu" title="renpy/doc/reference/Configuration Variables">config.main_menu</a> variable. This variable should be a list of tuples. The first component of each tuple is the name of the button on the main menu. The second component can be one of three things:</p>
+<ul>
+<li>a string, in which case it is a label at which the game execution starts (after a jump out of the menu context).</li>
+<li>a function, in which case the function is called when the button is clicked.</li>
+<li>Finally, it can be None, which causes the button to be insensitive.</li>
+</ul>
+<p>The third component must be a string containing a python expression, which determines when the button is enabled. The optional fourth component is a string containing a python expression, that determines if the button is shown at all. <i>(changed in 6.6.2)</i></p>
+<p>To jump from the main menu to one of the screens in the game menu, one should use the _intra_jumps function to specify the appropriate transition.</p>
+<p><span id="_intra_jumps" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>_intra_jumps</b></td>
+<td valign="top">(label, transition):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Jumps to <i>label</i> while remaining in the same context.</p>
+<p><i>transition</i> should be a string giving a field on the <tt>config</tt> object. When this function is run, that field is accessed, and is used to specify the transition that is used.</p>
+</div>
+<p>The default value of <a href="../reference/Configuration_Variables#config.main_menu" title="renpy/doc/reference/Configuration Variables">config.main_menu</a> is:</p>
+<pre>
+    config<span class="sym">.</span>main_menu <span class="sym">= [</span>
+        <span class="sym">(</span>u<span class="str">"Start Game"</span><span class="sym">,</span> <span class="str">"start"</span><span class="sym">,</span> <span class="str">"True"</span><span class="sym">),</span>
+        <span class="sym">(</span>u<span class="str">"Continue Game"</span><span class="sym">,</span> <span class="kwd">_intra_jumps</span><span class="sym">(</span><span class="str">"load_screen"</span><span class="sym">,</span> <span class="str">"main_game_transition"</span><span class="sym">),</span> <span class="str">"True"</span><span class="sym">),</span>
+        <span class="sym">(</span>u<span class="str">"Preferences"</span><span class="sym">,</span> <span class="kwd">_intra_jumps</span><span class="sym">(</span><span class="str">"preferences_screen"</span><span class="sym">,</span> <span class="str">"main_game_transition"</span><span class="sym">),</span> <span class="str">"True"</span><span class="sym">),</span>
+        <span class="sym">(</span>u<span class="str">"Quit"</span><span class="sym">,</span> ui<span class="sym">.</span><span class="kwd">jumps</span><span class="sym">(</span><span class="str">"_quit"</span><span class="sym">),</span> <span class="str">"True"</span><span class="sym">)</span>
+        <span class="sym">]</span>
+</pre>
+<p><a id="Game_Menu" name="Game_Menu"></a></p>
+<h2><span class="mw-headline">Game Menu</span></h2>
+<p>The first thing one may wish to do when modifying the game menu is to add a screen to it. This is done in two steps. The first is to create the screen, and the second is to add it to the <a href="../reference/Configuration_Variables#config.game_menu" title="renpy/doc/reference/Configuration Variables">config.game_menu</a> list so that it can be reached from the game menu.</p>
+<p>Each screen is represented in the code as a label that is jumped to to display the screen. There are five steps that this label should do in order to display the screen. First, it should call <a href="../reference/functions/layout.navigation.html" title="renpy/doc/reference/functions/layout.navigation">layout.navigation</a>(screen), where screen is the name of the screen (the first component of the tuples in config.game_menu, described below). Second, it should call the ui functions to add components to the the screen. Third, it should call <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a> to interact with the user. Fourth, it should examine the results of _game_interact, and react appropriately. Finally, it should jump back up to the screen label, showing the screen again after each interaction.</p>
+<p>So that the user can see it, the screen should be added to config.game_menu. This is a list of four- or five-component tuples. The first is the name of the screen. It's used to determine if the button used to reach that screen should be indicated as selected. The second component is the text used for that button. The third component is a function that executes when the button is clicked. Normally, an appropriate function is <tt>_intra_jumps</tt>(<i>label</i>, <i>transition</i>), where label is the name of the label of your screen. The fourth component is a string containing a python expression. If the expression is not true, the button is insensitive. The optional fifth component is also a string containing a python expression. If the expression is not true, the button is not shown. <i>(changed in 6.6.2)</i></p>
+<p>The default value of <a href="../reference/Configuration_Variables#config.game_menu" title="renpy/doc/reference/Configuration Variables">config.game_menu</a> is:</p>
+<pre>
+    config<span class="sym">.</span>game_menu <span class="sym">= [</span>
+        <span class="sym">(</span> <span class="kwa">None</span><span class="sym">,</span> u<span class="str">"Return"</span><span class="sym">,</span> ui<span class="sym">.</span><span class="kwd">jumps</span><span class="sym">(</span><span class="str">"_return"</span><span class="sym">),</span> <span class="str">'True'</span><span class="sym">),</span>
+        <span class="sym">(</span> <span class="str">"preferences"</span><span class="sym">,</span> u<span class="str">"Preferences"</span><span class="sym">,</span> <span class="kwd">_intra_jumps</span><span class="sym">(</span><span class="str">"preferences_screen"</span><span class="sym">,</span> <span class="str">"intra_transition"</span><span class="sym">),</span> <span class="str">'True'</span> <span class="sym">),</span>
+        <span class="sym">(</span> <span class="str">"save"</span><span class="sym">,</span> u<span class="str">"Save Game"</span><span class="sym">,</span> <span class="kwd">_intra_jumps</span><span class="sym">(</span><span class="str">"save_screen"</span><span class="sym">,</span> <span class="str">"intra_transition"</span><span class="sym">),</span> <span class="str">'not main_menu'</span> <span class="sym">),</span>
+        <span class="sym">(</span> <span class="str">"load"</span><span class="sym">,</span> u<span class="str">"Load Game"</span><span class="sym">,</span> <span class="kwd">_intra_jumps</span><span class="sym">(</span><span class="str">"load_screen"</span><span class="sym">,</span> <span class="str">"intra_transition"</span><span class="sym">),</span> <span class="str">'True'</span><span class="sym">),</span>
+        <span class="sym">(</span> <span class="kwa">None</span><span class="sym">,</span> u<span class="str">"Main Menu"</span><span class="sym">,</span> ui<span class="sym">.</span><span class="kwd">callsinnewcontext</span><span class="sym">(</span><span class="str">"_main_menu_prompt"</span><span class="sym">),</span> <span class="str">'not main_menu'</span> <span class="sym">),</span>
+        <span class="sym">(</span> <span class="kwa">None</span><span class="sym">,</span> u<span class="str">"Quit"</span><span class="sym">,</span> ui<span class="sym">.</span><span class="kwd">callsinnewcontext</span><span class="sym">(</span><span class="str">"_quit_prompt"</span><span class="sym">),</span> <span class="str">'True'</span> <span class="sym">),</span>
+        <span class="sym">]</span>
+</pre>
+<p><br />
+<span id="_game_menu_screen" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>_game_menu_screen</b></td>
+<td valign="top">= "_load_screen"</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>One can customize the screen the game menu jumps to by default by changing the value of _game_menu_screen. For example, one could set this to "load_screen" for the first few interactions, and then set it to "save_screen" for the rest of the game. This is especially useful for a game with no main menu.</p>
+<p>If set to None, the user cannot enter the game menu. This is set to None at the start of the splashscreen, and reset to its old value when the splashscreen completes.</p>
+</div>
+<p>Use the <a href="../reference/functions/layout.yesno_prompt.html" title="renpy/doc/reference/functions/layout.yesno prompt">layout.yesno_prompt</a> function to ask yes/no questions of the user.</p>
+<p><span id="layout.yesno_prompt" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>layout.yesno_prompt</b></td>
+<td valign="top">(screen, message):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p><i>screen</i> - The screen button that should be highlighted when this prompt is shown. If None, then no game menu navigation is shown.</p>
+<p><i>message</i> - The message that is shown to the user to prompt them to answer yes or no.</p>
+<p>This function returns True if the user clicks Yes, or False if the user clicks No.</p>
+</div>
+<p><b>Pre-defined Screens.</b> Layouts define the load screen, save screen, and preferences screen are define at the <tt>load_screen</tt>, <tt>save_screen</tt>, and <tt>preferences_screen</tt>, respectively.</p>
+<p>Please see the page on <a href="../reference/Saving,_Loading,_and_Rollback.html" title="renpy/doc/reference/Saving, Loading, and Rollback">Saving, Loading, and Rollback</a> for a list of functions that can be used in the load and save screens, and the page on the <a href="../reference/Preferences.html" title="renpy/doc/reference/Preferences">Preferences</a> for a list of preferences that can be customized.</p>
+<p>Jump to <tt>_return</tt> to return to the game or the main menu, as appropriate. Jump to <tt>_noisy_return</tt> to play <a href="../reference/Configuration_Variables#config.exit_sound" title="renpy/doc/reference/Configuration Variables">config.exit_sound</a> before returning.</p>
+<p><a id="Entering_the_Game_Menu" name="Entering_the_Game_Menu"></a></p>
+<h2><span class="mw-headline">Entering the Game Menu</span></h2>
+<p>The game menu can be activated immediately using <a href="../reference/functions/renpy.game_menu.html" title="renpy/doc/reference/functions/renpy.game menu">renpy.game_menu</a>, or <a href="../reference/functions/ui.gamemenus.html" title="renpy/doc/reference/functions/ui.gamemenus">ui.gamemenus</a> can be used to enter the game menu when a button is clicked. Both functions take an optional argument, the name of the screen to enter, normally one of "load_screen", "save_screen", or "preferences_screen". This can be omitted to use the default screen.</p>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    <span class="kwa">def</span> <span class="kwd">overlay</span><span class="sym">():</span>
+         ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Prefs"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">gamemenus</span><span class="sym">(</span><span class="str">"preferences_screen"</span><span class="sym">),</span> xalign<span class="sym">=</span><span class="num">1.0</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.0</span><span class="sym">)</span>
+
+    config<span class="sym">.</span>overlay_functions<span class="sym">.</span><span class="kwd">append</span><span class="sym">(</span>overlay<span class="sym">)</span>
+
+<span class="kwa">label</span> battle_begin<span class="sym">:</span>
+    <span class="kwa">menu</span><span class="sym">:</span>
+        <span class="str">"A battle is about to begin! Would you like to save your game?"</span>
+        <span class="str">"Yes."</span><span class="sym">:</span>
+              $ renpy<span class="sym">.</span><span class="kwd">game_menu</span><span class="sym">(</span><span class="str">"save_screen"</span><span class="sym">)</span>
+        <span class="str">"No."</span><span class="sym">:</span>
+              <span class="kwa">pass</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

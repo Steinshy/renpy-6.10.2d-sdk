@@ -1,0 +1,30 @@
+<html><head><title>renpy.get roll forward - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.get_roll_forward" name="renpy.get_roll_forward"></a></p>
+<h1><span class="mw-headline">renpy.get_roll_forward</span></h1>
+<p><span id="renpy.get_roll_forward" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.get_roll_forward</strong></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Gets the roll forward info for the current interaction. This function is intended to be used by overlay functions. The overlay function should return the result of this function to cause a roll-forward to happen.</p>
+<p>Note that it only makes sense to use this inside of an interaction. See <a href="../../reference/functions/renpy.roll_forward_info.html" title="renpy/doc/reference/functions/renpy.roll forward info">renpy.roll_forward_info</a> for information on how to get the roll forward info outside of an interaction.</p>
+</div>
+<pre>
+<span class="kwa">init python hide</span><span class="sym">:</span>
+    <span class="kwa">def</span> <span class="kwd">overlay</span><span class="sym">():</span>
+        value <span class="sym">=</span> renpy<span class="sym">.</span><span class="kwd">get_roll_forward</span><span class="sym">()</span>
+        <span class="kwa">if</span> value <span class="kwa">is not None</span><span class="sym">:</span>
+            ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"-&gt;"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span>value<span class="sym">),</span> xalign<span class="sym">=</span><span class="num">1.0</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">1.0</span><span class="sym">)</span>
+
+    config<span class="sym">.</span>overlay_functions<span class="sym">.</span><span class="kwd">append</span><span class="sym">(</span>overlay<span class="sym">)</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,38 @@
+<html><head><title>ui.keymap - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="name" name="name"></a></p>
+<h1><span class="mw-headline">name</span></h1>
+<p><span id="ui.keymap" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.keymap</strong></b></td>
+<td valign="top">(**keymap):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a pseudo-widget that adds a keymap to the screen. This function takes as keyword arguments the names of bindings or keysyms. These keywords should be given as their arguments a function, which is called with zero arguments when an appropriate keysym is pressed.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<p>This example lets the player press the (uppercase) W key at any point to see the easter egg, by assigning a function to the keyword argument <code>W</code>. To bind to a normal lowercase w, the binding <code>w</code> or keysym <code>K_w</code> would be used. A full list of keysyms may be found <a class="external text" href="http://www.pygame.org/docs/ref/key.html" rel="nofollow" title="http://www.pygame.org/docs/ref/key.html">here</a>.</p>
+<p><br /></p>
+<pre>
+<span class="kwa">label</span> easter_egg<span class="sym">:</span>
+    <span class="str">"You win!"</span>
+    <span class="kwa">return</span>
+
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">python hide</span><span class="sym">:</span>
+         <span class="kwa">def</span> <span class="kwd">overlay</span><span class="sym">():</span>
+             ui<span class="sym">.</span><span class="kwd">keymap</span><span class="sym">(</span>W<span class="sym">=</span>renpy<span class="sym">.</span><span class="kwd">curried_call_in_new_context</span><span class="sym">(</span><span class="str">"easter_egg"</span><span class="sym">))</span>
+
+         config<span class="sym">.</span>overlay_functions<span class="sym">.</span><span class="kwd">append</span><span class="sym">(</span>overlay<span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

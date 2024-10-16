@@ -1,0 +1,42 @@
+<html><head><title>renpy.imagemap - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.imagemap" name="renpy.imagemap"></a></p>
+<h1><span class="mw-headline">renpy.imagemap</span></h1>
+<p><span id="renpy.imagemap" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.imagemap</strong></b></td>
+<td valign="top">(ground, selected, hotspots, unselected=None, overlays=False, style='imagemap', with_none=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Displays an imagemap. An image map consists of two images and a list of hotspots that are defined on that image. When the user clicks on a hotspot, the value associated with that hotspot is returned. Despite the name, this takes arbitrary displayables, not just image manipulators.</p>
+<p><i>ground</i> - The name of the file containing the ground image. The ground image is displayed for areas that are not part of any hotspots.</p>
+<p><i>selected</i> - The name of the file containing the selected image. This image is displayed in hotspots when the mouse is over them.</p>
+<p><i>hotspots</i> - A list of tuples defining the hotspots in this image map. Each tuple has the format (x0, y0, x1, y1, result). (x0, y0) gives the coordinates of the upper-left corner of the hotspot, (x1, y1) gives the lower-right corner, and result gives the value returned from this function if the mouse is clicked in the hotspot.</p>
+<p><i>unselected</i> - If provided, then it is the name of a file containing the image that's used to fill in hotspots that are not selected as part of any image. If not provided, the ground image is used instead.</p>
+<p><i>overlays</i> - If True, overlays are displayed when this imagemap is active. If False, the overlays are suppressed.</p>
+<p><i>with_none</i> - If True, causes a "with None" statement to be run after each interaction. If None (the default), checks config.implicit_with_none to determine if a "with None" should be run.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+$ result <span class="sym">=</span> renpy<span class="sym">.</span><span class="kwd">imagemap</span><span class="sym">(</span><span class="str">"ground.png"</span><span class="sym">,</span> <span class="str">"selected.png"</span><span class="sym">, [</span>
+                           <span class="sym">(</span><span class="num">100</span><span class="sym">,</span> <span class="num">100</span><span class="sym">,</span> <span class="num">300</span><span class="sym">,</span> <span class="num">400</span><span class="sym">,</span> <span class="str">"eileen"</span><span class="sym">),</span>
+                           <span class="sym">(</span><span class="num">500</span><span class="sym">,</span> <span class="num">100</span><span class="sym">,</span> <span class="num">700</span><span class="sym">,</span> <span class="num">400</span><span class="sym">,</span> <span class="str">"lucy"</span><span class="sym">)</span>
+                          <span class="sym">])</span>
+
+<span class="kwa">if</span> result <span class="sym">==</span> <span class="str">"eileen"</span><span class="sym">:</span>
+    e <span class="str">"You picked me!"</span>
+
+<span class="kwa">elif</span> result <span class="sym">==</span> <span class="str">"lucy"</span><span class="sym">:</span>
+    e <span class="str">"It looks like you picked Lucy."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

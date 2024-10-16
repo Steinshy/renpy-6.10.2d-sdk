@@ -1,0 +1,25 @@
+<html><head><title>layout.defaults - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="layout.defaults" name="layout.defaults"></a></p>
+<h1><span class="mw-headline">layout.defaults</span></h1>
+<p><span id="layout.defaults" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">layout.defaults</strong></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When called, this checks to see which layouts have not already been provided (using <a href="../../reference/functions/layout.provides.html" title="renpy/doc/reference/functions/layout.provides">layout.provides</a>). For each required kind of layout that hasn't been provided, this calls the corresponding layout.classic_ function. This ensures that all required layouts are provided, even in later versions of Ren'Py.</p>
+<p>It's safe to call this more than once, as the second call will be a no-op, since all layouts will have been provided by the first call.</p>
+</div>
+<pre>
+<span class="kwa">init</span> <span class="sym">-</span><span class="num">1</span> <span class="kwa">python</span><span class="sym">:</span>
+    layout<span class="sym">.</span><span class="kwd">defaults</span><span class="sym">()</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

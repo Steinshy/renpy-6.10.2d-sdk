@@ -1,0 +1,42 @@
+<html><head><title>renpy.last interact type - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.last_interact_type" name="renpy.last_interact_type"></a></p>
+<h1><span class="mw-headline">renpy.last_interact_type</span></h1>
+<p><span id="renpy.last_interact_type" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.last_interact_type</strong></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns the value of the <i>type</i> parameter supplied to ui.interact() during the last interaction. Default types are:</p>
+<ul>
+<li>"say" - Normal say statements.</li>
+<li>"nvl" - NVL-mode say statements.</li>
+<li>"imagemap" - <a href="../../reference/functions/renpy.imagemap.html" title="renpy/doc/reference/functions/renpy.imagemap">renpy.imagemap</a></li>
+<li>"pause" - <a href="../../reference/functions/renpy.pause.html" title="renpy/doc/reference/functions/renpy.pause">renpy.pause</a></li>
+<li>"input" - <a href="../../reference/functions/renpy.input.html" title="renpy/doc/reference/functions/renpy.input">renpy.input</a></li>
+<li>"menu" - Menus.</li>
+<li>"misc" - Other interactions.</li>
+</ul>
+<p>In addition to these, other values can be created by giving the <i>say</i> argument to <a href="../../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> or <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="slc"># Fade out the NVL-window, if it was showing.</span>
+
+<span class="kwa">if</span> renpy<span class="sym">.</span><span class="kwd">last_interact_type</span><span class="sym">() ==</span> <span class="str">"nvl"</span><span class="sym">:</span>
+    $ renpy<span class="sym">.</span><span class="kwd">reshow_say</span><span class="sym">()</span>
+    <span class="kwa">with None</span>
+    <span class="kwa">with</span> dissolve
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

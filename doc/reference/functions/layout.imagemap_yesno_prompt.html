@@ -1,0 +1,78 @@
+<html><head><title>layout.imagemap yesno prompt - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="layout.imagemap_yesno_prompt" name="layout.imagemap_yesno_prompt"></a></p>
+<h1><span class="mw-headline">layout.imagemap_yesno_prompt</span></h1>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:imagemap_yesno_prompt.png.html" title="imagemap yesno prompt.png"><img alt="" border="0" class="thumbimage" height="135" src="../../images/180px-imagemap_yesno_prompt.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.imagemap_yesno_prompt" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">layout.imagemap_yesno_prompt</strong></b></td>
+<td valign="top">(ground, idle, hover, hotspots, prompt_images={}):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This layout uses an imagemap to handle prompting the user with yes/no questions.</p>
+<p><i>ground</i> - The displayable used for disabled buttons, and areas that are not in a hotspot.</p>
+<p><i>idle</i> - The displayable used for unfocused hotspots.</p>
+<p><i>hover</i> - The displayable used for focused hotspots.</p>
+<p><i>hotspots</i> - A list of tuples defining the hotspots. Each tuple consists of</p>
+<ol>
+<li>The x-coordinate of the left side.</li>
+<li>The y-coordinate of the top side.</li>
+<li>The x-coordinate of the right side.</li>
+<li>The y-coordinate of the bottom side.</li>
+<li>The button replaced by this hotspot (one of "Yes" or "No").</li>
+</ol>
+<p><i>prompt_images</i> - A map listing prompt images to be used instead of prompt text.</p>
+<p>When a prompt is to be shown, it is first looked up in prompt_images. If a message image is found, then it is shown to the user. Otherwise, the default prompt (layout.ARE_YOU_SURE) is looked up, and if it is found, that image is shown to the user. Otherwise, the prompt is rendered as text.</p>
+<p>Placement of a prompt image is controlled by style properties associated with the image. Placement of the prompt text can be controlled using style.yesno_prompt, with the style of the text proper being controlled by style.yesno_prompt_text.</p>
+<p>Currently-used prompts are:</p>
+<dl>
+<dt>layout.ARE_YOU_SURE</dt>
+<dd>u"Are you sure?"</dd>
+<dt>layout.DELETE_SAVE</dt>
+<dd>u"Are you sure you want to delete this save?"</dd>
+<dt>layout.OVERWRITE_SAVE</dt>
+<dd>u"Are you sure you want to overwrite your save?"</dd>
+<dt>layout.LOADING</dt>
+<dd>u"Loading will lose unsaved progress.\nAre you sure you want to do this?"</dd>
+<dt>layout.QUIT</dt>
+<dd>u"Are you sure you want to quit?"</dd>
+<dt>layout.MAIN_MENU</dt>
+<dd>u"Are you sure you want to return to the main menu?\nThis will lose unsaved progress."</dd>
+</dl>
+<p>Hotspot functions may also include the untranslated names of game menu buttons. If at least one such button is defined, the navigation is not shown, and the imagemap is expected to define all relevant game menu buttons.</p>
+<p>Despite the name, this function can take arbitrary displayables as well as images. The images or displayables used should be transparent to allow the navigation to show through, unless the game menu buttons are defined here.</p>
+</div>
+<pre>
+<span class="kwa">init</span> <span class="sym">-</span><span class="num">2</span> <span class="kwa">python</span><span class="sym">:</span>
+    layout<span class="sym">.</span><span class="kwd">imagemap_yesno_prompt</span><span class="sym">(</span>
+        <span class="str">"yesno_ground.png"</span><span class="sym">,</span>
+        <span class="str">"yesno_idle.png"</span><span class="sym">,</span>
+        <span class="str">"yesno_hover.png"</span><span class="sym">,</span>
+        <span class="sym">[</span>
+            <span class="sym">(</span><span class="num">211</span><span class="sym">,</span> <span class="num">228</span><span class="sym">,</span> <span class="num">320</span><span class="sym">,</span> <span class="num">280</span><span class="sym">,</span> <span class="str">"Yes"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">490</span><span class="sym">,</span> <span class="num">228</span><span class="sym">,</span> <span class="num">575</span><span class="sym">,</span> <span class="num">280</span><span class="sym">,</span> <span class="str">"No"</span><span class="sym">),</span>
+        <span class="sym">],</span>
+        <span class="sym">{</span>
+            layout<span class="sym">.</span>ARE_YOU_SURE <span class="sym">:</span> <span class="str">"yesno_are_you_sure.png"</span><span class="sym">,</span>
+            layout<span class="sym">.</span>DELETE_SAVE <span class="sym">:</span> <span class="str">"yesno_delete_save.png"</span><span class="sym">,</span>
+            layout<span class="sym">.</span>OVERWRITE_SAVE <span class="sym">:</span> <span class="str">"yesno_overwrite_save.png"</span><span class="sym">,</span>
+            layout<span class="sym">.</span>LOADING <span class="sym">:</span> <span class="str">"yesno_loading.png"</span><span class="sym">,</span>
+            layout<span class="sym">.</span>QUIT <span class="sym">:</span> <span class="str">"yesno_quit.png"</span><span class="sym">,</span>
+            layout<span class="sym">.</span>MAIN_MENU <span class="sym">:</span> <span class="str">"yesno_main_menu.png"</span><span class="sym">,</span>
+        <span class="sym">}</span>
+<span class="sym">)</span>
+
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

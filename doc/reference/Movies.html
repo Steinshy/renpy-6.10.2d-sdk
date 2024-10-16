@@ -1,0 +1,101 @@
+<html><head><title>Movies - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Movies" name="Movies"></a></p>
+<h1><span class="mw-headline">Movies</span></h1>
+<p>Ren'Py is capable of using ffmpeg (included) to play movies using the video codecs:</p>
+<ul>
+<li>Theora</li>
+<li>MPEG 4 part 2 (including Xvid and DivX)</li>
+<li>MPEG 2</li>
+<li>MPEG 1</li>
+</ul>
+<p>and the following audio codecs:</p>
+<ul>
+<li>Vorbis</li>
+<li>MP3</li>
+<li>MP2</li>
+<li>PCM</li>
+</ul>
+<p>inside the following container formats:</p>
+<ul>
+<li>Matroska</li>
+<li>Ogg</li>
+<li>Avi</li>
+<li>Various kinds of MPEG stream.</li>
+</ul>
+<p>(Note that using some of these formats may require patent licenses. When in doubt, and especially for commercial games, we recommend using Theora, Vorbis, and Matroska or Ogg.)</p>
+<p>Ren'Py expects that every movie will have an audio track associated with it, even if that audio track consists of nothing but silence. This is because the audio track is used for synchronization purposes.</p>
+<p>Movies can be displayed fullscreen, or in a displayable. Fullscreen movies are the more efficient.</p>
+<p><a id="Fullscreen_Movies" name="Fullscreen_Movies"></a></p>
+<h2><span class="mw-headline">Fullscreen Movies</span></h2>
+<p>The easiest way to display a movie fullscreen is to display it using the <a href="../reference/functions/renpy.movie_cutscene.html" title="renpy/doc/reference/functions/renpy.movie cutscene">renpy.movie_cutscene</a> function. This function displays a movie for a specified length of time. When that time has elapsed, or when the user clicks to dismiss the movie, the movie ends and the function returns.</p>
+<p><br />
+<span id="renpy.movie_cutscene" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.movie_cutscene.html" title="renpy/doc/reference/functions/renpy.movie cutscene">renpy.movie_cutscene</a></b></td>
+<td valign="top">(filename, delay=None, loops=0, stop_music=True):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This displays a fullscreen movie cutscene.</p>
+<p><i>filename</i> - The name of a file containing a movie.</p>
+<p><i>delay</i> - The number of seconds to wait before ending the cutscene. Normally the length of the movie, in seconds. If None, the length of the movie will be automatically determined. If -1, the cutscene will not automatically terminate, and will continue until the user clicks.</p>
+<p><i>loops</i> - The number of extra loops to show, -1 to loop forever.</p>
+<p><i>stop_music</i> - If True, stops the music channel while the cutscene is playing, and starts it again when the cutscene is over.</p>
+<p>Returns True if the movie was terminated by the user, or False if the given delay elapsed uninterrupted.</p>
+</div>
+<p><br /></p>
+<pre>
+   $ renpy<span class="sym">.</span><span class="kwd">movie_cutscene</span><span class="sym">(</span><span class="str">"On_Your_Mark.mpg"</span><span class="sym">)</span>
+</pre>
+<p><a id="Movies_Inside_Displayables" name="Movies_Inside_Displayables"></a></p>
+<h2><span class="mw-headline">Movies Inside Displayables</span></h2>
+<p>A movie can also be displayed inside a displayable, allowing it to be combined with other things on the screen. To do this, one must first show a Movie displayable, and then play the movie on an audio channel. (We recommend using the movie channel for this purpose.)</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> movie <span class="sym">=</span> <span class="kwd">Movie</span><span class="sym">(</span>size<span class="sym">=(</span><span class="num">400</span><span class="sym">,</span> <span class="num">300</span><span class="sym">),</span> xalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">)</span>
+
+<span class="kwa">label</span> movie_sign<span class="sym">:</span>
+    <span class="kwa">scene</span> black
+    <span class="kwa">show</span> movie
+
+    play movie <span class="str">"incubus.mkv"</span>
+
+    <span class="str">"Wow, this movie is really terrible."</span>
+
+    <span class="str">"I mean, it stars William Shatner..."</span>
+
+    <span class="str">"... speaking Esperanto."</span>
+
+    <span class="str">"MAKE IT STOP!"</span>
+
+    stop movie
+    <span class="kwa">hide</span> movie
+
+    <span class="str">"Thats... better."</span>
+</pre>
+<p><br />
+<span id="Movie" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Movie.html" title="renpy/doc/reference/functions/Movie">Movie</a></b></td>
+<td valign="top">(fps=24, size=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a displayable that displays the current movie.</p>
+<p><i>fps</i> - The framerate that the movie should be shown at. (This is currently ignored, but the parameter is kept for backwards compatibility. The framerate is auto-detected.)</p>
+<p><i>size</i>- This should always be specified. A tuple giving the width and height of the movie.</p>
+<p>The contents of this displayable when a movie is not playing are undefined. (And may change when a rollback occurs.)</p>
+</div>
+<p><br /></p>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

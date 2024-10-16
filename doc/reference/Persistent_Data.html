@@ -1,0 +1,98 @@
+<html><head><title>Persistent Data - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Persistent_Data" name="Persistent_Data"></a></p>
+<h1><span class="mw-headline">Persistent Data</span></h1>
+<p>Ren'Py also supports persistent data, which is saved data that is not associated with a particular point in a game. Persistent data is data that is accessed through the fields of the persistent object, which is bound to the variable persistent.</p>
+<p><span id="persistent" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>persistent</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The persistent variable is bound to the special persistent object. All data reachable through fields on persistent is saved whenver Ren'Py terminates, and loaded when Ren'Py resumes. The persistent object is special in that an access to an undefined field on it will have a None value, rather than causing an exception.</p>
+</div>
+<p>An example use of persistent is the creation of an unlockable image gallery. This is done by storing a flag in persistent that determines if the gallery has been unlocked, as in:</p>
+<pre>
+<span class="kwa">label</span> gallery<span class="sym">:</span>
+
+    <span class="kwa">if not</span> persistent<span class="sym">.</span>gallery_unlocked<span class="sym">:</span>
+        <span class="kwa">show</span> background
+        centered <span class="str">"You haven't unlocked this gallery yet."</span>
+        $ renpy<span class="sym">.</span><span class="kwd">full_restart</span><span class="sym">()</span>
+
+    <span class="slc"># Actually show the gallery here.</span>
+</pre>
+<p>When the user gets an ending that causes the gallery to be unlocked, the flag must be set to True:</p>
+<pre>
+$ persistent<span class="sym">.</span>gallery_unlocked <span class="sym">=</span> <span class="kwa">True</span>
+</pre>
+<p><a id="Multi-Game_Persistence" name="Multi-Game_Persistence"></a></p>
+<h2><span class="mw-headline">Multi-Game Persistence</span></h2>
+<p>Multi-Game persistence is a feature that lets you share information between Ren'Py games. This may be useful if you plan to make a series of games, and want to have them share information.</p>
+<p>To use multipersistent data, a MultiPersistent object must be created inside an init block. The user can then update this object, and save it to disk by calling its save method. Undefined fields default to None. To ensure the object can be loaded again, we suggest not assigning the object instances of user-defined types.</p>
+<p><span id="MultiPersistent" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>MultiPersistent</b></td>
+<td valign="top">(key):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Creates a new MultiPersistent object. This should only be called inside an init block, and it returns a new MultiPersistent object corresponding to key.</p>
+<p><i>key</i> a key that is used to access the multipersistent data. To prevent conflicts, we suggest that the key be suffixed by a domain you own... so if you owned renpy.org, you could use the key "demo.renpy.org".</p>
+</div>
+<p><span id="MultiPersistent.save" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>MultiPersistent.save</b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Saves a MultiPersistent object to disk. Changes are not persisted until this method is called.</p>
+</div>
+<p><b>Example.</b> Part 1 of a multi-part game:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ mp <span class="sym">=</span> <span class="kwd">MultiPersistent</span><span class="sym">(</span><span class="str">"demo.renpy.org"</span><span class="sym">)</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+
+    <span class="slc"># ...</span>
+
+    <span class="slc"># Record the fact that the user beat part 1.</span>
+
+    $ mp<span class="sym">.</span>beat_part_1 <span class="sym">=</span> <span class="kwa">True</span>
+    $ mp<span class="sym">.</span><span class="kwd">save</span><span class="sym">()</span>
+
+    e <span class="str">"You beat part 1. See you in part 2!"</span>
+</pre>
+<p>And the code for part 2:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ mp <span class="sym">=</span> <span class="kwd">MultiPersistent</span><span class="sym">(</span><span class="str">"demo.renpy.org"</span><span class="sym">)</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+
+    <span class="kwa">if</span> mp<span class="sym">.</span>beat_part_1<span class="sym">:</span>
+         e <span class="str">"I see you've beaten part 1, so welcome back!"</span>
+    <span class="kwa">else</span><span class="sym">:</span>
+         e <span class="str">"Hmm, you haven't played part 1, why not try it first?"</span>
+</pre>
+<p><b>Data Location.</b> The place where the data is stored varies based on the operating system being used:</p>
+<ul>
+<li>Windows:&#160;%APPDATA%/RenPy/persistent</li>
+<li>Mac OS X: ~/Library/RenPy/persistent</li>
+<li>Linux/Other: ~/.renpy/persistent</li>
+</ul>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

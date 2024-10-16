@@ -1,0 +1,37 @@
+<html><head><title>renpy.curry - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.curry" name="renpy.curry"></a></p>
+<h1><span class="mw-headline">renpy.curry</span></h1>
+<p><span id="renpy.curry" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.curry</strong></b></td>
+<td valign="top">(func):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Currying is an operation that allows a function to be called using a chain of calls, each providing some of the arguments. In Ren'Py, calling renpy.curry(<b>func</b>) returns a callable object. When this object is called with arguments, a second callable object is returned that stores <b>func</b> and the supplied arguments. When this second callable object is called, the original function is called with the stored arguments and the arguments supplied to the second call.</p>
+<p>Positional arguments from the first call are placed before positional arguments from the second call. If a keyword argument is given in both calls, the value from the second call takes priority.</p>
+<p>Curry objects can be pickled provided the original function remains available at its original name.</p>
+</div>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+     <span class="kwa">def</span> <span class="kwd">real_add</span><span class="sym">(</span>a<span class="sym">,</span> b<span class="sym">):</span>
+           <span class="kwa">return</span> a <span class="sym">+</span> b
+
+     add <span class="sym">=</span> renpy<span class="sym">.</span><span class="kwd">curry</span><span class="sym">(</span>real_add<span class="sym">)</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+     $ v <span class="sym">=</span> <span class="kwd">add</span><span class="sym">(</span><span class="num">1</span><span class="sym">)</span>
+     $ result <span class="sym">=</span> <span class="kwd">v</span><span class="sym">(</span><span class="num">2</span><span class="sym">)</span>
+
+     <span class="slc"># result is now 3.</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

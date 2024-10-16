@@ -1,0 +1,36 @@
+<html><head><title>renpy.music.get playing - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.music.get_playing" name="renpy.music.get_playing"></a></p>
+<h1><span class="mw-headline">renpy.music.get_playing</span></h1>
+<p><span id="renpy.music.get_playing" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.music.get_playing</strong></b></td>
+<td valign="top">(channel="music"):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns the filename of the music playing on the given <i>channel</i>, or None if no music is playing on that channel. Note that None may be returned when the user sets the music volume to zero, even if the game script requested that music be played on that channel.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+$ renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">play</span><span class="sym">([</span><span class="str">'a.ogg'</span><span class="sym">,</span> <span class="str">'a.ogg'</span><span class="sym">,</span> <span class="str">'b.ogg'</span><span class="sym">,</span> <span class="str">'a.ogg'</span><span class="sym">])</span>
+
+<span class="str">"Click to change the music."</span>
+
+<span class="kwa">if</span> renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">get_playing</span><span class="sym">() ==</span> <span class="str">'a.ogg'</span><span class="sym">:</span>
+    $ renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">queue</span><span class="sym">(</span><span class="str">'a_to_c.ogg'</span><span class="sym">)</span>
+<span class="kwa">elif</span> renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">get_playing</span><span class="sym">() ==</span> <span class="str">'b.ogg'</span><span class="sym">:</span>
+    $ renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">queue</span><span class="sym">(</span><span class="str">'b_to_c.ogg'</span><span class="sym">)</span>
+
+$ renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">queue</span><span class="sym">([</span><span class="str">'c.ogg'</span><span class="sym">,</span> <span class="str">'c.ogg'</span><span class="sym">,</span> <span class="str">'d.ogg'</span><span class="sym">,</span> <span class="str">'c.ogg'</span><span class="sym">],</span> clear_queue<span class="sym">=</span><span class="kwa">False</span><span class="sym">)</span>
+
+<span class="str">"Can you hear the music change?"</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

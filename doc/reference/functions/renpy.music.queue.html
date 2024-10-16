@@ -1,0 +1,33 @@
+<html><head><title>renpy.music.queue - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.music.queue" name="renpy.music.queue"></a></p>
+<h1><span class="mw-headline">renpy.music.queue</span></h1>
+<p><span id="renpy.music.queue" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.music.queue</strong></b></td>
+<td valign="top">(filenames, channel="music", loop=None, clear_queue=True, fadein=0, tight=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This queues the given filenames on the named <i>channel</i>.</p>
+<p><i>filenames</i> - May either be a single filename, or a list of filenames.</p>
+<p><i>loop</i> - If True, this music will loop. If False, it will not. If None, takes the channel default.</p>
+<p><i>clear_queue</i> - If True, then the queue is cleared, making these files the files that are played when the currently playing file finishes. If it is False, then these files are placed at the back of the queue. In either case, if no music is playing these files begin playing immediately.</p>
+<p><i>fadein</i> - The number of seconds to fade the music in for, on the first loop only.</p>
+<p><i>tight</i> - If True, then fadeouts will span into the next-queued sound. If False, it will not, and if None, takes the channel default.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+    <span class="slc"># Start some music playing in the background, looping between 2 music files</span>
+    $ renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">queue</span><span class="sym">([</span><span class="str">"mozart.ogg"</span><span class="sym">,</span> <span class="str">"beethoven.ogg"</span><span class="sym">],</span> loop<span class="sym">=</span><span class="kwa">True</span><span class="sym">)</span>
+</pre>
+<p><b>See also</b>: <a href="../../reference/Audio.html" title="renpy/doc/reference/Audio">Audio</a></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

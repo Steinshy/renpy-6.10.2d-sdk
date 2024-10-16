@@ -1,0 +1,82 @@
+<html><head><title>ui.jumpsoutofcontext - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.jumpsoutofcontext" name="ui.jumpsoutofcontext"></a></p>
+<h1><span class="mw-headline">ui.jumpsoutofcontext</span></h1>
+<p><span id="ui.jumpsoutofcontext" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.jumpsoutofcontext</strong></b></td>
+<td valign="top">(label):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function returns a function that, when called, exits the current context, and in the parent context jumps to the named label. It's intended to be used as the clicked argument to a button.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">python</span><span class="sym">:</span>
+        <span class="slc"># The contents of the main menu.</span>
+        config<span class="sym">.</span>main_menu <span class="sym">= [</span>
+            <span class="sym">(</span> u<span class="str">"Start Game"</span><span class="sym">,</span> <span class="str">"start"</span><span class="sym">,</span> <span class="str">'True'</span><span class="sym">),</span>
+            <span class="sym">(</span> u<span class="str">"Continue Game"</span><span class="sym">,</span> ui<span class="sym">.</span><span class="kwd">jumps</span><span class="sym">(</span><span class="str">"_load_screen"</span><span class="sym">),</span> <span class="str">'True'</span> <span class="sym">),</span>
+            <span class="sym">(</span> u<span class="str">"Preferences"</span><span class="sym">,</span> ui<span class="sym">.</span><span class="kwd">jumps</span><span class="sym">(</span><span class="str">"_prefs_screen"</span><span class="sym">),</span> <span class="str">'True'</span> <span class="sym">),</span>
+            <span class="sym">(</span> u<span class="str">"Quit"</span><span class="sym">,</span>  ui<span class="sym">.</span><span class="kwd">jumps</span><span class="sym">(</span><span class="str">"_quit"</span><span class="sym">),</span> <span class="str">'True'</span> <span class="sym">),</span>
+            <span class="sym">]</span>
+
+<span class="slc"># This is the default main menu, which we get if the user hasn't</span>
+<span class="slc"># defined his own, or if that function calls this explicitly.</span>
+<span class="kwa">label</span> _library_main_menu<span class="sym">:</span>
+    <span class="kwa">python hide</span><span class="sym">:</span>
+        ui<span class="sym">.</span><span class="kwd">keymap</span><span class="sym">(</span>toggle_fullscreen <span class="sym">=</span> renpy<span class="sym">.</span>toggle_fullscreen<span class="sym">)</span>
+
+        ui<span class="sym">.</span><span class="kwa">window</span><span class="sym">(</span>style<span class="sym">=</span><span class="str">'mm_root'</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">fixed</span><span class="sym">()</span>
+
+        <span class="kwa">if</span> config<span class="sym">.</span>main_menu_positions<span class="sym">:</span>
+            ui<span class="sym">.</span><span class="kwd">fixed</span><span class="sym">()</span>
+        <span class="kwa">else</span><span class="sym">:</span>
+            ui<span class="sym">.</span><span class="kwa">window</span><span class="sym">(</span>style<span class="sym">=</span><span class="str">'mm_menu_frame'</span><span class="sym">)</span>
+            ui<span class="sym">.</span><span class="kwd">vbox</span><span class="sym">(</span>style<span class="sym">=</span><span class="str">'mm_menu_frame_vbox'</span><span class="sym">)</span>
+
+        <span class="kwa">for</span> text<span class="sym">,</span> clicked<span class="sym">,</span> enabled <span class="kwa">in</span> config<span class="sym">.</span>main_menu<span class="sym">:</span>
+
+            <span class="slc"># if the clicked argument in config.main_menu is just a</span>
+            <span class="slc"># string (for a label), like the start game entry in the</span>
+            <span class="slc"># default config.main_menu, replace it with a</span>
+            <span class="slc"># ui.jumpsoutofcontext call to the label</span>
+            <span class="kwa">if</span> <span class="kwb">isinstance</span><span class="sym">(</span>clicked<span class="sym">,</span> basestring<span class="sym">):</span>
+                clicked <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">jumpsoutofcontext</span><span class="sym">(</span>clicked<span class="sym">)</span>
+
+            <span class="kwa">if</span> config<span class="sym">.</span>main_menu_positions<span class="sym">:</span>
+                kwargs <span class="sym">=</span> config<span class="sym">.</span>main_menu_positions<span class="sym">.</span><span class="kwd">get</span><span class="sym">(</span>text<span class="sym">, { })</span>
+            <span class="kwa">else</span><span class="sym">:</span>
+                kwargs <span class="sym">= { }</span>
+
+            <span class="kwa">if not</span> <span class="kwb">eval</span><span class="sym">(</span>enabled<span class="sym">):</span>
+                clicked <span class="sym">=</span> <span class="kwa">None</span>
+                disabled <span class="sym">=</span> <span class="kwa">True</span>
+            <span class="kwa">else</span><span class="sym">:</span>
+                disabled <span class="sym">=</span> <span class="kwa">False</span>
+
+            <span class="kwd">_button_factory</span><span class="sym">(</span>text<span class="sym">,</span> <span class="str">"mm"</span><span class="sym">,</span> clicked<span class="sym">=</span>clicked<span class="sym">,</span> disabled<span class="sym">=</span>disabled<span class="sym">,</span> properties<span class="sym">=</span>kwargs<span class="sym">)</span>
+
+        ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+        ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+
+        store<span class="sym">.</span>_result <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">(</span>suppress_overlay <span class="sym">=</span> <span class="kwa">True</span><span class="sym">,</span>
+                                    suppress_underlay <span class="sym">=</span> <span class="kwa">True</span><span class="sym">,</span>
+                                    mouse<span class="sym">=</span><span class="str">"mainmenu"</span><span class="sym">)</span>
+
+    <span class="slc"># Computed jump to the appropriate label.</span>
+    <span class="kwa">jump</span> _main_menu
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

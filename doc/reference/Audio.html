@@ -1,0 +1,224 @@
+<html><head><title>Audio - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Audio"><span class="tocnumber">1</span> <span class="toctext">Audio</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Audio_Statements"><span class="tocnumber">1.1</span> <span class="toctext">Audio Statements</span></a></li>
+<li class="toclevel-2"><a href="#Defining_Channels"><span class="tocnumber">1.2</span> <span class="toctext">Defining Channels</span></a></li>
+<li class="toclevel-2"><a href="#Music_Functions"><span class="tocnumber">1.3</span> <span class="toctext">Music Functions</span></a></li>
+<li class="toclevel-2"><a href="#Sound_Functions"><span class="tocnumber">1.4</span> <span class="toctext">Sound Functions</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><a id="Audio" name="Audio"></a></p>
+<h1><span class="mw-headline">Audio</span></h1>
+<p>Ren'Py supports playing music and sound effects in the background, using the following audio file formats:</p>
+<ul>
+<li><a class="external text" href="http://www.vorbis.com/" rel="nofollow" title="http://www.vorbis.com/">OGG Vorbis</a></li>
+<li>MP3</li>
+<li>WAV (uncompressed PCM only)</li>
+</ul>
+<p>Ren'Py supports an arbitrary number of audio channels. Three are defined by default:</p>
+<ul>
+<li>music - A channel for music playback.</li>
+<li>sound - A channel for sound effects.</li>
+<li>voice - A channel for voice.</li>
+</ul>
+<p>The 'Music Volume', 'Sound Volume', and 'Voice Volume' settings of the in-game preferences menu are used to set individual volumes for these channels.</p>
+<p>Sounds can also be set to play when buttons, menu choices, or imagemaps enter their hovered or activated states. See <a href="../reference/List_of_Properties#sound" title="renpy/doc/reference/List of Properties">Sound Properties</a>.</p>
+<p><a id="Audio_Statements" name="Audio_Statements"></a></p>
+<h2><span class="mw-headline">Audio Statements</span></h2>
+<p>The usual way to play music and sound in Ren'Py is using the three music/sound statements:</p>
+<ul>
+<li><a href="../reference/The_Ren%27Py_Language#Play_Statement" title="renpy/doc/reference/The Ren&apos;Py Language">The Play Statement</a>.</li>
+</ul>
+<p><b>play</b> <i>channelname audiofile(s)</i> [<i>fadein</i>] [<i>fadeout</i>]</p>
+<p>is used to play sound and music. If a file is currently playing, it is interrupted and replaced with the new file.</p>
+<p><i>channelname</i> is expected to be the name of a channel. (Usually, this is either "sound", "music", or "voice".)</p>
+<p><i>audiofile(s)</i> can be one file or list of files.</p>
+<p><i>fadein</i> and <i>fadeout</i> clauses are all optional. Fadeout gives the fadeout time for currently playing music, in seconds, while fadein gives the time it takes to fade in the new music.</p>
+<pre>
+play music <span class="str">"mozart.ogg"</span>
+play sound <span class="str">"woof.mp3"</span>
+play myChannel <span class="str">"punch.wav"</span> <span class="slc"># 'myChannel' needs to be defined with renpy.music.register_channel().</span>
+
+<span class="str">"We can also play a list of sounds, or music."</span>
+play music <span class="sym">[</span> <span class="str">"a.ogg"</span><span class="sym">,</span> <span class="str">"b.ogg"</span> <span class="sym">]</span> fadeout <span class="num">1.0</span> fadein <span class="num">1.0</span>
+</pre>
+<ul>
+<li><a href="../reference/The_Ren%27Py_Language#Stop_Statement" title="renpy/doc/reference/The Ren&apos;Py Language">The Stop Statement</a>.</li>
+</ul>
+<pre>
+stop sound
+stop music fadeout <span class="num">1.0</span>
+</pre>
+<ul>
+<li><a href="../reference/The_Ren%27Py_Language#Queue_Statement" title="renpy/doc/reference/The Ren&apos;Py Language">The Queue Statement</a>.</li>
+</ul>
+<pre>
+queue sound <span class="str">"woof.ogg"</span>
+queue music <span class="sym">[</span> <span class="str">"a.ogg"</span><span class="sym">,</span> <span class="str">"b.ogg"</span> <span class="sym">]</span>
+</pre>
+<p>The advantage of using these statements is that your program will be checked for missing sound and music files when lint is run. The functions below exist to allow access to allow music and sound to be controlled from python, and to expose advanced (rarely-used) features.</p>
+<p>Two configuration variables, <a href="../reference/Configuration_Variables#config.main_menu_music" title="renpy/doc/reference/Configuration Variables">config.main_menu_music</a> and <a href="../reference/Configuration_Variables#config.game_menu_music" title="renpy/doc/reference/Configuration Variables">config.game_menu_music</a> allow for the given music files to be played as the main and game menu music, respectively.</p>
+<p><a id="Defining_Channels" name="Defining_Channels"></a></p>
+<h2><span class="mw-headline">Defining Channels</span></h2>
+<p>It's possible to define your own channel by calling renpy.music.register_channel in init code.</p>
+<p><br />
+<span id="renpy.music.register_channel" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.music.register_channel.html" title="renpy/doc/reference/functions/renpy.music.register channel">renpy.music.register_channel</a></b></td>
+<td valign="top">(channel, mixer, loop, tight=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This registers a new audio channel named <i>channel</i>.</p>
+<p><i>mixer</i> - The name of the mixer the channel uses. The three mixers Ren'Py knows about by default are "music", "sfx", and "voice".</p>
+<p><i>loop</i> - Determines if sounds on this channel loop by default.</p>
+<p><i>tight</i> - Determines if sounds loop even during fadeout.</p>
+</div>
+<p><br /></p>
+<p><a id="Music_Functions" name="Music_Functions"></a></p>
+<h2><span class="mw-headline">Music Functions</span></h2>
+<p>The music functions provide a programmatic interface to music playback.</p>
+<p><br />
+<span id="renpy.music.play" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.music.play.html" title="renpy/doc/reference/functions/renpy.music.play">renpy.music.play</a></b></td>
+<td valign="top">(filenames, channel="music", loop=None, fadeout=None, synchro_start=False, fadein=0, tight=False, if_changed=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This stops the music currently playing on the named <i>channel</i>, dequeues any queued music, and begins playing the specified file or files.</p>
+<p><i>filenames</i> may be a single file, or a list of files.</p>
+<p><i>loop</i> - If True, the tracks will loop once they finish playing. If False, they will not. If None, takes the default for the channel.</p>
+<p><i>fadeout</i> - If None, the fadeout time is taken from <a href="../reference/Configuration_Variables#config.fade_music" title="renpy/doc/reference/Configuration Variables">config.fade_music</a>, otherwise it is a time in seconds to fade out for.</p>
+<p><i>synchro_start</i> - If True, all the channels that have had play called on them with synchro_start set to True will be started at the same time, in a sample accurate manner. This can be used to, for instance, have a piece of music separated into separate percussion, melody, and background chord audio files, and play them simultaneously.</p>
+<p><i>fadein</i> - The number of seconds to fade the music in for, on the first loop only.</p>
+<p><i>tight</i> - If True, then fadeouts will span into the next-queued sound. If False, it will not, and if None, takes the channel default.</p>
+<p><i>if_changed</i> - If True, and the music file is currently playing, then it will not be stopped/faded out and faded back in again, but instead will be kept playing. (This will always queue up an additional loop of the music.)</p>
+</div>
+<p><br />
+<span id="renpy.music.queue" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.music.queue.html" title="renpy/doc/reference/functions/renpy.music.queue">renpy.music.queue</a></b></td>
+<td valign="top">(filenames, channel="music", loop=None, clear_queue=True, fadein=0, tight=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This queues the given filenames on the named <i>channel</i>.</p>
+<p><i>filenames</i> - May either be a single filename, or a list of filenames.</p>
+<p><i>loop</i> - If True, this music will loop. If False, it will not. If None, takes the channel default.</p>
+<p><i>clear_queue</i> - If True, then the queue is cleared, making these files the files that are played when the currently playing file finishes. If it is False, then these files are placed at the back of the queue. In either case, if no music is playing these files begin playing immediately.</p>
+<p><i>fadein</i> - The number of seconds to fade the music in for, on the first loop only.</p>
+<p><i>tight</i> - If True, then fadeouts will span into the next-queued sound. If False, it will not, and if None, takes the channel default.</p>
+</div>
+<p><br />
+<span id="renpy.music.stop" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.music.stop.html" title="renpy/doc/reference/functions/renpy.music.stop">renpy.music.stop</a></b></td>
+<td valign="top">(channel="music", fadeout=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This stops the music that is currently playing on the named <i>channel</i>, dequeues all queued music, and sets the last queued file to None.</p>
+<p><i>fadeout</i> - If None, the music is faded out for the time given in <a href="../reference/Configuration_Variables#config.fade_music" title="renpy/doc/reference/Configuration Variables">config.fade_music</a>, otherwise it is faded for the given number of seconds.</p>
+</div>
+<p><br />
+<span id="renpy.music.set_volume" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.music.set_volume.html" title="renpy/doc/reference/functions/renpy.music.set volume">renpy.music.set_volume</a></b></td>
+<td valign="top">(volume, delay=0, channel="music"):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This sets the volume of the named <i>channel</i>. The <i>volume</i> is a number between 0.0 and 1.0, and is interpreted as a fraction of the mixer volume for the channel.</p>
+<p>It takes <i>delay</i> seconds to change the volume. This value is persisted into saves, and participates in rollback.</p>
+</div>
+<p><br />
+<span id="renpy.music.set_pan" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.music.set_pan.html" title="renpy/doc/reference/functions/renpy.music.set pan">renpy.music.set_pan</a></b></td>
+<td valign="top">(pan, delay, channel="music"):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function allows sound and music to be panned between the two stereo channels.</p>
+<p><i>pan</i> - A number between -1 and 1 that control the placement of the audio. If this is -1, then all audio is sent to the left channel. If it's 0, then the two channels are equally balanced. If it's 1, then all audio is sent to the right ear.</p>
+<p><i>delay</i> - The amount of time it takes for the panning to occur.</p>
+<p><i>channel</i> - The channel the panning takes place on. This can be a sound or a music channel. Often, this is channel 7, the default music channel.</p>
+</div>
+<p><br />
+<span id="renpy.music.get_playing" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.music.get_playing.html" title="renpy/doc/reference/functions/renpy.music.get playing">renpy.music.get_playing</a></b></td>
+<td valign="top">(channel="music"):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns the filename of the music playing on the given <i>channel</i>, or None if no music is playing on that channel. Note that None may be returned when the user sets the music volume to zero, even if the game script requested that music be played on that channel.</p>
+</div>
+<p><br />
+<span id="renpy.music.set_volume" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.music.set_volume.html" title="renpy/doc/reference/functions/renpy.music.set volume">renpy.music.set_volume</a></b></td>
+<td valign="top">(volume, delay=0, channel="music"):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This sets the volume of the named <i>channel</i>. The <i>volume</i> is a number between 0.0 and 1.0, and is interpreted as a fraction of the mixer volume for the channel.</p>
+<p>It takes <i>delay</i> seconds to change the volume. This value is persisted into saves, and participates in rollback.</p>
+</div>
+<p><br />
+<span id="renpy.music.set_queue_empty_callback" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.music.set_queue_empty_callback.html" title="renpy/doc/reference/functions/renpy.music.set queue empty callback">renpy.music.set_queue_empty_callback</a></b></td>
+<td valign="top">(callback, channel="music"):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This sets a callback function that is called when the queue is empty. This callback is called when the queue first becomes empty, and at least once per interaction while the queue is empty.</p>
+<p>The callback is called with no parameters. It can queue sounds by calling <a href="../reference/functions/renpy.music.queue.html" title="renpy/doc/reference/functions/renpy.music.queue">renpy.music.queue</a> with the appropriate arguments. Please note that the callback may be called while a sound is playing, as long as a queue slot is empty.</p>
+</div>
+<p><br /></p>
+<p><a id="Sound_Functions" name="Sound_Functions"></a></p>
+<h2><span class="mw-headline">Sound Functions</span></h2>
+<p>Most renpy.music functions have aliases in renpy.sound. These functions are similar, except they default to the sound channel rather than the music channel, and default to not looping.</p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

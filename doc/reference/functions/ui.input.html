@@ -1,0 +1,39 @@
+<html><head><title>ui.input - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.input" name="ui.input"></a></p>
+<h1><span class="mw-headline">ui.input</span></h1>
+<p><span id="ui.input" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.input</strong></b></td>
+<td valign="top">(default, length=None, allow=None, exclude='{}', button=None, changed=None, prefix="", suffix="", **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This displays a text area that accepts input from the user. Only ASCII is input reliably, although some non-ASCII languages may also work on some platforms.</p>
+<p><i>default</i> - The default value for the text area.</p>
+<p><i>length</i> - If not None, a limit on the number of characters that can be input.</p>
+<p><i>allow</i> - If not None, a string containing the characters that are allowed.</p>
+<p><i>exclude</i> - A string containing characters that are no allowed. The brace characters should always be disallowed, since they may accidentally cause a text tag to be shown.</p>
+<p><i>button</i> - If not None, then this should be a button. The input is only active when this button is focused.</p>
+<p><i>changed</i> - If not None, then this function is called when the text is changed.</p>
+<p><i>prefix</i> - A prefix included before the text to be edited.</p>
+<p><i>suffix</i> - A suffix included after the text to be edited.</p>
+<p>If changed is None, then the text is returned as the result of ui.interact() when enter is pressed. Otherwise, this cannot cause ui.interact() to terminate.</p>
+</div>
+<pre>
+<span class="kwa">label</span> prompt_for_name<span class="sym">:</span>
+    $ ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span><span class="str">"Please enter your name:"</span><span class="sym">,</span> xalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.4</span><span class="sym">)</span>
+    $ ui<span class="sym">.</span><span class="kwb">input</span><span class="sym">(</span><span class="str">''</span><span class="sym">,</span> xalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">)</span>
+    $ name <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+    <span class="kwa">if</span> name <span class="sym">==</span> <span class="str">''</span><span class="sym">:</span>
+        $ name <span class="sym">=</span> <span class="str">'Guy Shy'</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

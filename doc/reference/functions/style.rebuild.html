@@ -1,0 +1,41 @@
+<html><head><title>style.rebuild - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="style.rebuild" name="style.rebuild"></a></p>
+<h1><span class="mw-headline">style.rebuild</span></h1>
+<p><span id="style.rebuild" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">style.rebuild</strong></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This causes all styles to be rebuilt, making it possible to change styles outside of init code. There are several caveats:</p>
+<ul>
+<li>Changes to styles are not saved.</li>
+<li>Changes to styles persist through a game restart.</li>
+<li>Changes to indexed styles will be ignored unless the indexed style was first defined in an init block.</li>
+</ul>
+</div>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    font <span class="sym">=</span> <span class="str">"DejaVuSans.ttf"</span>
+    style<span class="sym">.</span>default<span class="sym">.</span>font <span class="sym">=</span> font
+
+    <span class="kwa">def</span> <span class="kwd">change_font</span><span class="sym">(</span>newfont<span class="sym">):</span>
+         <span class="kwa">global</span> font
+         font <span class="sym">=</span> newfont
+         style<span class="sym">.</span>default<span class="sym">.</span>font <span class="sym">=</span> newfont
+         style<span class="sym">.</span><span class="kwd">rebuild</span><span class="sym">()</span>
+
+<span class="kwa">label</span> after_load<span class="sym">:</span>
+    <span class="kwa">python</span><span class="sym">:</span>
+        style<span class="sym">.</span>default<span class="sym">.</span>font <span class="sym">=</span> font
+        style<span class="sym">.</span><span class="kwd">rebuild</span><span class="sym">()</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

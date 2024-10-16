@@ -1,0 +1,53 @@
+<html><head><title>anim.Edge - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="anim.Edge" name="anim.Edge"></a></p>
+<h1><span class="mw-headline">anim.Edge</span></h1>
+<p><span id="anim.Edge" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">anim.Edge</strong></b></td>
+<td valign="top">(old, delay, new, trans=None, prob=1):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates an edge that can be used with a <a href="../../reference/functions/anim.SMAnimation.html" title="renpy/doc/reference/functions/anim.SMAnimation">anim.SMAnimation</a>.</p>
+<p><i>old</i> - The name (a string) of the state that this transition is from.</p>
+<p><i>delay</i> - The number of seconds that this transition takes.</p>
+<p><i>new</i> - The name (a string) of the state that this transition is to.</p>
+<p><i>trans</i> - The transition that will be used to show the image found in the new state. If None, the image is show immediately.</p>
+<p><i>prob</i> - The number of times this edge is added. This can be used to make a transition more probable then others. For example, if one transition out of a state has prob=5, and the other has prob=1, then the one with prob=5 will execute 5/6 of the time, while the one with prob=1 will only occur 1/6 of the time. (Don't make this too large, as memory use is proportional to this value.)</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> blinking <span class="sym">=</span> anim<span class="sym">.</span><span class="kwd">SMAnimation</span><span class="sym">(</span><span class="str">"a"</span><span class="sym">,</span>
+        anim<span class="sym">.</span><span class="kwd">State</span><span class="sym">(</span><span class="str">"a"</span><span class="sym">,</span> <span class="str">"eyes_open.png"</span><span class="sym">),</span>
+
+        <span class="slc"># This edge keeps us showing the eyes open for a second.</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"a"</span><span class="sym">,</span> <span class="num">1.0</span><span class="sym">,</span> <span class="str">"a"</span><span class="sym">,</span> prob<span class="sym">=</span><span class="num">60</span><span class="sym">),</span>
+
+        <span class="slc"># This edge causes the eyes to start closing...</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"a"</span><span class="sym">,</span> <span class="num">0.25</span><span class="sym">,</span> <span class="str">"b"</span><span class="sym">),</span>
+
+        <span class="slc"># ..because it brings us here.</span>
+        anim<span class="sym">.</span><span class="kwd">State</span><span class="sym">(</span><span class="str">"b"</span><span class="sym">,</span> <span class="str">"eyes_half.png"</span><span class="sym">),</span>
+
+        <span class="slc"># And so on...</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"b"</span><span class="sym">,</span> <span class="num">0.25</span><span class="sym">,</span> <span class="str">"c"</span><span class="sym">),</span>
+        anim<span class="sym">.</span><span class="kwd">State</span><span class="sym">(</span><span class="str">"c"</span><span class="sym">,</span> <span class="str">"eyes_closed.png"</span><span class="sym">),</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"c"</span><span class="sym">,</span> <span class="num">0.25</span><span class="sym">,</span> <span class="str">"d"</span><span class="sym">),</span>
+        anim<span class="sym">.</span><span class="kwd">State</span><span class="sym">(</span><span class="str">"d"</span><span class="sym">,</span> <span class="str">"eyes_half.png"</span><span class="sym">),</span>
+
+        <span class="slc"># And back to a.</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"d"</span><span class="sym">,</span> <span class="num">0.5</span><span class="sym">,</span> <span class="str">"a"</span><span class="sym">)</span>
+        <span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

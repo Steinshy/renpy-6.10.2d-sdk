@@ -1,0 +1,57 @@
+<html><head><title>layout.imagemap navigation - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="layout.imagemap_navigation" name="layout.imagemap_navigation"></a></p>
+<h1><span class="mw-headline">layout.imagemap_navigation</span></h1>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:imagemap_navigation.png.html" title="imagemap navigation.png"><img alt="" border="0" class="thumbimage" height="135" src="../../images/180px-imagemap_navigation.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.imagemap_navigation" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">layout.imagemap_navigation</strong></b></td>
+<td valign="top">(ground, idle, hover, selected_idle, selected_hover, hotspots):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This layout uses an imagemap to handle game menu navigation.</p>
+<p><i>ground</i> - The displayable used for disabled buttons, and areas that are not in a hotspot.</p>
+<p><i>idle</i> - The displayable used for unfocused unselected hotspots.</p>
+<p><i>hover</i> - The displayable used for focused unselected hotspots.</p>
+<p><i>selected_idle</i> - The displayable used for unfocused selected hotspots.</p>
+<p><i>selected_hover</i> - The displayable used for focused selected hotspots.</p>
+<p><i>hotspots</i> - A list of tuples defining the hotspots. Each tuple consists of</p>
+<ol>
+<li>The x-coordinate of the left side.</li>
+<li>The y-coordinate of the top side.</li>
+<li>The x-coordinate of the right side.</li>
+<li>The y-coordinate of the bottom side.</li>
+<li>The (untranslated) name of the game menu button this hotspot is equivalent to.</li>
+</ol>
+<p>Despite the name, this function can take arbitrary displayables as well as images.</p>
+</div>
+<pre>
+<span class="kwa">init</span> <span class="sym">-</span><span class="num">2</span> <span class="kwa">python</span><span class="sym">:</span>
+    layout<span class="sym">.</span><span class="kwd">imagemap_navigation</span><span class="sym">(</span>
+        <span class="str">"gm_ground.jpg"</span><span class="sym">,</span>
+        <span class="str">"gm_idle.jpg"</span><span class="sym">,</span>
+        <span class="str">"gm_hover.jpg"</span><span class="sym">,</span>
+        <span class="str">"gm_selected_idle.jpg"</span><span class="sym">,</span>
+        <span class="str">"gm_selected_hover.jpg"</span><span class="sym">,</span>
+        <span class="sym">[</span>
+            <span class="sym">(</span><span class="num">26</span><span class="sym">,</span> <span class="num">485</span><span class="sym">,</span> <span class="num">168</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="str">"Return"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">245</span><span class="sym">,</span> <span class="num">485</span><span class="sym">,</span> <span class="num">410</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="str">"Save Game"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">522</span><span class="sym">,</span> <span class="num">485</span><span class="sym">,</span> <span class="num">688</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="str">"Load Game"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">104</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="num">286</span><span class="sym">,</span> <span class="num">589</span><span class="sym">,</span> <span class="str">"Preferences"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">374</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="num">550</span><span class="sym">,</span> <span class="num">589</span><span class="sym">,</span> <span class="str">"Main Menu"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">675</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="num">790</span><span class="sym">,</span> <span class="num">589</span><span class="sym">,</span> <span class="str">"Quit"</span><span class="sym">),</span>
+            <span class="sym">])</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

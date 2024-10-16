@@ -1,0 +1,55 @@
+<html><head><title>RotoZoom - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="RotoZoom" name="RotoZoom"></a></p>
+<h1><span class="mw-headline">RotoZoom</span></h1>
+<p><span id="RotoZoom" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">RotoZoom</strong></b></td>
+<td valign="top">(rot_start, rot_end, rot_delay, zoom_start, zoom_end, zoom_delay, rot_repeat=False, zoom_repeat=False, rot_bounce=False, zoom_bounce=False, rot_anim_timebase=False, zoom_anim_timebase=False, rot_time_warp=None, zoom_time_warp=None, opaque=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function returns an object, suitable for use in an at cause, that rotates and/or zooms its child.</p>
+<p><i>rot_start</i> - The number of degrees of clockwise rotation at the start time.</p>
+<p><i>rot_end</i> - The number of degrees of clockwise rotation at the end time.</p>
+<p><i>rot_delay</i> - The time it takes to complete rotation.</p>
+<p><i>zoom_start</i> - The zoom factor at the start time.</p>
+<p><i>zoom_end</i> - The zoom factor at the end time.</p>
+<p><i>zoom_delay</i> - The time it takes to complete a zoom.</p>
+<p><i>rot_repeat</i> - If true, the rotation cycle repeats once it is finished.</p>
+<p><i>zoom_repeat</i> - If true, the zoom cycle repeats once it is finished.</p>
+<p><i>rot_bounce</i> - If true, rotate from start to end to start each cycle. If False, rotate from start to end once.</p>
+<p><i>zoom_bounce</i> - If true, zoom from start to end to start each cycle. If False, zoom from start to end once.</p>
+<p><i>rot_anim_timebase</i> - If true, rotation times are judged from when a displayable with the same tag was first shown. If false, times are judged from when this displayable was first shown.</p>
+<p><i>zoom_anim_timebase</i> - If true, zoom times are judged from when a displayable with the same tag was first shown. If false, times are judged from when this displayable was first shown.</p>
+<p><i>opaque</i> - This should be True if the child is fully opaque, and False otherwise.</p>
+<p>RotoZoom uses a bilinear interpolation method that is accurate when the zoom factor is &gt;= 0.5.</p>
+<p>Rotation is around the center of the child displayable.</p>
+<p>Note that this shrinks what it is rotozooming by 1 pixel horizontally and vertically. Images should be 1 pixel larger then they would otherwise be.</p>
+<p>The produced displayable has height and with equal to the hypotenuse of the sides of the child. This may disturb the layout somewhat. To minimize this, position the center of the RotoZoom.</p>
+<p>The time taken to RotoZoom is proportional to the area of the rotozoomed image that is shown on screen.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">show</span> magic circle <span class="kwa">at</span> <span class="kwd">RotoZoom</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">360</span><span class="sym">,</span> <span class="num">10</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">1</span><span class="sym">,</span> <span class="num">1</span><span class="sym">,</span> rot_anim_timebase<span class="sym">=</span><span class="kwa">True</span><span class="sym">,</span> opaque<span class="sym">=</span><span class="kwa">False</span><span class="sym">,</span> xalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">)</span>
+$ renpy<span class="sym">.</span><span class="kwa">pause</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">)</span>
+
+e <span class="str">"See my magic circle?"</span>
+
+<span class="kwa">show</span> magic circle <span class="kwa">at</span> <span class="kwd">RotoZoom</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">360</span><span class="sym">,</span> <span class="num">10</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">1</span><span class="sym">,</span> <span class="num">1</span><span class="sym">,</span> rot_anim_timebase<span class="sym">=</span><span class="kwa">True</span><span class="sym">,</span> opaque<span class="sym">=</span><span class="kwa">False</span><span class="sym">,</span> xalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">)</span>
+$ renpy<span class="sym">.</span><span class="kwa">pause</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">)</span>
+
+<span class="kwa">hide</span> magic circle
+
+e <span class="str">"Now you see it, now you don't!"</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

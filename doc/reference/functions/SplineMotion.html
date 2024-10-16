@@ -1,0 +1,38 @@
+<html><head><title>SplineMotion - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="SplineMotion" name="SplineMotion"></a></p>
+<h1><span class="mw-headline">SplineMotion</span></h1>
+<p><span id="SplineMotion" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">SplineMotion</strong></b></td>
+<td valign="top">(points, time, anchors=(0.5, 0.5), repeat=False, bounce=False, anim_timebase=False, time_warp=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a spline-based motion, where a spline may consist of linear segments, quadratic beziers, and cubic beziers.</p>
+<p>The path is a list of segments, where each segment is a tuple containing between 1 to 3 points, and an optional time. A point is represented by either an (x, y) pair or an (x, y, xanchor, yanchor) tuple. When not specified in a point, the anchors are taken from the <i>anchors</i> parameter. The time is represented as a floating point number between 0.0 and 1.0, and gives the time when motion along the segment should be complete.</p>
+<p>A linear segment consists of a single point, the point to move to.</p>
+<p>A quadratic curve contains two points, the point to move to and the single control point.</p>
+<p>A cubic curve contains three points, the point to move to and the two control points.</p>
+<p>Any time you don't manually specify is linearly interpolated between the previous and following times that are specified. This allows you to specify that at a specific time, the motion will be at a specific point. By default, the start time is 0.0 and the end time is 1.0, unless you specify something different.</p>
+<p>There is a <a class="external text" href="http://www.renpy.org/wiki/renpy/Spline_Editor" rel="nofollow" title="http://www.renpy.org/wiki/renpy/Spline_Editor">spline editor</a> that helps with editing splines.</p>
+<p><i>Repeat</i>, <i>bounce</i>, <i>anim_timebase</i>, and <i>time_warp</i> are as for <a href="../../reference/functions/Motion.html" title="renpy/doc/reference/functions/Motion">Motion</a>.</p>
+</div>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    spline <span class="sym">=</span> <span class="kwd">SplineMotion</span><span class="sym">([</span>
+        <span class="sym">((-</span><span class="num">0.042</span><span class="sym">,</span> <span class="num">0.523</span><span class="sym">,),),</span>
+        <span class="sym">((</span><span class="num">0.768</span><span class="sym">,</span> <span class="num">0.296</span><span class="sym">,), (</span><span class="num">0.082</span><span class="sym">,</span> <span class="num">0.507</span><span class="sym">,), (</span><span class="num">0.772</span><span class="sym">,</span> <span class="num">0.573</span><span class="sym">,),),</span>
+        <span class="sym">((</span><span class="num">0.292</span><span class="sym">,</span> <span class="num">0.304</span><span class="sym">,), (</span><span class="num">0.766</span><span class="sym">,</span> <span class="num">0.112</span><span class="sym">,), (</span><span class="num">0.296</span><span class="sym">,</span> <span class="num">0.123</span><span class="sym">,),),</span>
+        <span class="sym">((</span><span class="num">1.152</span><span class="sym">,</span> <span class="num">0.509</span><span class="sym">,), (</span><span class="num">0.288</span><span class="sym">,</span> <span class="num">0.555</span><span class="sym">,), (</span><span class="num">1.076</span><span class="sym">,</span> <span class="num">0.499</span><span class="sym">,),),</span>
+        <span class="sym">],</span> <span class="num">3.0</span><span class="sym">,</span> anchors<span class="sym">=(</span><span class="num">0.5</span><span class="sym">,</span> <span class="num">0.5</span><span class="sym">))</span>
+
+<span class="kwa">show</span> logo <span class="kwa">at</span> spline
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

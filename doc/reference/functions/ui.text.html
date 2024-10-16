@@ -1,0 +1,40 @@
+<html><head><title>ui.text - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.text" name="ui.text"></a></p>
+<h1><span class="mw-headline">ui.text</span></h1>
+<p><span id="ui.text" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.text</strong></b></td>
+<td valign="top">(label, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a widget displaying a text label.</p>
+<p><i>label</i> - The text that will be displayed on the screen. It uses font properties. The label can also be a list containing both text strings in widgets, in the case of a widget, the widget is displayed as if it was text of the enclosing font. The height of the area allocated is that of the font, with the width being taked from a render of the widget.</p>
+<p><i>slow</i> - If True, the text will be typed at the screen at a rate determined by the slow_cps property, if set, or the "Text Speed" preference. If None (the default), then it will be typed at a speed determined by the slow_cps property. If False, then it will appear instantly.</p>
+<p><br />
+<i>slow_speed</i> - If slow is True, then this is the number of cps the text is displayed at, overriding the preference.</p>
+<p><i>slow_done</i> - If not None and slow is True, this is a callback that is called when we're done displaying text on the screen.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    <span class="slc"># Single-child widget, contains the following ui.vbox</span>
+    ui<span class="sym">.</span><span class="kwa">window</span><span class="sym">()</span>
+
+    <span class="slc"># Multiple-child widget - all new widgets following this will be</span>
+    <span class="slc"># added as children to it, until the next ui.close</span>
+    ui<span class="sym">.</span><span class="kwd">vbox</span><span class="sym">()</span>
+    ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span><span class="str">"To get to the next screen, click the 'Continue' button."</span><span class="sym">)</span>
+    ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

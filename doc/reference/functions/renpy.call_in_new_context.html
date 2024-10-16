@@ -1,0 +1,31 @@
+<html><head><title>renpy.call in new context - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.call_in_new_context" name="renpy.call_in_new_context"></a></p>
+<h1><span class="mw-headline">renpy.call_in_new_context</span></h1>
+<p><span id="renpy.call_in_new_context" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.call_in_new_context</strong></b></td>
+<td valign="top">(label):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This code creates a new context, and starts executing code from that label in the new context. Rollback is disabled in the new context. (Actually, it will just bring you back to the real context.)</p>
+<p>Use this to begin a second interaction with the user while inside an interaction.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">def</span> <span class="kwd">invoke_game_menu</span><span class="sym">():</span>
+        renpy<span class="sym">.</span><span class="kwd">play</span><span class="sym">(</span>config<span class="sym">.</span>enter_sound<span class="sym">)</span>
+        renpy<span class="sym">.</span><span class="kwd">call_in_new_context</span><span class="sym">(</span><span class="str">'_game_menu'</span><span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

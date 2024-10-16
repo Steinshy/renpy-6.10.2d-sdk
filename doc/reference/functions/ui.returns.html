@@ -1,0 +1,86 @@
+<html><head><title>ui.returns - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.returns" name="ui.returns"></a></p>
+<h1><span class="mw-headline">ui.returns</span></h1>
+<p><span id="ui.returns" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.returns</strong></b></td>
+<td valign="top">(value):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function returns a function that, when called, returns the supplied value. It's best used to supply the clicked argument to the various button widgets.</p>
+</div>
+<p><a id="Examples" name="Examples"></a></p>
+<h2><span class="mw-headline">Examples</span></h2>
+<p>This example uses ui.returns to return a simple number from <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+<pre>
+$ ui<span class="sym">.</span><span class="kwd">vbox</span><span class="sym">(</span>xalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">)</span>
+$ ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Choice 1"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="num">1</span><span class="sym">))</span>
+$ ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Choice 2"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="num">2</span><span class="sym">))</span>
+$ ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+
+$ result <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+<span class="kwa">if</span> result <span class="sym">==</span> <span class="num">1</span><span class="sym">:</span>
+    <span class="str">"You picked choice 1!"</span>
+<span class="kwa">else</span><span class="sym">:</span>
+    <span class="str">"Choice 2 was for you!"</span>
+</pre>
+<p>This example uses ui.returns to return a function <code>func</code> from <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>, and then call the function <code>func</code>. This is the recommended way to have selecting a ui widget call a user function.</p>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+  <span class="kwa">def</span> <span class="kwd">SpecialFunctionA</span><span class="sym">():</span>
+    <span class="slc"># ...</span>
+  <span class="kwa">def</span> <span class="kwd">JumpToPart2</span><span class="sym">():</span>
+    renpy<span class="sym">.</span><span class="kwa">jump</span><span class="sym">(</span><span class="str">'part2'</span><span class="sym">)</span>
+
+<span class="kwa">label</span> maybe_function_time<span class="sym">:</span>
+$ ui<span class="sym">.</span><span class="kwd">vbox</span><span class="sym">(</span>xalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">)</span>
+$ ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Call Special Function A"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span>SpecialFunctionA<span class="sym">))</span>
+$ ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Move on"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span>JumpToPart2<span class="sym">))</span>
+$ ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+
+$ func <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+$ <span class="kwd">func</span><span class="sym">()</span>
+</pre>
+<p>This example shows how to have a button conditionally return a value when clicked.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">python</span><span class="sym">:</span>
+        <span class="slc"># This renders an empty slot in the file picker.</span>
+        <span class="kwa">def</span> <span class="kwd">_render_new_slot</span><span class="sym">(</span>name<span class="sym">,</span> save<span class="sym">):</span>
+
+            <span class="kwa">if</span> save<span class="sym">:</span>
+                clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">((</span><span class="str">"return"</span><span class="sym">, (</span>name<span class="sym">,</span> <span class="kwa">False</span><span class="sym">)))</span>
+                enable_hover <span class="sym">=</span> <span class="kwa">True</span>
+            <span class="kwa">else</span><span class="sym">:</span>
+                clicked <span class="sym">=</span> <span class="kwa">None</span>
+                enable_hover <span class="sym">=</span> <span class="kwa">True</span>
+
+            ui<span class="sym">.</span><span class="kwd">button</span><span class="sym">(</span>style<span class="sym">=</span><span class="str">'file_picker_entry'</span><span class="sym">,</span>
+                      clicked<span class="sym">=</span>clicked<span class="sym">,</span>
+                      enable_hover<span class="sym">=</span>enable_hover<span class="sym">)</span>
+
+            ui<span class="sym">.</span><span class="kwd">hbox</span><span class="sym">(</span>style<span class="sym">=</span><span class="str">'file_picker_entry_box'</span><span class="sym">)</span>
+
+            <span class="kwa">if not</span> config<span class="sym">.</span>disable_thumbnails<span class="sym">:</span>
+                ui<span class="sym">.</span><span class="kwd">null</span><span class="sym">(</span>width<span class="sym">=</span>config<span class="sym">.</span>thumbnail_width<span class="sym">,</span>
+                        height<span class="sym">=</span>config<span class="sym">.</span>thumbnail_height<span class="sym">)</span>
+
+            ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span>name <span class="sym">+</span> <span class="str">". "</span><span class="sym">,</span> style<span class="sym">=</span><span class="str">'file_picker_old'</span><span class="sym">)</span>
+
+            <span class="slc">### file_picker_empty_slot file_picker_text</span>
+            <span class="slc"># (text) The style that is used for the empty slot indicator</span>
+            <span class="slc"># in the file picker.</span>
+            ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span><span class="kwd">_</span><span class="sym">(</span>u<span class="str">"Empty Slot."</span><span class="sym">),</span> style<span class="sym">=</span><span class="str">'file_picker_empty_slot'</span><span class="sym">)</span>
+            ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

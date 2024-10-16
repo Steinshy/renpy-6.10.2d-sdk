@@ -1,0 +1,36 @@
+<html><head><title>anim.Filmstrip - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="anim.Filmstrip" name="anim.Filmstrip"></a></p>
+<h1><span class="mw-headline">anim.Filmstrip</span></h1>
+<p><span id="anim.Filmstrip" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">anim.Filmstrip</strong></b></td>
+<td valign="top">(image, framesize, gridsize, delay, frames=None, loop=True, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates an animation from a single image. This image must consist of a grid of frames, with the number of columns and rows in the grid being taken from gridsize, and the size of each frame in the grid being taken from framesize. This takes frames and sticks them into an <a href="../../reference/functions/Animation.html" title="renpy/doc/reference/functions/Animation">Animation</a>, with the given delay between each frame. The frames are taken by going from left-to-right across the first row, left-to-right across the second row, and so on until all frames are consumed, or a specified number of frames are taken.</p>
+<p><i>image</i> - The image that the frames must be taken from.</p>
+<p><i>framesize</i> - A (width, height) tuple giving the size of each of the frames in the animation.</p>
+<p><i>gridsize</i> - A (columns, rows) tuple giving the number of columns and rows in the grid.</p>
+<p><i>delay</i> - The delay, in seconds, between frames.</p>
+<p><i>frames</i> - The number of frames in this animation. If None, then this defaults to colums * rows frames, that is, taking every frame in the grid.</p>
+<p><i>loop</i> - If True, loop at the end of the animation. If False, this performs the animation once, and then stops.</p>
+<p>Other keyword arguments are as for <a href="../../reference/functions/anim.SMAnimation.html" title="renpy/doc/reference/functions/anim.SMAnimation">anim.SMAnimation</a>.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> ctc <span class="sym">=</span> anim<span class="sym">.</span><span class="kwd">Filmstrip</span><span class="sym">(</span><span class="str">"sakura.png"</span><span class="sym">, (</span><span class="num">20</span><span class="sym">,</span> <span class="num">20</span><span class="sym">), (</span><span class="num">2</span><span class="sym">,</span> <span class="num">1</span><span class="sym">),</span> <span class="num">.30</span><span class="sym">,</span>
+                               xpos<span class="sym">=</span><span class="num">760</span><span class="sym">,</span> ypos<span class="sym">=</span><span class="num">560</span><span class="sym">,</span> xanchor<span class="sym">=</span><span class="num">0</span><span class="sym">,</span> yanchor<span class="sym">=</span><span class="num">0</span><span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

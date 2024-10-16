@@ -1,0 +1,45 @@
+<html><head><title>Environment Variables - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Environment_Variables" name="Environment_Variables"></a></p>
+<h1><span class="mw-headline">Environment Variables</span></h1>
+<p>The following environment variables control the behavior of Ren'Py:</p>
+<dl>
+<dt>RENPY_SCALE_FACTOR</dt>
+<dd>If set, this is parsed as a floating point number, and the display screen is scaled by that amount. For example, if RENPY_SCALE_FACTOR is set to "0.5", everything is half normal size.</dd>
+<dt>RENPY_SCALE_FAST</dt>
+<dd>If set and Ren'Py starts scaling the display screen, the display screen will use nearest-neighbor filtering rather than slower but higher-quality bilinear filtering. It should generally be unnecessary to set this.</dd>
+<dt>RENPY_DISABLE_JOYSTICK</dt>
+<dd>If set, joystick detection is disabled. Use this if a faulty joystick is causing Ren'Py to advance when not desired.</dd>
+<dt>RENPY_DISABLE_FULLSCREEN</dt>
+<dd>If set, Ren'Py will refuse to go into fullscreen mode.</dd>
+<dt>RENPY_DISABLE_SOUND</dt>
+<dd>This prevents sound playback from occuring. If this variable contains "pss", sound playback will be disabled. If it contains "mixer", volume control will be disabled. A value of "pss,mixer" will disable both.</dd>
+<dt>RENPY_SOUND_BUFSIZE</dt>
+<dd>This controls the sound buffer size. Values larger than the default (2048) can prevent sound from skipping, at the cost of a larger delay from when a sound is invoked to when it is played.</dd>
+<dt>RENPY_NOMIXER</dt>
+<dd>If set, prevents Ren'Py from trying to control the system audio mixer.</dd>
+<dt>RENPY_EDITOR</dt>
+<dd>The default value of <a href="../reference/Configuration_Variables#config.editor" title="renpy/doc/reference/Configuration Variables">config.editor</a>.</dd>
+<dt>RENPY_EDITOR_FILE_SEPARATOR</dt>
+<dd>The default value of <a href="../reference/Configuration_Variables#config.editor_file_separator" title="renpy/doc/reference/Configuration Variables">config.editor_file_separator</a>.</dd>
+<dt>RENPY_EDITOR_TRANSIENT</dt>
+<dd>The default value of <a href="../reference/Configuration_Variables#config.editor_transient" title="renpy/doc/reference/Configuration Variables">config.editor_transient</a>.</dd>
+<dt>RENPY_SCREENSHOT_PATTERN</dt>
+<dd>A pattern used to create screenshot filenames. It should contain a single&#160;%d substitution in it. For example, setting this to &quot;screenshot%04d.jpg&quot; will cause Ren'Py to write out jpeg screenshots rather than the usual pngs.</dd>
+<dt>RENPY_LESS_MEMORY</dt>
+<dd>This causes Ren'Py to reduce its memory usage, in exchange for reductions in speed.</dd>
+<dt>RENPY_LESS_UPDATES</dt>
+<dd>This causes Ren'Py to reduce the number of screen updates that occur.</dd>
+<dt>RENPY_LESS_MOUSE</dt>
+<dd>This causes Ren'Py to disable the mouse at all times.</dd>
+<dt>RENPY_BASE</dt>
+<dd>This environment variable is exported by Ren'Py to processes run by it. It contains the full path to the directory containing renpy.exe, renpy.sh, or renpy.app.</dd>
+</dl>
+<p>As Ren'Py uses SDL, its behavior can also be controlled by the <a class="external text" href="http://www.libsdl.org/cgi/docwiki.cgi/SDL_envvars" rel="nofollow" title="http://www.libsdl.org/cgi/docwiki.cgi/SDL_envvars">SDL environment variables</a>.</p>
+<p>At startup, Ren'Py will look in the Ren'Py directory (the one containing renpy.exe or renpy.py) for the file "environment.txt". If it exists, it will be evaluated as a python file, and the values defined in that file will be used as the default values of environment variables. <i>(new in 6.9.0)</i></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

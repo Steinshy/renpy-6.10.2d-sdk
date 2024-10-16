@@ -1,0 +1,162 @@
+<html><head><title>Defining Characters - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Defining_Characters" name="Defining_Characters"></a></p>
+<h1><span class="mw-headline">Defining Characters</span></h1>
+<p>When showing dialogue to the user using the two-argument form of the say statement, the first argument to the say statement should almost always be a variable bound to a Character object. These objects implement (or call functions that implement) much of the logic required to show dialogue to the user.</p>
+<p>Characters are declared by binding variables to the Character objects. Such declarations should take place inside init blocks, to ensure that the bindings are not saved with the game state, as this would prevent revised versions of a game from picking up changes to the init block. Perhaps the simplest definition is:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ e <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Eileen"</span><span class="sym">)</span>
+</pre>
+<p>This creates a new character object and binds it to the `e` variable. When the say statement:</p>
+<pre>
+e <span class="str">"Hello, World!"</span>
+</pre>
+<p>runs, the line of text "Hello, World!" will be preceded by the label "Eileen", indicating who is talking. It's common to customize the color of this label. This can be done by supplying the `color` keyword argument to Character, as in:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ e <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Eileen"</span><span class="sym">,</span> color<span class="sym">=(</span><span class="num">200</span><span class="sym">,</span> <span class="num">255</span><span class="sym">,</span> <span class="num">200</span><span class="sym">,</span> <span class="num">255</span><span class="sym">))</span>
+</pre>
+<p>The color argument is actually setting the <a href="../reference/List_of_Properties#color" title="renpy/doc/reference/List of Properties">color</a> property on the label. The color property takes an RGBA tuple consisting of four numbers, enclosed in parenthesis and separated by commas, with each number ranging from 0 to 255.</p>
+<p>The <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> function is defined as follows:</p>
+<p><span id="Character" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a></b></td>
+<td valign="top">(name, kind=adv, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Creates a new character object. This object is suitable for use as the first argument of a two-argument say statement. When it is used as such, it shows a window containing the character name and the second argument to the say statement. This behavior is customized by passing parameters to this function.</p>
+<p><i>name</i> is the name of the character that is speaking. It can be either a string containing the character name, or None to indicate that the label should not be shown. A name value consisting of a single space (" ") indicates that the label should be a blank line, which allows a narrator character to line up narration with character dialogue. name is the only requirement to Character.</p>
+<p><i>kind</i>, if supplied, gives the name of another Character object. The default values for all the settings of the newly-created character object are taken from that character object. If not given, defaults to <tt>adv</tt>. Another useful value is <tt>nvl</tt>, which by default causes nvl-mode interactions.</p>
+<p><b>Keyword Arguments.</b> In addition to name, <tt>Character</tt> takes keyword arguments that control its behavior.</p>
+<p><i>dynamic</i> - If true, then <i>name</i> is interpreted as a string containing a python expression that is evaluated to yield the name of the character.</p>
+<p><i>image</i> - If true, then <i>name</i> is interpreted as an image. This image is added to the dialogue window in place of the label.</p>
+<p><i>condition</i> - If present, this should be a string containing a python expression. This expression is evaluated whenever a line is said through this character object. If it evaluates to false, the line is not shown to the user.</p>
+<p><i>interact</i> - If true, the default, causes an interaction to occur when a line is shown to the user. If false, the interaction does not take place, and ui.interact (or some other means) must be called to cause an interaction to occur.</p>
+<p><i>with_none</i> - If True, causes a "with None" statement to be run after each interaction. If None (the default), checks <a href="../reference/Configuration_Variables#config.implicit_with_none" title="renpy/doc/reference/Configuration Variables">config.implicit_with_none</a> to determine if a "with None" should be run.</p>
+<p><i>type</i> - The type of interaction. See <a href="../reference/functions/renpy.last_interact_type.html" title="renpy/doc/reference/functions/renpy.last interact type">renpy.last_interact_type</a> for how this is used.</p>
+<p><b>Prefixes and Suffixes.</b> The following keyword arguments can be used to add a prefix or suffix to everything said through a character object. These can be used when lines of dialogue need to be enclosed in quotes, as the preferred alternative to adding those quotes to every line of dialogue in the script.</p>
+<p><i>who_prefix</i> - Text that is prepended to the name of the character when forming the label of the dialogue.</p>
+<p><i>who_suffix</i> - Text that is appended to the name of the character when forming the label of the dialogue.</p>
+<p><i>what_prefix</i> - Text that is prepended to the line of dialogue before it is shown to the user.</p>
+<p><i>what_suffix</i> - Thext that is appended to the line of dialogue before it is shown to the user.</p>
+<p><b>Click-to-continue.</b> These keyword arguements are used to control the click-to-continue indicator:</p>
+<p><i>ctc</i> - If present, this argument takes a displayable that is used as the click-to-continue indicator. If not present or None, then no click-to-continue indicator is displayed.</p>
+<p><i>ctc_pause</i> - If given, a click-to-continue indicator that's shown when the display of text has been paused with the {p} or {w} text tags.</p>
+<p><i>ctc_timedpause</i> - If given and not None, a click-to-continue indicator that is displayed when a {p} or {w} tag has a time associated with it. One can use ctc_pause=Null() to disable ctc_pause only in the case of a timed pause.</p>
+<p><i>ctc_position</i> - If "nestled", the click-to-continue indicator is displayed nestled in with the end of the text. If "fixed", the click-to-continue indicator is displayed directly on the screen, with its various position properties determining where it is actually shown.</p>
+<p><b>Functions.</b> The following are keyword arguments that allow one to massively customize the behavior of a character object:</p>
+<p><i>show_function</i> - The function that is called to display each step of a dialogue to the user. (A dialogue may be broken down into steps by pause text tags.) It should have the same signature as <a href="../reference/functions/renpy.show_display_say.html" title="renpy/doc/reference/functions/renpy.show display say">renpy.show_display_say</a>.</p>
+<p><i>predict_function</i> - The function that is called to predict the images from this dialogue. It should have the signature of <a href="../reference/functions/renpy.predict_display_say.html" title="renpy/doc/reference/functions/renpy.predict display say">renpy.predict_display_say</a>.</p>
+<p><i>callback</i> - A callback or list of callbacks that are called at various points during the the process of displaying dialogue. The callback is called with a single positional argument, which indicates the event that occured, and the following keyword arguments:</p>
+<ul>
+<li><i>interact</i> - True if this dialogue is being displayed interactively.</li>
+<li><i>type</i> - The value of <i>type</i> supplied to Character.</li>
+</ul>
+<p>Additional keyword arguments and unknown events should be ignored, for future expansion. The events that cause the callback to be called are:</p>
+<ul>
+<li>"begin" - called at the start of showing dialogue.</li>
+<li>"show" - called before each segment of dialogue is shown.</li>
+<li>"show_done" - called after each segment of dialog is shown (but before the interaction occurs).</li>
+<li>"slow_done" - called when slow text finishes showing.</li>
+<li>"end" - called at the end of showing dialogue.</li>
+</ul>
+<p>Note that when interact=False, slow_done can occur after end. If <i>callback</i> is not given or None, it defaults to <a href="../reference/Configuration_Variables#config.character_callback" title="renpy/doc/reference/Configuration Variables">config.character_callback</a>, if not None. The character callbacks in <a href="../reference/Configuration_Variables#config.all_character_callbacks" title="renpy/doc/reference/Configuration Variables">config.all_character_callbacks</a> are called for all characters, before any more specific callbacks.</p>
+<p><b>Default Show Function</b> The following are keyword arguments that are processed by the default show_function.</p>
+<p><i>show_two_window</i> - Places the name of the character saying the dialogue into its own window.</p>
+<p><i>show_side_image</i> - Specifies a displayable that is show with this dialogue. The displayable should set its position properties in a way to place it where the user wants it. Similarly, the window properties should be set in a way that provides room for the side image.</p>
+<p><i>show_two_window_vbox_properties</i> - If supplied, a dictionary containing properties that are added to the vbox containing both windows, when show_two_window is true.</p>
+<p><i>show_who_window_properties</i> - If supplied, a dictionary containing properties that are added to the window containing the name of who is speaking, when show_two_window is true.</p>
+<p><i>show_say_vbox_properties</i> - If supplied, a dictionary containing properties that are added to the vbox inside the main window.</p>
+<p><i>show_transform</i> - If supplied, a transform that is applied to window(s) being shown.</p>
+<p><b><a href="../tutorials/Style_Customization.html" title="renpy/doc/tutorials/Style Customization">Styles</a>.</b> The following keyword arguments control the styles used by parts of the dialogue:</p>
+<p><i>who_style</i> - Defaults to 'say_label', the style of the label.</p>
+<p><i>what_style</i> - Defaults to 'say_dialogue', the style of the text being said.</p>
+<p><i>window_style</i> - Defaults to 'say_window', the style of the window containing the dialogue.</p>
+<p><b>Additional Keyword Arguments.</b> Additional keyword arguments are interpreted as follows:</p>
+<ul>
+<li>Keyword arguments beginning with "window_" are intepreted as properties of the window containing the dialogue, with the window_" prefix stripped off.</li>
+<li>Keyword arguments beginning with "what_" are interpreted as properties of the text being said, with the "what_" prefix stripped off.</li>
+<li>Keyword arguments begining with "show_" are supplied as keyword arguments to the <i>show_function</i> and <i>predict_function</i>, with the "show_" prefix stripped off.</li>
+<li>Keyword arguments beginning with "cb_" are supplied as keyword arguments to the <i>callback</i> function(s), with the "cb_" prefix stripped off.</li>
+<li>All other keyword arguments are interpreted as <a href="../reference/List_of_Properties.html" title="renpy/doc/reference/List of Properties">properties</a> of the label. (<b>color</b> is the most common property passed as a keyword in this function.)</li>
+</ul>
+</div>
+<p>There is also a <a href="../reference/functions/DynamicCharacter.html" title="renpy/doc/reference/functions/DynamicCharacter">DynamicCharacter</a> function:</p>
+<p><span id="DynamicCharacter" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/DynamicCharacter.html" title="renpy/doc/reference/functions/DynamicCharacter">DynamicCharacter</a></b></td>
+<td valign="top">(name, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Equivalent to calling <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> with the same arguments, and with the dynamic argument set to true.</p>
+</div>
+<p><br /></p>
+<p><span id="Character.copy" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>Character.copy</b></td>
+<td valign="top">(...):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The copy method on Characters takes the same arguments as the <tt>funcref Character</tt> constructor, with the exception that the <i>name</i> argument is optional. This method returns a new Character object, one that is created by combining the arguments of the original constructor and this method, with the arguments provided by this method taking precedence.</p>
+</div>
+<p><br /></p>
+<p><a id="Calling_Character_Objects" name="Calling_Character_Objects"></a></p>
+<h2><span class="mw-headline">Calling Character Objects</span></h2>
+<p>Character objects may be called directly, as if they were functions. They take one positional parameter, the line of dialogue to be show to the user. They also take keyword arguments:</p>
+<ul>
+<li><i>interact</i>, which determines if an interaction should take place.</li>
+</ul>
+<ul>
+<li><i>force_ctc</i>, forces the click-to-continue indicator to be displayed even if interact is False.</li>
+</ul>
+<p>This use can programatically replace say statements. For example, the say statement:</p>
+<pre>
+e <span class="str">"Hello, World!"</span>
+</pre>
+<p>is equivalent to:</p>
+<pre>
+$ <span class="kwd">e</span><span class="sym">(</span><span class="str">"Hello, World!"</span><span class="sym">,</span> interact<span class="sym">=</span><span class="kwa">True</span><span class="sym">)</span>
+</pre>
+<p><a id="Pre-Defined_Characters" name="Pre-Defined_Characters"></a></p>
+<h2><span class="mw-headline">Pre-Defined Characters</span></h2>
+<p>We give you a few pre-defined characters to work with.</p>
+<ul>
+<li><b>centered</b> is a character that will cause what it says to be displayed centered,</li>
+</ul>
+<p>in the middle of the screen, outside of any window.</p>
+<ul>
+<li><b>extend</b> will cause the last character to speak to say a line of dialogue consisting of the last line of dialogue spoken, "{fast}", and the dialogue given to extend. This can be used to have the screen change over the course of dialogue. Extend is aware of NVL-mode, and treats it correctly.</li>
+</ul>
+<pre>
+<span class="slc"># Show the first line of dialogue, wait for a click, change expression, and show</span>
+<span class="slc"># the rest.</span>
+
+<span class="kwa">show</span> eileen concerned
+e <span class="str">"Sometimes, I feel sad."</span>
+<span class="kwa">show</span> eileen happy
+extend <span class="str">" But I usually quickly get over it!"</span>
+
+<span class="slc"># Similar, but automatically changes the expression when the first line is finished</span>
+<span class="slc"># showing. This only makes sense when the user doesn't have text speed set all the</span>
+<span class="slc"># way up.</span>
+
+<span class="kwa">show</span> eileen concerned
+e <span class="str">"Sometimes, I feel sad.{nw}"</span>
+<span class="kwa">show</span> eileen happy
+extend <span class="str">" But I usually quickly get over it!"</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,32 @@
+<html><head><title>Move - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="Move" name="Move"></a></p>
+<h1><span class="mw-headline">Move</span></h1>
+<p><span id="Move" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">Move</strong></b></td>
+<td valign="top">(startpos, endpos, time, repeat=False, bounce=False, time_warp=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Move is similar to <a href="../../reference/functions/Pan.html" title="renpy/doc/reference/functions/Pan">Pan</a>, insofar as it involves moving things. But where <a href="../../reference/functions/Pan.html" title="renpy/doc/reference/functions/Pan">Pan</a> moves the screen through an image, Move moves an image on the screen. Specifially, move changes the position style of an image with time.</p>
+<p>Move takes as parameters a starting position, an ending position, the amount of time it takes to move from the starting position to the ending position, and extra position properties. The postions may either be pairs giving the xpos and ypos properties, or 4-tuples giving xpos, ypos, xanchor, and yanchor. These properties may be given as integers or floating point numbers, but for any property it's not permissible to mix the two. <i>repeat</i>, <i>bounce</i>, and <i>time_warp</i> are as for <a href="../../reference/functions/Motion.html" title="renpy/doc/reference/functions/Motion">Motion</a>.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="str">"The following example moves a ball from the upper-left to the</span>
+<span class="str"> lower-right of the screen, taking 10 seconds to do so."</span>
+
+<span class="kwa">show</span> ball <span class="kwa">at</span> <span class="kwd">Move</span><span class="sym">((</span><span class="num">0.0</span><span class="sym">,</span> <span class="num">0.0</span><span class="sym">), (</span><span class="num">1.0</span><span class="sym">,</span> <span class="num">1.0</span><span class="sym">),</span> <span class="num">10.0</span><span class="sym">,</span>
+                  xanchor<span class="sym">=</span><span class="str">"center"</span><span class="sym">,</span> yanchor<span class="sym">=</span><span class="str">"center"</span><span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

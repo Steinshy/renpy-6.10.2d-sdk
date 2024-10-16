@@ -1,0 +1,46 @@
+<html><head><title>ui.button - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.button" name="ui.button"></a></p>
+<h1><span class="mw-headline">ui.button</span></h1>
+<p><span id="ui.button" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.button</strong></b></td>
+<td valign="top">(clicked=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a button that can be clicked by the user. When this button is clicked or otherwise selected, the function supplied as the clicked argument is called. If it returns a value, that value is returned from <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+<p>Buttons created with this function contain another widget, specifically the next widget to be added. As a convenience, one can use <a href="../../reference/functions/ui.textbutton.html" title="renpy/doc/reference/functions/ui.textbutton">ui.textbutton</a> to create a button with a text label. See also <a href="../../reference/functions/ui.imagebutton.html" title="renpy/doc/reference/functions/ui.imagebutton">ui.imagebutton</a>, which creates a button in the form of an image.</p>
+<p><i>clicked</i> - A function that is called with no arguments when this button is clicked. If it returns a non-None value, then that value is returned from <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>. If clicked itself is None, the button is displayed in the "insensitive" (disabled) style.</p>
+<p><i>hovered</i> - A function that is called with no arguments when this button is focused. If it returns a non-None value, then that value is returned from <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+<p><i>unhovered</i> - A function that is called with no arguments when the button loses focus. It's also called at least once per interaction, when a button is not focused at the start of the interaction. The return value is currently ignored, but should be None.</p>
+<p><i>role</i> - The role this button undertakes. This can be the empty string, or "selected_".</p>
+<p><i>keymap</i> - A keymap that is used when this button is focused.</p>
+<p>Note that code in the clicked, hovered, and unhovered methods is run inside the current interaction. This means that the screen is not cleared while this code is run. Displayables may be added or removed from the current interaction, provided <a href="../../reference/functions/renpy.restart_interaction.html" title="renpy/doc/reference/functions/renpy.restart interaction">renpy.restart_interaction</a> is called to let Ren'Py know that the interaction has been changed. You should not run code that causes a new interaction from inside these functions, except inside a new context using <a href="../../reference/functions/renpy.call_in_new_context.html" title="renpy/doc/reference/functions/renpy.call in new context">renpy.call_in_new_context</a>, <a href="../../reference/functions/renpy.invoke_in_new_context.html" title="renpy/doc/reference/functions/renpy.invoke in new context">renpy.invoke_in_new_context</a>, or <a href="../../reference/functions/ui.callsinnewcontext.html" title="renpy/doc/reference/functions/ui.callsinnewcontext">ui.callsinnewcontext</a>.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    <span class="kwa">def</span> <span class="kwd">button</span><span class="sym">(</span>text<span class="sym">,</span> selected<span class="sym">,</span> returns<span class="sym">, **</span>properties<span class="sym">):</span>
+        style<span class="sym">=</span><span class="str">'selected_button'</span>
+        style_text<span class="sym">=</span><span class="str">'selected_button_text'</span>
+
+        <span class="kwa">if</span> selected<span class="sym">:</span>
+            role<span class="sym">=</span><span class="str">'selected_'</span>
+        <span class="kwa">else</span><span class="sym">:</span>
+             role<span class="sym">=</span><span class="str">''</span>
+
+        ui<span class="sym">.</span><span class="kwd">button</span><span class="sym">(</span>clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span>returns<span class="sym">),</span>
+                  style<span class="sym">=</span><span class="str">'button'</span><span class="sym">,</span> role<span class="sym">=</span>role<span class="sym">, **</span>properties<span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span>text<span class="sym">,</span> style<span class="sym">=</span><span class="str">'button_text'</span><span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

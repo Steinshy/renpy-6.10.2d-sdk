@@ -1,0 +1,679 @@
+<html><head><title>Transitions - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Transitions"><span class="tocnumber">1</span> <span class="toctext">Transitions</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Pre-Defined_Transitions"><span class="tocnumber">1.1</span> <span class="toctext">Pre-Defined Transitions</span></a></li>
+<li class="toclevel-2"><a href="#Transition_Constructors"><span class="tocnumber">1.2</span> <span class="toctext">Transition Constructors</span></a></li>
+<li class="toclevel-2"><a href="#Transition_Families"><span class="tocnumber">1.3</span> <span class="toctext">Transition Families</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><a id="Transitions" name="Transitions"></a></p>
+<h1><span class="mw-headline">Transitions</span></h1>
+<p>By default, Ren'Py displays each scene by replacing the old scene with a new one. This is appropriate in general (such as for emotion changes), but it may be boring for large changes, such as a change in location or a character entering or leaving the scene. Ren'Py supports transitions that control how changes to the scene lists are exposed to the user.</p>
+<p>Transitions occur between the last scene that was shown to the user, and the current scene that has been updated using the scene, show, or hide statements. A transition runs for a given amount of time, but may be dismissed early by the user. Once a transition is shown, the scene is considered shown for the purposes of future transitions.</p>
+<p>Transitions are introduced with the `with` statement. The `with` statement takes an expression that is suitable for use with the `with` statement (that is, a callable that takes as input two scene lists), and runs that transition. Alternatively, if the expression is `None`, then the `with` statement has the effect of showing the scene to the user, and returning instantly. This is useful in conjunction with a future `with` statement, so that only some changes to the scene list will be transitioned in.</p>
+<p>An example is in order. First, let us define a few objects that can be passed in as the argument to a with statement:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="slc"># Fades to black, then to the new scene.</span>
+    fade <span class="sym">=</span> <span class="kwd">Fade</span><span class="sym">(</span><span class="num">0.5</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">0.5</span><span class="sym">)</span>
+
+    <span class="slc"># Dissolves between old and new scenes.</span>
+    dissolve <span class="sym">=</span> <span class="kwd">Dissolve</span><span class="sym">(</span><span class="num">0.5</span><span class="sym">)</span>
+</pre>
+<p>A simple use of with would be to place it after a series of show and hide statements of the program. As an example:</p>
+<pre>
+<span class="kwa">scene</span> bg whitehouse
+<span class="kwa">show</span> eileen happy
+<span class="kwa">with</span> fade
+</pre>
+<p>This series of statements will cause the old scene (displayed before these statements started) to fade to black, and be replaced with the new scene all at once. This is a useful behavior, for example, when we are replacing a scene with a new one, such as when the story changes locations.</p>
+<pre>
+<span class="kwa">scene</span> bg whitehouse
+<span class="kwa">with None</span>
+<span class="kwa">show</span> eileen happy
+<span class="kwa">with</span> dissolve
+</pre>
+<p>The `with None` statement is useful to break changes to the scene list into parts, as in the example above. When run, the background will be instantly shown, and then the character image will be dissolved in over the background.</p>
+<p>Another use of the `with None` statement is to remove transient elements before a transition begins. By default, the scene list includes transient elements like dialogue, thoughts, and menus. `with None` always executes without these elements, and so gets rid of them.</p>
+<p>The `show`, `hide`, and `scene` statements all take a with clause. One of these statement with a with clause associated with it is actually converted into three statements: A `with None` statement, the original statement sans the with clause, and the with clause as a with statement. For example:</p>
+<pre>
+<span class="kwa">scene</span> bg whitehouse <span class="kwa">with</span> fade
+<span class="kwa">show</span> eileen happy <span class="kwa">at</span> left <span class="kwa">with</span> dissolve
+<span class="kwa">show</span> lucy happy <span class="kwa">at</span> right <span class="kwa">with</span> dissolve
+</pre>
+<p>becomes</p>
+<pre>
+<span class="kwa">with None</span>
+<span class="kwa">scene</span> bg whitehouse
+<span class="kwa">with</span> fade
+<span class="kwa">with None</span>
+<span class="kwa">show</span> eileen happy <span class="kwa">at</span> left
+<span class="kwa">with</span> dissolve
+<span class="kwa">with None</span>
+<span class="kwa">show</span> lucy happy <span class="kwa">at</span> right
+<span class="kwa">with</span> dissolve
+</pre>
+<p>This has the effect of fading out the old scene and fading in the new background, then dissolving in the characters one after the other.</p>
+<pre>
+<span class="kwa">show</span> albert <span class="kwa">at</span> far_left
+<span class="kwa">show</span> bernardette <span class="kwa">at</span> left
+<span class="kwa">show</span> charles <span class="kwa">at</span> center
+<span class="kwa">show</span> derek <span class="kwa">at</span> right
+<span class="kwa">show</span> eleanor <span class="kwa">at</span> far_right
+<span class="kwa">with</span> dissolve
+</pre>
+<p>Additionally, you can also show multiple images at once by ordering them consecutively and putting the 'with' statement at the end, followed by your transition.</p>
+<p><br />
+We also allow with clauses to be supplied for say and menu statements. When a with clause is supplied on one of these statements, the transition is used to introduce the say or menu element. For example,</p>
+<pre>
+e <span class="str">"How are you doing?"</span> <span class="kwa">with</span> dissolve
+</pre>
+<p>Will dissolve in a line of dialogue. The line of dialogue will be dismissed immediately, unless it is followed by a with statement or clause that causes it to transition to something else.</p>
+<p>There are two variables that control transitions:</p>
+<p><span id="default_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>default_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not none, specifies a default transition that is applied to all say and menu statements that are not provided a with clause. This is only considered if the transitions preference is set to "All".</p>
+</div>
+<p><br />
+<span id="_window_during_transitions" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>_window_during_transitions</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If set to true, this will show an empty line of narration during transitions, provided you are in the outermost context, and there is nothing transient on the screen.</p>
+<p>This only works for the default config.with_callback.</p>
+<p>This variable may be changed outside of an init block, but a "with None" statement should be run after doing so for change to take effect.</p>
+<p>This is more-or-less obsoleted by the <a href="../reference/The_Ren%27Py_Language#window" title="renpy/doc/reference/The Ren&apos;Py Language">window statement</a>.</p>
+</div>
+<div id="predefined" />
+<p><a id="Pre-Defined_Transitions" name="Pre-Defined_Transitions"></a></p>
+<h2><span class="mw-headline">Pre-Defined Transitions</span></h2>
+<p><span id="fade" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>fade</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of the <a href="../reference/functions/Fade.html" title="renpy/doc/reference/functions/Fade">Fade</a> transition that takes 0.5 seconds to fade to black, and then 0.5 seconds to fade to the new screen.</p>
+</div>
+<p><span id="dissolve" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>dissolve</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of the <a href="../reference/functions/Dissolve.html" title="renpy/doc/reference/functions/Dissolve">Dissolve</a> transition that takes 0.5 seconds to complete.</p>
+</div>
+<p><span id="pixellate" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>pixellate</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of the <a href="../reference/functions/Pixellate.html" title="renpy/doc/reference/functions/Pixellate">Pixellate</a> transition, which takes 1 second to complete, and creates pixels as big as 32x32 over the course of 5 steps in either direction.</p>
+</div>
+<p><span id="move" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>move</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of the <a href="../reference/functions/MoveTransition.html" title="renpy/doc/reference/functions/MoveTransition">MoveTransition</a> transition, this takes 0.5 seconds to move images that changed position to their new locations.</p>
+</div>
+<p><span id="moveinright.2C_moveinleft.2C_moveintop.2C_moveinbottom" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>moveinright, moveinleft, moveintop, moveinbottom</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>These move entering images onto the screen from the appropriate side, taking 0.5 seconds to do so.</p>
+</div>
+<p><span id="moveoutright.2C_moveoutleft.2C_moveouttop.2C_moveoutbottom" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>moveoutright, moveoutleft, moveouttop, moveoutbottom</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>These move leaving images off the screen via the appropriate side, taking 0.5 seconds to do so.</p>
+</div>
+<p><span id="ease.2C_easeinright.2C_easeinleft.2C_easeintop.2C_easeinbottom.2C_easeoutright.2C_easeoutleft.2C_easeouttop.2C_easeoutbottom" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>ease, easeinright, easeinleft, easeintop, easeinbottom, easeoutright, easeoutleft, easeouttop, easeoutbottom</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>These are similar to the move- family of transitions, except that they use a cosine-based curve to slow down the start and end of the transition.</p>
+</div>
+<p><span id="zoomin" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>zoomin</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This zooms in entering images, taking 0.5 seconds to do so.</p>
+</div>
+<p><span id="zoomout" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>zoomout</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This zooms out leaving images, taking 0.5 seconds to do so.</p>
+</div>
+<p><span id="zoominout" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>zoominout</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This zooms in entering images and zooms out leaving images, taking 0.5 seconds to do so.</p>
+</div>
+<p><span id="vpunch" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>vpunch</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When invoked, this transition shakes the screen vertically for a quarter second.</p>
+</div>
+<p><span id="hpunch" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>hpunch</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When invoked, this transition shakes the screen horizontally for a quarter second.</p>
+</div>
+<p><span id="blinds" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>blinds</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Transitions the screen in a vertical blinds effect lasting 1 second.</p>
+</div>
+<p><span id="squares" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>squares</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Transitions the screen in a squares effect lasting 1 second.</p>
+</div>
+<p><span id="wiperight" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>wiperight</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that takes 1 second to wipe the screen right.</p>
+</div>
+<p><span id="wipeleft" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>wipeleft</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that takes 1 second to wipe the screen left.</p>
+</div>
+<p><span id="wipeup" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>wipeup</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that takes 1 second to wipe the screen up.</p>
+</div>
+<p><span id="wipedown" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>wipedown</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that takes 1 second to wipe the screen down.</p>
+</div>
+<p><span id="slideright" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>slideright</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that takes 1 second to slide the screen right.</p>
+</div>
+<p><span id="slideleft" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>slideleft</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that takes 1 second to slide the screen left.</p>
+</div>
+<p><span id="slideup" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>slideup</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that takes 1 second to slide the screen up.</p>
+</div>
+<p><span id="slidedown" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>slidedown</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that takes 1 second to slide the screen down.</p>
+</div>
+<p><span id="slideawayright" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>slideawayright</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that takes 1 second to slide the screen away and to the right.</p>
+</div>
+<p><span id="slideawayleft" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>slideawayleft</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that takes 1 second to slide the screen away and to the left.</p>
+</div>
+<p><span id="slideawayup" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>slideawayup</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that takes 1 second to slide the screen away and to the up.</p>
+</div>
+<p><span id="slideawaydown" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>slideawaydown</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that takes 1 second to slide the screen away and to the down.</p>
+</div>
+<p><span id="irisout" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>irisout</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that irises the screen out for 1 second.</p>
+</div>
+<p><span id="irisin" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>irisin</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An instance of <a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a> that irises the screen in for 1 second.</p>
+</div>
+<div id="constructors" />
+<p><a id="Transition_Constructors" name="Transition_Constructors"></a></p>
+<h2><span class="mw-headline">Transition Constructors</span></h2>
+<p>The following are functions that return things useful as transitions. The user should not supply the new_widget or old_widget parameters, as these are supplied by Ren'Py when a transition begins.</p>
+<p><br />
+<span id="CropMove" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/CropMove.html" title="renpy/doc/reference/functions/CropMove">CropMove</a></b></td>
+<td valign="top">(time, mode='fromleft', startcrop=(0.0, 0.0, 0.0, #0), startpos=(0.0, 0.0), endcrop=(0.0, 0.0, #0, #0), endpos=(0.0, 0.0), topnew=True, old_widget=None, new_widget=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The CropMove transition works by placing the old and the new image on two layers, called the top and the bottom. (Normally the new image is on the top, but that can be changed in some modes.) The bottom layer is always drawn in full. The top image is first cropped to a rectangle, and then that rectangle drawn onto the screen at a specified position. Start and end crop rectangles and positions can be selected by the supplied mode, or specified manually. The result is a surprisingly flexible transition.</p>
+<p>This transition has many modes, simplifying its use. We can group these modes into three groups: wipes, slides, and other.</p>
+<p>In a wipe, the image stays fixed, and more of it is revealed as the transition progresses. For example, in "wiperight", a wipe from left to right, first the left edge of the image is revealed at the left edge of the screen, then the center of the image, and finally the right side of the image at the right of the screen. Other supported wipes are "wipeleft", "wipedown", and "wipeup".</p>
+<p>In a slide, the image moves. So in a "slideright", the right edge of the image starts at the left edge of the screen, and moves to the right as the transition progresses. Other slides are "slideleft", "slidedown", and "slideup".</p>
+<p>There are also slideaways, in which the old image moves on top of the new image. Slideaways include "slideawayright", "slideawayleft", "slideawayup", and "slideawaydown".</p>
+<p>We also support a rectangular iris in with "irisin" and a rectangular iris out with "irisout". Finally, "custom" lets the user define new transitions, if these ones are not enough.</p>
+<p><i>time</i> - The time that this transition will last for, in seconds.</p>
+<p><i>mode</i> - One of the modes given above.</p>
+<p>The following parameters are only respected if the mode is "custom".</p>
+<p><i>startcrop</i> - The starting rectangle that is cropped out of the top image. A 4-element tuple containing x, y, width, and height.</p>
+<p><i>startpos</i> - The starting place that the top image is drawn to the screen at, a 2-element tuple containing x and y.</p>
+<p><i>startcrop</i> - The starting rectangle that is cropped out of the top image. A 4-element tuple containing x, y, width, and height.</p>
+<p><i>startpos</i> - The starting place that the top image is drawn to the screen at, a 2-element tuple containing x and y.</p>
+<p><i>topnew</i> - If True, the top layer contains the new image. Otherwise, the top layer contains the old image.</p>
+</div>
+<p><br />
+<span id="Dissolve" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Dissolve.html" title="renpy/doc/reference/functions/Dissolve">Dissolve</a></b></td>
+<td valign="top">(time, old_widget=None, new_widget=None, alpha=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This dissolves from the old scene to the new scene, by overlaying the new scene on top of the old scene and varying its alpha from 0 to 255. Dissolve only works correctly when both scenes are the same size.</p>
+<p><i>time</i> - The amount of time the dissolve will take.</p>
+<p><i>alpha</i> - If True, the resulting displayable will have an alpha channel, at the cost of some speed. If False, it will be treated as opaque, but be faster.</p>
+</div>
+<p><br />
+<span id="Fade" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Fade.html" title="renpy/doc/reference/functions/Fade">Fade</a></b></td>
+<td valign="top">(out_time, hold_time, in_time, old_widget=None, new_widget=None, color=None, widget=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This returns an object that can be used as an argument to a with statement to fade the old scene into a solid color, waits for a given amount of time, and then fades from the solid color into the new scene.</p>
+<p><i>out_time</i> - The amount of time that will be spent fading from the old scene to the solid color. A float, given as seconds.</p>
+<p><i>hold_time</i> - The amount of time that will be spent displaying the solid color. A float, given as seconds.</p>
+<p><i>in_time</i> - The amount of time that will be spent fading from the solid color to the new scene. A float, given as seconds.</p>
+<p><i>color</i> - The solid color that will be fade to. A tuple containing three components, each between 0 or 255. This can also be `None`.</p>
+<p><i>widget</i> - This is a widget that will be faded to, if color is `None`. This allows a fade to be to an image rather than just a solid color.</p>
+<p>If both <i>color</i> and <i>widget</i> are `None`, then the fade is to black.</p>
+</div>
+<p><br />
+<span id="ImageDissolve" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ImageDissolve.html" title="renpy/doc/reference/functions/ImageDissolve">ImageDissolve</a></b></td>
+<td valign="top">(image, time, reverse=False, old_widget=None, new_widget=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This dissolves the old scene into the new scene, using an image to control the dissolve process. Basically, this means that white pixels come in first and black last.</p>
+<p>The two children should be the same size, or the behavior of ImageDissolve is undefined.</p>
+<p><i>image</i> - The image that will be used to control this transition. The image should be the same size as the scene being dissolved.</p>
+<p><i>time</i> - The amount of time the dissolve will take.</p>
+<p><i>reverse</i> - This reverses the ramp and the direction of the window slide. When True, black pixels dissolve in first, and white pixels come in last.</p>
+<p><i>alpha</i> - If True, the resulting displayable will have an alpha channel, at the cost of some speed. If False, it will be treated as opaque, but be faster.</p>
+</div>
+<p><br />
+<span id="MoveTransition" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/MoveTransition.html" title="renpy/doc/reference/functions/MoveTransition">MoveTransition</a></b></td>
+<td valign="top">(delay, factory=None, enter_factory=None, leave_factory=None, old=False, layers=['master']):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This transition attempts to find images that have changed position, and moves them from the old position to the new transition, taking <i>delay</i> seconds to complete the move.</p>
+<p>If <i>factory</i> is given, it is expected to be a function that takes as arguments: an old position, a new position, the delay, and a displayable, and to return a displayable as an argument. If not given, the default behavior is to move the displayable from the starting to the ending positions. Positions are always given as (xpos, ypos, xanchor, yanchor) tuples.</p>
+<p>If <i>enter_factory</i> or <i>leave_factory</i> are given, they are expected to be functions that take as arguments a position, a delay, and a displayable, and return a displayable. They are applied to displayables that are entering or leaving the scene, respectively. The default is to show in place displayables that are entering, and not to show those that are leaving.</p>
+<p>If <i>old</i> is True, then <i>factory</i> moves the old displayable with the given tag. Otherwise, it moves the new displayable with that tag. <i>(new in 6.6.1)</i></p>
+<p><i>layers</i> is a list of layers that the transition will be applied to. <i>(new in 6.9.0)</i></p>
+<p>Images are considered to be the same if they have the same tag, in the same way that the tag is used to determine which image to replace or to hide. They are also considered to be the same if they are the same displayable.</p>
+<p>If you use this transition to slide an image off the side of the screen, remember to hide it when you are done. (Or just use it with a leave_factory.)</p>
+<p>There are several constructors that create functions for use with enter_factory and leave_factory:</p>
+<p><span id="MoveFactory" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>MoveFactory</b></td>
+<td valign="top">(**kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Can be used with factory to supply arguments to <a href="../reference/functions/Move.html" title="renpy/doc/reference/functions/Move">Move</a>.</p>
+</div>
+<p><span id="MoveIn" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>MoveIn</b></td>
+<td valign="top">(pos, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Can be used with enter_factory to move in entering elements.</p>
+<p><i>pos</i> - An (xpos, ypos, xanchor, yanchor) tuple, giving the position to move from. Any component can be None, to take the corresponding component of the final position.</p>
+<p>Keyword arguments are passed to <a href="../reference/functions/Move.html" title="renpy/doc/reference/functions/Move">Move</a>.</p>
+</div>
+<p><span id="MoveOut" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>MoveOut</b></td>
+<td valign="top">(pos, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Can be used with leave_factory to move in entering elements.</p>
+<p><i>pos</i> - An (xpos, ypos, xanchor, yanchor) tuple, giving the position to move to. Any component can be None, to take the corresponding component of the original position.</p>
+<p>Keyword arguments are passed to <a href="../reference/functions/Move.html" title="renpy/doc/reference/functions/Move">Move</a>.</p>
+</div>
+<p><span id="ZoomInOut" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>ZoomInOut</b></td>
+<td valign="top">(start, end, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Can be used with enter_factory or leave_factory. Used to zoom in or out entering or leaving displayables.</p>
+<p><i>start</i> - The zoom factor at the start of the transition.</p>
+<p><i>end</i> - The zoom factor at the end of the transition.</p>
+<p>Keyword arguments are passed to <a href="../reference/functions/FactorZoom.html" title="renpy/doc/reference/functions/FactorZoom">FactorZoom</a>.</p>
+</div>
+<p><span id="RevolveInOut" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>RevolveInOut</b></td>
+<td valign="top">(start, end, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Can be used with enter_factory or leave_factory. Used to revolve in or out entering or leaving displayables.</p>
+<p><i>start</i> - The clockwise revolution at the start of the transition.</p>
+<p><i>end</i> - The clockwise revolution at the end of the transition.</p>
+<p>Additional keyword arguments are passed to <a href="../reference/functions/Revolve.html" title="renpy/doc/reference/functions/Revolve">Revolve</a>.</p>
+</div>
+</div>
+<p><br />
+<span id="Pause" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Pause.html" title="renpy/doc/reference/functions/Pause">Pause</a></b></td>
+<td valign="top">(delay):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns a transition that shows the new screen for <i>delay</i> seconds.</p>
+<p>This is useful for implementing a pause that behaves as a transition does, one that is skipped when transitions are.</p>
+</div>
+<p><br />
+<span id="Pixellate" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Pixellate.html" title="renpy/doc/reference/functions/Pixellate">Pixellate</a></b></td>
+<td valign="top">(time, steps, old_widget=None, new_widget=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This pixellates out the old scene, and then pixellates in the new scene, taking the given amount of time and the given number of pixellate steps in each direction.</p>
+</div>
+<p><br /></p>
+<p><span id="ComposeTransition" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ComposeTransition.html" title="renpy/doc/reference/functions/ComposeTransition">ComposeTransition</a></b></td>
+<td valign="top">(trans, before=None, after=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This allows transitions to be composed before they are applied.</p>
+<p><i>trans</i> - The top-level transition.</p>
+<p><i>before</i> - If not None, a transition that is applied to the old and new screens, and used as the old screen for <i>trans</i>.</p>
+<p><i>after</i> - If not None, a transition that is applied to the old and new screens, and used as the new screen for <i>trans</i>.</p>
+<p>This may not work with all transitions.</p>
+</div>
+<p><br />
+<span id="MultipleTransition" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/MultipleTransition.html" title="renpy/doc/reference/functions/MultipleTransition">MultipleTransition</a></b></td>
+<td valign="top">(args):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a transition that consists of one or more transitions. <i>args</i> must be a list of odd length, containing at least 3 elements. Odd elements of this list are considered to be displayables, while even elements are transitions. When used, this causes the first element (a displayable) to transition to the third element (a displayable), using the second element as the transition. If the fourth and fifth elements are present, a transition will occur from the third element (a displayable) to the fifth element (a displayable) using the fourth element (a transition).</p>
+<p>There are two special values that will be recognized as displayables. <i>False</i> will be replaced with a displayable containing the scene before the transition, while <i>True</i> will be replaced with a displayable containing the scene after the transition.</p>
+</div>
+<p><br />
+Some transitions can also be applied to specific layers, using the <a href="../reference/functions/renpy.transition.html" title="renpy/doc/reference/functions/renpy.transition">renpy.transition</a> function. Only transitions that are not completely opaque can be used in this way.</p>
+<p><br /></p>
+<p><a id="Transition_Families" name="Transition_Families"></a></p>
+<h2><span class="mw-headline">Transition Families</span></h2>
+<p>This function defines a family of similar transitions.</p>
+<p><br />
+<span id="define.move_transitions" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/define.move_transitions.html" title="renpy/doc/reference/functions/define.move transitions">define.move_transitions</a></b></td>
+<td valign="top">(prefix, delay, time_warp=None, in_time_warp=None, out_time_warp=None, layers=['master'], **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This defines a family of move transitions, similar to the move and ease transitions. For a given prefix, this defines the transitions:</p>
+<ul>
+<li>prefix - A transition that takes <i>delay</i> seconds to move images that changed positions to their new locations.</li>
+</ul>
+<ul>
+<li>prefixinleft, prefixinright, prefixintop, prefixinbottom - A transition that takes <i>delay</i> seconds to move images that changed positions to their new locations, with newly shown images coming in from the appropriate side.</li>
+</ul>
+<ul>
+<li>prefixoutleft, prefixoutright, prefixoutop, prefixoutbottom - A transition that takes <i>delay</i> seconds to move images that changed positions to their new locations, with newly hidden images leaving via the appropriate side.</li>
+</ul>
+<p><i>time_warp</i>, <i>in_time_warp</i>, <i>out_time_warp</i> - The time_warp argument supplied to <a href="../reference/functions/Move.html" title="renpy/doc/reference/functions/Move">Move</a> for images remaining on the screen, newly shown images, and newly hidden images (respectively).</p>
+<p><i>old</i> - Causes the transitions to move the old displayables, rather than the new ones.</p>
+<p><i>layers</i> - The layers the transition will apply to.</p>
+<p>Additional keyword arguments are passed (indirectly) to the moves. The most useful additional keyword argument is probably subpixel=True, which causes a subpixel move to be used.</p>
+</div>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

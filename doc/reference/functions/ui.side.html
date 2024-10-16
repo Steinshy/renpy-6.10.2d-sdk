@@ -1,0 +1,41 @@
+<html><head><title>ui.side - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.side" name="ui.side"></a></p>
+<h1><span class="mw-headline">ui.side</span></h1>
+<p><span id="ui.side" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.side</strong></b></td>
+<td valign="top">(places, style='default', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This positions child widgets so that they surround a parent widget. It takes a single argument, <i>places</i>, which controls where each child widget is placed. Places is expected to be iterable, and each element should be in the list:</p>
+<p>'c', 't', 'b', 'l', 'r', 'tl', 'tr', 'bl', 'br'</p>
+<p>'c' means center, 't' top, 'tl' top left, 'br' bottom right, and so on. A side should be given the same number of children as the number of entries in the places list.</p>
+<p>The top and bottom children are rendered with a 0 requested height, while the left and right children are rendered with a 0 requested width. It is therefore suggested that you enforce a minimum width on the children that are placed in these slots.</p>
+<p>The center widget is rendered before the others. Other than that, the order widgets are rendered in is undefined.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+    <span class="kwa">python</span><span class="sym">:</span>
+        ui<span class="sym">.</span><span class="kwd">side</span><span class="sym">([</span><span class="str">'c'</span><span class="sym">,</span> <span class="str">'b'</span><span class="sym">,</span> <span class="str">'r'</span><span class="sym">],</span> spacing<span class="sym">=</span><span class="num">5</span><span class="sym">)</span>
+        vp <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">viewport</span><span class="sym">(</span>xmaximum<span class="sym">=</span><span class="num">200</span><span class="sym">,</span> ymaximum<span class="sym">=</span><span class="num">200</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwa">image</span><span class="sym">(</span><span class="str">"mainmenu.jpg"</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">bar</span><span class="sym">(</span>adjustment<span class="sym">=</span>vp<span class="sym">.</span>xadjustment<span class="sym">,</span> style<span class="sym">=</span><span class="str">'scrollbar'</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">bar</span><span class="sym">(</span>adjustment<span class="sym">=</span>vp<span class="sym">.</span>yadjustment<span class="sym">,</span> style<span class="sym">=</span><span class="str">'vscrollbar'</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+
+        ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Done"</span><span class="sym">,</span> ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="kwa">True</span><span class="sym">))</span>
+
+        ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

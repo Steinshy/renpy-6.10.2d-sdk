@@ -1,0 +1,31 @@
+<html><head><title>renpy.music.set mixer - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.sound.set_mixer" name="renpy.sound.set_mixer"></a></p>
+<h1><span class="mw-headline">renpy.sound.set_mixer</span></h1>
+<p><span id="renpy.sound.set_mixer" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../../reference/functions/renpy.sound.set_mixer.html" title="renpy/doc/reference/functions/renpy.sound.set mixer">renpy.sound.set_mixer</a></b></td>
+<td valign="top">(channel, mixer):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Allows to associate any channel with a named mixer. By default, (prior Ren'Py 6.9.1 there were only 8 channels) there are three mixers, 'sfx' (channels 0-1), 'music' (3-4) and 'voice' (2). You can create your own mixer, but will need to add its own slider in the preference game menu if you wish to allow the user to set it. This function should only be called in an init block.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+    <span class="slc"># Prior Ren'Py 6.9.1 there were only 8 channels.</span>
+    <span class="slc"># Adds channel number 5 to the 'Sound Volume' slider</span>
+    <span class="slc"># in the preference game menu.</span>
+    renpy<span class="sym">.</span>sound<span class="sym">.</span><span class="kwd">set_mixer</span><span class="sym">(</span><span class="num">5</span><span class="sym">,</span><span class="str">"sfx"</span><span class="sym">)</span>
+</pre>
+<p><b>See also</b>: <a href="../../reference/Audio.html" title="renpy/doc/reference/Audio">Audio</a></p>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

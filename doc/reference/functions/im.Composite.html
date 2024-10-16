@@ -1,0 +1,33 @@
+<html><head><title>im.Composite - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="im.Composite" name="im.Composite"></a></p>
+<h1><span class="mw-headline">im.Composite</span></h1>
+<p><span id="im.Composite" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">im.Composite</strong></b></td>
+<td valign="top">(size, *args, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This image manipulator composites one or more images together.</p>
+<p>This takes a variable number of arguments. The first argument is size, which is either the desired size of the image (in pixels), or None to indicate that the size should be the size of the first image.</p>
+<p>It then takes an even number of further arguments. (For an odd number of total arguments.) The second and other even numbered arguments contain position tuples, while the third and further odd-numbered arguments give images (or image manipulators). A position argument gives the position of the image immediately following it, with the position expressed as a tuple giving an offset from the upper-left corner of the image. The images are composited in bottom-to-top order, with the last image being closest to the user.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> cyan composite <span class="sym">=</span> im<span class="sym">.</span><span class="kwd">Composite</span><span class="sym">((</span><span class="num">200</span><span class="sym">,</span> <span class="num">300</span><span class="sym">),</span>
+                                        <span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">),</span> <span class="str">"cyan.png"</span><span class="sym">,</span>
+                                        <span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">50</span><span class="sym">),</span> <span class="str">"cyan.png"</span><span class="sym">,</span>
+                                        <span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">100</span><span class="sym">),</span> <span class="str">"cyan.png"</span><span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

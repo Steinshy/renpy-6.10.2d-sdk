@@ -1,0 +1,31 @@
+<html><head><title>renpy.partial - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.partial" name="renpy.partial"></a></p>
+<h1><span class="mw-headline">renpy.partial</span></h1>
+<p><span id="renpy.partial" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.partial</strong></b></td>
+<td valign="top">(function, *args, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When called with a function and optional arguments, this function returns a callable object. When that object is called, <i>function</i> is called with the arguments from both calls. Positional arguments from the first call are placed before positional arguments from the second call. If a keyword argument is given in both calls, the value from the second call takes priority.</p>
+<p>The callable objects can be pickled provided the original function remains available at its original name.</p>
+</div>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    <span class="kwa">def</span> <span class="kwd">add</span><span class="sym">(</span>a<span class="sym">,</span> b<span class="sym">):</span>
+        <span class="kwa">return</span> a <span class="sym">+</span> b
+
+<span class="kwa">python</span><span class="sym">:</span>
+    add_to_one <span class="sym">=</span> renpy<span class="sym">.</span><span class="kwd">partial</span><span class="sym">(</span>add<span class="sym">,</span> <span class="num">1</span><span class="sym">)</span>
+    result <span class="sym">=</span> <span class="kwd">add_to_one</span><span class="sym">(</span><span class="num">2</span><span class="sym">)</span>
+    <span class="slc"># Result is now 3.</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

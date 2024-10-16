@@ -1,0 +1,35 @@
+<html><head><title>renpy.get at list - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.get_at_list" name="renpy.get_at_list"></a></p>
+<h1><span class="mw-headline">renpy.get_at_list</span></h1>
+<p><span id="renpy.get_at_list" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.get_at_list</strong></b></td>
+<td valign="top">(name, layer='master'):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This gets the at_list that was used to show a given image tag. <i>name</i> is parsed to get out the image tag, and the at_list corresponding to that tag is retrieved. If no image with that tag has been shown on the given layer, then None is returned.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<p>This displays a different frame image for the character based on where the character is being shown on the screen.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ e <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Eileen"</span><span class="sym">,</span>
+        what_background<span class="sym">=</span><span class="kwd">ConditionSwitch</span><span class="sym">(</span>
+            <span class="str">"renpy.get_at_list('eileen') is None"</span><span class="sym">,</span> <span class="str">"frame_none.png"</span><span class="sym">,</span>
+            <span class="str">"left in renpy.get_at_list('eileen')"</span><span class="sym">,</span> <span class="str">"frame_left.png"</span><span class="sym">,</span>
+            <span class="str">"right in renpy.get_at_list('eileen')"</span><span class="sym">,</span> <span class="str">"frame_right.png"</span><span class="sym">,</span>
+            <span class="str">"True"</span><span class="sym">,</span> <span class="str">"frame_center.png"</span><span class="sym">))</span>
+
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,55 @@
+<html><head><title>renpy.show - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.show" name="renpy.show"></a></p>
+<h1><span class="mw-headline">renpy.show</span></h1>
+<p><span id="renpy.show" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.show</strong></b></td>
+<td valign="top">(name, at_list=[], layer='master', what=None, zorder=0, tag=None, behind=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is used to execute the show statement, adding the named image to the screen.</p>
+<p><i>name</i> - The name of the image to add to the screen. This may be a tuple of strings, or a single string. In the latter case, it is split on whitespace to make a tuple.</p>
+<p><i>at_list</i> - The at list, a list of functions that are applied to the image when shown. The members of the at list need to be pickleable if sticky_positions is True.</p>
+<p><i>layer</i> - The layer the image will be shown on.</p>
+<p><i>what</i> - If not None, this is expected to be a displayable. That displayable is shown, instead of going through the normal lookup process.</p>
+<p><i>zorder</i> - The zorder of this image.</p>
+<p><i>tag</i> - The tag of this image. If None, the tag is taken from name.</p>
+<p><i>behind</i> - A list of tags this image will be shown behind, if they are present on the same layer at the same zorder, and an image with the same tag is not already present on the layer.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">python</span><span class="sym">:</span>
+        <span class="kwa">for</span> slideindex <span class="kwa">in</span> <span class="kwb">range</span><span class="sym">(</span><span class="num">10</span><span class="sym">):</span>
+            <span class="slc"># images are named slide0.png...slide9.png</span>
+            renpy<span class="sym">.</span><span class="kwa">image</span><span class="sym">(</span><span class="str">'slide%d'</span> <span class="sym">%</span> slideindex<span class="sym">,</span>
+                        <span class="str">'slide%d.png'</span> <span class="sym">%</span> slideindex<span class="sym">)</span>
+
+<span class="str">"And now, a slideshow"</span>
+<span class="kwa">python</span><span class="sym">:</span>
+    <span class="kwa">for</span> slideindex <span class="kwa">in</span> <span class="kwb">range</span><span class="sym">(</span><span class="num">10</span><span class="sym">):</span>
+        <span class="slc"># clear all images</span>
+        renpy<span class="sym">.</span><span class="kwa">scene</span><span class="sym">()</span>
+
+        renpy<span class="sym">.</span><span class="kwa">show</span><span class="sym">(</span><span class="str">'slide%d'</span> <span class="sym">%</span> slideindex<span class="sym">)</span>
+
+        <span class="slc"># set the transition for the pause interaction</span>
+        renpy<span class="sym">.</span><span class="kwd">transition</span><span class="sym">(</span>dissolve<span class="sym">)</span>
+
+        renpy<span class="sym">.</span><span class="kwa">pause</span><span class="sym">(</span><span class="num">3.0</span><span class="sym">)</span>
+
+<span class="kwa">scene</span> bg washington
+<span class="str">"Wasn't that nice?"</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,179 @@
+<html><head><title>Store Variables - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Store_Variables" name="Store_Variables"></a></p>
+<h1><span class="mw-headline">Store Variables</span></h1>
+<p>This is a list of special store variables that control aspects of gameplay. These are variables that are placed in the store (the default scope of python code), and so can be updated during the course of the game. You must be careful to ensure that the values of these variables can be pickled. (For example, one should create a function with a different name inside an init block, and then assign it to one of these variables.)</p>
+<p><a id="Variable_List" name="Variable_List"></a></p>
+<h2><span class="mw-headline">Variable List</span></h2>
+<p><span id="adv" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>adv</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is the template adv-mode character, and the default character used when we are in adv-mode.</p>
+</div>
+<p><span id="default_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>default_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, a default transition that is used when no transition is specified. Don't use this, it's really annoying.</p>
+</div>
+<p><span id="menu" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>menu</b></td>
+<td valign="top">= renpy.display_menu</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The function that's called to display the menu. It should take the same arguments as <a href="../reference/functions/renpy.display_menu.html" title="renpy/doc/reference/functions/renpy.display menu">renpy.display_menu</a>. Assigning nvl_menu to this is often done in nvl mode.</p>
+</div>
+<p><span id="mouse_visible" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>mouse_visible</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Controls if the mouse is visible. This is automatically set to true when entering the standard game menus.</p>
+</div>
+<p><span id="name_only" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>name_only</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is the character that is used as a base for dialogue spoken by characters with names given as a just a string. This is used by the <a href="../reference/Store_Variables#say" title="renpy/doc/reference/Store Variables">say</a> function.</p>
+</div>
+<p><span id="narrator" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>narrator</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is the character that will say narration (that is, say statements consisting of only a single string).</p>
+</div>
+<p><span id="nvl" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>nvl</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is the default kind of character for NVL-mode characters.</p>
+</div>
+<p><span id="predict_menu" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>predict_menu</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is called with no arguments, and is expected to return a list of displayables used by the <a href="../reference/Store_Variables#menu" title="renpy/doc/reference/Store Variables">menu</a> function.</p>
+</div>
+<p><span id="predict_say" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>predict_say</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is used to predict the images used by <a href="../reference/Store_Variables#say" title="renpy/doc/reference/Store Variables">say</a>. It's called with the same two arguments, and is expected to return a list of displayables used.</p>
+</div>
+<p><span id="_rollback" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>_rollback</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Controls if rollback is allowed.</p>
+</div>
+<p><span id="say" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>say</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A function that is called when the say statement is called with a string for a name. The default behavior of this function creates a copy of the <a href="../reference/Store_Variables#name_only" title="renpy/doc/reference/Store Variables">name_only</a> object with the supplied name, and then uses that to display the dialogue. The function takes two arguments, given the name of the character and the line of dialogue.</p>
+</div>
+<p><span id="save_name" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>save_name</b></td>
+<td valign="top">= ""</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a name that's used when data is saved.</p>
+</div>
+<p><span id="suppress_overlay" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>suppress_overlay</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When true, overlay functions will not be called and the overlay will not be displayed. Defaults to true, but is set to false upon entering the out-of-game menus.</p>
+</div>
+<p><span id="_window" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>_window</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This controls if the window is shown automatically when a character is not speaking. Normally, this is set by the <code>window show</code> and <code>window hide</code> statements.</p>
+</div>
+<p><span id="_window_subtitle" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>_window_subtitle</b></td>
+<td valign="top">=</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is appended to <a href="../reference/Configuration_Variables#config.window_title" title="renpy/doc/reference/Configuration Variables">config.window_title</a> to produce the caption for the game window. This is automatically set to <a href="../reference/Configuration_Variables#config.menu_window_subtitle" title="renpy/doc/reference/Configuration Variables">config.menu_window_subtitle</a> when entering the game menu. <i>(new in 6.7.1)</i></p>
+</div>
+<p>Variables and functions specific to menu customization are documented at <a class="mw-redirect" href="../reference/Customizing_the_Main_and_Game_Menus.html" title="renpy/doc/reference/Customizing the Main and Game Menus">Customizing the Main and Game Menus</a>.</p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

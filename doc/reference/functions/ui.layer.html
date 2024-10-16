@@ -1,0 +1,45 @@
+<html><head><title>ui.layer - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.layer" name="ui.layer"></a></p>
+<h1><span class="mw-headline">ui.layer</span></h1>
+<p><span id="ui.layer" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.layer</strong></b></td>
+<td valign="top">(name):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This causes widgets to be added to the named layer, until a matching call to <a href="../../reference/functions/ui.close.html" title="renpy/doc/reference/functions/ui.close">ui.close</a>.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    <span class="slc"># This function actually draws the overlay menu.</span>
+    <span class="kwa">def</span> <span class="kwd">overlay_menu_func</span><span class="sym">():</span>
+        <span class="kwa">if</span> overlay_menu<span class="sym">.</span>shown<span class="sym">:</span>
+
+            ui<span class="sym">.</span><span class="kwd">layer</span><span class="sym">(</span><span class="str">"overlay_menu"</span><span class="sym">)</span>
+
+            ui<span class="sym">.</span><span class="kwd">vbox</span><span class="sym">(</span>xpos<span class="sym">=</span><span class="num">1.0</span><span class="sym">,</span> xanchor<span class="sym">=</span><span class="str">"right"</span><span class="sym">,</span> ypos<span class="sym">=</span><span class="num">0.75</span><span class="sym">,</span> yanchor<span class="sym">=</span><span class="str">"bottom"</span><span class="sym">)</span>
+
+            <span class="kwa">def</span> <span class="kwd">button</span><span class="sym">(</span><span class="kwa">label</span><span class="sym">,</span> target<span class="sym">):</span>
+                ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="kwa">label</span><span class="sym">,</span> clicked<span class="sym">=</span>renpy<span class="sym">.</span><span class="kwd">curried_call_in_new_context</span><span class="sym">(</span>target<span class="sym">))</span>
+
+            <span class="kwd">button</span><span class="sym">(</span><span class="str">"Load Game"</span><span class="sym">,</span> <span class="str">"_game_menu_load"</span><span class="sym">)</span>
+            <span class="kwd">button</span><span class="sym">(</span><span class="str">"Save Game"</span><span class="sym">,</span> <span class="str">"_game_menu_save"</span><span class="sym">)</span>
+            <span class="kwd">button</span><span class="sym">(</span><span class="str">"Preferences"</span><span class="sym">,</span> <span class="str">"_game_menu_preferences"</span><span class="sym">)</span>
+
+            ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span> <span class="slc"># ui.vbox</span>
+            ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span> <span class="slc"># ui.layer</span>
+
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,134 @@
+<html><head><title>CropMove - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="CropMove" name="CropMove"></a></p>
+<h1><span class="mw-headline">CropMove</span></h1>
+<p><span id="CropMove" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">CropMove</strong></b></td>
+<td valign="top">(time, mode='fromleft', startcrop=(0.0, 0.0, 0.0, #0), startpos=(0.0, 0.0), endcrop=(0.0, 0.0, #0, #0), endpos=(0.0, 0.0), topnew=True, old_widget=None, new_widget=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The CropMove transition works by placing the old and the new image on two layers, called the top and the bottom. (Normally the new image is on the top, but that can be changed in some modes.) The bottom layer is always drawn in full. The top image is first cropped to a rectangle, and then that rectangle drawn onto the screen at a specified position. Start and end crop rectangles and positions can be selected by the supplied mode, or specified manually. The result is a surprisingly flexible transition.</p>
+<p>This transition has many modes, simplifying its use. We can group these modes into three groups: wipes, slides, and other.</p>
+<p>In a wipe, the image stays fixed, and more of it is revealed as the transition progresses. For example, in "wiperight", a wipe from left to right, first the left edge of the image is revealed at the left edge of the screen, then the center of the image, and finally the right side of the image at the right of the screen. Other supported wipes are "wipeleft", "wipedown", and "wipeup".</p>
+<p>In a slide, the image moves. So in a "slideright", the right edge of the image starts at the left edge of the screen, and moves to the right as the transition progresses. Other slides are "slideleft", "slidedown", and "slideup".</p>
+<p>There are also slideaways, in which the old image moves on top of the new image. Slideaways include "slideawayright", "slideawayleft", "slideawayup", and "slideawaydown".</p>
+<p>We also support a rectangular iris in with "irisin" and a rectangular iris out with "irisout". Finally, "custom" lets the user define new transitions, if these ones are not enough.</p>
+<p><i>time</i> - The time that this transition will last for, in seconds.</p>
+<p><i>mode</i> - One of the modes given above.</p>
+<p>The following parameters are only respected if the mode is "custom".</p>
+<p><i>startcrop</i> - The starting rectangle that is cropped out of the top image. A 4-element tuple containing x, y, width, and height.</p>
+<p><i>startpos</i> - The starting place that the top image is drawn to the screen at, a 2-element tuple containing x and y.</p>
+<p><i>startcrop</i> - The starting rectangle that is cropped out of the top image. A 4-element tuple containing x, y, width, and height.</p>
+<p><i>startpos</i> - The starting place that the top image is drawn to the screen at, a 2-element tuple containing x and y.</p>
+<p><i>topnew</i> - If True, the top layer contains the new image. Otherwise, the top layer contains the old image.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ wiperight <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"wiperight"</span><span class="sym">)</span>
+    $ wipeleft <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"wipeleft"</span><span class="sym">)</span>
+    $ wipeup <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"wipeup"</span><span class="sym">)</span>
+    $ wipedown <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"wipedown"</span><span class="sym">)</span>
+
+    $ slideright <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"slideright"</span><span class="sym">)</span>
+    $ slideleft <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"slideleft"</span><span class="sym">)</span>
+    $ slideup <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"slideup"</span><span class="sym">)</span>
+    $ slidedown <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"slidedown"</span><span class="sym">)</span>
+
+    $ slideawayright <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"slideawayright"</span><span class="sym">)</span>
+    $ slideawayleft <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"slideawayleft"</span><span class="sym">)</span>
+    $ slideawayup <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"slideawayup"</span><span class="sym">)</span>
+    $ slideawaydown <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"slideawaydown"</span><span class="sym">)</span>
+
+    $ irisout <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"irisout"</span><span class="sym">)</span>
+    $ irisin <span class="sym">=</span> <span class="kwd">CropMove</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="str">"irisin"</span><span class="sym">)</span>
+
+e <span class="str">"The CropMove transition class lets us provide a wide</span>
+<span class="str">               range of transition effects."</span>
+
+<span class="kwa">hide</span> eileen <span class="kwa">with</span> dissolve
+
+e <span class="str">"I'll stand offscreen, so you can see some of its modes. I'll read</span>
+<span class="str">   out the mode name after each transition."</span>
+
+<span class="kwa">scene</span> bg whitehouse <span class="kwa">with</span> wiperight
+
+e <span class="str">"We first have wiperight..."</span>
+
+<span class="kwa">scene</span> bg washington <span class="kwa">with</span> wipeleft
+
+e <span class="str">"...followed by wipeleft... "</span>
+
+<span class="kwa">scene</span> bg whitehouse <span class="kwa">with</span> wipeup
+
+e <span class="str">"...wipeup..."</span>
+
+<span class="kwa">scene</span> bg washington <span class="kwa">with</span> wipedown
+
+e <span class="str">"...and wipedown."</span>
+
+e <span class="str">"Next, the slides."</span>
+
+<span class="kwa">scene</span> bg whitehouse <span class="kwa">with</span> slideright
+
+e <span class="str">"Slideright..."</span>
+
+<span class="kwa">scene</span> bg washington <span class="kwa">with</span> slideleft
+
+e <span class="str">"...slideleft..."</span>
+
+<span class="kwa">scene</span> bg whitehouse <span class="kwa">with</span> slideup
+
+e <span class="str">"...slideup..."</span>
+
+<span class="kwa">scene</span> bg washington <span class="kwa">with</span> slidedown
+
+e <span class="str">"and slidedown."</span>
+
+e <span class="str">"While the slide transitions slide in the new scene, the</span>
+<span class="str">   slideaways slide out the old scene."</span>
+
+<span class="kwa">scene</span> bg whitehouse <span class="kwa">with</span> slideawayright
+
+e <span class="str">"Slideawayright..."</span>
+
+<span class="kwa">scene</span> bg washington <span class="kwa">with</span> slideawayleft
+
+e <span class="str">"...slideawayleft..."</span>
+
+<span class="kwa">scene</span> bg whitehouse <span class="kwa">with</span> slideawayup
+
+e <span class="str">"...slideawayup..."</span>
+
+<span class="kwa">scene</span> bg washington <span class="kwa">with</span> slideawaydown
+
+e <span class="str">"and slideawaydown."</span>
+
+e <span class="str">"We also have a couple of transitions that use a</span>
+<span class="str">   rectangular iris."</span>
+
+<span class="kwa">scene</span> bg whitehouse <span class="kwa">with</span> irisout
+
+e <span class="str">"There's irisout..."</span>
+
+<span class="kwa">with None</span>
+<span class="kwa">scene</span> bg washington
+<span class="kwa">show</span> eileen happy
+<span class="kwa">with</span> irisin
+
+e <span class="str">"... and irisin."</span>
+
+e <span class="str">"It's enough to make you feel a bit dizzy."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

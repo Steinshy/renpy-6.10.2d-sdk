@@ -1,0 +1,45 @@
+<html><head><title>define.move transitions - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="define.move_transitions" name="define.move_transitions"></a></p>
+<h1><span class="mw-headline">define.move_transitions</span></h1>
+<p><span id="define.move_transitions" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">define.move_transitions</strong></b></td>
+<td valign="top">(prefix, delay, time_warp=None, in_time_warp=None, out_time_warp=None, layers=['master'], **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This defines a family of move transitions, similar to the move and ease transitions. For a given prefix, this defines the transitions:</p>
+<ul>
+<li>prefix - A transition that takes <i>delay</i> seconds to move images that changed positions to their new locations.</li>
+</ul>
+<ul>
+<li>prefixinleft, prefixinright, prefixintop, prefixinbottom - A transition that takes <i>delay</i> seconds to move images that changed positions to their new locations, with newly shown images coming in from the appropriate side.</li>
+</ul>
+<ul>
+<li>prefixoutleft, prefixoutright, prefixoutop, prefixoutbottom - A transition that takes <i>delay</i> seconds to move images that changed positions to their new locations, with newly hidden images leaving via the appropriate side.</li>
+</ul>
+<p><i>time_warp</i>, <i>in_time_warp</i>, <i>out_time_warp</i> - The time_warp argument supplied to <a href="../../reference/functions/Move.html" title="renpy/doc/reference/functions/Move">Move</a> for images remaining on the screen, newly shown images, and newly hidden images (respectively).</p>
+<p><i>old</i> - Causes the transitions to move the old displayables, rather than the new ones.</p>
+<p><i>layers</i> - The layers the transition will apply to.</p>
+<p>Additional keyword arguments are passed (indirectly) to the moves. The most useful additional keyword argument is probably subpixel=True, which causes a subpixel move to be used.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ <span class="kwa">define</span><span class="sym">.</span><span class="kwd">move_transitions</span><span class="sym">(</span><span class="str">'realslowmove'</span><span class="sym">,</span> <span class="num">5.0</span><span class="sym">,</span> subpixel<span class="sym">=</span><span class="kwa">True</span><span class="sym">)</span>
+
+start<span class="sym">:</span>
+    <span class="kwa">show</span> eileen happy
+    <span class="kwa">with</span> realslowmoveinright
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

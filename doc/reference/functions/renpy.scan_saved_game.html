@@ -1,0 +1,36 @@
+<html><head><title>renpy.scan saved game - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.scan_saved_game" name="renpy.scan_saved_game"></a></p>
+<h1><span class="mw-headline">renpy.scan_saved_game</span></h1>
+<p><span id="renpy.scan_saved_game" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.scan_saved_game</strong></b></td>
+<td valign="top">(name):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This scans a single savegame, and returns information about it. If a savegame with the filename <i>name</i> does not exist, this function returns None. Otherwise, it returns a triple consisting of:</p>
+<ul>
+<li>The extra_info that was passed to renpy.save.</li>
+<li>A displayable, the screenshot used to show the game.</li>
+<li>The time the game was saved at, seconds since 1/1/1970 UTC.</li>
+</ul>
+</div>
+<p><br /></p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="slc"># Load the quick save if it's less than five minutes old.</span>
+<span class="kwa">python hide</span><span class="sym">:</span>
+    <span class="kwa">import</span> time
+    data <span class="sym">=</span> renpy<span class="sym">.</span><span class="kwd">scan_saved_game</span><span class="sym">(</span><span class="str">"quicksave"</span><span class="sym">)</span>
+    <span class="kwa">if</span> data <span class="kwa">and</span> data<span class="sym">[</span><span class="num">2</span><span class="sym">] +</span> <span class="num">300</span> <span class="sym">&gt;</span> time<span class="sym">.</span><span class="kwd">time</span><span class="sym">():</span>
+        renpy<span class="sym">.</span><span class="kwd">load</span><span class="sym">(</span><span class="str">"quicksave"</span><span class="sym">)</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

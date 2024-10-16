@@ -1,0 +1,27 @@
+<html><head><title>renpy.rollback - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.rollback" name="renpy.rollback"></a></p>
+<h1><span class="mw-headline">renpy.rollback</span></h1>
+<p><span id="renpy.rollback" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.rollback</strong></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Call this to cause a rollback to occur. Only returns if rollback is not possible, otherwise control will be transferred to the rollback point.</p>
+</div>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    <span class="kwa">def</span> <span class="kwd">rollback_overlay</span><span class="sym">():</span>
+        ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Back"</span><span class="sym">,</span> clicked<span class="sym">=</span>renpy<span class="sym">.</span>rollback<span class="sym">,</span> xalign<span class="sym">=</span><span class="num">1.0</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.0</span><span class="sym">)</span>
+
+    config<span class="sym">.</span>overlay_functions<span class="sym">.</span><span class="kwd">append</span><span class="sym">(</span>rollback_overlay<span class="sym">)</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

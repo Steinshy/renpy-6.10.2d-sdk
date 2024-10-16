@@ -1,0 +1,41 @@
+<html><head><title>renpy.roll forward info - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.roll_forward_info" name="renpy.roll_forward_info"></a></p>
+<h1><span class="mw-headline">renpy.roll_forward_info</span></h1>
+<p><span id="renpy.roll_forward_info" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.roll_forward_info</strong></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When re-executing a statement after rollback, this returns the data stored using <a href="../../reference/functions/renpy.checkpoint.html" title="renpy/doc/reference/functions/renpy.checkpoint">renpy.checkpoint</a> the last time this statement was executed. If this statement is not being re-executed due to a rollback, this returns None.</p>
+<p>Often, this data is passed as the roll_forward parameter of <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>. It's important to check to ensure that the value is valid before using it in this way.</p>
+</div>
+<p><br /></p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    roll_forward <span class="sym">=</span> renpy<span class="sym">.</span><span class="kwd">roll_forward_info</span><span class="sym">()</span>
+    <span class="kwa">if</span> roll_forward <span class="kwa">not in</span> <span class="sym">(</span><span class="str">"rock"</span><span class="sym">,</span> <span class="str">"paper"</span><span class="sym">,</span> <span class="str">"scissors"</span><span class="sym">):</span>
+        roll_forward <span class="sym">=</span> <span class="kwa">None</span>
+
+    ui<span class="sym">.</span><span class="kwd">hbox</span><span class="sym">()</span>
+    ui<span class="sym">.</span><span class="kwd">imagebutton</span><span class="sym">(</span><span class="str">"rock.png"</span><span class="sym">,</span> <span class="str">"rock_hover.png"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="str">"rock"</span><span class="sym">))</span>
+    ui<span class="sym">.</span><span class="kwd">imagebutton</span><span class="sym">(</span><span class="str">"paper.png"</span><span class="sym">,</span> <span class="str">"paper_hover.png"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="str">"paper"</span><span class="sym">))</span>
+    ui<span class="sym">.</span><span class="kwd">imagebutton</span><span class="sym">(</span><span class="str">"scissors.png"</span><span class="sym">,</span> <span class="str">"scissors_hover.png"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="str">"scissors"</span><span class="sym">))</span>
+    ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+
+    choice <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">(</span>roll_forward<span class="sym">=</span>roll_forward<span class="sym">)</span>
+    renpy<span class="sym">.</span><span class="kwd">checkpoint</span><span class="sym">(</span>choice<span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

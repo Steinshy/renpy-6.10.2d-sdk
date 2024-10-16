@@ -1,0 +1,215 @@
+<html><head><title>NVL-Mode - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a></p><p><a id="NVL-Mode_Tutorial" name="NVL-Mode_Tutorial"></a></p>
+<h1><span class="mw-headline">NVL-Mode Tutorial</span></h1>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:nvl-example.jpg.html" title="nvl-example.jpg"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-nvl-example.jpg" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p>There are two main styles of presentation used for visual novels. ADV-style games present dialogue and narration one line at a time, generally in a window at the bottom of the screen. NVL-style games present multiple lines on the screen at a time, in a window that takes up the entire screen.</p>
+<p>In this tutorial, we will explain how to make an NVL-mode game using Ren'Py. This tutorial assumes that you are already familiar with the basics of Ren'Py, as explained in the <a href="../tutorials/Quickstart.html" title="renpy/doc/tutorials/Quickstart">Quickstart manual</a>.</p>
+<table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#NVL-Mode_Tutorial"><span class="tocnumber">1</span> <span class="toctext">NVL-Mode Tutorial</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Getting_Started"><span class="tocnumber">1.1</span> <span class="toctext">Getting Started</span></a></li>
+<li class="toclevel-2"><a href="#Menus"><span class="tocnumber">1.2</span> <span class="toctext">Menus</span></a></li>
+<li class="toclevel-2"><a href="#Showing_and_Hiding_the_NVL-mode_Window"><span class="tocnumber">1.3</span> <span class="toctext">Showing and Hiding the NVL-mode Window</span></a></li>
+<li class="toclevel-2"><a href="#Customizing_Characters"><span class="tocnumber">1.4</span> <span class="toctext">Customizing Characters</span></a></li>
+<li class="toclevel-2"><a href="#Customizing_Menus"><span class="tocnumber">1.5</span> <span class="toctext">Customizing Menus</span></a></li>
+<li class="toclevel-2"><a href="#Customizing_NVL-Mode"><span class="tocnumber">1.6</span> <span class="toctext">Customizing NVL-Mode</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Setting_the_NVL-Mode_Window_Background"><span class="tocnumber">1.6.1</span> <span class="toctext">Setting the NVL-Mode Window Background</span></a></li>
+<li class="toclevel-3"><a href="#Setting_the_Inter-Block_Spacing"><span class="tocnumber">1.6.2</span> <span class="toctext">Setting the Inter-Block Spacing</span></a></li>
+<li class="toclevel-3"><a href="#Paged_Rollback"><span class="tocnumber">1.6.3</span> <span class="toctext">Paged Rollback</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Script_of_The_Question_.28NVL-mode_Edition.29"><span class="tocnumber">1.7</span> <span class="toctext">Script of The Question (NVL-mode Edition)</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><br clear="right" /></p>
+<p><a id="Getting_Started" name="Getting_Started"></a></p>
+<h2><span class="mw-headline">Getting Started</span></h2>
+<p>NVL-mode can be added to a Ren'Py script in two steps. The first is to declare the characters to use NVL-mode, and the second is to add "nvl clear" statements at the end of each page.</p>
+<p>Characters can be declared to use NVL-mode by adding a "kind=nvl" parameter to each of the Character declarations. For example, if we the character declarations from the Quickstart manual are:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ s <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">'Sylvie'</span><span class="sym">,</span> color<span class="sym">=</span><span class="str">"#c8ffc8"</span><span class="sym">)</span>
+    $ m <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">'Me'</span><span class="sym">,</span> color<span class="sym">=</span><span class="str">"#c8c8ff"</span><span class="sym">)</span>
+</pre>
+<p>Changed to use NVL-mode, those declarations become:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ s <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">'Sylvie'</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">,</span> color<span class="sym">=</span><span class="str">"#c8ffc8"</span><span class="sym">)</span>
+    $ m <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">'Me'</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">,</span> color<span class="sym">=</span><span class="str">"#c8c8ff"</span><span class="sym">)</span>
+    $ narrator <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="kwa">None</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">)</span>
+</pre>
+<p>Note that we have also added an NVL-mode declaration of <tt>narrator</tt>. The <tt>narrator</tt> character is used to speak lines that do not have another character name associated with it.</p>
+<p>If we ran the game like this, the first few lines would display normally, but after a while, lines would begin displaying below the bottom of the screen. To break the script into pages, include an "nvl clear" statement after each page.</p>
+<p>The following is an example script with pagination:</p>
+<pre>
+<span class="kwa">label</span> start<span class="sym">:</span>
+    <span class="str">"I'll ask her..."</span>
+
+    m <span class="str">"Um... will you..."</span>
+    m <span class="str">"Will you be my artist for a visual novel?"</span>
+
+    nvl clear
+
+    <span class="str">"Silence."</span>
+    <span class="str">"She is shocked, and then..."</span>
+
+    s <span class="str">"Sure, but what is a</span> <span class="esc">\"</span><span class="str">visual novel?</span><span class="esc">\"</span><span class="str">"</span>
+
+    nvl clear
+</pre>
+<p>While nvl-mode games generally have more text per paragraph, this example demonstrates a basic NVL-mode script. (Suitable for use in a kinetic novel that does not have transitions.)</p>
+<p><a id="Menus" name="Menus"></a></p>
+<h2><span class="mw-headline">Menus</span></h2>
+<p>By default, menus are displayed in ADV-mode, taking up the full screen. There is also an alternate NVL-mode menu presentation, which displays the menus immediately after the current page of NVL-mode text.</p>
+<p>To access this alternate menu presentation, write:</p>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+     <span class="kwa">menu</span> <span class="sym">=</span> nvl_menu
+</pre>
+<p>The menu will disappear after the choice has been made, so it usually makes sense to follow menus with an "nvl clear" or some sort of indication as to the choice.</p>
+<p><a id="Showing_and_Hiding_the_NVL-mode_Window" name="Showing_and_Hiding_the_NVL-mode_Window"></a></p>
+<h2><span class="mw-headline">Showing and Hiding the NVL-mode Window</span></h2>
+<p>The NVL-mode window can be controlled with the standard "window show" and "window hide" statements. To enable this, add the following code to your game:</p>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    config<span class="sym">.</span>empty_window <span class="sym">=</span> nvl_show_core
+    config<span class="sym">.</span>window_hide_transition <span class="sym">=</span> dissolve
+    config<span class="sym">.</span>window_show_transition <span class="sym">=</span> dissolve
+</pre>
+<p>Setting <a href="../reference/Configuration_Variables#config.empty_window" title="renpy/doc/reference/Configuration Variables">config.empty_window</a> to <tt>nvl_show_core</tt> will cause the NVL-mode window to be displayed during a transition. (The last two lines select the default transitions to be used for showing and hiding the window.)</p>
+<p>An example of using the window commands to show and hide the window is:</p>
+<pre>
+<span class="kwa">label</span> meadow<span class="sym">:</span>
+
+    nvl clear
+
+    <span class="kwa">window hide</span>
+    <span class="kwa">scene</span> bg meadow
+    <span class="kwa">with</span> fade
+    <span class="kwa">window show</span>
+
+    <span class="str">"We reached the meadows just outside our hometown. Autumn was so beautiful here."</span>
+    <span class="str">"When we were children, we often played here."</span>
+
+    m <span class="str">"Hey... ummm..."</span>
+
+    <span class="kwa">window hide</span>
+    <span class="kwa">show</span> sylvie smile
+    <span class="kwa">with</span> dissolve
+    <span class="kwa">window show</span>
+
+    <span class="str">"She turned to me and smiled."</span>
+    <span class="str">"I'll ask her..."</span>
+    m <span class="str">"Ummm... will you..."</span>
+    m <span class="str">"Will you be my artist for a visual novel?"</span>
+</pre>
+<p><a id="Customizing_Characters" name="Customizing_Characters"></a></p>
+<h2><span class="mw-headline">Customizing Characters</span></h2>
+<p>NVL-mode characters can be customized to have several looks, hopefully allowing you to pick the one that is most appropriate to the game you are creating.</p>
+<div align="center"><a class="image" href="/wiki/File:nvl-looks.jpg.html" title="nvl-looks.jpg"><img alt="" border="0" height="225" src="../images/300px-nvl-looks.jpg" width="300" /></a></div>
+<p>1. The default look has a character's name to the left, and dialogue indented to the right of the name. The color of the name is controlled by the <i>color</i> parameter.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ s <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">'Sylvie'</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">,</span> color<span class="sym">=</span><span class="str">"#c8ffc8"</span><span class="sym">)</span>
+</pre>
+<p>2. A second look has the character's name embedded in with the text. Dialogue spoken by the character is enclosed in quotes. Note that here, the character's name is placed in the <i>what_prefix</i> parameter, along with the open quote. (The close quote is placed in the <i>what_suffix</i> parameter.)</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ s <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="kwa">None</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">,</span> what_prefix<span class="sym">=</span><span class="str">"Sylvie:</span> <span class="esc">\"</span><span class="str">"</span><span class="sym">,</span> what_suffix<span class="sym">=</span><span class="str">"</span><span class="esc">\"</span><span class="str">"</span><span class="sym">)</span>
+</pre>
+<p>3. A third look dispenses with the character name entirely, while putting the dialogue in quotes.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ s <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="kwa">None</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">,</span> what_prefix<span class="sym">=</span><span class="str">"</span><span class="esc">\"</span><span class="str">"</span><span class="sym">,</span> what_suffix<span class="sym">=</span><span class="str">"</span><span class="esc">\"</span><span class="str">"</span><span class="sym">)</span>
+</pre>
+<p>4. Since the third look might make it hard to distinguish who's speaking, we can tint the dialogue using the <i>what_color</i> parameter.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ s <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="kwa">None</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">,</span> what_prefix<span class="sym">=</span><span class="str">"</span><span class="esc">\"</span><span class="str">"</span><span class="sym">,</span> what_suffix<span class="sym">=</span><span class="str">"</span><span class="esc">\"</span><span class="str">"</span><span class="sym">,</span> what_color<span class="sym">=</span><span class="str">"#c8ffc8"</span><span class="sym">)</span>
+</pre>
+<p>5. Of course, a completely uncustomized NVL-mode character can be used, if you want to take total control of what is shown. (This is often used for the narrator.)</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ s <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="kwa">None</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">)</span>
+</pre>
+<p><a id="Customizing_Menus" name="Customizing_Menus"></a></p>
+<h2><span class="mw-headline">Customizing Menus</span></h2>
+<p>There are a few styles that control the look of the menus. Here's some code showing how to customize them. Note that colors are generally expressed as hex-quadruples of the form "#rrggbbaa", where aa is an alpha from 00 (transparent) to ff (fully opaque).</p>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+
+    <span class="slc"># The color of a menu choice when it isn't hovered.</span>
+    style<span class="sym">.</span>nvl_menu_choice<span class="sym">.</span>idle_color <span class="sym">=</span> <span class="str">"#ccccccff"</span>
+
+    <span class="slc"># The color of a menu choice when it is hovered.</span>
+    style<span class="sym">.</span>nvl_menu_choice<span class="sym">.</span>hover_color <span class="sym">=</span> <span class="str">"#ffffffff"</span>
+
+    <span class="slc"># The color of the background of a menu choice, when it isn't</span>
+    <span class="slc"># hovered.</span>
+    style<span class="sym">.</span>nvl_menu_choice_button<span class="sym">.</span>idle_background <span class="sym">=</span> <span class="str">"#00000000"</span>
+
+    <span class="slc"># The color of the background of a menu choice, when it is</span>
+    <span class="slc"># hovered.</span>
+    style<span class="sym">.</span>nvl_menu_choice_button<span class="sym">.</span>hover_background <span class="sym">=</span> <span class="str">"#ff000044"</span>
+
+    <span class="slc"># How far from the left menu choices should be indented.</span>
+    style<span class="sym">.</span>nvl_menu_choice_button<span class="sym">.</span>left_margin <span class="sym">=</span> <span class="num">20</span>
+</pre>
+<p><a id="Customizing_NVL-Mode" name="Customizing_NVL-Mode"></a></p>
+<h2><span class="mw-headline">Customizing NVL-Mode</span></h2>
+<p>Finally, there are several ways that NVL-mode itself can be customized.</p>
+<p><a id="Setting_the_NVL-Mode_Window_Background" name="Setting_the_NVL-Mode_Window_Background"></a></p>
+<h3><span class="mw-headline">Setting the NVL-Mode Window Background</span></h3>
+<p>The following code sets the NVL-mode window background. "nvl_window.png" should be an image the size of the screen, while xpadding and ypadding control the distance from the borders of the screen to the text area.</p>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+
+    style<span class="sym">.</span>nvl_window<span class="sym">.</span>background <span class="sym">=</span> <span class="str">"nvl_window.png"</span>
+    style<span class="sym">.</span>nvl_window<span class="sym">.</span>xpadding <span class="sym">=</span> <span class="num">55</span>
+    style<span class="sym">.</span>nvl_window<span class="sym">.</span>ypadding <span class="sym">=</span> <span class="num">55</span>
+</pre>
+<p><a id="Setting_the_Inter-Block_Spacing" name="Setting_the_Inter-Block_Spacing"></a></p>
+<h3><span class="mw-headline">Setting the Inter-Block Spacing</span></h3>
+<p>The inter-block spacing is the distance between blocks of text on a page. The following code sets it to 10 pixels, the default.</p>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    style<span class="sym">.</span>nvl_vbox<span class="sym">.</span>box_spacing <span class="sym">=</span> <span class="num">10</span>
+</pre>
+<p><a id="Paged_Rollback" name="Paged_Rollback"></a></p>
+<h3><span class="mw-headline">Paged Rollback</span></h3>
+<p>Paged rollback causes Ren'Py to rollback one NVL-mode page at a time, rather than one block of text at a time. It can be enabled by including the following code in your script.</p>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    config<span class="sym">.</span>nvl_paged_rollback <span class="sym">=</span> <span class="kwa">True</span>
+</pre>
+<p><a id="Script_of_The_Question_.28NVL-mode_Edition.29" name="Script_of_The_Question_.28NVL-mode_Edition.29"></a></p>
+<h2><span class="mw-headline">Script of The Question (NVL-mode Edition)</span></h2>
+<p>You can view the full script of the NVL-mode edition of <i>The Question</i> <a href="../tutorials/TheQuestionNVLScript.html" title="renpy/doc/tutorials/TheQuestionNVLScript">here</a>.</p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a></p></div>
+	</body></html>

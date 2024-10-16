@@ -1,0 +1,40 @@
+<html><head><title>renpy.block rollback - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.block_rollback" name="renpy.block_rollback"></a></p>
+<h1><span class="mw-headline">renpy.block_rollback</span></h1>
+<p><span id="renpy.block_rollback" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.block_rollback</strong></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Prevents the game from rolling back to before the current statement.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">label</span> final_answer<span class="sym">:</span>
+<span class="str">"Is that your final answer?"</span>
+<span class="kwa">menu</span><span class="sym">:</span>
+    <span class="str">"Yes"</span><span class="sym">:</span>
+        <span class="kwa">jump</span> no_return
+    <span class="str">"No"</span><span class="sym">:</span>
+        <span class="str">"We have ways of making you talk."</span>
+        <span class="str">"You should contemplate them."</span>
+        <span class="str">"I'll ask you one more time..."</span>
+        <span class="kwa">jump</span> final_answer
+
+<span class="kwa">label</span> no_return<span class="sym">:</span>
+$ renpy<span class="sym">.</span><span class="kwd">block_rollback</span><span class="sym">()</span>
+<span class="str">"So it is. There's no turning back now."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

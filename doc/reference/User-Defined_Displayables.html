@@ -1,0 +1,438 @@
+<html><head><title>User-Defined Displayables - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="User-Defined_Displayables" name="User-Defined_Displayables"></a></p>
+<h1><span class="mw-headline">User-Defined Displayables</span></h1>
+<p>It's possible for a user to define displayables that extend Ren'Py's behavior. This section will explain the steps that are involved in defining your own displayables, and how to use them with Ren'Py.</p>
+<p>A displayable is an object that inherits from renpy.Displayable, a class that has several methods that can be overridden to control the behavior of the displayable. Probably the most important of these is render, a method that must be overridden to return a renpy.Render object, which contains the result of drawing the displayable. The event method can be overridden to respont to events, and to terminate the interaction when necessary. Other methods allow a displayable to respond to a variety of events.</p>
+<p>Displayables must be capable of being serialized. This means that they must not contain references to objects that are incapable of being serialized. Of particular note is that the renpy.Render object is incapable of being serialized.</p>
+<p>Displayables have a number of methods and fields, not all of which are documented here. We strongly recommend you use a unique prefix for the names of fields and methods you add, to minimize the chance of conflicts.</p>
+<table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#User-Defined_Displayables"><span class="tocnumber">1</span> <span class="toctext">User-Defined Displayables</span></a>
+<ul>
+<li class="toclevel-2"><a href="#renpy.Displayable"><span class="tocnumber">1.1</span> <span class="toctext">renpy.Displayable</span></a></li>
+<li class="toclevel-2"><a href="#renpy.Render"><span class="tocnumber">1.2</span> <span class="toctext">renpy.Render</span></a></li>
+<li class="toclevel-2"><a href="#renpy.Container"><span class="tocnumber">1.3</span> <span class="toctext">renpy.Container</span></a></li>
+<li class="toclevel-2"><a href="#Utility_Functions"><span class="tocnumber">1.4</span> <span class="toctext">Utility Functions</span></a></li>
+<li class="toclevel-2"><a href="#Using_User-Defined_Displayables"><span class="tocnumber">1.5</span> <span class="toctext">Using User-Defined Displayables</span></a></li>
+<li class="toclevel-2"><a href="#Defining_At-functions_and_Transitions"><span class="tocnumber">1.6</span> <span class="toctext">Defining At-functions and Transitions</span></a></li>
+<li class="toclevel-2"><a href="#Notes"><span class="tocnumber">1.7</span> <span class="toctext">Notes</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><br /></p>
+<p><a id="renpy.Displayable" name="renpy.Displayable"></a></p>
+<h2><span class="mw-headline">renpy.Displayable</span></h2>
+<p>This is the base class for user-defined displayables. It has the following fields and methods.</p>
+<p>Since you will be implementing many of these methods, rather than calling them, we include the normally hidden self parameter in the definition.</p>
+<p><span id="focusable" /></p>
+<table>
+<tr>
+<td valign="top">Field:</td>
+<td valign="top"><b>focusable</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This field should be True if it's possible for the displayable to gain focus, and false otherwise.</p>
+</div>
+<p><span id="style" /></p>
+<table>
+<tr>
+<td valign="top">Field:</td>
+<td valign="top"><b>style</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The style of this displayable. This is automatically created by the default constructor.</p>
+</div>
+<p><span id="delay" /></p>
+<table>
+<tr>
+<td valign="top">Field:</td>
+<td valign="top"><b>delay</b></td>
+<td valign="top">= <i>undefined</i></td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If this displayable is used as a transition, then delay should be set to the number of seconds that the transition will take.</p>
+</div>
+<p><span id="renpy.Displayable.__init__" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Displayable.__init__</b></td>
+<td valign="top">(self, default=False, focus=None, style='default', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The __init__ method may be overridden with your own parameter list, but the default method must be called to properly initialize a Displayable. The parameters the default methods take are:</p>
+<p><i>focus</i> - if given, a string giving the name of the focus group in the object. The focus group is used to determine which displayable should be focused after an interaction. For example, if the third displayable in focus group "foo" has focus at the end of an interaction, the third displayable in "foo" will have focus at the start of the next interaction, even if the two displayables are not the same.</p>
+<p><i>default</i> - determines if this object can be focused by default. This is only used if no object with the same focus name is found in an interaction.</p>
+<p><i>style</i> - The name of the default style, used to construct a style object that is placed in the <tt>style</tt> field.</p>
+<p><i>properties</i> - Additional keyword arguments are treated as style properties when constructing the style.</p>
+</div>
+<p><span id="renpy.Displayable.focus" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Displayable.focus</b></td>
+<td valign="top">(self, default=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Called to indicate that this displayable has been given the focus. <i>default</i> is true if the focus has been given to this displayable at the start of an interaction.</p>
+<p>The default implementation sets the style prefix of this displayable and its children to 'hover_'.</p>
+<p>If this returns a non-None value, the current interaction is terminated and the value is returned.</p>
+</div>
+<p><span id="renpy.Displayable.unfocus" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Displayable.unfocus</b></td>
+<td valign="top">(self):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Called to indicate this displayable has lost focus.</p>
+<p>The default implementation resets the style prefix of this displayable and its children to 'idle_'.</p>
+<p>This should return None.</p>
+</div>
+<p><span id="renpy.Displayable.is_focused" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Displayable.is_focused</b></td>
+<td valign="top">(self):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This method determines if the current displayable has focus. It probably doesn't make sense to override it.</p>
+</div>
+<p><span id="renpy.Displayable.set_style_prefix" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Displayable.set_style_prefix</b></td>
+<td valign="top">(self, prefix):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Sets the style prefix of this displayable and its children to one of: "insensitive_", "idle_", "hover_", "activate_", "selected_insensitive_", "selected_idle_", "selected_hover_", or "selected_activate_".</p>
+</div>
+<p><span id="renpy.Displayable.render" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Displayable.render</b></td>
+<td valign="top">(self, width, height, st, at):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is responsible for drawing the displayable. This is done by creating a renpy.Render object, blitting other objects to that object in appropriate places, and then returning that Render.</p>
+<p><i>width</i>, <i>height</i> - The area allocated to this displayable. The created displayable may be bigger or smaller than this, without consequence.</p>
+<p><i>st</i> - The displayable timebase, the number of seconds this displayable has been shown for.</p>
+<p><i>at</i> - The animation timebase, the number of seconds an image with the same tag as this displayable has been shown for.</p>
+<p>This method should not be called directly on child displayables. (See renpy.render instead.)</p>
+</div>
+<p><span id="renpy.Displayable.event" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Displayable.event</b></td>
+<td valign="top">(self, ev, x, y, st):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is called when an event occurs.</p>
+<p><i>ev</i> - The pygame event object. This can be read to get the type of event and other parameters.</p>
+<p><i>x</i>, <i>y</i> - The position of the mouse at the time of the event. This is relative to the upper-left corner of this displayable, and should be used in preference to similar data contained in <i>ev</i>.</p>
+<p><i>st</i> - The displayable timebase.</p>
+<p>If this method returns a non-None value, then that value is returned from <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>. If it returns None, processing of the event is continued by the other displayables. If renpy.IgnoreEvent is raised, then no other displayables will see the event.</p>
+<p>It may make sense to call this method on child displayables.</p>
+</div>
+<p><span id="renpy.Displayable.get_placement" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Displayable.get_placement</b></td>
+<td valign="top">(self):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns a tuple of (xpos, ypos, xalign, yalign, xoffset, yoffset), that is used to place this displayable on the screen.</p>
+<p>This defaults to getting the proper values out of style.</p>
+</div>
+<p><span id="renpy.Displayable.visit" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Displayable.visit</b></td>
+<td valign="top">(self):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This should be overridden to return a list of all the child displayables fo this displayable.</p>
+</div>
+<p><span id="renpy.Displayable.per_interact" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Displayable.per_interact</b></td>
+<td valign="top">(self):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is called once per interaction, to inform the displayable that a new interaction has begun.</p>
+<p>Often, this should call renpy.redraw(self, 0), to make sure that the displayable is redrawn for each interaction. This is especially useful if the displayable participates in rollback.</p>
+</div>
+<p><a id="renpy.Render" name="renpy.Render"></a></p>
+<h2><span class="mw-headline">renpy.Render</span></h2>
+<p>Since one will not be subclassing renpy.Render, we omit the self parameter from method descriptions.</p>
+<p><br />
+<span id="renpy.Render" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.Render_(constructor).html" title="renpy/doc/reference/functions/renpy.Render (constructor)">renpy.Render</a></b></td>
+<td valign="top">(width, height):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Constructs a new render object with the given width and height.</p>
+</div>
+<p><br />
+<span id="renpy.Render.blit" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Render.blit</b></td>
+<td valign="top">(source, pos):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Copies the contents of the <i>source</i> render to this one. <i>Pos</i> is a 2-element tuple giving the position of the upper-left-hand corner of the source render, relative to the upper-left-hand corner of this render, in pixels.</p>
+</div>
+<p><span id="renpy.Render.fill" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Render.fill</b></td>
+<td valign="top">(color):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Fills the render with the given color, which should be an RGBA tuple.</p>
+</div>
+<p><span id="renpy.Render.get_size" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Render.get_size</b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns the width and height of this render as a pair.</p>
+</div>
+<p><span id="renpy.Render.kill" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Render.kill</b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Deallocates the memory used by this Render. This must be called on a Render returned by renpy.render or renpy.Render.subsurface if the render is not blitted to another Render. Once this is called, the render should not be blitted to a surface or have any other method called. It is safe to call this on a Render that has been blitted somewhere, as these calls are ignored.</p>
+</div>
+<p><span id="renpy.Render.subsurface" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Render.subsurface</b></td>
+<td valign="top">(pos):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns a render that is a subsurface of this render. Pos should be an (x,y,w,h) tuple, where x and y are the coordinates of the upper-left corner of the subsurface, w is the width, and h is the height of the subsurface.</p>
+</div>
+<p><span id="renpy.Render.add_focus" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Render.add_focus</b></td>
+<td valign="top">(displayable, arg, x, y, w, h, mx=None, my=None, mask=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is used to indicate that a sub-region of this Render is eligible for being focused.</p>
+<p><i>displayable</i> - The displayable that will be focused. <i>arg</i> - Ignored, should be None. <i>x</i>, <i>y</i>, <i>w</i>, <i>h</i> - If not None, a rectangular subregion of this Render that will be focused. If all are None, this displayable has full-screen focus. <i>mx</i>, <i>my</i> - If not None, offsets of the focus mask from the upper-left hand corner of this Render. <i>mask</i> - A Render that is used as a focus mask when mouse focus is needed. The mouse will only focus the displayable when it is over a non-transparent pixel in the mask.</p>
+</div>
+<p><span id="renpy.Render.canvas" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Render.canvas</b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function returns a canvas object that has methods corresponding to the <a class="external text" href="http://www.pygame.org/docs/ref/draw.html" rel="nofollow" title="http://www.pygame.org/docs/ref/draw.html">pygame.draw</a> functions, except that the first argument (the surface) is omitted. For example, instead of calling pygame.draw.line(surface, (255, 255, 255, 255), (100, 100), (200, 200)), one would call c.line((255, 255, 255, 255), (100, 100), (200, 200)).</p>
+<p>Code that uses a canvas may not be portable to non-pygame platforms, should we choose to support them in the future.</p>
+</div>
+<p><a id="renpy.Container" name="renpy.Container"></a></p>
+<h2><span class="mw-headline">renpy.Container</span></h2>
+<p>The renpy.Container class implements a displayable that positions its children using style properties, in a manner similar to <a href="../reference/functions/Fixed.html" title="renpy/doc/reference/functions/Fixed">Fixed</a> and <a href="../reference/functions/ui.fixed.html" title="renpy/doc/reference/functions/ui.fixed">ui.fixed</a>. Unlike the displayable returned by those functions, renpy.Container supports adding and removing children, and it may be subclassed to change its behavior (including the behavior of the render and event methods).</p>
+<p>A renpy.Container implements all of the methods of a renpy.Displayable. These methods may be overridden in a subclass, and this is often done with for the render and event methods. A container has three additional fields:</p>
+<p><span id="children" /></p>
+<table>
+<tr>
+<td valign="top">Field:</td>
+<td valign="top"><b>children</b></td>
+<td valign="top">= []</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of the children of this container.</p>
+</div>
+<p><span id="children" /></p>
+<table>
+<tr>
+<td valign="top">Field:</td>
+<td valign="top"><b>children</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The last child added to this container and not removed, or None if there are no children in this container.</p>
+</div>
+<p><span id="offsets" /></p>
+<table>
+<tr>
+<td valign="top">Field:</td>
+<td valign="top"><b>offsets</b></td>
+<td valign="top">= []</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of (x, y) tuples giving the coordinates of the upper-left corners of the children of this displayable.</p>
+</div>
+<p>It also has three methods. (We give these without the self parameter, as we expect them to be called, and only rarely overridden.)</p>
+<p><span id="renpy.Container.add" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Container.add</b></td>
+<td valign="top">(d):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Add a <i>d</i> to this container.</p>
+</div>
+<p><span id="renpy.Container.remove" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Container.remove</b></td>
+<td valign="top">(d):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Remove the first instance of <i>d</i> from this container.</p>
+</div>
+<p><span id="renpy.Container.update" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.Container.update</b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This should be called after add or remove, to indicate that the container has changed and should be redrawn.</p>
+</div>
+<p><a id="Utility_Functions" name="Utility_Functions"></a></p>
+<h2><span class="mw-headline">Utility Functions</span></h2>
+<p><span id="renpy.render" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.render.html" title="renpy/doc/reference/functions/renpy.render">renpy.render</a></b></td>
+<td valign="top">(displayable, width, height, st, at):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Call this function to get a Render from a displayable. It takes care of calling the render method on that displayable, and then caching the results when nothing has changed.</p>
+</div>
+<p><span id="renpy.redraw" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.redraw.html" title="renpy/doc/reference/functions/renpy.redraw">renpy.redraw</a></b></td>
+<td valign="top">(displayable, time):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Causes the supplied displayable to be redrawn after <i>time</i> seconds have elapsed. <i>Time</i> may be zero to ensure an immediate redraw.</p>
+</div>
+<p><br />
+<span id="renpy.timeout" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.timeout.html" title="renpy/doc/reference/functions/renpy.timeout">renpy.timeout</a></b></td>
+<td valign="top">(time):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Causes an event to occur in <i>time</i> seconds. The type of the event is undefined.</p>
+</div>
+<p><br />
+<span id="renpy.easy_displayable" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.easy_displayable.html" title="renpy/doc/reference/functions/renpy.easy displayable">renpy.easy_displayable</a></b></td>
+<td valign="top">(d, none=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This takes an "easy displayable", and returns a <a href="../reference/Displayables.html" title="renpy/doc/reference/Displayables">Displayable</a>. Easy displayables may be Displayables, or may be strings. If a string, then:</p>
+<ul>
+<li>If the string starts with #, a <a href="../reference/functions/Solid.html" title="renpy/doc/reference/functions/Solid">Solid</a> of the given color is returned.</li>
+<li>Otherwise, an <a href="../reference/functions/Image.html" title="renpy/doc/reference/functions/Image">Image</a> is returned.</li>
+</ul>
+<p>If <i>none</i> is True and d is None, then None is returned. Otherwise, if d is None, an exception is thrown.</p>
+</div>
+<p><br /></p>
+<p><a id="Using_User-Defined_Displayables" name="Using_User-Defined_Displayables"></a></p>
+<h2><span class="mw-headline">Using User-Defined Displayables</span></h2>
+<p>Once a user-defined displayable class has been defined, objects of that class can be created. Such an object can be shown with a show statement, or added to the transient layer with <a href="../reference/functions/ui.add.html" title="renpy/doc/reference/functions/ui.add">ui.add</a>.</p>
+<p><a id="Defining_At-functions_and_Transitions" name="Defining_At-functions_and_Transitions"></a></p>
+<h2><span class="mw-headline">Defining At-functions and Transitions</span></h2>
+<p>An At-function is a function that is suitable for use in an at-list, as part of a show statement. These are functions that take a displayable as an argument, and return a second displayable. (User-defined or not.)</p>
+<p>Transitions take two keyword arguments, new_widget and old_widget, representing the new and old scenes, respectively. They return a displayable that performs the transition, which should have its delay fields set to the duration of the transition.</p>
+<p><a id="Notes" name="Notes"></a></p>
+<h2><span class="mw-headline">Notes</span></h2>
+<p>Although we will do our best to avoid breaking code unnecessarily, we reserve the right to change the displayable API as necessary to support the future development of Ren'Py. As a result, code using the displayable API may not be forward-compatible with future versions of Ren'Py.</p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

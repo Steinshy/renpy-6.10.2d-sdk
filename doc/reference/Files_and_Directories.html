@@ -1,0 +1,34 @@
+<html><head><title>Files and Directories - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Files_and_Directories" name="Files_and_Directories"></a></p>
+<h1><span class="mw-headline">Files and Directories</span></h1>
+<p>There are two main directories used by Ren'Py games.</p>
+<p><a id="Base_Directory" name="Base_Directory"></a></p>
+<h3><span class="mw-headline">Base Directory</span></h3>
+<p>The base directory is the directory that contains all files that are distributed with the game. (It may also contain some files that are not distributed with the game.) Things like README files should be placed in the base directory, from where they will be distributed.</p>
+<p>The base directory is created underneath the Ren'Py directory, and has the name of your game. For example, if your Ren'Py directory is named renpy-6.10.1, and your game is named "HelloWorld", your base directory will be renpy-6.10.1/HelloWorld.</p>
+<p><a id="Game_Directory" name="Game_Directory"></a></p>
+<h3><span class="mw-headline">Game Directory</span></h3>
+<p>The game directory is almost always a directory named "game" underneath the base directory. For example, if your base directory is renpy-6.10.1/HelloWorld, your game directory will be renpy-6.10.1/HelloWorld/game.</p>
+<p>However, Ren'Py searches directories in the following order:</p>
+<ul>
+<li>The name of the executable, without the suffix. For example, if the executable is named moonlight.exe, it will look for a directory named moonlight under the base directory.</li>
+<li>The name of the executable, without the suffix, and with a prefix ending with _ removed. For example, if the executable is moonlight_en.exe, Ren'Py will look for a directory named en.</li>
+<li>The directories "game", "data", and "launcher", in that order.</li>
+</ul>
+<p>The launcher will only properly recognize the "game" and "data" directories, however.</p>
+<p>The game directory contains all the files used by the game. It, including all subdirectories, is scanned for .rpy and .rpyc files, and those are combined to form the game script. It is scanned for .rpa archive files, and those are automatically used by the game. Finally, when the game gives a path to a file to load, it is loaded relative to the game directory. (But note that <a href="../reference/Configuration_Variables#config.searchpath" title="renpy/doc/reference/Configuration Variables">config.searchpath</a> can change this.)</p>
+<p><a id="Ignored_Files" name="Ignored_Files"></a></p>
+<h3><span class="mw-headline">Ignored Files</span></h3>
+<p>The following files and directories are not distributed with Ren'Py games, even if they are in the base directory.</p>
+<ul>
+<li>archived - This directory contains files that have been added to the archives by the archiver included with the Ren'Py launcher. The launcher scans this directory, along with the game directory, when building archives.</li>
+<li>icon.ico - This file is used to set the icon for a windows executable.</li>
+<li>icon.icns - This file is used to set the icon for a mac application.</li>
+</ul>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

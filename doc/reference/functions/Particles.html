@@ -1,0 +1,32 @@
+<html><head><title>Particles - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="Particles" name="Particles"></a></p>
+<h1><span class="mw-headline">Particles</span></h1>
+<p><span id="Particles" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">Particles</strong></b></td>
+<td valign="top">(factory, style='default', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Supports particle motion.</p>
+<p><i>factory</i> - A factory object.</p>
+<p>The particles function expects to take as an argument a factory object. This object (which should be pickleable) must support two methods.</p>
+<p>The create method of the factory object is called once per frame with two arguments. The first is either a list of existing particles, or None if this is the first time this Particles is shown (and hence there are no particles on the screen). The second argument is the time in seconds from some arbitrary point, increasing each time create is called. The method is expected to return a list of new particles created for this frame, or an empty list if no particles are to be created this frame.</p>
+<p>The predict method of the factory object is called when image prediction is requested for the Particles. It is expected to return a list of displayables and/or image filenames that will be used.</p>
+<p>Particles are represented by the objects returned from each factory function. Each particle object must have an update method. This method is called once per frame per particle, usually with the time from the same arbitrary point as was used to create the object. (The arbitrary point may change when hidden and shown, so particle code should be prepared to deal with this.) The update method may return None to indicate that the particle is dead. Nothing is shown for a dead particle, and update is never called on it. The update method can also return an (xpos, ypos, time, displayable) tuple. The xpos and ypos parameters are a position on the screen to show the particle at, interpreted in the same way as the xpos and ypos style properties. The time is the time of display. This should start with the time parameter, but it may make sense to offset it to make multiple particle animations out of phase. Finally, the displayable is a displayable or image filename that is shown as the particle.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+TODO
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

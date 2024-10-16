@@ -1,0 +1,28 @@
+<html><head><title>im.AlphaMask - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="im.AlphaMask" name="im.AlphaMask"></a></p>
+<h1><span class="mw-headline">im.AlphaMask</span></h1>
+<p><span id="im.AlphaMask" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">im.AlphaMask</strong></b></td>
+<td valign="top">(base, mask, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p><i>base</i> and <i>mask</i> should be image manipulators. This function takes the red channel from <i>mask</i>, and applies it to the alpha channel of <i>base</i> to create a new image.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> eileen happy  <span class="sym">=</span> im<span class="sym">.</span><span class="kwd">AlphaMask</span><span class="sym">(</span><span class="str">"eileen_happy.base.jpg"</span><span class="sym">,</span> <span class="str">"eileen_happy.mask.jpg"</span><span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

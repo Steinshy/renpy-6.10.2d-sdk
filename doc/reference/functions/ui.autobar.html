@@ -1,0 +1,45 @@
+<html><head><title>ui.autobar - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.autobar" name="ui.autobar"></a></p>
+<h1><span class="mw-headline">ui.autobar</span></h1>
+<p><span id="ui.autobar" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.autobar</strong></b></td>
+<td valign="top">(range, start, end, time, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Creates a bar (with a range of <i>range</i>) that automatically moves from <i>start</i> to <i>end</i> in <i>time</i> seconds.</p>
+</div>
+<pre>
+<span class="slc"># Shows a bar at the top of the screen that automatically tracks the score variable, animating as it does.</span>
+
+<span class="kwa">init python</span><span class="sym">:</span>
+    <span class="kwa">def</span> <span class="kwd">overlay</span><span class="sym">():</span>
+        <span class="kwa">global</span> old_score
+
+        ui<span class="sym">.</span><span class="kwd">hbox</span><span class="sym">()</span>
+        ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span><span class="str">"Score: "</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">autobar</span><span class="sym">(</span><span class="num">100</span><span class="sym">,</span> old_score<span class="sym">,</span> score<span class="sym">,</span> <span class="num">1.0</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+
+        old_score <span class="sym">=</span> score
+
+    config<span class="sym">.</span>overlay_functions<span class="sym">.</span><span class="kwd">append</span><span class="sym">(</span>overlay<span class="sym">)</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+    $ score <span class="sym">=</span> old_score <span class="sym">=</span> <span class="num">0</span>
+
+    <span class="str">"You have zero points."</span>
+
+    $ score <span class="sym">+=</span> <span class="num">10</span>
+
+    <span class="str">"Now you have ten more points."</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,37 @@
+<html><head><title>renpy.show display say - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.show_display_say" name="renpy.show_display_say"></a></p>
+<h1><span class="mw-headline">renpy.show_display_say</span></h1>
+<p><span id="renpy.show_display_say" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.show_display_say</strong></b></td>
+<td valign="top">(who, what, who_args={}, what_args={}, window_args={}, image=False, no_ctc_what=..., **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is called (by default) by <a href="../../reference/functions/renpy.display_say.html" title="renpy/doc/reference/functions/renpy.display say">renpy.display_say</a> to add the widgets corresponding to a screen of dialogue to the user. It is not expected to be called by the user, but instead to be called by <a href="../../reference/functions/renpy.display_say.html" title="renpy/doc/reference/functions/renpy.display say">renpy.display_say</a>, or by a function passed as the <i>show_function argument</i> to <a href="../../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> or <a href="../../reference/functions/renpy.display_say.html" title="renpy/doc/reference/functions/renpy.display say">renpy.display_say</a>.</p>
+<p><i>who</i> - The name of the character that is speaking, or None to not show this name to the user.</p>
+<p><i>what</i> - What that character is saying. Please note that this may not be a string, as it can also be a list containing both text and displayables, suitable for use as the first argument of <a href="../../reference/functions/ui.text.html" title="renpy/doc/reference/functions/ui.text">ui.text</a>.</p>
+<p><i>who_args</i> - Additional keyword arguments intended to be supplied to the <a href="../../reference/functions/ui.text.html" title="renpy/doc/reference/functions/ui.text">ui.text</a> that creates the who widget of this dialogue.</p>
+<p><i>what_args</i> - Additional keyword arguments intended to be supplied to the <a href="../../reference/functions/ui.text.html" title="renpy/doc/reference/functions/ui.text">ui.text</a> that creates the what widget of this dialogue.</p>
+<p><i>window_args</i> - Additional keyword arguments intended to be supplied to the <a href="../../reference/functions/ui.window.html" title="renpy/doc/reference/functions/ui.window">ui.window</a> that creates the who widget of this dialogue.</p>
+<p><i>image</i> - If True, then who should be interpreted as an image or displayable rather than a text string.</p>
+<p><i>callback</i> - If not None, a function that should be called with no arguments before each time something is shown.</p>
+<p><i>no_ctc_what</i> - The contents of <i>what</i> before the click-to-continue indicator was appended.</p>
+<p><i>kwargs</i> - Additional keyword arguments should be ignored.</p>
+<p>This function is required to return the <a href="../../reference/functions/ui.text.html" title="renpy/doc/reference/functions/ui.text">ui.text</a> widget displaying the what text.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+TODO
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

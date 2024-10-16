@@ -1,0 +1,38 @@
+<html><head><title>Dissolve - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="Dissolve" name="Dissolve"></a></p>
+<h1><span class="mw-headline">Dissolve</span></h1>
+<p><span id="Dissolve" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">Dissolve</strong></b></td>
+<td valign="top">(time, old_widget=None, new_widget=None, alpha=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This dissolves from the old scene to the new scene, by overlaying the new scene on top of the old scene and varying its alpha from 0 to 255. Dissolve only works correctly when both scenes are the same size.</p>
+<p><i>time</i> - The amount of time the dissolve will take.</p>
+<p><i>alpha</i> - If True, the resulting displayable will have an alpha channel, at the cost of some speed. If False, it will be treated as opaque, but be faster.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ dissolve <span class="sym">=</span> <span class="kwd">Dissolve</span><span class="sym">(</span><span class="num">0.5</span><span class="sym">)</span>
+
+<span class="kwa">with None</span>
+<span class="kwa">scene</span> bg whitehouse
+<span class="kwa">show</span> eileen happy
+<span class="kwa">with</span> dissolve
+
+e <span class="str">"The dissolve transition is probably the most useful,</span>
+<span class="str">   blending one scene into another."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

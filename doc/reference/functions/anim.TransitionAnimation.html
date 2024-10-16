@@ -1,0 +1,38 @@
+<html><head><title>anim.TransitionAnimation - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="anim.TransitionAnimation" name="anim.TransitionAnimation"></a></p>
+<h1><span class="mw-headline">anim.TransitionAnimation</span></h1>
+<p><span id="anim.TransitionAnimation" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">anim.TransitionAnimation</strong></b></td>
+<td valign="top">(*args, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A displayable that draws an animation with each frame separated by a transition.</p>
+<p>This takes arguments such that the 1st, 4th, 7th, ... arguments are displayables, the 2nd, 5th, 8th, ... arguments are times, and the 3rd, 6th, 9th, ... are transitions.</p>
+<p>This displays the first displayable for the given time, then transitions to the second displayable using the given transition, and shows it for the given time (the time of the transition is taken out of the time the frame is shown), and so on.</p>
+<p>A transition may be None, to specify no transition should be used.</p>
+<p>The last argument may be a transition (in which case that transition is used to transition back to the first frame), or a displayable (which is shown forever).</p>
+<p>Not all transitions can be used with this. (Most notably, the various forms of <a href="../../reference/functions/MoveTransition.html" title="renpy/doc/reference/functions/MoveTransition">MoveTransition</a> can't.)</p>
+<p>There is one keyword argument, apart from the usual style properties:</p>
+<p><i>anim_timebase</i> - If True, the default, use the animation timebase. Otherwise, use the displayable timebase.</p>
+</div>
+<p><br /></p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> my_animation <span class="sym">=</span> anim<span class="sym">.</span><span class="kwd">TransitionAnimation</span><span class="sym">(</span><span class="str">"frame1.png"</span><span class="sym">,</span> <span class="num">2.0</span><span class="sym">,</span> dissolve<span class="sym">,</span>
+                                                  <span class="str">"frame2.png"</span><span class="sym">,</span> <span class="num">2.0</span><span class="sym">,</span> dissolve<span class="sym">)</span>
+
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

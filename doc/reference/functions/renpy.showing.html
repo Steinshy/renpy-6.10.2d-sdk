@@ -1,0 +1,31 @@
+<html><head><title>renpy.showing - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.showing" name="renpy.showing"></a></p>
+<h1><span class="mw-headline">renpy.showing</span></h1>
+<p><span id="renpy.showing" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.showing</strong></b></td>
+<td valign="top">(name, layer='master'):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns True if <i>name</i> is a prefix of an image that's being shown on <i>layer</i>. <i>name</i> may be a tuple of strings, or a single string. In the latter case, it is split on whitespace to make a tuple.</p>
+<p>When called during image prediction, this uses the images that are predicted to be shown, rather than the images that are currently being shown.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<p>This only hides the eileen image with a dissolve if it is being shown. This allows us to avoid an unnecessary dissolve.</p>
+<pre>
+<span class="kwa">if</span> renpy<span class="sym">.</span><span class="kwd">showing</span><span class="sym">(</span><span class="str">"eileen"</span><span class="sym">):</span>
+    <span class="kwa">hide</span> eileen
+    <span class="kwa">with</span> dissolve
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

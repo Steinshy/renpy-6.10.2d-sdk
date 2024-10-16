@@ -1,0 +1,45 @@
+<html><head><title>ui.interact - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.interact" name="ui.interact"></a></p>
+<h1><span class="mw-headline">ui.interact</span></h1>
+<p><span id="ui.interact" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.interact</strong></b></td>
+<td valign="top">(**kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Displays the current scene to the user, waits for a widget to indicate a return value, and returns that value to the user. As a side-effect, disables fast skip mode when executed.</p>
+<p>Some useful keyword arguments are:</p>
+<p><i>type</i> - The type of this interaction. See <a href="../../reference/functions/renpy.last_interact_type.html" title="renpy/doc/reference/functions/renpy.last interact type">renpy.last_interact_type</a> for more details.</p>
+<p><i>show_mouse</i> - Should the mouse be shown during this interaction? Only advisory, as this doesn't work reliably.</p>
+<p><i>suppress_overlay</i> - This suppresses the display of the overlay during this interaction.</p>
+<p><i>suppress_underlay</i> - This suppresses the underlay during this interaction. The underlay contains the key and mouse bindings that let the user access the game menu. (As well as a number of other useful in-game functions.)</p>
+<p><i>suppress_window</i> - This suppresses the showing of an empty window when it otherwise would be shown.</p>
+<p><i>roll_forward</i> - The value returned if the user tries to roll forward. This is normally used in conjunction with <a href="../../reference/functions/renpy.roll_forward_info.html" title="renpy/doc/reference/functions/renpy.roll forward info">renpy.roll_forward_info</a> and <a href="../../reference/functions/renpy.checkpoint.html" title="renpy/doc/reference/functions/renpy.checkpoint">renpy.checkpoint</a>.</p>
+<p><i>clear</i> - If True, the transient layer will be cleared at the end of the interaction.</p>
+</div>
+<p><br /></p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+$ ui<span class="sym">.</span><span class="kwd">vbox</span><span class="sym">(</span>xalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">)</span>
+$ ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Choice 1"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="num">1</span><span class="sym">))</span>
+$ ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Choice 2"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="num">2</span><span class="sym">))</span>
+$ ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+
+$ result <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+<span class="kwa">if</span> result <span class="sym">==</span> <span class="num">1</span><span class="sym">:</span>
+    <span class="str">"You picked choice 1!"</span>
+<span class="kwa">else</span><span class="sym">:</span>
+    <span class="str">"Choice 2 was for you!"</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

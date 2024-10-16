@@ -1,0 +1,29 @@
+<html><head><title>layout.yesno prompt - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="layout.yesno_prompt" name="layout.yesno_prompt"></a></p>
+<h1><span class="mw-headline">layout.yesno_prompt</span></h1>
+<p><span id="layout.yesno_prompt" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">layout.yesno_prompt</strong></b></td>
+<td valign="top">(screen, message):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function is intended to be customized by yesno_prompt layouts. It can be replaced by another function, provided the signature remains the same.</p>
+<p><i>screen</i> - The screen button that should be highlighted when this prompt is shown. If None, then no game menu navigation is shown.</p>
+<p><i>message</i> - The message that is shown to the user to prompt them to answer yes or no.</p>
+<p>This function returns True if the user clicks Yes, or False if the user clicks No.</p>
+</div>
+<pre>
+<span class="kwa">if</span> layout<span class="sym">.</span><span class="kwd">yesno_prompt</span><span class="sym">(</span><span class="str">"armageddon"</span><span class="sym">,</span> <span class="str">"Are you sure you want to end the world?"</span><span class="sym">):</span>
+    <span class="kwa">jump</span> earth_shattering_kaboom
+<span class="kwa">else</span><span class="sym">:</span>
+    <span class="kwa">jump</span> _return
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

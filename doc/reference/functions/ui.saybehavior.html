@@ -1,0 +1,35 @@
+<html><head><title>ui.saybehavior - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.saybehavior" name="ui.saybehavior"></a></p>
+<h1><span class="mw-headline">ui.saybehavior</span></h1>
+<p><span id="ui.saybehavior" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.saybehavior</strong></b></td>
+<td valign="top">(afm=None, dismiss=[ 'dismiss' ], allow_dismiss=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a pseudo-widget that adds the say behavior to the screen. The say behavior is to return True if the left mouse is clicked or enter is pressed. It also returns True in various other cases, such as if the current statement has already been seen. This widget should not be added to any other widget, but should instead be only added to the screen itself.</p>
+<p>If <i>afm</i> is present, it is a block of text, that's given to the auto forwarding mode algorithm to determine the auto-forwarding timeout.</p>
+<p>If <i>dismiss</i> is present, it is a list of names of keybindings that are used to dismiss this saybehavior.</p>
+<p>If <i>allow_dismiss</i> is present, it should be a function. This function is called without any arguments each time the user initiates a dismiss request. If the function returns True, the dismiss request is allowed, otherwise it is ignored. <i>Added in 5.6.6.</i></p>
+<p>There should only be one saybehavior shown at a time, otherwise they will fight for focus.</p>
+</div>
+<p><a id="Changes" name="Changes"></a></p>
+<h2><span class="mw-headline">Changes</span></h2>
+<p>The dismiss parameter was changed in 5.6.1 from a single keybinding to a list of keybindings.</p>
+<p><br /></p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+TODO
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

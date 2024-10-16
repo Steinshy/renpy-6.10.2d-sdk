@@ -1,0 +1,35 @@
+<html><head><title>renpy.dynamic - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.dynamic" name="renpy.dynamic"></a></p>
+<h1><span class="mw-headline">renpy.dynamic</span></h1>
+<p><span id="renpy.dynamic" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.dynamic</strong></b></td>
+<td valign="top">(*vars):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This declares a variable as dynamically scoped to the current Ren'Py call. The first time renpy.dynamic is called in the current call, the values of the variables named in the supplied strings are stored. When we return from the current call, the variables are given the values they had at the time when renpy.dynamic was called. If the variables are undefined when renpy.dynamic is called, they are undefined after the current call returns. If renpy.dynamic is called twice for the same variable in a given call, it has no effect the second time.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">label</span> fight<span class="sym">:</span>
+    $ renpy<span class="sym">.</span><span class="kwd">dynamic</span><span class="sym">(</span><span class="str">"playerhp"</span><span class="sym">,</span> <span class="str">"monsterhp"</span><span class="sym">)</span>
+    $ playerhp <span class="sym">=</span> <span class="num">100</span>
+    $ monsterhp <span class="sym">=</span> <span class="num">100</span>
+
+    <span class="str">"A terrible fight ensues!"</span>
+
+    <span class="kwa">return</span>
+
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

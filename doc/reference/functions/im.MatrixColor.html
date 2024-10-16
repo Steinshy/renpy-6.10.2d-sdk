@@ -1,0 +1,53 @@
+<html><head><title>im.MatrixColor - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="im.MatrixColor" name="im.MatrixColor"></a></p>
+<h1><span class="mw-headline">im.MatrixColor</span></h1>
+<p><span id="im.MatrixColor" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">im.MatrixColor</strong></b></td>
+<td valign="top">(im, matrix):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is an image operator that creates an image by using a <i>matrix</i> to linearly transform the colors in the image <i>im</i>.</p>
+<p><i>matrix</i> should be a list, tuple, or <a href="../../reference/functions/im.matrix.html" title="renpy/doc/reference/functions/im.matrix">im.matrix</a> that is 20 or 25 elements long. If the object has 25 elements, then elements past the 20th are ignored. If the elements of the matrix are named as follows:</p>
+<pre>
+[ a, b, c, d, e,
+  f, g, h, i, j,
+  k, l, m, n, o,
+  p, q, r, s, t ]
+</pre>
+<p>and R, G, B, and A are the red, green, blue, and alpha components of the color, respectively, then the transformed color R', G', B', A' is computed as follows:</p>
+<pre>
+R' = (a * R) + (b * G) + (c * B) + (d * A) + (e * 255)
+G' = (f * R) + (g * G) + (h * B) + (i * A) + (j * 255)
+B' = (k * R) + (l * G) + (m * B) + (n * A) + (o * 255)
+A' = (p * R) + (q * G) + (r * B) + (s * A) + (t * 255)
+</pre>
+<p>R', G', B', and A' are clamped to the range [0, 255].</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> eileen inverted <span class="sym">=</span> im<span class="sym">.</span><span class="kwd">MatrixColor</span><span class="sym">(</span><span class="str">"eileen_happy.png"</span><span class="sym">,</span>
+       <span class="sym">[ -</span><span class="num">1</span><span class="sym">,</span>  <span class="num">0</span><span class="sym">,</span>  <span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">1</span><span class="sym">,</span>
+          <span class="num">0</span><span class="sym">, -</span><span class="num">1</span><span class="sym">,</span>  <span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">1</span><span class="sym">,</span>
+          <span class="num">0</span><span class="sym">,</span>  <span class="num">0</span><span class="sym">, -</span><span class="num">1</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">1</span><span class="sym">,</span>
+          <span class="num">0</span><span class="sym">,</span>  <span class="num">0</span><span class="sym">,</span>  <span class="num">0</span><span class="sym">,</span> <span class="num">1</span><span class="sym">,</span> <span class="num">0</span><span class="sym">, ])</span>
+
+    <span class="slc"># Or equivalently:</span>
+    <span class="kwa">image</span> eileen inverted2 <span class="sym">=</span> im<span class="sym">.</span><span class="kwd">MatrixColor</span><span class="sym">(</span><span class="str">"eileen_happy.png"</span><span class="sym">,</span>
+      im<span class="sym">.</span>matrix<span class="sym">.</span><span class="kwd">invert</span><span class="sym">())</span>
+
+
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

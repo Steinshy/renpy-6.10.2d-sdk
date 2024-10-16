@@ -1,0 +1,31 @@
+<html><head><title>renpy.copy images - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.copy_images" name="renpy.copy_images"></a></p>
+<h1><span class="mw-headline">renpy.copy_images</span></h1>
+<p><span id="renpy.copy_images" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.copy_images</strong></b></td>
+<td valign="top">(old, new):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This renames images that begin with <i>old</i> such that they begin with <i>new</i>. <i>old</i> and <i>new</i> may be strings or tuples of strings.</p>
+</div>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> eileen happy <span class="sym">=</span> <span class="str">"eileen_happy.png"</span>
+    <span class="kwa">image</span> eileen vhappy <span class="sym">=</span> <span class="str">"eileen_vhappy.png"</span>
+    $ renpy<span class="sym">.</span><span class="kwd">copy_image</span><span class="sym">(</span><span class="str">"eileen"</span><span class="sym">,</span> <span class="str">"evil_eileen"</span><span class="sym">)</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+    <span class="kwa">show</span> evil_eileen happy
+
+    <span class="str">"I didn't know eileen had an evil twin!"</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

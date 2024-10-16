@@ -1,0 +1,35 @@
+<html><head><title>renpy.display menu - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.display_menu" name="renpy.display_menu"></a></p>
+<h1><span class="mw-headline">renpy.display_menu</span></h1>
+<p><span id="renpy.display_menu" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.display_menu</strong></b></td>
+<td valign="top">(items, window_style='menu_window', interact=True, with_none=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Displays a menu containing the given items, returning the value of the item the user selects.</p>
+<p><i>items</i> - A list of tuples that are the items to be added to this menu. The first element of a tuple is a string that is used for this menuitem. The second element is the value to be returned if this item is selected, or None if this item is a non-selectable caption.</p>
+<p><i>interact</i> - If True, then an interaction occurs. If False, no such interaction occurs, and the user should call <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a> manually.</p>
+<p><i>with_none</i> - If True, causes a "with None" statement to be run after each interaction. If None (the default), checks config.implicit_with_none to determine if a "with None" should be run.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    test <span class="sym">= [</span>
+        <span class="sym">(</span><span class="str">"unselectable item"</span><span class="sym">,</span> <span class="kwa">None</span><span class="sym">),</span>
+        <span class="sym">]</span>
+    test<span class="sym">.</span><span class="kwd">append</span><span class="sym">([</span><span class="str">"value shown"</span><span class="sym">,</span><span class="str">"returned value"</span><span class="sym">])</span>
+    result <span class="sym">=</span> renpy<span class="sym">.</span><span class="kwd">display_menu</span><span class="sym">(</span>test<span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,29 @@
+<html><head><title>renpy.game menu - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.game_menu" name="renpy.game_menu"></a></p>
+<h1><span class="mw-headline">renpy.game_menu</span></h1>
+<p><span id="renpy.game_menu" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.game_menu</strong></b></td>
+<td valign="top">(screen=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Invokes the game menu.</p>
+<p><i>screen</i> is the screen to access, usually one of "load_screen", "save_screen", or "preferences_screen", but the user can define other game menu screens. If None, it defaults to the value of <a href="../../reference/Main_and_Game_Menus#_game_menu_screen" title="renpy/doc/reference/Main and Game Menus">_game_menu_screen</a>.</p>
+</div>
+<pre>
+<span class="kwa">menu</span><span class="sym">:</span>
+    <span class="str">"Would you like to save your game?"</span>
+    <span class="str">"Yes."</span><span class="sym">:</span>
+          $ renpy<span class="sym">.</span><span class="kwd">game_menu</span><span class="sym">(</span><span class="str">"save_screen"</span><span class="sym">)</span>
+    <span class="str">"No."</span><span class="sym">:</span>
+          <span class="kwa">pass</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,630 @@
+<html><head><title>The Ren&amp;#39;Py Language - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="The_Ren.27Py_Language" name="The_Ren.27Py_Language"></a></p>
+<h1><span class="mw-headline">The Ren'Py Language</span></h1>
+<p>This section describes the Ren'Py language, and the functions found in that language. There is <a href="../reference/The_Ren%27Py_Language_(Simple).html" title="renpy/doc/reference/The Ren&apos;Py Language (Simple)">a simpler, less technical version</a> if you find the detail on this page intimidating.</p>
+<table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#The_Ren.27Py_Language"><span class="tocnumber">1</span> <span class="toctext">The Ren'Py Language</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Script.2C_Line.2C_and_Block_Structure"><span class="tocnumber">1.1</span> <span class="toctext">Script, Line, and Block Structure</span></a></li>
+<li class="toclevel-2"><a href="#Syntax_Constructs"><span class="tocnumber">1.2</span> <span class="toctext">Syntax Constructs</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Name_Munging"><span class="tocnumber">1.2.1</span> <span class="toctext">Name Munging</span></a></li>
+<li class="toclevel-3"><a href="#Grammar_Rules"><span class="tocnumber">1.2.2</span> <span class="toctext">Grammar Rules</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Statements"><span class="tocnumber">1.3</span> <span class="toctext">Statements</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Call_Statement"><span class="tocnumber">1.3.1</span> <span class="toctext">Call Statement</span></a></li>
+<li class="toclevel-3"><a href="#Define_Statement"><span class="tocnumber">1.3.2</span> <span class="toctext">Define Statement</span></a></li>
+<li class="toclevel-3"><a href="#Hide_Statement"><span class="tocnumber">1.3.3</span> <span class="toctext">Hide Statement</span></a></li>
+<li class="toclevel-3"><a href="#If_Statement"><span class="tocnumber">1.3.4</span> <span class="toctext">If Statement</span></a></li>
+<li class="toclevel-3"><a href="#Image_Statement"><span class="tocnumber">1.3.5</span> <span class="toctext">Image Statement</span></a></li>
+<li class="toclevel-3"><a href="#Init_Statement"><span class="tocnumber">1.3.6</span> <span class="toctext">Init Statement</span></a></li>
+<li class="toclevel-3"><a href="#Jump_Statement"><span class="tocnumber">1.3.7</span> <span class="toctext">Jump Statement</span></a></li>
+<li class="toclevel-3"><a href="#Label_Statement"><span class="tocnumber">1.3.8</span> <span class="toctext">Label Statement</span></a></li>
+<li class="toclevel-3"><a href="#Menu_Statement"><span class="tocnumber">1.3.9</span> <span class="toctext">Menu Statement</span></a>
+<ul>
+<li class="toclevel-4"><a href="#Details"><span class="tocnumber">1.3.9.1</span> <span class="toctext">Details</span></a></li>
+</ul>
+</li>
+<li class="toclevel-3"><a href="#Pause_Statement"><span class="tocnumber">1.3.10</span> <span class="toctext">Pause Statement</span></a></li>
+<li class="toclevel-3"><a href="#Play_Statement"><span class="tocnumber">1.3.11</span> <span class="toctext">Play Statement</span></a></li>
+<li class="toclevel-3"><a href="#Pass_Statement"><span class="tocnumber">1.3.12</span> <span class="toctext">Pass Statement</span></a></li>
+<li class="toclevel-3"><a href="#Python_Statement"><span class="tocnumber">1.3.13</span> <span class="toctext">Python Statement</span></a></li>
+<li class="toclevel-3"><a href="#Queue_Statement"><span class="tocnumber">1.3.14</span> <span class="toctext">Queue Statement</span></a></li>
+<li class="toclevel-3"><a href="#Return_Statement"><span class="tocnumber">1.3.15</span> <span class="toctext">Return Statement</span></a></li>
+<li class="toclevel-3"><a href="#Say_Statement"><span class="tocnumber">1.3.16</span> <span class="toctext">Say Statement</span></a>
+<ul>
+<li class="toclevel-4"><a href="#Details_2"><span class="tocnumber">1.3.16.1</span> <span class="toctext">Details</span></a></li>
+</ul>
+</li>
+<li class="toclevel-3"><a href="#Scene_Statement"><span class="tocnumber">1.3.17</span> <span class="toctext">Scene Statement</span></a></li>
+<li class="toclevel-3"><a href="#Show_Statement"><span class="tocnumber">1.3.18</span> <span class="toctext">Show Statement</span></a></li>
+<li class="toclevel-3"><a href="#Stop_Statement"><span class="tocnumber">1.3.19</span> <span class="toctext">Stop Statement</span></a></li>
+<li class="toclevel-3"><a href="#Window_Statement"><span class="tocnumber">1.3.20</span> <span class="toctext">Window Statement</span></a></li>
+<li class="toclevel-3"><a href="#With_Statement_and_Clauses"><span class="tocnumber">1.3.21</span> <span class="toctext">With Statement and Clauses</span></a></li>
+<li class="toclevel-3"><a href="#While_Statement"><span class="tocnumber">1.3.22</span> <span class="toctext">While Statement</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><br /></p>
+<div id="Script_Line_and_Block_Structure" />
+<p><a id="Script.2C_Line.2C_and_Block_Structure" name="Script.2C_Line.2C_and_Block_Structure"></a></p>
+<h2><span class="mw-headline">Script, Line, and Block Structure</span></h2>
+<p>Ren'Py scripts consist of one or more .rpy files. These script files may be read in any order, and all of them together make up a Ren'Py script. Please see <a href="../reference/Files_and_Directories.html" title="renpy/doc/reference/Files and Directories">Files and Directories</a> for information about where Ren'Py searches for .rpy files.</p>
+<p>Each of these files is divided into a series of <b>logical lines</b>. The first logical line of a file begins at the start of a file, and another logical line begins after each logical line ends, until the end of the file is reached. By default, a logical line is terminated by the first newline encountered. However, a line will not terminate if any of the following are true:</p>
+<ul>
+<li>The newline is immediately preceded by a backslash. In this case, the backslash is removed, and the newline is ignored.</li>
+<li>An opening parenthesis, bracket, or brace has been encountered without encountering the corresponding closing character.</li>
+<li>The newline occurs within a string.</li>
+</ul>
+<p>Ren'Py script files also can include <b>comments</b>. A comment begins with a hash mark that is not contained within a string, and continues to, but does not include, the next newline character. Some examples are:</p>
+<pre>
+<span class="slc"># This line contains only a comment.</span>
+<span class="kwa">scene</span> bg whitehouse  <span class="slc"># This line contains a statement as well.</span>
+</pre>
+<p>If, after eliminating comments, a logical line is empty, that logical line is ignored.</p>
+<p>Logical lines are then combined into <b>blocks</b>. Two logical lines are in the same block if the lines have the same indentation preceding them, and no logical line with a lesser amount of indentation occurs between the two lines. Indentation may only consist of spaces, not tabs. In the following example:</p>
+<pre>
+line 1
+    line a
+    line b
+line 2
+    line c
+    line d
+</pre>
+<p>In this example, here are three blocks. One block contains lines 1 and 2, another lines a and b, and the third contains lines c and d. This example can also serve to illustrate the concept of a <i>block associated with a line</i>. A block is associated with a line if the block starts on the next logical line following the line. For example, the block containing lines a and b is associated with line #</p>
+<p>There are three kinds of blocks in an Ren'Py program. The most common is a block containing Ren'Py statements. Blocks may also contain menuitems or python code. The top-level block (the one that contains the first line of a file) is always a block of Ren'Py statements.</p>
+<div id="Syntax_Constructs" />
+<p><a id="Syntax_Constructs" name="Syntax_Constructs"></a></p>
+<h2><span class="mw-headline">Syntax Constructs</span></h2>
+<p>Before we can describe Ren'Py statements, we must first describe a number of syntactic constructs those statements are built out of. In this subsection, we describe such constructs.</p>
+<p><b>Keywords</b> are words that must literally appear in the source code. They're used ito introduce statements, or to delimit parts of statements. You'll see keywords throughout the descriptions of statements. In grammar rules, keywords are in quotes. The keywords used by Ren'Py are:</p>
+<pre>
+at
+behind
+call
+elif
+else
+expression
+hide
+if
+image
+init
+jump
+label
+menu
+onlayer
+pass
+python
+return
+scene
+set
+show
+transform
+while
+with
+zorder
+</pre>
+<div id="name" />
+<p>A <b>name</b> consists of a letter or underscore (_) followed by zero or more letters, numbers, or underscores. For this purpose, unicode characters between U+00a0 and U+fffd are considered to be letters. A name may not be a keyword.</p>
+<div id="string" />
+<p>A <b>string</b> begins with a quote character (one of &quot;, ', or `), contains some sequence of characters, and ends with the same quote character. Inside a Ren'Py string, whitespace is collapsed into a single space, unless preceded by a backslash (as \ ). Backslash is used to escape quotes, special characters such as&#160;% (written as \%) and { (written as \{). It's also used to include newlines, using the \n sequence.</p>
+<div id="simple_expression" />
+<p>A <b>simple_expression</b> is a Python expression that starts with a name, a string, or any Python expression in parentheses. This may be followed by any number of the following:</p>
+<ul>
+<li>A dot followed by a name.</li>
+<li>A parenthesized python expression.</li>
+</ul>
+<div id="python_expression" />
+<p>A <b>python_expression</b> is an arbitrary python expression that may not include a colon. These expressions are generally used to express the conditions in the if and while statements.</p>
+<div id="image_name" />
+<p>An <b>image_name</b> consists of one or more names, separated by spaces. The first name in an image_name is known as the <b>image tag</b>.</p>
+<p><a id="Name_Munging" name="Name_Munging"></a></p>
+<h4><span class="mw-headline">Name Munging</span></h4>
+<p>Before parsing a file, Ren'Py looks for names of the form <code>__word</code>, where word does not contain <code>__</code>. That is, starting with two or three underscores, and not containing another two consecutive underscores. It munges these names in a filename-specific manner, generally ensuring that they will not conflict with the same name in other files. For example, in the file script.rpy, <code>__v</code> is munged into <code>_m1_script__v</code> (the name is prefixed with the munged filename).</p>
+<p>Names beginning with an odd number of underscores are reserved for Ren'Py, while those beginning with an even number of underscores can safely be used in scripts.</p>
+<p><a id="Grammar_Rules" name="Grammar_Rules"></a></p>
+<h4><span class="mw-headline">Grammar Rules</span></h4>
+<p>We will be giving grammar rules for some of the statements. In these rules, a word in quotes means that that word is literally expected in the script. Parenthesis are used to group things together, but they don't correspond to anything in the script. Star, question mark, and plus are used to indicate that the token or group they are to the right of can occur zero or more, zero or one, or one or more times, respectively.</p>
+<p>If we give a name for the rule, it will be separated from the body of the rule with a crude ascii-art arrow (-&gt;).</p>
+<p><a id="Statements" name="Statements"></a></p>
+<h2><span class="mw-headline">Statements</span></h2>
+<div id="Call_Statement" />
+<div id="call" />
+<p><a id="Call_Statement" name="Call_Statement"></a></p>
+<h3><span class="mw-headline">Call Statement</span></h3>
+<p>The <code>call</code> statement is used to transfer control to the statement with the given name. It also pushes the name of the statement following this one onto the call stack, allowing the return statement to return control to the statement following this one.</p>
+<pre>
+call_statement -&gt; "call" name ( "from" name )?
+call_statement -&gt; "call" "expression" simple_expression ( "from" name )?
+
+call_statement -&gt; "call" name "(" arguments ")" ( "from" name )?
+call_statement -&gt; "call" "expression" simple_expression "pass" "(" arguments ")" ( "from" name )?
+</pre>
+<p>If the <code>expression</code> keyword is present, the expression is evaluated, and the string so computed is used as the name of the statement to call. If the <code>expression</code> keyword is not present, the name of the statement to call must be explicitly given.</p>
+<p>If the optional <code>from</code> clause is present, it has the effect of including a label statement with the given name as the statement immediately following the call statement. An explicit label is required here to ensure that saved games with return stacks can return to the proper place when loaded on a changed script. From clauses should be included for all calls in released games.</p>
+<p>As from clauses may be distracting when a game is still under development, we provide with Ren'Py a program, called <code>add_from</code>, that adds from clauses to all bare calls in any game directory. It can be found in <code>tools/add_from</code>, although it needs to be run from the base directory. The easiest way to do this on windows is by running <code>tools/game_add_from.bat</code>. It should be run before a final release of your game is made. Be sure to make a backup of your game directories before running add_from. Also note that <code>add_from</code> produces .bak files for all files it can change, so delete them when you're satisfied that everything worked.</p>
+<pre>
+e <span class="str">"First, we will call a subroutine."</span>
+
+<span class="kwa">call</span> subroutine <span class="kwa">from</span> _call_site_1
+
+<span class="slc"># ...</span>
+
+<span class="kwa">label</span> subroutine<span class="sym">:</span>
+
+    e <span class="str">"Next, we will return from the subroutine."</span>
+
+    <span class="kwa">return</span>
+</pre>
+<p>The call statement may take arguments, which are processed as described in PEP 3102. If the return statement returns a value, that value is stored in the _return variable, which is dynamically scoped to each context.</p>
+<p>When using a call expression with an arguments list, the pass keyword must be inserted between the expression and the arguments list. Otherwise, the arguments list will be parsed as part of the expression, not as part of the call.</p>
+<p><a id="Define_Statement" name="Define_Statement"></a></p>
+<h3><span class="mw-headline">Define Statement</span></h3>
+<p>The define statement causes its expression to be evaluated, and assigned to the supplied name. If not inside an init block, the define statement will automatically be run with init priority 0.</p>
+<pre>
+define_statement -&gt; "define" name "=" python_expression
+</pre>
+<pre>
+<span class="kwa">define</span> e <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Eileen"</span><span class="sym">)</span>
+</pre>
+<div id="Hide_Statement" />
+<div id="hide" />
+<p><a id="Hide_Statement" name="Hide_Statement"></a></p>
+<h3><span class="mw-headline">Hide Statement</span></h3>
+<p>The <code>hide</code> statement is used to hide an image from the screen.</p>
+<p>hide_statement -&gt; "hide" image_name ( "onlayer" name )?</p>
+<p>A <code>hide</code> statement operates on the layer supplied in the <code>onlayer</code> clause of the <i>image_spec</i>, defaulting to "master" if no such clause has been supplied. It finds an image beginning with the image tag of the image name, and removes it from that layer.</p>
+<p>Please note that the <code>hide</code> statement is rarely used in practice. Show can be used by itself when a character is changing emotion, while <code>scene</code> is used to remove all images at the end of a scene. Hide is only necessary when a character leaves before the end of a scene.</p>
+<div id="If_Statement" />
+<div id="if" />
+<p><a id="If_Statement" name="If_Statement"></a></p>
+<h3><span class="mw-headline">If Statement</span></h3>
+<p>The <code>if</code> statement is used to conditionally execute a block of statements.</p>
+<pre>
+if_statement -&gt; "if" python_expression ":"
+elif_clause -&gt; "elif" python_expression ":"
+else_clause -&gt; "else" ":"
+</pre>
+<p>The <code>if</code> statement is the only statement which consists of more than one logical line in the same block. The initial <code>if</code> statement may be followed by zero or more <code>elif</code> clauses, concluded with an optional <code>else</code> clause. The expression is evaluated for each clause in turn, and if it evaluates to a true value, then the block associated with that clause is executed. If no expression evaluates to true, then the block associated with the <code>else</code> clause is executed. (If an <code>else</code> clause exists, execution immediately continues with the next statement.) In any case, at the end of the block, control is transferred to the statement following the if statement.</p>
+<pre>
+<span class="kwa">if</span> points <span class="sym">&gt;=</span> <span class="num">10</span><span class="sym">:</span>
+
+   e <span class="str">"Congratulations! You're getting the best ending!"</span>
+
+<span class="kwa">elif</span> points <span class="sym">&gt;=</span> <span class="num">5</span><span class="sym">:</span>
+
+   e <span class="str">"It's the good ending for you."</span>
+
+<span class="kwa">else</span><span class="sym">:</span>
+
+   e <span class="str">"Sorry, you're about to get the bad ending."</span>
+</pre>
+<div id="Image_Statement" />
+<div id="image" />
+<p><a id="Image_Statement" name="Image_Statement"></a></p>
+<h3><span class="mw-headline">Image Statement</span></h3>
+<p>The <code>image</code> statement is used to declare images to Ren'Py. Image statements can either appear in init blocks, or are implicitly placed in an init block with priority 990. <i>(changed in 6.9.0)</i></p>
+<pre>
+image_statement -&gt; "image" image_name "=" python_expression
+</pre>
+<p>An <code>image</code> statement binds an <a href="../reference/The_Ren%27Py_Language#image_name" title="renpy/doc/reference/The Ren&apos;Py Language">image name</a> to a displayable. The displayable is computed by the supplied python expression, with the result of the expression being passed to the <a href="../reference/functions/im.Image.html" title="renpy/doc/reference/functions/im.Image">im.Image</a> function in loose mode. This means that if the assignment is a single string, it is interpreted as an image filename. Displayables are passed through unmolested. Once an image has been defined using an <code>image</code> statement, it can be used by the <code>scene</code>, <code>show</code>, and <code>hide</code> statements.</p>
+<p>For a complete list of functions that define displayables, see <a href="../reference/Displayables.html" title="renpy/doc/reference/Displayables">the displayables page</a>.</p>
+<pre>
+<span class="kwa">image</span> eileen happy <span class="sym">=</span> <span class="str">"eileen/happy.png"</span>
+<span class="kwa">image</span> eileen upset <span class="sym">=</span> <span class="str">"eileen/upset.png"</span>
+</pre>
+<div id="Init_Statement" />
+<div id="init" />
+<p><a id="Init_Statement" name="Init_Statement"></a></p>
+<h3><span class="mw-headline">Init Statement</span></h3>
+<p>The <code>init</code> statement is used to execute blocks of Ren'Py statements before the script executes. Init blocks are used to define images and characters, to set up unchanging game data structures, and to customize Ren'Py. Code inside init blocks should not interact with the user or change any of the layers, and so should not contain <code>say</code>, <code>menu</code>, <code>scene</code>, <code>show</code>, or <code>hide</code> statements, as well as calls to any function that can do these things.</p>
+<pre>
+init_statement -&gt; "init" (number)? ":"
+</pre>
+<p>An <code>init</code> statement is introduced with the keyword <code>init</code>, followed by an optional priority number, and a mandatory colon. If the priority is not given, it defaults to 0. Priority numbers should be in the range -999 to 999. Numbers outside of this range are reserved for Ren'Py code.</p>
+<p>The priority number is used to determine when the code inside the init block executes. Init blocks are executed in priority order from low to high. Within a file, init blocks with the same priority are run in order from the top of the file to the bottom. The order of evaluation of priority blocks with the same priority between files is undefined.</p>
+<p>The init blocks are all run once, during a special init phase. When control reaches the end of an init block during normal execution, execution of that block ends. If an init statement is encountered during normal execution, the init block is not run. Instead, control passes to the next statement.</p>
+<div id="Jump_Statement" />
+<div id="jump" />
+<p><a id="Jump_Statement" name="Jump_Statement"></a></p>
+<h3><span class="mw-headline">Jump Statement</span></h3>
+<p>The <code>jump</code> statement is used to transfer control to the statement with the given name.</p>
+<pre>
+jump_statement -&gt; "jump" name 
+jump_statement -&gt; "jump" "expression" simple_expression 
+</pre>
+<p>If the <code>expression</code> keyword is present, the expression is evaluated, and the string so computed is used as the name of the statement to jump to. If the <code>expression</code> keyword is not present, the name of the statement to jump to must be explicitly given.</p>
+<p>Unlike <code>call</code>, <code>jump</code> does not push the target onto any stack. As a result, there's no way to return to where you've jumped from.</p>
+<pre>
+<span class="kwa">label</span> loop_start<span class="sym">:</span>
+
+e <span class="str">"Oh no! It looks like we're trapped in an infinite loop."</span>
+
+<span class="kwa">jump</span> loop_start
+</pre>
+<div id="Label_Statement" />
+<div id="label" />
+<p><a id="Label_Statement" name="Label_Statement"></a></p>
+<h3><span class="mw-headline">Label Statement</span></h3>
+<p>Label statements allow a name to be assigned to a program point. They exist solely to be called or jumped to, whether by script code or the Ren'Py config.</p>
+<pre>
+label_statement -&gt; "label" name ":"
+label_statement -&gt; "label" name "(" parameters ")" ":"
+</pre>
+<p>A <code>label</code> statement may have a block associated with it. In that case, control enters the block whenever the label statement is reached, and proceeds with the statement after the label statement whenever the end of the block is reached.</p>
+<p>The label statement may take an optional list of parameters. These parameters are processed as described in PEP 3102, with two exceptions:</p>
+<ul>
+<li>The values of default parameters are evaluated at call time.</li>
+<li>The variables are dynamically, rather than lexically, scoped.</li>
+</ul>
+<p>Inside a called label, variables can be declared dynamic using the renpy.dynamic function:</p>
+<p><br />
+<span id="renpy.dynamic" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.dynamic.html" title="renpy/doc/reference/functions/renpy.dynamic">renpy.dynamic</a></b></td>
+<td valign="top">(*vars):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This declares a variable as dynamically scoped to the current Ren'Py call. The first time renpy.dynamic is called in the current call, the values of the variables named in the supplied strings are stored. When we return from the current call, the variables are given the values they had at the time when renpy.dynamic was called. If the variables are undefined when renpy.dynamic is called, they are undefined after the current call returns. If renpy.dynamic is called twice for the same variable in a given call, it has no effect the second time.</p>
+</div>
+<p><br /></p>
+<div id="Menu_Statement" />
+<div id="menu" />
+<p><a id="Menu_Statement" name="Menu_Statement"></a></p>
+<h3><span class="mw-headline">Menu Statement</span></h3>
+<p>Menus are used to present the user with a list of choices that can be made. In a visual novel, menus are the primary means by which the user can influence the story.</p>
+<pre>
+menu_statement -&gt; "menu" ( name )? ":"
+</pre>
+<p>A <code>menu</code> statement is introduced by the keyword <code>menu</code>, an optional name, and a colon. If the name is supplied, it is treated as a label for this <code>menu</code> statement, as if the menu statement was preceded by a label statement.</p>
+<p>A <code>menu</code> statement must have a block associated with it. This is a menuitem block that must contain one or more menuitems in it. There are several kinds of menuitems that can be contained in a menuitem block.</p>
+<pre>
+caption_menuitem -&gt; string
+</pre>
+<p>The first kind of menuitem is a string. This string is placed into a menu as a caption that cannot be selected. In general, captions are used to indicate what the menu is for, especially when it is not clear from the choices.</p>
+<pre>
+choice_menuitem -&gt; string ( "if" python_expression )? ":"
+</pre>
+<p>The second kind of menuitem gives a choice the user can make. Each choice must have a block of Ren'Py statements associated with it. If the choice is selected by the user, then block of statements associated with the choice is executed. A choice may also have an optional <code>if</code> clause that includes a Python expression. This clause gives a condition that must be satisfied for the choice to be presented to the user. A terminating colon is used to indicate that this menuitem is a choice.</p>
+<pre>
+set_menuitem -&gt; "set" variable_name
+</pre>
+<p>The third kind of menuitem provides a variable in which to store the list of choices the user has made, and prevent the user making the same choice if the menu is visited multiple times. This variable must be defined before the menu statement, and should be an empty list, [ ]. When the user chooses a choice from the menu, that choice will be stored in the list. When the game reaches another menu statement using the same variable name in a <code>set</code> clause (or reaches the same menu again), any choices matching items in the list will not be shown.</p>
+<pre>
+with_menuitem -&gt; "with" simple_expression
+</pre>
+<p>The final kind of menuitem is a <code>with</code> clause. Please see <a href="../reference/Transitions.html" title="renpy/doc/reference/Transitions">Transitions</a> for more information on <code>with</code> clauses.</p>
+<pre>
+<span class="kwa">menu</span> what_to_do<span class="sym">:</span>
+
+    <span class="str">"What should we do today?"</span>
+
+    <span class="str">"Go to the movies."</span><span class="sym">:</span>
+        <span class="str">"We went to the movies."</span>
+
+    <span class="str">"Go shopping."</span><span class="sym">:</span>
+        <span class="str">"We went shopping, and the girls bought swimsuits."</span>
+        $ have_swimsuits <span class="sym">=</span> <span class="kwa">True</span>
+
+    <span class="str">"Go to the beach."</span> <span class="kwa">if</span> have_swimsuits<span class="sym">:</span>
+        <span class="str">"We went to the beach together. I got to see the girls in their</span>
+<span class="str">         new swimsuits."</span>
+</pre>
+<p><a id="Details" name="Details"></a></p>
+<h4><span class="mw-headline">Details</span></h4>
+<p>When a menu is to be shown to the user, the first thing that happens is that a list of captions and choices is built up from the menuitems associated with the menu. Each of the choices that has an expression associated with it has that expression evaluated, and if not true, that choice is removed from the list. If no choices survive this process, the menu is not displayed and execution continues with the next statement. Otherwise, the <code>menu</code> function is called with the list of choices, displays the menu to the user, and returns a chosen choice. Execution continues with the block corresponding to the chosen choice. If execution reaches the end of that block, it continues with the the statement after the menu.</p>
+<div id="Play_Statement" />
+<p><br /></p>
+<p><a id="Pause_Statement" name="Pause_Statement"></a></p>
+<h3><span class="mw-headline">Pause Statement</span></h3>
+<p>The pause statement causes Ren'Py to pause until the mouse is clicked. If the optional expression is given, it will be evaluated to a number, and the pause will automatically terminate once that number of seconds has elapsed.</p>
+<pre>
+pause_statement -&gt; "pause" ( simple_expression )?
+</pre>
+<p><a id="Play_Statement" name="Play_Statement"></a></p>
+<h3><span class="mw-headline">Play Statement</span></h3>
+<p>The play statement is used to play sound and music. If a file is currently playing, it is interrupted and replaced with the new file.</p>
+<pre>
+play_statement -&gt; "play" name simple_expression 
+                       ( "fadeout" simple_expression )?
+                       ( "fadein" simple_expression )?
+                       ( "loop" | "noloop" )?
+                       ( "if_changed" )?
+</pre>
+<p>The first simple_expression in the play statement is expected to evaluate to either a string containing a filename, or a list of filenames to be played. The name is expected to be the name of a channel. (Usually, this is either "sound", "music", or "movie".) The file or list of files is played using <a href="../reference/functions/renpy.music.play.html" title="renpy/doc/reference/functions/renpy.music.play">renpy.music.play</a>. The other clauses are all optional. Fadeout gives the fadeout time for currently playing music, in seconds, while fadein gives the time it takes to fade in the new music. Loop causes the music too loop, while noloop forces it not to loop. If_changed causes the music to only change if it is not the currently playing music.</p>
+<pre>
+play music <span class="str">"mozart.ogg"</span>
+play sound <span class="str">"woof.ogg"</span>
+
+<span class="str">"Let's try something more complicated."</span>
+
+play music <span class="sym">[</span> <span class="str">"a.ogg"</span><span class="sym">,</span> <span class="str">"b.ogg"</span> <span class="sym">]</span> fadeout <span class="num">1.0</span> fadein <span class="num">1.0</span>
+</pre>
+<div id="Pass_Statement" />
+<div id="pass" />
+<p><a id="Pass_Statement" name="Pass_Statement"></a></p>
+<h3><span class="mw-headline">Pass Statement</span></h3>
+<p>The <code>pass</code> statement does not perform an action. It exists because blocks of Ren'Py statements require at least one statement in them, and it's not always sensible to perform an action in those blocks.</p>
+<pre>
+pass_statement -&gt; "pass"
+</pre>
+<pre>
+<span class="kwa">menu</span><span class="sym">:</span>
+    <span class="str">"Should I go to the movies?"</span>
+
+    <span class="str">"Yes"</span><span class="sym">:</span>
+        <span class="kwa">call</span> go_see_movie
+
+    <span class="str">"No"</span><span class="sym">:</span>
+        <span class="kwa">pass</span>
+
+<span class="str">"Now it's getting close to dinner time, and I'm starving."</span>
+</pre>
+<div id="Python_Statement" />
+<div id="python" />
+<p><a id="Python_Statement" name="Python_Statement"></a></p>
+<h3><span class="mw-headline">Python Statement</span></h3>
+<p>The <code>python</code> statement allows one to execute Python code in a Ren'Py script. This allows one to use Python code to declare things to Ren'Py, to invoke much of Ren'Py's functionality, and to store data in variables that can be accessed by user code. There are two forms of the <code>python</code> statement:</p>
+<pre>
+python_statement -&gt; "$" python_code
+python_statement -&gt; "python" ( "hide" )? ":"
+</pre>
+<p>The first form of a python consists of a dollar sign (<code>$</code>) followed by Python code extending to the end of the line. This form is used to execute a single Python statement.</p>
+<p>A second form consists of the keyword <code>python</code>, optionally the keyword <code>hide</code>, and a colon. This is used to execute a block of Python code, supplied after the statement. Normally, Python code executes in a script-global namespace, but if the <code>hide</code> keyword is given, a new namespace is created for this block. (The script-global namespace can be accessed from the block, but not assigned to.)</p>
+<pre>
+$ score <span class="sym">+=</span> <span class="num">1</span>
+
+<span class="kwa">python</span><span class="sym">:</span>
+    ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span><span class="str">"This is text on the screen."</span><span class="sym">)</span>
+    ui<span class="sym">.</span><span class="kwd">saybehavior</span><span class="sym">()</span>
+    ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+</pre>
+<p><b>Init Python Statement.</b> For convenience, we have created the init pythons statement. This statement combines an init statement and a python statement into a single statement, to reduce the indentation required for python-heavy files.</p>
+<pre>
+init python_statement -&gt; "init" ( number )? "python" ( "hide" )? ":"
+</pre>
+<div id="Queue_Statement" />
+<p><a id="Queue_Statement" name="Queue_Statement"></a></p>
+<h3><span class="mw-headline">Queue Statement</span></h3>
+<p>The queue statement is used to queue up audio files. They will be played when the channel finishes playing the currently playing file.</p>
+<pre>
+queue_statement -&gt; "queue" name simple_expression ( "loop" | "noloop" )?
+</pre>
+<p>The name is expected to be the name of a channel, while the simple_expression is expected to evaluate to either a string containing a filename, or a list of filenames to be queued up. The files are queued using <a href="../reference/functions/renpy.music.queue.html" title="renpy/doc/reference/functions/renpy.music.queue">renpy.music.queue</a>.</p>
+<p>Loop causes the queued music to loop, while noloop causes it to play only once.</p>
+<pre>
+queue sound <span class="str">"woof.ogg"</span>
+queue music <span class="sym">[</span> <span class="str">"a.ogg"</span><span class="sym">,</span> <span class="str">"b.ogg"</span> <span class="sym">]</span>
+</pre>
+<div id="Return_Statement" />
+<p><a id="Return_Statement" name="Return_Statement"></a></p>
+<h3><span class="mw-headline">Return Statement</span></h3>
+<p>The <code>return</code> statement pops the top location off of the call stack, and transfers control to it. If the call stack is empty, the return statement performs a full restart of Ren'Py.</p>
+<pre>
+return_statement -&gt; "return"
+return_statement -&gt; "return" expression
+</pre>
+<p>If the optional expression is given to return, it is evaluated, and it's result is stored in the _return variable. This variable is dynamically scoped to each context.</p>
+<div id="Say_Statement" />
+<div id="say" />
+<p><a id="Say_Statement" name="Say_Statement"></a></p>
+<h3><span class="mw-headline">Say Statement</span></h3>
+<p>The say statement is used to present text to the user, in the form of dialogue or thoughts. Since the bulk of the of the content of a script will be dialogue or thoughts, it's important that the say statement be as convenient as possible. Because of this, the say statement is the only statement that is not delimited with a keyword or other form of delimiter. Instead, it consists of a string, with an optional <i>simple_expression</i> before it to designate who is doing the speaking, and an optional <code>with</code> clause after it used to specify a transition.</p>
+<pre>
+say_statement -&gt; ( simple_expression )? string ( "with" simple_expression )?
+</pre>
+<p>There are two forms of the say statement, depending on if the simple expression is provided. The single-argument form consists of a single string (with or without the optional with clause). This form causes the string to be displayed to the user as without any label as to who is saying it. Conventionally, this is used to indicate POV character thoughts or narration.</p>
+<pre>
+<span class="str">"I moved to my left, and she moved to her right."</span>
+
+<span class="str">"So we were still blocking each other's path."</span>
+
+<span class="str">"I then moved to my right, and at the same time she moved to her</span>
+<span class="str"> left."</span>
+
+<span class="str">"We could be at this all day."</span>
+</pre>
+<p>The two-argument form of the say statement consist of a <i>simple_expression</i>, a string, and optionally a <code>with</code> clause. This form of the statement is used to indicate dialogue. The first argument is expected to be an object (usually a <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> or <a href="../reference/functions/DynamicCharacter.html" title="renpy/doc/reference/functions/DynamicCharacter">DynamicCharacter</a> object) that knows how to show dialogue to the user. The string is then passed to that object, which is responsible for showing it to to the user.</p>
+<p>The <i>simple_expression</i> can also be a string, rather than an object. Strings are used directly as the name of the character.</p>
+<pre>
+<span class="str">"Girl"</span> <span class="str">"Hi, my name is Eileen."</span>
+
+e <span class="str">"Starting today, I'll be living here."</span>
+</pre>
+<p><a id="Details_2" name="Details_2"></a></p>
+<h4><span class="mw-headline">Details</span></h4>
+<p>The two-argument say statement first evaluates the supplied simple expression. It then attempts to call that value (the who value) with the string giving the line of dialogue (the what string). If it can do so, it's finished, as the object that is called is responsible for interacting with the user.</p>
+<p>If it can't call the value of the expression, then it copies the <code>name_only</code> character object, supplying the given string as a new character name, and then uses that to say the dialogue. (This is done by the <code>say</code> and <code>predict_say</code> functions found in the store. Changing these functions can change this behavior.)</p>
+<p>The single-argument form of the statement simply calls the special function (or object) <code>narrator</code> with the string to be shown. This function is responsible for showing the string to the user. <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> and <a href="../reference/functions/DynamicCharacter.html" title="renpy/doc/reference/functions/DynamicCharacter">DynamicCharacter</a> objects are suitable for use as the <code>narrator</code>.</p>
+<p>The <code>with</code> clause is used to specify a transition; see <a href="#With_Statement_and_Clauses" title="">With Statement and Clauses</a> for details.</p>
+<div id="Scene_Statement" />
+<div id="scene" />
+<p><a id="Scene_Statement" name="Scene_Statement"></a></p>
+<h3><span class="mw-headline">Scene Statement</span></h3>
+<p>The <code>scene</code> statement clears a layer by removing all images from it. It may then show a supplied image to the user. This makes it appropriate for changing the background of a scene.</p>
+<pre>
+scene_statement -&gt; "scene" ("onlayer" name)?  (...)?
+</pre>
+<p>The scene statement first clears out all images from a layer, defaulting to the "master" layer if no other layer is specified. If additional arguments are present, then they are handled as if a <a href="../reference/The_Ren%27Py_Language#show" title="renpy/doc/reference/The Ren&apos;Py Language">show statement</a> statement was supplied.</p>
+<p>By default, no background is added to the screen, so we recommend that every script begin with a scene statement that shows a full-screen background to the user.</p>
+<div id="Show_Statement" />
+<div id="show" />
+<p><a id="Show_Statement" name="Show_Statement"></a></p>
+<h3><span class="mw-headline">Show Statement</span></h3>
+<p>The show statement is used to add an image to a layer. The image must have been defined using the <a href="../reference/The_Ren%27Py_Language#image" title="renpy/doc/reference/The Ren&apos;Py Language">image statement</a> statement.</p>
+<pre>
+show_statement -&gt; "show" image_name 
+                  ( "at" transform_list )?
+                  ( "as" name )?
+                  ( "behind" name_list )?
+                  ( "onlayer" name )?
+                  ( "with" simple_expression )?
+</pre>
+<p>When adding an image, the show statement first checks to see if an image with the same tag (by default, first part of the image name) exists in the layer. If so, that image is replaced, without changing the order. This means that it's rarely necessary to hide images.</p>
+<p>The show statement takes several optional clauses.</p>
+<ul>
+<li>The at clause takes a comma-separated list of positions and motions. These are created using the <a href="../reference/Displayables#Position_and_Motion_Functions" title="renpy/doc/reference/Displayables">position and motion functions</a>.</li>
+<li>The as clause specifies the image tag directly. This allows the same image to be shown on the screen twice.</li>
+<li>The behind takes gives a comma-separated list of image tags. The image will be shown behind all images with this tag.</li>
+<li>The onlayer clause specifies the layer the image will be shown on.</li>
+<li>The with clause specifies a transition that occurs when this image is shown. See the <a href="../reference/The_Ren%27Py_Language#with" title="renpy/doc/reference/The Ren&apos;Py Language">with statement</a> statement for more details.</li>
+</ul>
+<p>When an image is shown, Ren'Py checks to see if there was a previous image with that tag, and if that image used a transform. If this is true, Ren'Py does two things:</p>
+<ol>
+<li>If the new image is not a transform, it wraps it in a transform.</li>
+<li>The transform is initialized to have the properties of the old transform.</li>
+</ol>
+<p>The generally has the effect of "remembering" the position of images shown on the screen. In some cases, this memory effect may override a position encoded into an image. In that case, the image must be hidden and shown again.</p>
+<p><br /></p>
+<pre>
+<span class="kwa">scene</span> living_room
+<span class="kwa">show</span> eileen happy <span class="kwa">at</span> left
+<span class="kwa">show</span> golden glow <span class="kwa">as</span> halo <span class="kwa">at</span> left <span class="kwa">behind</span> eileen
+
+e <span class="str">"I'm feeling happy right now."</span>
+
+<span class="kwa">show</span> eileen upset <span class="kwa">at</span> left
+<span class="kwa">show</span> darkness <span class="kwa">as</span> halo <span class="kwa">at</span> left <span class="kwa">behind</span> eileen
+
+e <span class="str">"But sometimes, I can get upset for no good reason."</span>
+</pre>
+<p>The show statement can also be used to display text, using the <a href="../reference/functions/ParameterizedText.html" title="renpy/doc/reference/functions/ParameterizedText">ParameterizedText</a> displayable. The <code>text</code> displayable is defined by default, and uses the centered_text style:</p>
+<pre>
+<span class="kwa">show</span> text <span class="str">"Centered text"</span>
+</pre>
+<p><br />
+There is a second form of the show statement that takes an expression that returns a <a href="../reference/Displayables.html" title="renpy/doc/reference/Displayables">displayable</a>. This can be used to show a displayable directly. The tag of the displayable is undefined, unless given with the as clause.</p>
+<pre>
+show_statement -&gt; "show" "expression" simple_expression
+                  ( "as" name )?
+                  ( "onlayer" name )?
+                  ( "at" transform_list )?
+                  ( "behind" name_list )?
+                  ( "with" simple_expression )?
+</pre>
+<pre>
+<span class="kwa">show expression</span> <span class="str">"myimage.png"</span>
+</pre>
+<p><br /></p>
+<div id="Stop_Statement" />
+<p><a id="Stop_Statement" name="Stop_Statement"></a></p>
+<h3><span class="mw-headline">Stop Statement</span></h3>
+<p>The stop statement is used to stop playing sound and music.</p>
+<pre>
+stop_statement -&gt; "stop" name
+                       ( "fadeout" simple_expression )?
+</pre>
+<p>The name is expected to be the name of an audio channel. The sound or music is stopped using <a href="../reference/functions/renpy.music.stop.html" title="renpy/doc/reference/functions/renpy.music.stop">renpy.music.stop</a>. The optional fadeout clause expects a time in seconds, and will cause it to take that long to fadeout the music.</p>
+<pre>
+stop sound
+stop music fadeout <span class="num">1.0</span>
+</pre>
+<div id="window" />
+<p><a id="Window_Statement" name="Window_Statement"></a></p>
+<h3><span class="mw-headline">Window Statement</span></h3>
+<p>The <code>window</code> statement is used to control if a window is shown when a character is not speaking. (For example, during transitions and pauses.)</p>
+<pre>
+window_statement -&gt; window ( "show" | "hide" ) ( simple_expression )?
+</pre>
+<p>The "window show" statement causes the window to be shown, while the "window hide" statement hides the window. If the optional simple_expression is given, it's a transition that's used to show and hide the window. If not given, it defaults to <a href="../reference/Configuration_Variables#config.window_show_transition" title="renpy/doc/reference/Configuration Variables">config.window_show_transition</a> and <a href="../reference/Configuration_Variables#config.window_hide_transition" title="renpy/doc/reference/Configuration Variables">config.window_hide_transition</a>. Giving None as the transition prevents it from occuring.</p>
+<p>The window itself is displayed by calling <a href="../reference/Configuration_Variables#config.empty_window" title="renpy/doc/reference/Configuration Variables">config.empty_window</a>. It defaults to having the narrator say an empty string.</p>
+<pre>
+<span class="kwa">show</span> bg washington
+<span class="kwa">show</span> eileen happy
+<span class="kwa">with</span> dissolve
+
+<span class="kwa">window show</span> dissolve
+
+<span class="str">"I can say stuff..."</span>
+
+<span class="kwa">show</span> eileen happy <span class="kwa">at</span> right
+<span class="kwa">with</span> move
+
+<span class="str">"... and move, while keeping the window shown."</span>
+
+<span class="kwa">window hide</span> dissolve
+</pre>
+<div id="With_Statement_and_Clauses" />
+<div id="with" />
+<p><a id="With_Statement_and_Clauses" name="With_Statement_and_Clauses"></a></p>
+<h3><span class="mw-headline">With Statement and Clauses</span></h3>
+<p>The <code>with</code> statement and <code>with</code> clauses are used to show transitions to the user. These transitions are always from the last screen shown to the user to the current screen. At the end of a <code>with</code> statement, the last screen shown to the user is set to the current screen. The last screen shown to the user can also be updated by <code>say</code> or <code>menu</code> statements, as well as by Python code.</p>
+<p>The <code>with</code> statement has the form:</p>
+<pre>
+with_statement -&gt; "with" simple_expression
+</pre>
+<p>The <i>simple_expression</i> is expected to evaluate to a transition function. If it evaluates to the value <i>None</i>, the last screen shown to the user is updated to the current screen, without performing a transition. This is useful to remove transient interface items (like a prior <code>say</code> statement) from partaking in a transition.</p>
+<p>For convenience, a number of statements support <code>with</code> clauses. In the case of the <code>scene</code>, <code>show</code>, and <code>hide</code> statements, the <code>with</code> clause is equivalent to placing a "with None" statement before the <code>scene</code>, <code>show</code> or <code>hide</code> statement, and a "with transition" statement after it. For example, the statement:</p>
+<pre>
+<span class="kwa">show</span> eileen happy <span class="kwa">with</span> dissolve
+</pre>
+<p>is equivalent to:</p>
+<pre>
+<span class="kwa">with None</span>
+<span class="kwa">show</span> eileen happy
+<span class="kwa">with</span> dissolve
+</pre>
+<p>This behavior can lead to undesired side-effects. The code:</p>
+<pre>
+<span class="kwa">show</span> bg whitehouse <span class="kwa">with</span> dissolve
+<span class="kwa">show</span> eileen happy <span class="kwa">with</span> dissolve
+</pre>
+<p>will cause two transitions to occur. To ensure only a single transition occurs, one must write:</p>
+<pre>
+<span class="kwa">with None</span>
+<span class="kwa">show</span> bg whitehouse
+<span class="kwa">show</span> eileen happy
+<span class="kwa">with</span> dissolve
+</pre>
+<p>With clauses can also be applied to <code>say</code> and <code>menu</code> statements. In this case, the transition occurs when the dialogue or menu is first shown to the user.</p>
+<p>For pre-defined transition functions that can be used in any script, see <a href="../reference/Transitions#predefined" title="renpy/doc/reference/Transitions">Pre-defined Transitions</a>. For functions that return transition functions, see <a href="../reference/Transitions#constructors" title="renpy/doc/reference/Transitions">Transition Constructors</a>.</p>
+<div id="While_Statement" />
+<div id="while" />
+<p><a id="While_Statement" name="While_Statement"></a></p>
+<h3><span class="mw-headline">While Statement</span></h3>
+<p>The <code>while</code> statement is used to execute a block of Ren'Py statement while a condition remains true.</p>
+<pre>
+while_statement -&gt; "while" python_expression ":"
+</pre>
+<p>When a <code>while</code> statement is executed, the <i>python_expression</i> is evaluated. If it evaluates to true, control is transferred to the first statement in the block associated with this <code>while</code> statement. If false, control is instead sent to the statement following the <code>while</code> statement.</p>
+<p>When control reaches the end of the block associated with the while statement, it returns to the <code>while</code> statement. This allows the <code>while</code> statement to check the condition again, and evaluate the block if the condition remains true.</p>
+<pre>
+<span class="kwa">while not</span> endgame<span class="sym">:</span>
+
+   <span class="str">"It's now morning. Time to get up and seize the day."</span>
+
+    <span class="kwa">call</span> morning
+    <span class="kwa">call</span> afternoon
+    <span class="kwa">call</span> evening
+
+    <span class="str">"Well, time to call it a night."</span>
+
+<span class="str">"Now it's time to wake up and face the endgame."</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

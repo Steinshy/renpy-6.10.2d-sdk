@@ -1,0 +1,35 @@
+<html><head><title>Position - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="Position" name="Position"></a></p>
+<h1><span class="mw-headline">Position</span></h1>
+<p><span id="Position" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">Position</strong></b></td>
+<td valign="top">(**properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Position, when given position properties as arguments, returns a callable that can be passed to the "at" clause of a show or scene statement to display the image at the given location. See the <a href="../../reference/Properties_and_Styles#Position_Properties" title="renpy/doc/reference/Properties and Styles">Position Properties</a> section to get a full explanation of how they are used to lay things out.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ left <span class="sym">=</span> <span class="kwd">Position</span><span class="sym">(</span>xpos<span class="sym">=</span><span class="num">0.0</span><span class="sym">,</span> xanchor<span class="sym">=</span><span class="str">'left'</span><span class="sym">)</span>
+    $ center <span class="sym">=</span> <span class="kwd">Position</span><span class="sym">(</span>xpos<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> xanchor<span class="sym">=</span><span class="str">'center'</span><span class="sym">)</span>
+    $ right <span class="sym">=</span> <span class="kwd">Position</span><span class="sym">(</span>xpos<span class="sym">=</span><span class="num">1.0</span><span class="sym">,</span> xanchor<span class="sym">=</span><span class="str">'right'</span><span class="sym">)</span>
+
+    $ top <span class="sym">=</span> <span class="kwd">Position</span><span class="sym">(</span>xpos<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> xanchor<span class="sym">=</span><span class="str">'center'</span><span class="sym">,</span> ypos<span class="sym">=</span><span class="num">0.0</span><span class="sym">,</span>
+                   yanchor<span class="sym">=</span><span class="str">'top'</span><span class="sym">)</span>
+
+<span class="kwa">show</span> eileen happy <span class="kwa">at</span> left
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

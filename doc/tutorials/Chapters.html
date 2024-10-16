@@ -1,0 +1,39 @@
+<html><head><title>Chapters - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a></p><p><a id="Chapters" name="Chapters"></a></p>
+<h3><span class="mw-headline">Chapters</span></h3>
+<p>Just like a traditional story, you might want to divide your Visual Novel up into chapters (or Acts, or any other story-telling chunk which makes sense in the context of your work.) Here's how.</p>
+<pre>
+
+<span class="kwa">scene</span> black <span class="kwa">with</span> dissolve
+
+<span class="kwa">show</span> text <span class="str">"Chapter 1</span><span class="esc">\n</span><span class="str">A Frightening Sight"</span> <span class="kwa">with</span> <span class="kwd">Pause</span><span class="sym">(</span><span class="num">1.5</span><span class="sym">)</span>
+
+<span class="kwa">scene</span> black <span class="kwa">with</span> dissolve
+
+<span class="kwa">scene</span> your_scene_title
+
+e <span class="str">"And now the story really begins."</span>
+
+</pre>
+<p>The code above will cause Ren'Py to fade to a black screen, showing "Chapter 1" centered on the screen, and below it on the next line "A Frightening Sight", also centered. (The "\n" means "new line".) After a pause of 1.5 seconds, the text will fade out again.</p>
+<p>If you just say:</p>
+<pre>
+<span class="kwa">show</span> text <span class="str">"Chapter 1/A Frightening Sight"</span> <span class="kwa">with</span> Pause
+</pre>
+<p>then "Chapter 1" etc. will stay on the screen until the player clicks or hits Return.</p>
+<p>"black" (note the lower case "b") is the only color which Ren'Py knows about by default. If you want to use a different color as the background for your chapter titles, then you'll have to set that up before you can use it, in an init block, like so:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> black <span class="sym">=</span> <span class="kwd">Solid</span><span class="sym">((</span><span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">255</span><span class="sym">))</span>
+    <span class="kwa">image</span> white <span class="sym">=</span> <span class="kwd">Solid</span><span class="sym">((</span><span class="num">255</span><span class="sym">,</span> <span class="num">255</span><span class="sym">,</span> <span class="num">255</span><span class="sym">,</span> <span class="num">255</span><span class="sym">))</span>
+    <span class="kwa">image</span> grey <span class="sym">=</span> <span class="kwd">Solid</span><span class="sym">((</span><span class="num">128</span><span class="sym">,</span> <span class="num">128</span><span class="sym">,</span> <span class="num">128</span><span class="sym">,</span> <span class="num">255</span><span class="sym">))</span>
+</pre>
+<p>Just google for "web colors" if you don't know what the values in brackets should be for the color you want.</p>
+<p>Note that there's nothing special about this "Chapter scene" - you don't have to use a Solid color if you don't want to. A custom scene-title .jpg would work just as well.</p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a></p></div>
+	</body></html>

@@ -1,0 +1,46 @@
+<html><head><title>renpy.scene - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.scene" name="renpy.scene"></a></p>
+<h1><span class="mw-headline">renpy.scene</span></h1>
+<p><span id="renpy.scene" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.scene</strong></b></td>
+<td valign="top">(layer='master'):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This clears out the specified layer, or 'master' by default. This is used in the execution of the `scene` statement, but only to clear out the layer. If you want to then add something new, like the `scene` statement would normally do when an image parameter is given, call <a href="../../reference/functions/renpy.show.html" title="renpy/doc/reference/functions/renpy.show">renpy.show</a> after this.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">python</span><span class="sym">:</span>
+        <span class="kwa">for</span> slideindex <span class="kwa">in</span> <span class="kwb">range</span><span class="sym">(</span><span class="num">10</span><span class="sym">):</span>
+            <span class="slc"># images are named slide0.png...slide9.png</span>
+            renpy<span class="sym">.</span><span class="kwa">image</span><span class="sym">(</span><span class="str">'slide%d'</span> <span class="sym">%</span> slideindex<span class="sym">,</span>
+                        <span class="str">'slide%d.png'</span> <span class="sym">%</span> slideindex<span class="sym">)</span>
+
+<span class="str">"And now, a slideshow"</span>
+<span class="kwa">python</span><span class="sym">:</span>
+    <span class="kwa">for</span> slideindex <span class="kwa">in</span> <span class="kwb">range</span><span class="sym">(</span><span class="num">10</span><span class="sym">):</span>
+        <span class="slc"># clear all images</span>
+        renpy<span class="sym">.</span><span class="kwa">scene</span><span class="sym">()</span>
+
+        renpy<span class="sym">.</span><span class="kwa">show</span><span class="sym">(</span><span class="str">'slide%d'</span> <span class="sym">%</span> slideindex<span class="sym">)</span>
+
+        <span class="slc"># set the transition for the pause interaction</span>
+        renpy<span class="sym">.</span><span class="kwd">transition</span><span class="sym">(</span>dissolve<span class="sym">)</span>
+
+        renpy<span class="sym">.</span><span class="kwa">pause</span><span class="sym">(</span><span class="num">3.0</span><span class="sym">)</span>
+
+<span class="kwa">scene</span> bg washington
+<span class="str">"Wasn't that nice?"</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

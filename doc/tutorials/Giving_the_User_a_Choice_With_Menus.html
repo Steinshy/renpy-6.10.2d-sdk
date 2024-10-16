@@ -1,0 +1,41 @@
+<html><head><title>Giving the User a Choice With Menus - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a></p><p><a id="Giving_the_User_a_Choice_with_Menus" name="Giving_the_User_a_Choice_with_Menus"></a></p>
+<h2><span class="mw-headline">Giving the User a Choice with Menus</span></h2>
+<p>Menus are implemented the <a href="../reference/The_Ren%27Py_Language#menu" title="renpy/doc/reference/The Ren&apos;Py Language">menu statement</a>, which is probably best explained by an example:</p>
+<pre>
+<span class="kwa">menu</span><span class="sym">:</span>
+    <span class="str">"Choice 1"</span><span class="sym">:</span>
+        <span class="str">"This is the result of the user choosing choice 1"</span>
+        bob <span class="str">"Hi Sarah."</span>
+        sarah <span class="str">"Hi Bob."</span>
+    <span class="str">"Second Choice"</span><span class="sym">:</span>
+        <span class="str">"This is the result of the user choosing the second choice."</span>
+    <span class="str">"The third menu option"</span><span class="sym">:</span>
+        <span class="str">"This is the result of the third menu option"</span>
+        bob <span class="str">"What up, Sarah?"</span>
+        sarah <span class="str">"Yo yo yo."</span>
+    <span class="str">"The fourth option doesn't do anything if you pick it"</span><span class="sym">:</span>
+        <span class="kwa">pass</span>
+    <span class="str">"The fifth option is a little different"</span><span class="sym">:</span>
+        bob <span class="str">"Hi Sarah. Hey, could you give me your sister's phone number?"</span>
+        sarah <span class="str">"Um, she doesn't have a telephone."</span>
+</pre>
+<p>Menu choices can be as long as you like, and you can have as many of them as you like, provided that they can all fit on the screen. The results of menu choices can also be as long as you like, without restriction. Every line that's the result of a menu choice must be indented beyond the menu choice.</p>
+<p>Please note that every menu option must have at least one statement, so if you want the menu option to do nothing, use the <a href="../reference/The_Ren%27Py_Language#pass" title="renpy/doc/reference/The Ren&apos;Py Language">pass statement</a>.</p>
+<p><br /></p>
+<table align="center" border="1" cellpadding="10" cellspacing="1" style="background: #fff0e0; text-align: center;" width="80%">
+<tr>
+<td width="30%">Previous:<br />
+<a href="../tutorials/Adding_Graphics_to_Your_Story.html" title="renpy/doc/tutorials/Adding Graphics to Your Story">Adding Graphics to Your Story</a></td>
+<td width="40%"><b><a href="../tutorials/Ren%27Py_Web_Tutorial.html" title="renpy/doc/tutorials/Ren&apos;Py Web Tutorial">Ren'Py Web Tutorial</a></b></td>
+<td width="30%">Next:<br />
+<a href="../tutorials/Remembering_User_Choices.html" title="renpy/doc/tutorials/Remembering User Choices">Remembering User Choices</a></td>
+</tr>
+</table>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a></p></div>
+	</body></html>

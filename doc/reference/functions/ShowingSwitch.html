@@ -1,0 +1,40 @@
+<html><head><title>ShowingSwitch - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ShowingSwitch" name="ShowingSwitch"></a></p>
+<h1><span class="mw-headline">ShowingSwitch</span></h1>
+<p><span id="ShowingSwitch" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ShowingSwitch</strong></b></td>
+<td valign="top">(*args, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This chooses a displayable to show based on which images are being shown on the screen. It expects an even number of positional arguments. Odd positional arguments are expected to be image names, while even positional arguments are expected to be displayables. An image matches if it is the prefix of a shown image. If the image name is None, it always matches. It is an error if no match occurs.</p>
+<p>This takes the keyword argument <i>layer</i>, which specifies the layer that will be checked to see if the images appear on it, defaulting to "master". Other keyword arguments are used to position the chosen displayable.</p>
+<p>Shown image names are tracked by the predictive image loading mechanism, and so ShowingSwitch will properly predictively load images.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ e <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span>
+        <span class="str">'Eileen'</span><span class="sym">,</span>
+        color<span class="sym">=</span><span class="str">"#c8ffc8"</span><span class="sym">,</span>
+        window_left_padding<span class="sym">=</span><span class="num">160</span><span class="sym">,</span>
+        show_side_image<span class="sym">=</span><span class="kwd">ShowingSwitch</span><span class="sym">(</span>
+            <span class="str">"eileen happy"</span><span class="sym">,</span> <span class="str">"eileen_side_happy.png"</span><span class="sym">,</span>
+            <span class="str">"eileen vhappy"</span><span class="sym">,</span> <span class="str">"eileen_side_vhappy.png"</span><span class="sym">,</span>
+            <span class="str">"eileen concerned"</span><span class="sym">,</span> <span class="str">"eileen_side_concerned.png"</span><span class="sym">,</span>
+            <span class="kwa">None</span><span class="sym">,</span> <span class="kwd">Null</span><span class="sym">(),</span>
+            xalign<span class="sym">=</span><span class="num">0.0</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">1.0</span><span class="sym">))</span>
+
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,48 @@
+<html><head><title>im.Map - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="im.Map" name="im.Map"></a></p>
+<h1><span class="mw-headline">im.Map</span></h1>
+<p><span id="im.Map" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">im.Map</strong></b></td>
+<td valign="top">(im, rmap=im.ramp(0, 255), gmap=im.ramp(0, 255), bmap=im.ramp(0, 255), amap=im.ramp(0, 255), force_alpha=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This adjusts the colors of the image that is its child. It takes as arguments 4 256 character strings. If a pixel channel has a value of 192, then the value of the 192nd character in the string is used for the mapped pixel component.</p>
+</div>
+<p>The im.Map function can be used in a simple way, like <a href="../../reference/functions/im.Recolor.html" title="renpy/doc/reference/functions/im.Recolor">im.Recolor</a>, to scale down or remove color components from the source image, or it can be used in a more complex way to totally remap the color of the source image.</p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> cyan green <span class="sym">=</span> im<span class="sym">.</span><span class="kwd">Map</span><span class="sym">(</span><span class="str">"cyan.png"</span><span class="sym">,</span> bmap<span class="sym">=</span>im<span class="sym">.</span><span class="kwd">ramp</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">))</span>
+    <span class="kwa">image</span> eileen inverse <span class="sym">=</span> im<span class="sym">.</span><span class="kwd">Map</span><span class="sym">(</span><span class="str">'9a_happy.png'</span><span class="sym">,</span> rmap<span class="sym">=</span>im<span class="sym">.</span><span class="kwd">ramp</span><span class="sym">(</span><span class="num">255</span><span class="sym">,</span><span class="num">0</span><span class="sym">),</span>
+                                  gmap<span class="sym">=</span>im<span class="sym">.</span><span class="kwd">ramp</span><span class="sym">(</span><span class="num">255</span><span class="sym">,</span><span class="num">0</span><span class="sym">),</span> bmap<span class="sym">=</span>im<span class="sym">.</span><span class="kwd">ramp</span><span class="sym">(</span><span class="num">255</span><span class="sym">,</span><span class="num">0</span><span class="sym">))</span>
+
+<span class="kwa">show</span> cyan green <span class="kwa">at</span> cyanpos <span class="kwa">with</span> dissolve
+
+<span class="str">"The im.Map operation lets us mess with the red, green,</span>
+<span class="str"> blue, and alpha channels of an image."</span>
+<span class="str">"In this case, we removed all the blue from the image,</span>
+<span class="str"> leaving only the green component of cyan."</span>
+
+e <span class="str">"Ever have that feeling you're a character in a horror movie?"</span>
+
+<span class="kwa">show</span> eileen inverse <span class="kwa">with</span> dissolve
+
+e <span class="str">"Right now, all my colors are inverted."</span>
+
+<span class="kwa">show</span> eileen happy <span class="kwa">with</span> dissolve
+
+e <span class="str">"Back to normal.</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

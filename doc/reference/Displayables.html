@@ -1,0 +1,1248 @@
+<html><head><title>Displayables - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Displayables" name="Displayables"></a></p>
+<h1><span class="mw-headline">Displayables</span></h1>
+<p>A <b>displayable</b> is a python object implementing an interface that allows it to be displayed to the screen. Displayables can be assigned to an image name using an `image` statement, and can then be shown to the user using the `show` and `hide` statements. They can be supplied as an argument to the <a href="../reference/functions/ui.add.html" title="renpy/doc/reference/functions/ui.add">ui.add</a> function. They are also used as the argument to certain style properties. In this section, we will describe functions that create displayables.</p>
+<p>When Ren'Py requires colors to be specified for a displayable, it allows them to be specified in a number of forms. In the following examples, lowercase letters stand for hexadecimal digits, while uppercase letters are short for numbers between 0 and 255. r, g, b, and a are short for red, green, blue, and alpha.</p>
+<ul>
+<li>A string of the form "#rgb". (yellow = "#ff0", blue = "#00f")</li>
+<li>A string of the form "#rgba". (yellow = "#ff0f", blue = "#00ff")</li>
+<li>A string of the form "#rrggbb". (yellow = "#ffff00", blue = "#0000ff")</li>
+<li>A string of the form "#rrggbbaa". (yellow = "#ffff00ff", blue = "#0000ffff")</li>
+<li>A 4-tuple of the form (R, G, B, A). (yellow = (255, 255, 0, 255), blue = (0, 0, 255, 255))</li>
+</ul>
+<p>When Ren'Py expects a displayable to be specified, it allows them to be in the following forms:</p>
+<ul>
+<li>A displayable may be given directly, in which case it is used.</li>
+<li>A string beginning with "#" is used to create a solid object, with the color interpreted as above.</li>
+<li>Strings with at least one dot in them are interpreted as the filenames of images, and are used to create image objects.</li>
+<li>Other strings are interpreted as the name of an image defined with the image statement.</li>
+</ul>
+<table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Displayables"><span class="tocnumber">1</span> <span class="toctext">Displayables</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Image_Manipulators"><span class="tocnumber">1.1</span> <span class="toctext">Image Manipulators</span></a></li>
+<li class="toclevel-2"><a href="#im.MatrixColor"><span class="tocnumber">1.2</span> <span class="toctext">im.MatrixColor</span></a></li>
+<li class="toclevel-2"><a href="#Backgrounds"><span class="tocnumber">1.3</span> <span class="toctext">Backgrounds</span></a></li>
+<li class="toclevel-2"><a href="#Text"><span class="tocnumber">1.4</span> <span class="toctext">Text</span></a></li>
+<li class="toclevel-2"><a href="#Dynamic"><span class="tocnumber">1.5</span> <span class="toctext">Dynamic</span></a></li>
+<li class="toclevel-2"><a href="#Animations"><span class="tocnumber">1.6</span> <span class="toctext">Animations</span></a></li>
+<li class="toclevel-2"><a href="#Layout"><span class="tocnumber">1.7</span> <span class="toctext">Layout</span></a></li>
+<li class="toclevel-2"><a href="#Widget"><span class="tocnumber">1.8</span> <span class="toctext">Widget</span></a></li>
+<li class="toclevel-2"><a href="#Particle_Motion"><span class="tocnumber">1.9</span> <span class="toctext">Particle Motion</span></a></li>
+<li class="toclevel-2"><a href="#Position_and_Motion_Functions"><span class="tocnumber">1.10</span> <span class="toctext">Position and Motion Functions</span></a></li>
+<li class="toclevel-2"><a href="#Position_Definitions"><span class="tocnumber">1.11</span> <span class="toctext">Position Definitions</span></a></li>
+<li class="toclevel-2"><a href="#Transform"><span class="tocnumber">1.12</span> <span class="toctext">Transform</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><br /></p>
+<p><a id="Image_Manipulators" name="Image_Manipulators"></a></p>
+<h2><span class="mw-headline">Image Manipulators</span></h2>
+<p>An Image is a type of displayable that contains bitmap data that can be shown to the screen. All images are displayables, but not all displayables are images. Images differ from displayables in that they can be statically computed, and stored in the image cache. This loading occurs sometime before the image is to be used (but not at the time the Image is created). This generally makes Images faster than arbitrary displayables. An image manipulator is a function that returns an Image.</p>
+<p>When an image manipulator requires another as input, the second image manipulator can be specified in a number of ways.</p>
+<ul>
+<li>It may be supplied as a string, which is interpreted as a filename and loaded with <a href="../reference/functions/im.Image.html" title="renpy/doc/reference/functions/im.Image">im.Image</a>.</li>
+<li>It may be a directly specified image manipulator, in which case it is passed through unchanged.</li>
+</ul>
+<p><b>Run-length Encoding.</b> Ren'Py supports the use of run-length encoding to efficiently draw images with large amounts of transparency. All image manipulators support an <i>rle</i> argument. When True, run-length encoding is used. When false, it is not used. When None (the default), Ren'Py will randomly sample 10 points in the image image to try to find transparency, and use rle only if transparency is found. In exchange for increased load time, and additional memory proportional to the number of non-transparent pixels in the image, run-length encoding can draw images to the screen in time proportional to the number of non-transparent pixels in the image. When an image is mostly transparent, this can lead to a significant speedup in drawing time.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> eileen happy <span class="sym">=</span> <span class="kwd">Image</span><span class="sym">(</span><span class="str">"eileen_happy.png"</span><span class="sym">,</span> rle<span class="sym">=</span><span class="kwa">True</span><span class="sym">)</span>
+</pre>
+<p><b>Caching.</b> By default, image manipulators are cached in memory before they are loaded. Supplying the cache=False argument to an image manipulator will prevent this caching. This should only be used when an image manipulator is never used directly (such as by an image statement).</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> eileen happy <span class="sym">=</span> im<span class="sym">.</span><span class="kwd">AlphaMask</span><span class="sym">(</span><span class="kwd">Image</span><span class="sym">(</span><span class="str">"eileen_happy.base.jpg"</span><span class="sym">,</span> cache<span class="sym">=</span><span class="kwa">False</span><span class="sym">),</span>
+                                      <span class="kwd">Image</span><span class="sym">(</span><span class="str">"eileen_happy.mask.jpg"</span><span class="sym">,</span> cache<span class="sym">=</span><span class="kwa">False</span><span class="sym">))</span>
+</pre>
+<p><b>Image Manipulator List.</b> The image manipulators are:</p>
+<p><span id="im.Image" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Image.html" title="renpy/doc/reference/functions/im.Image">im.Image</a></b></td>
+<td valign="top">(filename, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This image manipulator loads an image from a file.</p>
+<p><i>filename</i> - The filename that the image will be loaded from.</p>
+</div>
+<p>Note that Image is an alias for im.Image.</p>
+<p><br /></p>
+<p><span id="Image" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Image.html" title="renpy/doc/reference/functions/Image">Image</a></b></td>
+<td valign="top">(...):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>An alias for <a href="../reference/functions/im.Image.html" title="renpy/doc/reference/functions/im.Image">im.Image</a>.</p>
+</div>
+<p><br /></p>
+<p><span id="im.Alpha" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Alpha.html" title="renpy/doc/reference/functions/im.Alpha">im.Alpha</a></b></td>
+<td valign="top">(image, alpha, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns an alpha-mapped version of the image. Alpha is the maximum alpha that this image can have, a number between 0.0 (fully transparent) and 1.0 (opaque).</p>
+<p>If an image already has an alpha channel, values in that alpha channel are reduced as appropriate.</p>
+</div>
+<p><br /></p>
+<p><span id="im.AlphaMask" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.AlphaMask.html" title="renpy/doc/reference/functions/im.AlphaMask">im.AlphaMask</a></b></td>
+<td valign="top">(base, mask, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p><i>base</i> and <i>mask</i> should be image manipulators. This function takes the red channel from <i>mask</i>, and applies it to the alpha channel of <i>base</i> to create a new image.</p>
+</div>
+<p><br /></p>
+<p><span id="im.Composite" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Composite.html" title="renpy/doc/reference/functions/im.Composite">im.Composite</a></b></td>
+<td valign="top">(size, *args, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This image manipulator composites one or more images together.</p>
+<p>This takes a variable number of arguments. The first argument is size, which is either the desired size of the image (in pixels), or None to indicate that the size should be the size of the first image.</p>
+<p>It then takes an even number of further arguments. (For an odd number of total arguments.) The second and other even numbered arguments contain position tuples, while the third and further odd-numbered arguments give images (or image manipulators). A position argument gives the position of the image immediately following it, with the position expressed as a tuple giving an offset from the upper-left corner of the image. The images are composited in bottom-to-top order, with the last image being closest to the user.</p>
+</div>
+<p><br /></p>
+<p><span id="im.Crop" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Crop.html" title="renpy/doc/reference/functions/im.Crop">im.Crop</a></b></td>
+<td valign="top">(im, x, y, w, h, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This crops the image that is its child.</p>
+</div>
+<p><br /></p>
+<p><span id="im.FactorScale" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.FactorScale.html" title="renpy/doc/reference/functions/im.FactorScale">im.FactorScale</a></b></td>
+<td valign="top">(im, width, height=None, bilinear=True, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Scales the supplied image manipulator <i>im</i> by the given <i>width</i> and <i>height</i> factors. If <i>height</i> is not given, it defaults to the width.</p>
+<p><i>bilinear</i> - If True, bilinear scaling is used.</p>
+</div>
+<p><br /></p>
+<p><span id="im.Flip" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Flip.html" title="renpy/doc/reference/functions/im.Flip">im.Flip</a></b></td>
+<td valign="top">(im, horizontal=False, vertical=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is an image manipulator that can flip the image horizontally or vertically.</p>
+<p><i>im</i> - The image to be flipped.</p>
+<p><i>horizontal</i> - True to flip the image horizontally.</p>
+<p><i>vertical</i> - True to flip the image vertically.</p>
+</div>
+<p><br /></p>
+<p><span id="im.Map" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Map.html" title="renpy/doc/reference/functions/im.Map">im.Map</a></b></td>
+<td valign="top">(im, rmap=im.ramp(0, 255), gmap=im.ramp(0, 255), bmap=im.ramp(0, 255), amap=im.ramp(0, 255), force_alpha=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This adjusts the colors of the image that is its child. It takes as arguments 4 256 character strings. If a pixel channel has a value of 192, then the value of the 192nd character in the string is used for the mapped pixel component.</p>
+</div>
+<p>The im.Map function can be used in a simple way, like <a href="../reference/functions/im.Recolor.html" title="renpy/doc/reference/functions/im.Recolor">im.Recolor</a>, to scale down or remove color components from the source image, or it can be used in a more complex way to totally remap the color of the source image.</p>
+<p><br /></p>
+<p><span id="im.ramp" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.ramp.html" title="renpy/doc/reference/functions/im.ramp">im.ramp</a></b></td>
+<td valign="top">(start, end):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns a 256 character linear ramp, where the first character has the value start and the last character has the value end. Such a ramp can be used as a map argument of <a href="../reference/functions/im.Map.html" title="renpy/doc/reference/functions/im.Map">im.Map</a>.</p>
+</div>
+<p><br /></p>
+<p><span id="im.Scale" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Scale.html" title="renpy/doc/reference/functions/im.Scale">im.Scale</a></b></td>
+<td valign="top">(im, width, height, bilinear=True, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is an image manipulator that scales another image manipulator to the specified <i>width</i> and <i>height</i>.</p>
+<p><i>bilinear</i> - If True, bilinear interpolation is used. If False, nearest-neighbor filtering is used.</p>
+</div>
+<p><br /></p>
+<p><span id="im.Recolor" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Recolor.html" title="renpy/doc/reference/functions/im.Recolor">im.Recolor</a></b></td>
+<td valign="top">(im, rmul=255, gmul=255, bmul=255, amul=255, force_alpha=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This adjusts the colors of the supplied image, <i>im</i>. It takes four arguments, <i>rmul</i>, <i>gmul</i>, <i>bmul</i> and <i>amul</i>, corresponding to the red, green, blue and alpha channels, with each being an integer between 0 and 255. Each channel has its value mapped so that 0 is 0, 255 is the argument supplied for that channel, and other values are linearly mapped in-between.</p>
+</div>
+<p><br /></p>
+<p><span id="im.Twocolor" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Twocolor.html" title="renpy/doc/reference/functions/im.Twocolor">im.Twocolor</a></b></td>
+<td valign="top">(im, white, black, force_alpha=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This takes as arguments two colors, white and black. The image is mapped such that pixels in white have the white color, pixels in black have the black color, and shades of gray are linearly interpolated inbetween. The alpha channel is mapped linearly between 0 and the alpha found in the white color, the black color's alpha is ignored.</p>
+</div>
+<p><br /></p>
+<p><span id="im.Rotozoom" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Rotozoom.html" title="renpy/doc/reference/functions/im.Rotozoom">im.Rotozoom</a></b></td>
+<td valign="top">(im, angle, zoom, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is an image manipulator that is a smooth rotation and zoom of another image manipulator.</p>
+<p><i>im</i> - The image to be rotozoomed.</p>
+<p><i>angle</i> - The number of degrees counterclockwise the image is to be rotated.</p>
+<p><i>zoom</i> - The zoom factor. Numbers that are greater than 1.0 lead to the image becoming larger.</p>
+</div>
+<p><br /></p>
+<p><span id="im.Tile" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Tile.html" title="renpy/doc/reference/functions/im.Tile">im.Tile</a></b></td>
+<td valign="top">(im, size=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This tiles the image, repeating it vertically and horizontally until it is as large as the specified size. If no size is given, then the size defaults to the size of the screen.</p>
+</div>
+<p><br />
+ImageReference is used to access images declared with the image statement.</p>
+<p><br />
+<span id="ImageReference" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ImageReference.html" title="renpy/doc/reference/functions/ImageReference">ImageReference</a></b></td>
+<td valign="top">(name):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This displayable accesses images declared using the image statement. <i>name</i> may be a string, or a tuple of strings giving the components of the image name.</p>
+<p>This always a displayable, and may also be an image manipulator if name is declared to refer to an image manipulator.</p>
+</div>
+<p><br /></p>
+<p><a id="im.MatrixColor" name="im.MatrixColor"></a></p>
+<h2><span class="mw-headline">im.MatrixColor</span></h2>
+<p>The im.MatrixColor image manipulator takes a 20 or 25 element matrix, and uses it to linearly transform the colors of an image.</p>
+<p><br />
+<span id="im.MatrixColor" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.MatrixColor.html" title="renpy/doc/reference/functions/im.MatrixColor">im.MatrixColor</a></b></td>
+<td valign="top">(im, matrix):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is an image operator that creates an image by using a <i>matrix</i> to linearly transform the colors in the image <i>im</i>.</p>
+<p><i>matrix</i> should be a list, tuple, or <a href="../reference/functions/im.matrix.html" title="renpy/doc/reference/functions/im.matrix">im.matrix</a> that is 20 or 25 elements long. If the object has 25 elements, then elements past the 20th are ignored. If the elements of the matrix are named as follows:</p>
+<pre>
+[ a, b, c, d, e,
+  f, g, h, i, j,
+  k, l, m, n, o,
+  p, q, r, s, t ]
+</pre>
+<p>and R, G, B, and A are the red, green, blue, and alpha components of the color, respectively, then the transformed color R', G', B', A' is computed as follows:</p>
+<pre>
+R' = (a * R) + (b * G) + (c * B) + (d * A) + (e * 255)
+G' = (f * R) + (g * G) + (h * B) + (i * A) + (j * 255)
+B' = (k * R) + (l * G) + (m * B) + (n * A) + (o * 255)
+A' = (p * R) + (q * G) + (r * B) + (s * A) + (t * 255)
+</pre>
+<p>R', G', B', and A' are clamped to the range [0, 255].</p>
+</div>
+<p><br />
+It's often convenient to specify the matrix using an im.matrix object. These objects support a number of mathematical operations, such as matrix and scalar multiplication and scalar addition. Multiplying matrices together lets you perform multiple color manipulations at once, at the cost of a single MatrixColor operation.</p>
+<p><br />
+<span id="im.matrix" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.matrix.html" title="renpy/doc/reference/functions/im.matrix">im.matrix</a></b></td>
+<td valign="top">(matrix):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Constructs an im.matrix object from the given matrix. im.matrix objects represent 5x5 matrices, and support a number of mathematical operations. The operations supported are matrix multiplication, scalar multiplication, element-wise addition, and element-wise subtraction. These operations are invoked using the standard mathematical operators (*, *, +, and -), respectively. If two im.matrix objects are multiplied, matrix multiplication is performed, otherwise scalar multiplication is used.</p>
+<p><i>matrix</i> is a 20 or 25 element list. If the list is 20 elements long, it is padded with [0, 0, 0, 0, 1 ] to make a 5x5 matrix, suitable for multiplication.</p>
+</div>
+<p><br />
+The following functions produce im.matrix objects:</p>
+<p><br />
+<span id="im.matrix.identity" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.matrix.identity.html" title="renpy/doc/reference/functions/im.matrix.identity">im.matrix.identity</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns an identity im.matrix (one that does not change color or alpha).</p>
+</div>
+<p><span id="im.matrix.saturation" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.matrix.saturation.html" title="renpy/doc/reference/functions/im.matrix.saturation">im.matrix.saturation</a></b></td>
+<td valign="top">(level, desat=(0.2126, 0.7152, 0.0722)):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Constructs an im.matrix that alters the saturation of an image. The alpha channel is untouched.</p>
+<p><i>level</i> - The amount of saturation in the resulting image. 1.0 is the unaltered image, while 0.0 is grayscale.</p>
+<p><i>desat</i> - This is a 3-element tuple that controls how much of the red, green, and blue channels will be placed into all three channels of a fully desaturated image. The default is based on the constants used for the luminance channel of an NTSC television signal. Since the human eye is mostly sensitive to green, more of the green channel is kept then the other two channels.</p>
+</div>
+<p><span id="im.matrix.desaturate" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.matrix.desaturate.html" title="renpy/doc/reference/functions/im.matrix.desaturate">im.matrix.desaturate</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns a matrix that desaturates the image (make it grayscale). This is equivalent to calling im.matrix.saturation(0).</p>
+</div>
+<p><span id="im.matrix.tint" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.matrix.tint.html" title="renpy/doc/reference/functions/im.matrix.tint">im.matrix.tint</a></b></td>
+<td valign="top">(r, g, b):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Constructs an im.matrix that tints an image, while leaving the alpha channel intact. <i>r</i>, <i>g</i>, and <i>b</i>, should be numbers between 0 and 1, and control what fraction of the given channel is placed into the final image. (For example, if r is .5, and a pixel has a red component of 100, the corresponding pixel will have a red component of 50.)</p>
+</div>
+<p><span id="im.matrix.invert" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.matrix.invert.html" title="renpy/doc/reference/functions/im.matrix.invert">im.matrix.invert</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Constructs an im.matrix that inverts the red, green, and blue channels of the source image, while leaving the alpha channel alone.</p>
+</div>
+<p><span id="im.matrix.brightness" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.matrix.brightness.html" title="renpy/doc/reference/functions/im.matrix.brightness">im.matrix.brightness</a></b></td>
+<td valign="top">(b):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Constructs an im.matrix that alters the brightness of an image, while leaving the alpha channel intact. <i>b</i> should be between -1 and 1, with -1 being the darkest possible image and 1 the brightest.</p>
+</div>
+<p><span id="im.matrix.contrast" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.matrix.contrast.html" title="renpy/doc/reference/functions/im.matrix.contrast">im.matrix.contrast</a></b></td>
+<td valign="top">(c):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Constructs an im.matrix that alters the contrast of an image. <i>c</i> should be greater than 0.0, with values greater than 1.0 increasing contrast and less than 1.0 decreasing it.</p>
+</div>
+<p><span id="im.matrix.opacity" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.matrix.opacity.html" title="renpy/doc/reference/functions/im.matrix.opacity">im.matrix.opacity</a></b></td>
+<td valign="top">(o):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Constructs an im.matrix that alters the opacity of an image, while leaving the red, green, and blue channels alone. An <i>o</i> of 0.0 is fully transparent, while 1.0 is fully opaque.</p>
+</div>
+<p><span id="im.matrix.hue" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.matrix.hue.html" title="renpy/doc/reference/functions/im.matrix.hue">im.matrix.hue</a></b></td>
+<td valign="top">(h):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns a matrix that rotates the hue by h degrees, while preserving luminosity.</p>
+</div>
+<p><br />
+Matrices constructed with these functions can be composed using matrix multiplication. For example, one can desaturate an image, and then tint it light blue.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> city blue <span class="sym">=</span> im<span class="sym">.</span><span class="kwd">MatrixColor</span><span class="sym">(</span><span class="str">"city.jpg"</span><span class="sym">,</span> im<span class="sym">.</span>matrix<span class="sym">.</span><span class="kwd">desaturate</span><span class="sym">() *</span> im<span class="sym">.</span>matrix<span class="sym">.</span><span class="kwd">tint</span><span class="sym">(</span><span class="num">0.9</span><span class="sym">,</span> <span class="num">0.9</span><span class="sym">,</span> <span class="num">1.0</span><span class="sym">))</span>
+</pre>
+<p>It's far more efficient to multiply matrices rather than composing im.MatrixColor operations, since the matrix multiplication requires about 125 multiply operations, while the im.MatrixColor uses 16 per pixel times the number of pixels in the image.</p>
+<p>There exist two image manipulators that wrap common uses of im.MatrixColor:</p>
+<p><br />
+<span id="im.Grayscale" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Grayscale.html" title="renpy/doc/reference/functions/im.Grayscale">im.Grayscale</a></b></td>
+<td valign="top">(im, desat=(0.2126, 0.7152, 0.0722)):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This image operator converts the given image to grayscale. <i>desat</i> is as for <a href="../reference/functions/im.matrix.saturation.html" title="renpy/doc/reference/functions/im.matrix.saturation">im.matrix.saturation</a>.</p>
+</div>
+<p><br /></p>
+<p><br />
+<span id="im.Sepia" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/im.Sepia.html" title="renpy/doc/reference/functions/im.Sepia">im.Sepia</a></b></td>
+<td valign="top">(im, tint=(1.0, .94, .76), desat=(0.2126, 0.7152, 0.0722)):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This image operator sepia-tones an image. <i>desat</i> is as for <a href="../reference/functions/im.matrix.saturation.html" title="renpy/doc/reference/functions/im.matrix.saturation">im.matrix.saturation</a>. <i>tint</i> is decomposed and used as the parameters to <a href="../reference/functions/im.matrix.tint.html" title="renpy/doc/reference/functions/im.matrix.tint">im.matrix.tint</a>.</p>
+</div>
+<p><br /></p>
+<p><a id="Backgrounds" name="Backgrounds"></a></p>
+<h2><span class="mw-headline">Backgrounds</span></h2>
+<p>There are two displayables that are eminently suitable for use as backgrounds:</p>
+<p><span id="Frame" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Frame.html" title="renpy/doc/reference/functions/Frame">Frame</a></b></td>
+<td valign="top">(image, xborder, yborder, tile=False, bilinear=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns a displayable that is a frame, based on the supplied image filename. A frame is an image that is automatically rescaled to the size allocated to it. The image has borders that are only scaled in one axis. The region within xborder pixels of the left and right borders is only scaled in the y direction, while the region within yborder pixels of the top and bottom axis is scaled only in the x direction. The corners are not scaled at all, while the center of the image is scaled in both x and y directions.</p>
+<p><i>image</i> - The image (which may be a filename or image object) that will be scaled.</p>
+<p><i>xborder</i> - The number of pixels in the x direction to use as a border.</p>
+<p><i>yborder</i> - The number of pixels in the y direction to use as a border.</p>
+<p><i>tile</i> - If true, then tiling is performed rather then scaling.</p>
+<p><i>bilinear</i> - If true (and tile is false), bilinear scaling is performed instead of nearest-neighbor scaling.</p>
+<p>For better performance, have the image share a dimension length in common with the size the frame will be rendered at. We detect this and avoid scaling if possible.</p>
+</div>
+<p><br /></p>
+<p><span id="Solid" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Solid.html" title="renpy/doc/reference/functions/Solid">Solid</a></b></td>
+<td valign="top">(color):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns a Displayable that is solid, and filled with a single color. A Solid expands to fill all the space allocated to it, making it suitable for use as a background.</p>
+<p><i>color</i> - The color that the display will be filled with, given either as an RGBA tuple, or an html-style string</p>
+</div>
+<p><br /></p>
+<p><a id="Text" name="Text"></a></p>
+<h2><span class="mw-headline">Text</span></h2>
+<p><a href="../reference/functions/Text.html" title="renpy/doc/reference/functions/Text">Text</a> can be used to show text to the user, as a displayable.</p>
+<p><br />
+<span id="Text" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Text.html" title="renpy/doc/reference/functions/Text">Text</a></b></td>
+<td valign="top">(text, slow=False, slow_done=None, slow_speed=None, slow_start=0, slow_abortable=False, pause=None, tokenized=False, style='default', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A displayable that can format and display text on the screen.</p>
+<p><i>text</i> - The text that will be displayed on the screen.</p>
+<p><i>slow</i> - If True, the text will be typed at the screen at a rate determined by the slow_cps property, if set, or the "Text Speed" preference. If None (the default), then it will be typed at a speed determined by the slow_cps property. If False, then it will appear instantly.</p>
+<p><i>style</i> - A style that will be applied to the text.</p>
+<p><i>properties</i> - Additional properties that are applied to the text.</p>
+<p><i>pause</i> - If not None, then we display up to the pauseth pause (0-numbered.)</p>
+<p><i>slow_done</i> - A callback that occurs when slow text is done.</p>
+<p><i>slow_speed</i> - The speed of slow text. If none, it's taken from the preferences.</p>
+<p><i>slow_offset</i> - The offset into the text to start the slow text.</p>
+<p><i>slow_abortable</i> - If True, clicking aborts the slow text.</p>
+<p><i>tokenized</i> - True if the text is already tokenized.</p>
+</div>
+<p><br />
+Ren'Py also supports a parameterized text object, which shows text as if it was an image on the screen. But care should be taken, as it's almost always better to use a <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> object to show text. By default there is one <a href="../reference/functions/ParameterizedText.html" title="renpy/doc/reference/functions/ParameterizedText">ParameterizedText</a> image, named `text` declared, but the user can declare more than one to show multiple text blocks on the screen at once.</p>
+<p><span id="ParameterizedText" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ParameterizedText.html" title="renpy/doc/reference/functions/ParameterizedText">ParameterizedText</a></b></td>
+<td valign="top">(style='default', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This can be used as an image. When used, this image is expected to have a single parameter, a string which is rendered as the image.</p>
+</div>
+<p><br /></p>
+<p><a id="Dynamic" name="Dynamic"></a></p>
+<h2><span class="mw-headline">Dynamic</span></h2>
+<p><a href="../reference/functions/DynamicDisplayable.html" title="renpy/doc/reference/functions/DynamicDisplayable">DynamicDisplayable</a> can be used in styles to change the displayable shown over the course of the game.</p>
+<p><br />
+<span id="DynamicDisplayable" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/DynamicDisplayable.html" title="renpy/doc/reference/functions/DynamicDisplayable">DynamicDisplayable</a></b></td>
+<td valign="top">(function, *args, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This displayable evaluates a function, and uses the result of that function to determine what to show.</p>
+<p><i>function</i> should be function that should accept at least two arguments. The first argument is the time (in seconds) that the DynamicDisplayable has been shown for. The second argument is the number of seconds that a displayable with the same image tag has been shown for. Additional positional and keyword arguments passed to DynamicDisplayable are also given to the function. The function is expected to return a 2-tuple. The first element of this tuple should be a displayable. The second should be either the time (in seconds) that the return value is valid for, or None to indicate the return value is valid indefinitely.</p>
+<p>The function is evaluated at least once for each interaction. It is also evaluated again when the specified time has elapsed.</p>
+<p>Note that DynamicDisplayable does not accept properties. Instead, it uses the properties of the displayable returned by <i>function</i>.</p>
+<p>Note that <a class="mw-redirect" href="/wiki/ConditionSwitch.html" title="ConditionSwitch">ConditionSwitch</a> is a wrapper around DynamicDisplayable, and may be simpler depending on your needs.</p>
+<p>For compatibility with pre-5.6.3 versions of Ren'Py, DynamicDisplayable also accepts a string as the <i>function</i> argument. In this case, the string is evaluated once per interaction, with the result being used as the displayable for that interaction.</p>
+</div>
+<p><br /></p>
+<p><br />
+<span id="ConditionSwitch" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ConditionSwitch.html" title="renpy/doc/reference/functions/ConditionSwitch">ConditionSwitch</a></b></td>
+<td valign="top">(*args, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a wrapper around <a href="../reference/functions/DynamicDisplayable.html" title="renpy/doc/reference/functions/DynamicDisplayable">DynamicDisplayable</a> that displays the first displayable matching a condition. It takes an even number of positional arguments, with odd arguments being strings containing python conditions, and odd arguments being displayables. On each interaction, it evaluates the conditions in order to find the first that is true, and then displays that displayable. It is an error for no condition to be true.</p>
+<p>If supplied, keyword arguments are used to position the chosen displayable.</p>
+</div>
+<p><br /></p>
+<p><span id="ShowingSwitch" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ShowingSwitch.html" title="renpy/doc/reference/functions/ShowingSwitch">ShowingSwitch</a></b></td>
+<td valign="top">(*args, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This chooses a displayable to show based on which images are being shown on the screen. It expects an even number of positional arguments. Odd positional arguments are expected to be image names, while even positional arguments are expected to be displayables. An image matches if it is the prefix of a shown image. If the image name is None, it always matches. It is an error if no match occurs.</p>
+<p>This takes the keyword argument <i>layer</i>, which specifies the layer that will be checked to see if the images appear on it, defaulting to "master". Other keyword arguments are used to position the chosen displayable.</p>
+<p>Shown image names are tracked by the predictive image loading mechanism, and so ShowingSwitch will properly predictively load images.</p>
+</div>
+<p><br /></p>
+<p><a id="Animations" name="Animations"></a></p>
+<h2><span class="mw-headline">Animations</span></h2>
+<p><i>This section has been made somewhat obsolete by the introduction of <a href="../reference/Animation_and_Transformation_Language.html" title="renpy/doc/reference/Animation and Transformation Language">ATL</a> in Ren'Py 6.10.</i></p>
+<div style="color: #888">
+<p>Ren'Py provides several kinds of animation displayables.</p>
+<p>These animation functions take an <i>anim_timebase</i> parameter, that determines which timebase to use. The animation timebase, used when anim_timebase is True, starts at the instant of the first frame from which the tag of the image containing this animation has been shown on the screen. This can be used to switch between two animations, in a way that ensures they are synchronized to the same timebase. The displayable timebase, used when anim_timebase=False, starts at the first frame after the displayable is shown, and can be used to ensure the entire animation is seen, even if an image with the same tag was already on the screen.</p>
+<p>The displayable timebase is set to zero for children of a Button, each time the button is focused or unfocused. This means that animations that are children of the button (including backgrounds of the button) that have anim_timebase=False will be restarted when the button changes focus.</p>
+<p>The animation functions are:</p>
+<p><span id="Animation" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Animation.html" title="renpy/doc/reference/functions/Animation">Animation</a></b></td>
+<td valign="top">(*args, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A Displayable that draws an animation, which is a series of images that are displayed with time delays between them.</p>
+<p>Odd (first, third, fifth, etc.) arguments to Animation are interpreted as image filenames, while even arguments are the time to delay between each image. If the number of arguments is odd, the animation will stop with the last image (well, actually delay for a year before looping). Otherwise, the animation will restart after the final delay time.</p>
+<p><i>anim_timebase</i> - If True, the default, use the animation timebase. Otherwise, use the displayable timebase.</p>
+</div>
+<p><br /></p>
+<p><span id="anim.TransitionAnimation" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/anim.TransitionAnimation.html" title="renpy/doc/reference/functions/anim.TransitionAnimation">anim.TransitionAnimation</a></b></td>
+<td valign="top">(*args, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A displayable that draws an animation with each frame separated by a transition.</p>
+<p>This takes arguments such that the 1st, 4th, 7th, ... arguments are displayables, the 2nd, 5th, 8th, ... arguments are times, and the 3rd, 6th, 9th, ... are transitions.</p>
+<p>This displays the first displayable for the given time, then transitions to the second displayable using the given transition, and shows it for the given time (the time of the transition is taken out of the time the frame is shown), and so on.</p>
+<p>A transition may be None, to specify no transition should be used.</p>
+<p>The last argument may be a transition (in which case that transition is used to transition back to the first frame), or a displayable (which is shown forever).</p>
+<p>Not all transitions can be used with this. (Most notably, the various forms of <a href="../reference/functions/MoveTransition.html" title="renpy/doc/reference/functions/MoveTransition">MoveTransition</a> can't.)</p>
+<p>There is one keyword argument, apart from the usual style properties:</p>
+<p><i>anim_timebase</i> - If True, the default, use the animation timebase. Otherwise, use the displayable timebase.</p>
+</div>
+<p><br /></p>
+<p><br />
+<span id="anim.Blink" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/anim.Blink.html" title="renpy/doc/reference/functions/anim.Blink">anim.Blink</a></b></td>
+<td valign="top">(image, on=0.5, off=0.5, rise=0.5, set=0.5, high=1.0, low=0.0, offset=0.0, anim_timebase=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This takes as an argument an image or widget, and blinks that image by varying its alpha. The sequence of phases is on - set - off - rise - on - ... All times are given in seconds, all alphas are fractions between 0 and 1.</p>
+<p><i>image</i> - The image or widget that will be blinked.</p>
+<p><i>on</i> - The amount of time the widget spends on, at high alpha.</p>
+<p><i>off</i> - The amount of time the widget spends off, at low alpha.</p>
+<p><i>rise</i> - The amount time the widget takes to ramp from low to high alpha.</p>
+<p><i>set</i> - The amount of time the widget takes to ram from high to low.</p>
+<p><i>high</i> - The high alpha.</p>
+<p><i>low</i> - The low alpha.</p>
+<p><i>offset</i> - A time offset, in seconds. Use this to have a blink that does not start at the start of the on phase.</p>
+<p><i>anim_timebase</i> - If True, use the animation timebase, if false, the displayable timebase.</p>
+</div>
+<p><br /></p>
+<p><br />
+<span id="anim.SMAnimation" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/anim.SMAnimation.html" title="renpy/doc/reference/functions/anim.SMAnimation">anim.SMAnimation</a></b></td>
+<td valign="top">(initial, *args, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a state-machine animation. Such an animation is created by randomly traversing the edges between states in a defined state machine. Each state corresponds to an image shown to the user, with the edges corresponding to the amount of time an image is shown, and the transition it is shown with.</p>
+<p>Images are shown, perhaps with a transition, when we are transitioning into a state containing that image.</p>
+<p><i>initial</i> - The name (a string) of the initial state we start in.</p>
+<p><i>showold</i> - If the keyword parameter showold is True, then the old image is shown instead of the new image when in an edge.</p>
+<p><i>anim_timebase</i> - If True, we use the animation timebase. If False, we use the displayable timebase.</p>
+<p>This accepts as additional arguments the <a href="../reference/functions/anim.State.html" title="renpy/doc/reference/functions/anim.State">anim.State</a> and <a href="../reference/functions/anim.Edge.html" title="renpy/doc/reference/functions/anim.Edge">anim.Edge</a> objects that are used to make up this state machine.</p>
+</div>
+<p><br /></p>
+<p><span id="anim.State" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/anim.State.html" title="renpy/doc/reference/functions/anim.State">anim.State</a></b></td>
+<td valign="top">(name, image, *atlist, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a state that can be used in an <a href="../reference/functions/anim.SMAnimation.html" title="renpy/doc/reference/functions/anim.SMAnimation">anim.SMAnimation</a>.</p>
+<p><i>name</i> - A string giving the name of this state.</p>
+<p><i>image</i> - The displayable that is shown to the user while we are in (entering) this state. For convenience, this can also be a string or tuple, which is interpreted with <a href="../reference/functions/Image.html" title="renpy/doc/reference/functions/Image">Image</a>.</p>
+<p><i>image</i> should be None when this State is used with motion, to indicate that the image will be replaced with the child of the motion.</p>
+<p><i>atlist</i> - A list of functions to call on the image. (In general, if something can be used in an at clause, it can be used here as well.)</p>
+<p>If any keyword arguments are given, they are used to construct a <a href="../reference/functions/Position.html" title="renpy/doc/reference/functions/Position">Position</a> object, that modifies the position of the image.</p>
+</div>
+<p><br /></p>
+<p><span id="anim.Edge" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/anim.Edge.html" title="renpy/doc/reference/functions/anim.Edge">anim.Edge</a></b></td>
+<td valign="top">(old, delay, new, trans=None, prob=1):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates an edge that can be used with a <a href="../reference/functions/anim.SMAnimation.html" title="renpy/doc/reference/functions/anim.SMAnimation">anim.SMAnimation</a>.</p>
+<p><i>old</i> - The name (a string) of the state that this transition is from.</p>
+<p><i>delay</i> - The number of seconds that this transition takes.</p>
+<p><i>new</i> - The name (a string) of the state that this transition is to.</p>
+<p><i>trans</i> - The transition that will be used to show the image found in the new state. If None, the image is show immediately.</p>
+<p><i>prob</i> - The number of times this edge is added. This can be used to make a transition more probable then others. For example, if one transition out of a state has prob=5, and the other has prob=1, then the one with prob=5 will execute 5/6 of the time, while the one with prob=1 will only occur 1/6 of the time. (Don't make this too large, as memory use is proportional to this value.)</p>
+</div>
+<p><br />
+We present two examples of this in action. The first shows how one can create a character that ocassionally, randomly, performs a 3-frame blink about once a minute.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> blinking <span class="sym">=</span> anim<span class="sym">.</span><span class="kwd">SMAnimation</span><span class="sym">(</span><span class="str">"a"</span><span class="sym">,</span>
+        anim<span class="sym">.</span><span class="kwd">State</span><span class="sym">(</span><span class="str">"a"</span><span class="sym">,</span> <span class="str">"eyes_open.png"</span><span class="sym">),</span>
+
+        <span class="slc"># This edge keeps us showing the eyes open for a second.</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"a"</span><span class="sym">,</span> <span class="num">1.0</span><span class="sym">,</span> <span class="str">"a"</span><span class="sym">,</span> prob<span class="sym">=</span><span class="num">60</span><span class="sym">),</span>
+
+        <span class="slc"># This edge causes the eyes to start closing...</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"a"</span><span class="sym">,</span> <span class="num">0.25</span><span class="sym">,</span> <span class="str">"b"</span><span class="sym">),</span>
+
+        <span class="slc"># ..because it brings us here.</span>
+        anim<span class="sym">.</span><span class="kwd">State</span><span class="sym">(</span><span class="str">"b"</span><span class="sym">,</span> <span class="str">"eyes_half.png"</span><span class="sym">),</span>
+
+        <span class="slc"># And so on...</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"b"</span><span class="sym">,</span> <span class="num">0.25</span><span class="sym">,</span> <span class="str">"c"</span><span class="sym">),</span>
+        anim<span class="sym">.</span><span class="kwd">State</span><span class="sym">(</span><span class="str">"c"</span><span class="sym">,</span> <span class="str">"eyes_closed.png"</span><span class="sym">),</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"c"</span><span class="sym">,</span> <span class="num">0.25</span><span class="sym">,</span> <span class="str">"d"</span><span class="sym">),</span>
+        anim<span class="sym">.</span><span class="kwd">State</span><span class="sym">(</span><span class="str">"d"</span><span class="sym">,</span> <span class="str">"eyes_half.png"</span><span class="sym">),</span>
+
+        <span class="slc"># And back to a.</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"d"</span><span class="sym">,</span> <span class="num">0.5</span><span class="sym">,</span> <span class="str">"a"</span><span class="sym">)</span>
+        <span class="sym">)</span>
+</pre>
+<p>Remember, State can take a Position, and Edge can take a transition. This lets you move things around the screen, dissolve images into others, and do all sorts of complicated, unexpected, things. (But be careful... not all transitions do what you'd expect when used with SMAnimation.)</p>
+</div>
+<p>The anim.Filmstrip function is not deprecated.</p>
+<p><br />
+<span id="anim.Filmstrip" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/anim.Filmstrip.html" title="renpy/doc/reference/functions/anim.Filmstrip">anim.Filmstrip</a></b></td>
+<td valign="top">(image, framesize, gridsize, delay, frames=None, loop=True, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates an animation from a single image. This image must consist of a grid of frames, with the number of columns and rows in the grid being taken from gridsize, and the size of each frame in the grid being taken from framesize. This takes frames and sticks them into an <a href="../reference/functions/Animation.html" title="renpy/doc/reference/functions/Animation">Animation</a>, with the given delay between each frame. The frames are taken by going from left-to-right across the first row, left-to-right across the second row, and so on until all frames are consumed, or a specified number of frames are taken.</p>
+<p><i>image</i> - The image that the frames must be taken from.</p>
+<p><i>framesize</i> - A (width, height) tuple giving the size of each of the frames in the animation.</p>
+<p><i>gridsize</i> - A (columns, rows) tuple giving the number of columns and rows in the grid.</p>
+<p><i>delay</i> - The delay, in seconds, between frames.</p>
+<p><i>frames</i> - The number of frames in this animation. If None, then this defaults to colums * rows frames, that is, taking every frame in the grid.</p>
+<p><i>loop</i> - If True, loop at the end of the animation. If False, this performs the animation once, and then stops.</p>
+<p>Other keyword arguments are as for <a href="../reference/functions/anim.SMAnimation.html" title="renpy/doc/reference/functions/anim.SMAnimation">anim.SMAnimation</a>.</p>
+</div>
+<p><br /></p>
+<p><a id="Layout" name="Layout"></a></p>
+<h2><span class="mw-headline">Layout</span></h2>
+<p>These displayables are used to layout multiple displayables at once.</p>
+<p><br />
+<span id="LiveComposite" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/LiveComposite.html" title="renpy/doc/reference/functions/LiveComposite">LiveComposite</a></b></td>
+<td valign="top">(size, *args, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is similar to <a href="../reference/functions/im.Composite.html" title="renpy/doc/reference/functions/im.Composite">im.Composite</a>, but can be used with displayables instead of images. This allows it to be used to composite, for example, an animation on top of the image.</p>
+<p>This is less efficient than <a href="../reference/functions/im.Composite.html" title="renpy/doc/reference/functions/im.Composite">im.Composite</a>, as it needs to draw all of the displayables on the screen. On the other hand, it allows displayables to change while they are on the screen, which is necessary for animation.</p>
+<p>This takes a variable number of arguments. The first argument is size, which must be a tuple giving the width and height of the composited widgets, for layout purposes.</p>
+<p>It then takes an even number of further arguments. (For an odd number of total arguments.) The second and other even numbered arguments contain position tuples, while the third and further odd-numbered arguments give displayables. A position argument gives the position of the displayable immediately following it, with the position expressed as a tuple giving an offset from the upper-left corner of the LiveComposite. The displayables are drawn in bottom-to-top order, with the last being closest to the user.</p>
+</div>
+<p><br /></p>
+<p><span id="Fixed" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Fixed.html" title="renpy/doc/reference/functions/Fixed">Fixed</a></b></td>
+<td valign="top">(*args, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A layout that expands to take the size allotted to it. Each displayable is allocated the entire size of the layout, with the first displayable further from the user than the second, and so on.</p>
+<p>This function takes both positional and keyword arguments. Positional arguments should be displayables or images to be laid out. Keyword arguments are interpreted as style properties, except for the style keyword argument, which is the name of the parent style of this layout.</p>
+</div>
+<p><br /></p>
+<p><span id="HBox" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/HBox.html" title="renpy/doc/reference/functions/HBox">HBox</a></b></td>
+<td valign="top">(*args, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A layout that lays out displayables from left to right.</p>
+<p>This function takes both positional and keyword arguments. Positional arguments should be displayables or images to be laid out. Keyword arguments are interpreted as style properties, except for the style keyword argument, which is the name of the parent style of this layout.</p>
+</div>
+<p><br /></p>
+<p><span id="VBox" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/VBox.html" title="renpy/doc/reference/functions/VBox">VBox</a></b></td>
+<td valign="top">(*args, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A layout that lays out displayables from top to bottom.</p>
+<p>This function takes both positional and keyword arguments. Positional arguments should be displayables or images to be laid out. Keyword arguments are interpreted as style properties, except for the style keyword argument, which is the name of the parent style of this layout.</p>
+</div>
+<p><br /></p>
+<p><a id="Widget" name="Widget"></a></p>
+<h2><span class="mw-headline">Widget</span></h2>
+<p>These are generally used with the ui functions, but may sometimes be used as displayables.</p>
+<p><br />
+<span id="Bar" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Bar.html" title="renpy/doc/reference/functions/Bar">Bar</a></b></td>
+<td valign="top">(range, value, clicked=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a Bar displayable, the displayable equivalent of a <a href="../reference/functions/ui.bar.html" title="renpy/doc/reference/functions/ui.bar">ui.bar</a>. The parameters are the same as for <a href="../reference/functions/ui.bar.html" title="renpy/doc/reference/functions/ui.bar">ui.bar</a>.</p>
+</div>
+<p><br /></p>
+<p><span id="Button" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Button.html" title="renpy/doc/reference/functions/Button">Button</a></b></td>
+<td valign="top">(child, clicked=None, hovered=None, unhovered=None, role=<i>, **properties):</i></td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a button displayable that can be clicked by the user. When this button is clicked or otherwise selected, the function supplied as the clicked argument is called. If it returns a value, that value is returned from <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+<p><i>child</i> - The displayable that is contained within this button. This is required.</p>
+<p><i>clicked</i> - A function that is called when this button is clicked.</p>
+<p><i>hovered</i> - A function that is called when this button gains focus.</p>
+<p><i>unhovered</i> - A function that is called when this button loses focus.</p>
+<p><i>role</i> - The role this button undertakes. This can be the empty string, or "selected_".</p>
+<p><br />
+<span id="Window" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Window.html" title="renpy/doc/reference/functions/Window">Window</a></b></td>
+<td valign="top">(child, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Creates a Window displayable with the given child and properties.</p>
+</div>
+<p><br /></p>
+<p><span id="Viewport" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Viewport.html" title="renpy/doc/reference/functions/Viewport">Viewport</a></b></td>
+<td valign="top">(child_size=(None, None), xadjustment=None, yadjustment=None, set_adjustments=True, mousewheel=False, draggable=False, style='viewport', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Creates a viewport displayable. A viewport restricts the size of its child, and allows the child to be displayed at an offset. This can be used for cropping and scrolling the images.</p>
+<p>See <a href="../reference/functions/ui.viewport.html" title="renpy/doc/reference/functions/ui.viewport">ui.viewport</a> for parameter meanings.</p>
+</div>
+<p><br /></p>
+<p><span id="Null" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Null.html" title="renpy/doc/reference/functions/Null">Null</a></b></td>
+<td valign="top">(width=0, height=0, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A displayable that does not display anything. By setting the width and height properties of this displayable, it can be used to take up space.</p>
+</div>
+<p><br /></p>
+<a id="Particle_Motion" name="Particle_Motion"></a>
+<h2><span class="mw-headline">Particle Motion</span></h2>
+<p>Ren'Py supports particle motion. Particle motion is the motion of many particles on the screen at once, with particles having a lifespan that is shorter than a single interaction. Particle motion can be used to have multiple things moving on the screen at once, such as snow, cherry blossoms, bubbles, fireflies, and more. There are two interfaces we've provided for the particle motion engine. The <a href="../reference/functions/SnowBlossom.html" title="renpy/doc/reference/functions/SnowBlossom">SnowBlossom</a> function is a convenience constructor for the most common cases of linearly falling or rising particles, while the <a href="../reference/functions/Particles.html" title="renpy/doc/reference/functions/Particles">Particles</a> function gives complete control over the particle engine.</p>
+<p><a href="../reference/functions/SnowBlossom.html" title="renpy/doc/reference/functions/SnowBlossom">SnowBlossom</a> is a function that can be used for the common case of linearly rising or falling particles. Some cases in which it can be used are for falling snow, falling cherry blossoms, and rising bubbles.</p>
+<p><br />
+<span id="SnowBlossom" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/SnowBlossom.html" title="renpy/doc/reference/functions/SnowBlossom">SnowBlossom</a></b></td>
+<td valign="top">(image, count=10, border=50, xspeed=(20, 50), yspeed=(100, 200), start=0, horizontal=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This implements the snowblossom effect, which is a simple linear motion up or down, left, or right. This effect can be used for falling cherry blossoms, falling snow, rising bubbles, and drifting dandelions, along with other things.</p>
+<p><i>image</i> - The image that is to be used for the particles. This can actually be any displayable, so it's okay to use an Animation as an argument to this parameter.</p>
+<p><i>count</i> - The number of particles to maintain at any given time. (Realize that not all of the particles may be on the screen at once.)</p>
+<p><i>border</i> - How many pixels off the screen to maintain a particle for. This is used to ensure that a particle is not displayed on the screen when it is created, and that it is completely off the screen when it is destroyed.</p>
+<p><i>xspeed</i> - The horizontal speed of the particles, in pixels per second. This may be a single integer, or it may be a tuple of two integers. In the latter case, the two numbers are used as a range from which to pick the horizontal speed for each particle. The numbers can be positive or negative, as long as the second is larger then the first.</p>
+<p><i>yspeed</i> - The vertical speed of the particles, in pixels per second. This may be a single integer, but it should almost certainly be a pair of integers which are used as a range from which to pick the vertical speed of each particle. (Using a single number will lead to every particle being used in a wave... not what is wanted.) The second number in the tuple should be larger then the first.</p>
+<p><i>start</i> - This is the number of seconds it will take to start all particles moving. Setting this to a non-zero number prevents an initial wave of particles from overwhelming the screen. Each particle will start in a random amount of time less than this number of seconds.</p>
+<p><i>fast</i> - If true, then all particles will be started at once, and they will be started at random places on the screen, rather then on the top or bottom.</p>
+<p><i>horizontal</i> - If true, the particles start on the left or right edge of the screen. If false, they start along the top or bottom edge.</p>
+</div>
+<p><br />
+The result of <a href="../reference/functions/SnowBlossom.html" title="renpy/doc/reference/functions/SnowBlossom">SnowBlossom</a> is best used to define an image, which can then be shown to the user.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> blossoms <span class="sym">=</span> <span class="kwd">SnowBlossom</span><span class="sym">(</span><span class="kwd">Animation</span><span class="sym">(</span><span class="str">"sakura1.png"</span><span class="sym">,</span> <span class="num">0.15</span><span class="sym">,</span>
+                                           <span class="str">"sakura2.png"</span><span class="sym">,</span> <span class="num">0.15</span><span class="sym">))</span>
+</pre>
+<p>It may make sense to show multiple snowblossoms at once. For example, in a scene with falling cherry blossoms, one can have small cherry blossoms falling slowly behind a character, while having larger cherry blossoms falling faster in front of her.</p>
+<p>If <a href="../reference/functions/SnowBlossom.html" title="renpy/doc/reference/functions/SnowBlossom">SnowBlossom</a> does not do what you want, it may make sense to define your own particle motion. This is done by calling the <a href="../reference/functions/Particles.html" title="renpy/doc/reference/functions/Particles">Particles</a> function.</p>
+<p><br />
+<span id="Particles" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Particles.html" title="renpy/doc/reference/functions/Particles">Particles</a></b></td>
+<td valign="top">(factory, style='default', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Supports particle motion.</p>
+<p><i>factory</i> - A factory object.</p>
+<p>The particles function expects to take as an argument a factory object. This object (which should be pickleable) must support two methods.</p>
+<p>The create method of the factory object is called once per frame with two arguments. The first is either a list of existing particles, or None if this is the first time this Particles is shown (and hence there are no particles on the screen). The second argument is the time in seconds from some arbitrary point, increasing each time create is called. The method is expected to return a list of new particles created for this frame, or an empty list if no particles are to be created this frame.</p>
+<p>The predict method of the factory object is called when image prediction is requested for the Particles. It is expected to return a list of displayables and/or image filenames that will be used.</p>
+<p>Particles are represented by the objects returned from each factory function. Each particle object must have an update method. This method is called once per frame per particle, usually with the time from the same arbitrary point as was used to create the object. (The arbitrary point may change when hidden and shown, so particle code should be prepared to deal with this.) The update method may return None to indicate that the particle is dead. Nothing is shown for a dead particle, and update is never called on it. The update method can also return an (xpos, ypos, time, displayable) tuple. The xpos and ypos parameters are a position on the screen to show the particle at, interpreted in the same way as the xpos and ypos style properties. The time is the time of display. This should start with the time parameter, but it may make sense to offset it to make multiple particle animations out of phase. Finally, the displayable is a displayable or image filename that is shown as the particle.</p>
+</div>
+<p><br /></p>
+<a id="Position_and_Motion_Functions" name="Position_and_Motion_Functions"></a>
+<h2><span class="mw-headline">Position and Motion Functions</span></h2>
+<p><i>This section has been made somewhat obsolete by the introduction of <a href="../reference/Animation_and_Transformation_Language.html" title="renpy/doc/reference/Animation and Transformation Language">ATL</a> in Ren'Py 6.10.</i></p>
+<div style="color: #888">
+<p>The result of these functions are suitable for use as the argument to the "at" clause of the scene and show statements. The result can also be called (using a second call) to return a displayable.</p>
+<p><br />
+<span id="Position" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Position.html" title="renpy/doc/reference/functions/Position">Position</a></b></td>
+<td valign="top">(**properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Position, when given position properties as arguments, returns a callable that can be passed to the "at" clause of a show or scene statement to display the image at the given location. See the <a href="../reference/Properties_and_Styles#Position_Properties" title="renpy/doc/reference/Properties and Styles">Position Properties</a> section to get a full explanation of how they are used to lay things out.</p>
+</div>
+<p><br />
+<span id="Motion" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Motion.html" title="renpy/doc/reference/functions/Motion">Motion</a></b></td>
+<td valign="top">(function, period, repeat=False, bounce=False, time_warp=None, add_sizes=False, anim_timebase=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Motion, when given the appropriate arguments, returns an object that when given as the `at` clause of an image causes an image to be moved on the screen.</p>
+<p><i>function</i> is a function that takes one or two arguments. The first argument is a fraction of the period, a number between 0 and 1. If <i>add_sizes</i> is true, <i>function</i> should take a second argument, a 4-tuple giving the width and height of the area in which the child will be shown, and the width and height of the child itself.</p>
+<p><i>function</i> should return a tuple containing two or four values. The first two values are interpreted as the xpos and the ypos of the motion. (Please note that if these values are floating point numbers, they are interpreted as a fraction of the screen. If they are integers, they are interpreted as the absolute position of the anchor of the motion.) If four values are returned, the third and fourth values are interpreted as an xanchor and yanchor.</p>
+<p>Please note that the function may be pickled, which means that it cannot be an inner function or a lambda, but must be a function defined in an init block of your script. In general, it's better to use a <a href="../reference/functions/Pan.html" title="renpy/doc/reference/functions/Pan">Pan</a> or a <a href="../reference/functions/Move.html" title="renpy/doc/reference/functions/Move">Move</a>, rather than defining your own motion.</p>
+<p><i>period</i> is the time, in seconds, it takes to complete one cycle of a motion. If <i>repeat</i> is True, then the cycle repeats when it finishes, if False, the motion stops after one period. If <i>bounce</i> is True, the argument to the function goes from 0 to 1 to 0 in a single period, if False, it goes from 0 to 1.</p>
+<p><i>time_warp</i>, if given, is a function that takes a fractional time period (a number between 0.0 and 1.0) and returns a fractional time period. This allows non-linear motions. This function may also be pickled.</p>
+<p><i>anim_timebase</i> is true to use the animation timebase, false to use the displayable timebase.</p>
+<p><i>add_sizes</i> was added in 5.6.6.</p>
+</div>
+<p><br />
+<span id="Pan" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Pan.html" title="renpy/doc/reference/functions/Pan">Pan</a></b></td>
+<td valign="top">(startpos, endpos, time, repeat=False, bounce=False, time_warp=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Pan, when given the appropriate arguments, gives an object that can be passed to the at clause of an image to cause the image to be panned on the screen. The parameters <i>startpos</i> and <i>endpos</i> are tuples, containing the x and y coordinates of the upper-left hand corner of the screen relative to the image. <i>time</i> is the time it will take this position to move from startpos to endpos. <i>repeat</i>, <i>bounce</i>, and <i>time_warp</i> are as for <a href="../reference/functions/Motion.html" title="renpy/doc/reference/functions/Motion">Motion</a>.</p>
+<p>As the current implementation of Ren'Py is quite limited, there are quite a few restrictions that we put on pan. The big one is that there always must be a screen's worth of pixels to the right and below the start and end positions. Failure to ensure this may lead to inconsistent rendering.</p>
+<p>Please note that the pan will be immediately displayed, and that Ren'Py will not wait for it to complete before moving on to the next statement. This may lead to the pan being overlayed with text or dialogue. You may want to use a call to <a href="../reference/functions/renpy.pause.html" title="renpy/doc/reference/functions/renpy.pause">renpy.pause</a> to delay for the time it will take to complete the pan.</p>
+<p>Finally, also note that when a pan is completed, the image locks into the ending position.</p>
+</div>
+<p><br />
+<span id="Move" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Move.html" title="renpy/doc/reference/functions/Move">Move</a></b></td>
+<td valign="top">(startpos, endpos, time, repeat=False, bounce=False, time_warp=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Move is similar to <a href="../reference/functions/Pan.html" title="renpy/doc/reference/functions/Pan">Pan</a>, insofar as it involves moving things. But where <a href="../reference/functions/Pan.html" title="renpy/doc/reference/functions/Pan">Pan</a> moves the screen through an image, Move moves an image on the screen. Specifially, move changes the position style of an image with time.</p>
+<p>Move takes as parameters a starting position, an ending position, the amount of time it takes to move from the starting position to the ending position, and extra position properties. The postions may either be pairs giving the xpos and ypos properties, or 4-tuples giving xpos, ypos, xanchor, and yanchor. These properties may be given as integers or floating point numbers, but for any property it's not permissible to mix the two. <i>repeat</i>, <i>bounce</i>, and <i>time_warp</i> are as for <a href="../reference/functions/Motion.html" title="renpy/doc/reference/functions/Motion">Motion</a>.</p>
+</div>
+<p><br />
+In general, one wants to use <a href="../reference/functions/Pan.html" title="renpy/doc/reference/functions/Pan">Pan</a> when an image is bigger than the screen, and <a href="../reference/functions/Move.html" title="renpy/doc/reference/functions/Move">Move</a> when it is smaller. Both <a href="../reference/functions/Pan.html" title="renpy/doc/reference/functions/Pan">Pan</a> and <a href="../reference/functions/Move.html" title="renpy/doc/reference/functions/Move">Move</a> are special cases of <a href="../reference/functions/Motion.html" title="renpy/doc/reference/functions/Motion">Motion</a>.</p>
+<p><br />
+<span id="SplineMotion" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/SplineMotion.html" title="renpy/doc/reference/functions/SplineMotion">SplineMotion</a></b></td>
+<td valign="top">(points, time, anchors=(0.5, 0.5), repeat=False, bounce=False, anim_timebase=False, time_warp=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a spline-based motion, where a spline may consist of linear segments, quadratic beziers, and cubic beziers.</p>
+<p>The path is a list of segments, where each segment is a tuple containing between 1 to 3 points, and an optional time. A point is represented by either an (x, y) pair or an (x, y, xanchor, yanchor) tuple. When not specified in a point, the anchors are taken from the <i>anchors</i> parameter. The time is represented as a floating point number between 0.0 and 1.0, and gives the time when motion along the segment should be complete.</p>
+<p>A linear segment consists of a single point, the point to move to.</p>
+<p>A quadratic curve contains two points, the point to move to and the single control point.</p>
+<p>A cubic curve contains three points, the point to move to and the two control points.</p>
+<p>Any time you don't manually specify is linearly interpolated between the previous and following times that are specified. This allows you to specify that at a specific time, the motion will be at a specific point. By default, the start time is 0.0 and the end time is 1.0, unless you specify something different.</p>
+<p>There is a <a class="external text" href="http://www.renpy.org/wiki/renpy/Spline_Editor" rel="nofollow" title="http://www.renpy.org/wiki/renpy/Spline_Editor">spline editor</a> that helps with editing splines.</p>
+<p><i>Repeat</i>, <i>bounce</i>, <i>anim_timebase</i>, and <i>time_warp</i> are as for <a href="../reference/functions/Motion.html" title="renpy/doc/reference/functions/Motion">Motion</a>.</p>
+</div>
+<p><br />
+<a href="../reference/functions/anim.SMAnimation.html" title="renpy/doc/reference/functions/anim.SMAnimation">anim.SMAnimation</a> can also be used to declare complicated motions. Use None instead of an image in States, and supply a move transition when moving between states. A SMAnimation so created can be passed in to the at clause of an image, allowing it to move things around the screen.</p>
+<p>These movement clauses can also be used as <a href="../reference/Transitions.html" title="renpy/doc/reference/Transitions">Transitions</a>, in which case they affect the position of a single layer or the entire screen, as appropriate.</p>
+<p><br />
+<span id="Zoom" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Zoom.html" title="renpy/doc/reference/functions/Zoom">Zoom</a></b></td>
+<td valign="top">(size, start, end, time, after_child=None, time_warp=None, bilinear=True, opaque=True, anim_timebase=False, repeat=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This causes a zoom to take place, using image scaling. When used as an `at` clause, this creates a displayable. The render of this displayable is always of the supplied size. The child displayable is rendered, and a rectangle is cropped out of it. This rectangle is interpolated between the start and end rectangles. The rectangle is then scaled to the supplied size. The zoom will take <i>time</i> seconds, after which it will show the end rectangle, unless an <i>after_child</i> is given.</p>
+<p>The start and end rectangles must fit completely inside the size of the child, otherwise an error will occur.</p>
+<p><i>size</i> - The size that the rectangle is scaled to, a (width, height) tuple.</p>
+<p><i>start</i> - The start rectangle, an (xoffset, yoffset, width, height) tuple.</p>
+<p><i>end</i> - The end rectangle, an (xoffset, yoffset, width, height) tuple.</p>
+<p><i>time</i> - The amount of time it will take to interpolate from the start to the end rectangle.</p>
+<p><i>after_child</i> - If present, a second child widget. This displayable will be rendered after the zoom completes. Use this to snap to a sharp displayable after the zoom is done.</p>
+<p><i>time_warp</i> - If not None, a function that takes a fractional period (between 0.0 and 0.1), and returns a fractional period. Use this to implement non-linear zooms. This function may be pickled, so it cannot be a lambda or other non-top-level function.</p>
+<p><i>bilinear</i> - If True, the default, this will use bilinear filtering. If false, this will use ugly yet fast nearest neighbor filtering.</p>
+<p><i>opaque</i> - If True and bilinear is True, this will use a very efficient method that does not support transparency. If False, this supports transparency, but is less efficient.</p>
+<p><i>anim_timebase</i> - is true to use the animation timebase, false to use the displayable timebase.</p>
+<p><i>repeat</i> - causes the zoom to repeat every <i>time</i> seconds.</p>
+</div>
+<p><br />
+<span id="FactorZoom" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/FactorZoom.html" title="renpy/doc/reference/functions/FactorZoom">FactorZoom</a></b></td>
+<td valign="top">(start, end, time, after_child=None, time_warp=None, bilinear=True, opaque=True, anim_timebase=False, repeat=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This causes a zoom to take place, using image scaling. When used as an `at` clause, this creates a displayable. The render of this displayable is always of the supplied size. The child displayable is rendered, and then scaled by an appropriate factor, interpolated between the start and end factors. The rectangle is then scaled to the supplied size. The zoom will take <i>time</i> seconds, after which it will show the end, unless an <i>after_child</i> is given.</p>
+<p>The algorithm used for scaling does not perform any interpolation or other smoothing.</p>
+<p><i>start</i> - The start zoom factor, a floating point number.</p>
+<p><i>end</i> - The end zoom factor, a floating point number.</p>
+<p><i>time</i> - The amount of time it will take to interpolate from the start to the end factors.</p>
+<p><i>after_child</i> - If present, a second child widget. This displayable will be rendered after the zoom completes. Use this to snap to a sharp displayable after the zoom is done.</p>
+<p><i>time_warp</i> - If not None, a function that takes a fractional period (between 0.0 and 0.1), and returns a fractional period. Use this to implement non-linear zooms. This function may be pickled, so it cannot be a lambda or other non-top-level function.</p>
+<p><i>bilinear</i> - If True, the default, this will use bilinear filtering. If false, this will use ugly yet fast nearest neighbor filtering.</p>
+<p><i>opaque</i> - If True and bilinear is True, this will use a very efficient method that does not support transparency. If False, this supports transparency, but is less efficient.</p>
+<p><i>anim_timebase</i> - is true to use the animation timebase, false to use the displayable timebase.</p>
+<p><i>repeat</i> - causes the zoom to repeat every <i>time</i> seconds.</p>
+</div>
+<p><br />
+<span id="RotoZoom" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/RotoZoom.html" title="renpy/doc/reference/functions/RotoZoom">RotoZoom</a></b></td>
+<td valign="top">(rot_start, rot_end, rot_delay, zoom_start, zoom_end, zoom_delay, rot_repeat=False, zoom_repeat=False, rot_bounce=False, zoom_bounce=False, rot_anim_timebase=False, zoom_anim_timebase=False, rot_time_warp=None, zoom_time_warp=None, opaque=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function returns an object, suitable for use in an at cause, that rotates and/or zooms its child.</p>
+<p><i>rot_start</i> - The number of degrees of clockwise rotation at the start time.</p>
+<p><i>rot_end</i> - The number of degrees of clockwise rotation at the end time.</p>
+<p><i>rot_delay</i> - The time it takes to complete rotation.</p>
+<p><i>zoom_start</i> - The zoom factor at the start time.</p>
+<p><i>zoom_end</i> - The zoom factor at the end time.</p>
+<p><i>zoom_delay</i> - The time it takes to complete a zoom.</p>
+<p><i>rot_repeat</i> - If true, the rotation cycle repeats once it is finished.</p>
+<p><i>zoom_repeat</i> - If true, the zoom cycle repeats once it is finished.</p>
+<p><i>rot_bounce</i> - If true, rotate from start to end to start each cycle. If False, rotate from start to end once.</p>
+<p><i>zoom_bounce</i> - If true, zoom from start to end to start each cycle. If False, zoom from start to end once.</p>
+<p><i>rot_anim_timebase</i> - If true, rotation times are judged from when a displayable with the same tag was first shown. If false, times are judged from when this displayable was first shown.</p>
+<p><i>zoom_anim_timebase</i> - If true, zoom times are judged from when a displayable with the same tag was first shown. If false, times are judged from when this displayable was first shown.</p>
+<p><i>opaque</i> - This should be True if the child is fully opaque, and False otherwise.</p>
+<p>RotoZoom uses a bilinear interpolation method that is accurate when the zoom factor is &gt;= 0.5.</p>
+<p>Rotation is around the center of the child displayable.</p>
+<p>Note that this shrinks what it is rotozooming by 1 pixel horizontally and vertically. Images should be 1 pixel larger then they would otherwise be.</p>
+<p>The produced displayable has height and with equal to the hypotenuse of the sides of the child. This may disturb the layout somewhat. To minimize this, position the center of the RotoZoom.</p>
+<p>The time taken to RotoZoom is proportional to the area of the rotozoomed image that is shown on screen.</p>
+</div>
+<p><br />
+<span id="Alpha" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Alpha.html" title="renpy/doc/reference/functions/Alpha">Alpha</a></b></td>
+<td valign="top">(start, end, time, repeat=False, bounce=False, time_warp=None, add_sizes=False, anim_timebase=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Alpha returns a function that, when called with a displayable, allows the alpha of that displayable to be changed over time. It's a more expensive version of <a href="../reference/functions/im.Alpha.html" title="renpy/doc/reference/functions/im.Alpha">im.Alpha</a> that works with any displayable, and can change over time.</p>
+<p><i>start</i> is the alpha at the start, a number between 0 and 1.</p>
+<p><i>end</i> is the alpha at the end, a number between 0 and 1.</p>
+<p><i>time</i> is the time, in seconds, it takes to complete one cycle. If <i>repeat</i> is True, then the cycle repeats when it finishes, if False, the motion stops after one period. If <i>bounce</i> is True, the alpha goes from <i>start</i> to <i>end</i> to <i>start</i> in a single period, if False, it goes from <i>start</i> to <i>end</i> only.</p>
+<p><i>time_warp</i>, if given, is a function that takes a fractional time period (a number between 0.0 and 1.0) and returns a fractional time period. This function must be pickleable.</p>
+<p><i>anim_timebase</i> is true to use the animation timebase, false to use the displayable timebase.</p>
+</div>
+<p><br />
+<span id="Revolve" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Revolve.html" title="renpy/doc/reference/functions/Revolve">Revolve</a></b></td>
+<td valign="top">(start, end, time, around=(0.5, 0.5), cor=(0.5, 0.5), **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Used to revolve it's child around a point in its parent. <i>around</i> is the point in the parent that we are revolving around, while <i>cor</i> is the center of revolution for the child. <i>start</i> is the start revolution, and <i>end</i> is the end revolution, both in degrees clockwise.</p>
+<p>Other keyword arguments are as for <a href="../reference/functions/Motion.html" title="renpy/doc/reference/functions/Motion">Motion</a>.</p>
+</div>
+<p><br />
+To apply the results of these functions to a displayable, use the At function.</p>
+<p><br />
+<span id="At" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/At.html" title="renpy/doc/reference/functions/At">At</a></b></td>
+<td valign="top">(displayable, *positions_and_motions):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The At function is used to apply the results of position and motion functions to displayables, yielding a displayable.</p>
+</div>
+</div>
+<a id="Position_Definitions" name="Position_Definitions"></a>
+<h2><span class="mw-headline">Position Definitions</span></h2>
+<p>These positions can be used as the argument to the at clause of a scene or show statement.</p>
+<p><span id="left" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>left</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A Position in which the left side of the image is aligned with the left side of the screen, with the bottom flush against the bottom of the screen.</p>
+</div>
+<p><span id="right" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>right</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A position in which the right side of the image is aligned with the right side of the screen, with the bottom of the image flush against the bottom of the screen.</p>
+</div>
+<p><span id="center" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>center</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A position in which the image is centered horizontally, with the bottom of the image flush against the bottom of the screen.</p>
+</div>
+<p><span id="offscreenleft" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>offscreenleft</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A position in which the image is placed just off the left side of the screen. Please note that an image placed in this position, while not visible to the user, still consumes resources, and so images should be hidden when not visible. This position is intended to be used with the move transition.</p>
+</div>
+<p><span id="offscreenright" /></p>
+<table>
+<tr>
+<td valign="top">Definition:</td>
+<td valign="top"><b>offscreenright</b></td>
+<td valign="top" />
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A position in which the image is placed just off the right side of the screen. Please note that an image placed in this position, while not visible to the user, still consumes resources, and so images should be hidden when not visible. This position is intended to be used with the move transition.</p>
+</div>
+<a id="Transform" name="Transform"></a>
+<h2><span class="mw-headline">Transform</span></h2>
+<p>A Transform allows one to use a Python function to control many aspects of its child. While more complicated, Transform is powerful enough to implement all of the position and motion functions. A Transform may be used as a displayable (by supplying a child) or a position and motion function (omit the child).</p>
+<p><br />
+<span id="Transform" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/Transform.html" title="renpy/doc/reference/functions/Transform">Transform</a></b></td>
+<td valign="top">(child=None, function=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A transform applies rotation, zooming, and alpha-blending to its child, in that order. These operations, along with positioning of the transformed object, are controlled by fields on the Transform object. Transform objects can be composed with minimal overhead.</p>
+<p><b>Parameters.</b> A transform takes these parameters:</p>
+<p><i>child</i> is the child of the Transform. This can be left None, in which case the Transform will act as a <a class="new" href="http://www.renpy.org/w/index.php?title=renpy/doc/Displayables&amp;action=edit&amp;redlink=1" title="renpy/doc/Displayables (page does not exist)">Position and Motion function</a>.</p>
+<p><i>function</i> is a callback function that is called before the Transform is rendered, with the Transform object, the shown timebase, and the animation timebase. It can set any of the fields described below, to cause the Transform to alter how it is displayed. It is expected to return a floating-point number giving the amount of time before the Transform should be re-rendered, in seconds. If 0 is returned, the Transform will be re-rendered on the next frame.</p>
+<p><b>Fields.</b> The ATL <a href="../reference/Animation_and_Transformation_Language#Transform_Properties" title="renpy/doc/reference/Animation and Transformation Language">transform properties</a> are available as fields on a Transform object.</p>
+<p>Additional fields are:</p>
+<ul>
+<li><tt>hide_request</tt> - This is set to true when the Transform is hidden.</li>
+<li><tt>hide_response</tt> - When <tt>hide_request</tt> is True, this can be set to False to prevent the Transform from being immediately hidden.</li>
+</ul>
+<p><b>Methods.</b> A transform has the following method:</p>
+<p><span id="update" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>update</b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The update method should be called on a transform after one or more fields have been changed outside of the callback function of that Transform.</p>
+</div>
+<p><span id="set_child" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>set_child</b></td>
+<td valign="top">(d):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Sets the child of this Transform to <i>d</i>.</p>
+</div>
+</div>
+</div>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

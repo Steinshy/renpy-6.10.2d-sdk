@@ -1,0 +1,33 @@
+<html><head><title>renpy.music.register channel - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.music.register_channel" name="renpy.music.register_channel"></a></p>
+<h1><span class="mw-headline">renpy.music.register_channel</span></h1>
+<p><span id="renpy.music.register_channel" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.music.register_channel</strong></b></td>
+<td valign="top">(channel, mixer, loop, tight=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This registers a new audio channel named <i>channel</i>.</p>
+<p><i>mixer</i> - The name of the mixer the channel uses. The three mixers Ren'Py knows about by default are "music", "sfx", and "voice".</p>
+<p><i>loop</i> - Determines if sounds on this channel loop by default.</p>
+<p><i>tight</i> - Determines if sounds loop even during fadeout.</p>
+</div>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">register_channel</span><span class="sym">(</span><span class="str">"nature"</span><span class="sym">,</span> <span class="str">"sound"</span><span class="sym">,</span> <span class="kwa">True</span><span class="sym">)</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+    play nature <span class="str">"wind.ogg"</span>
+    play music <span class="str">"piano.ogg"</span>
+
+    <span class="str">"The piano is playing at the same time the wind is blowing."</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,33 @@
+/** CSS placed here will be applied to all skins */
+.renpy-doc {
+    margin-left: 3em;
+}
+
+.renpy-doc I {
+    color: #020;
+}
+
+BODY.ns-0 .firstHeading {
+display: none;
+}
+
+BODY.ns-0 #contentSub {
+display: none;
+}
+
+.kwa {
+color: #640;
+}
+
+.str {
+color: #060;
+}
+
+.slc {
+color: #600;
+}
+
+pre {
+background: #fcfcff;
+border: 1px solid #ccf;
+}

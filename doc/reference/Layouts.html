@@ -1,0 +1,968 @@
+<html><head><title>Layouts - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Layouts"><span class="tocnumber">1</span> <span class="toctext">Layouts</span></a>
+<ul>
+<li class="toclevel-2"><a href="#main_menu_layouts"><span class="tocnumber">1.1</span> <span class="toctext">main_menu layouts</span></a></li>
+<li class="toclevel-2"><a href="#navigation_layouts"><span class="tocnumber">1.2</span> <span class="toctext">navigation layouts</span></a></li>
+<li class="toclevel-2"><a href="#load_save_layouts"><span class="tocnumber">1.3</span> <span class="toctext">load_save layouts</span></a></li>
+<li class="toclevel-2"><a href="#yesno_prompt_layouts"><span class="tocnumber">1.4</span> <span class="toctext">yesno_prompt layouts</span></a></li>
+<li class="toclevel-2"><a href="#preferences_layouts"><span class="tocnumber">1.5</span> <span class="toctext">preferences layouts</span></a></li>
+<li class="toclevel-2"><a href="#joystick_preferences_layouts"><span class="tocnumber">1.6</span> <span class="toctext">joystick_preferences layouts</span></a></li>
+<li class="toclevel-2"><a href="#standalone_layouts"><span class="tocnumber">1.7</span> <span class="toctext">standalone layouts</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Defining_New_Layouts"><span class="tocnumber">2</span> <span class="toctext">Defining New Layouts</span></a>
+<ul>
+<li class="toclevel-2"><a href="#main_menu_layouts_2"><span class="tocnumber">2.1</span> <span class="toctext">main_menu layouts</span></a></li>
+<li class="toclevel-2"><a href="#navigation_layouts_2"><span class="tocnumber">2.2</span> <span class="toctext">navigation layouts</span></a></li>
+<li class="toclevel-2"><a href="#load_save_layouts_2"><span class="tocnumber">2.3</span> <span class="toctext">load_save layouts</span></a></li>
+<li class="toclevel-2"><a href="#yesno_prompt_layouts_2"><span class="tocnumber">2.4</span> <span class="toctext">yesno_prompt layouts</span></a></li>
+<li class="toclevel-2"><a href="#preferences_layouts_2"><span class="tocnumber">2.5</span> <span class="toctext">preferences layouts</span></a></li>
+<li class="toclevel-2"><a href="#joystick_preferences_layouts_2"><span class="tocnumber">2.6</span> <span class="toctext">joystick_preferences layouts</span></a></li>
+<li class="toclevel-2"><a href="#Example"><span class="tocnumber">2.7</span> <span class="toctext">Example</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><a id="Layouts" name="Layouts"></a></p>
+<h1><span class="mw-headline">Layouts</span></h1>
+<p>Layouts control the feel of the out-of-game menus. There are five main kinds of layouts:</p>
+<ul>
+<li><b>main_menu</b> layouts control the feel of the main menu.</li>
+<li><b>navigation</b> layouts control the feel of the game menu navigation.</li>
+<li><b>load_save</b> layouts control the feel of the load and save screens.</li>
+<li><b>yesno_prompt</b> layouts control the feel of asking the user a yes or no question.</li>
+<li><b>preferences</b> layouts control the feel of the preference screens.</li>
+<li><b>joystick_preferences</b> layouts control the feel of the joystick preference screens.</li>
+</ul>
+<p>There are also standalone layouts which do not fall into any of these categories. While a game needs exactly one of each of the five main kinds of layouts to function properly, it can have as many standalone layouts as it needs.</p>
+<p>Each kind of layout provides certain functionality to the interface. The functionality provided by each kind of layout is described below. The selection of layouts is expected to occur before the selection of a theme. If no layout of a given kind is selected, then the classic variant is used. For example, if no yesno_prompt layout has been selected, then <a href="../reference/functions/layout.classic_yesno_prompt.html" title="renpy/doc/reference/functions/layout.classic yesno prompt">layout.classic_yesno_prompt</a> is used.</p>
+<p>Note that there are combinations of layouts and themes that will not look reasonable together. This is not a bug... it's impossible to have every layout work with every other layout and every theme, and still have an unlimited range of layouts and themes. Caveat factor.</p>
+<p><br /></p>
+<p><a id="main_menu_layouts" name="main_menu_layouts"></a></p>
+<h2><span class="mw-headline">main_menu layouts</span></h2>
+<p>The main_menu layouts are responsible for defining the look of the main menu. This includes the background of the main menu, and the buttons that are used to go to the game menu or start a game.</p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:classic_main_menu.png.html" title="classic main menu.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-classic_main_menu.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.classic_main_menu" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.classic_main_menu.html" title="renpy/doc/reference/functions/layout.classic main menu">layout.classic_main_menu</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This displays the classic main menu, which stacks the main menu buttons vertically.</p>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:grouped_main_menu.png.html" title="grouped main menu.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-grouped_main_menu.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.grouped_main_menu" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.grouped_main_menu.html" title="renpy/doc/reference/functions/layout.grouped main menu">layout.grouped_main_menu</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This defines a main menu layout that groups buttons into rows horizontally, and then stacks those rows vertically.</p>
+<p><span id="config.main_menu_per_group" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.main_menu_per_group</b></td>
+<td valign="top">= 2</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The number of buttons placed in to each horizontal row.</p>
+</div>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:imagemap_main_menu.jpg.html" title="imagemap main menu.jpg"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-imagemap_main_menu.jpg" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.imagemap_main_menu" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.imagemap_main_menu.html" title="renpy/doc/reference/functions/layout.imagemap main menu">layout.imagemap_main_menu</a></b></td>
+<td valign="top">(ground, selected, hotspots, idle=None, variant=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p><i>ground</i> - The ground image. This is used for parts of the screen that are not defined.</p>
+<p><i>selected</i> - The selected image. This used for hotspots that are hovered.</p>
+<p><i>hotspots</i> - A list of tuples defining the hotspot. Each tuple consists of:</p>
+<ol>
+<li>The x-coordinate of the left side.</li>
+<li>The y-coordinate of the top side.</li>
+<li>The x-coordinate of the right side.</li>
+<li>The y-coordinate of the bottom side.</li>
+<li>Either the (untranslated) name of the main menu button this hotspot is equivalent to, or, a label in the program to jump to when this hotspot is clicked.</li>
+</ol>
+<p><i>idle</i> - If not None, an image that is used for images that are not hovered. If this is None, it defaults to ground. <i>(new in 6.10.1)</i></p>
+<p><i>variant</i> - The variant of the main menu to define. The variable _main_menu_variant is used to select a variant to show to the user. <i>(new in 6.10.1)</i></p>
+<p>Despite the name, this function can take arbitrary displayables (like Animations) as well as images.</p>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<p><a id="navigation_layouts" name="navigation_layouts"></a></p>
+<h2><span class="mw-headline">navigation layouts</span></h2>
+<p>The navigation layouts are responsible for defining the navigation through the game menu. This includes the background of the game menus and the buttons that are used to go between game menu screens.</p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:classic_navigation.png.html" title="classic navigation.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-classic_navigation.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.classic_navigation" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.classic_navigation.html" title="renpy/doc/reference/functions/layout.classic navigation">layout.classic_navigation</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This displays the navigation buttons in a vertical box.</p>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:grouped_navigation.png.html" title="grouped navigation.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-grouped_navigation.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.grouped_navigation" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.grouped_navigation.html" title="renpy/doc/reference/functions/layout.grouped navigation">layout.grouped_navigation</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This displays the navigation buttons in horizontal groups, which are then stacked vertically.</p>
+<p><span id="config.navigation_per_group" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.navigation_per_group</b></td>
+<td valign="top">= 2</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The number of navigation buttons per horizontal group.</p>
+</div>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:imagemap_navigation.png.html" title="imagemap navigation.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-imagemap_navigation.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.imagemap_navigation" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.imagemap_navigation.html" title="renpy/doc/reference/functions/layout.imagemap navigation">layout.imagemap_navigation</a></b></td>
+<td valign="top">(ground, idle, hover, selected_idle, selected_hover, hotspots):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This layout uses an imagemap to handle game menu navigation.</p>
+<p><i>ground</i> - The displayable used for disabled buttons, and areas that are not in a hotspot.</p>
+<p><i>idle</i> - The displayable used for unfocused unselected hotspots.</p>
+<p><i>hover</i> - The displayable used for focused unselected hotspots.</p>
+<p><i>selected_idle</i> - The displayable used for unfocused selected hotspots.</p>
+<p><i>selected_hover</i> - The displayable used for focused selected hotspots.</p>
+<p><i>hotspots</i> - A list of tuples defining the hotspots. Each tuple consists of</p>
+<ol>
+<li>The x-coordinate of the left side.</li>
+<li>The y-coordinate of the top side.</li>
+<li>The x-coordinate of the right side.</li>
+<li>The y-coordinate of the bottom side.</li>
+<li>The (untranslated) name of the game menu button this hotspot is equivalent to.</li>
+</ol>
+<p>Despite the name, this function can take arbitrary displayables as well as images.</p>
+</div>
+<p><br /></p>
+<p><a id="load_save_layouts" name="load_save_layouts"></a></p>
+<h2><span class="mw-headline">load_save layouts</span></h2>
+<p>The load_save layouts are responsible for defining the load and save screens.</p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:classic_load_save.png.html" title="classic load save.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-classic_load_save.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.classic_load_save" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.classic_load_save.html" title="renpy/doc/reference/functions/layout.classic load save">layout.classic_load_save</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This layout displays the the load and save screens as having a certain number of rows and columns of slots, with a row of navigation buttons on top.</p>
+<p><span id="config.file_page_rows" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.file_page_rows</b></td>
+<td valign="top">= 5</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The number of rows of file slots to display.</p>
+</div>
+<p><span id="config.file_page_cols" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.file_page_cols</b></td>
+<td valign="top">= 2</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The number of columns of file slots to display.</p>
+</div>
+<p><span id="config.file_quick_access_pages" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.file_quick_access_pages</b></td>
+<td valign="top">= 8</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The number of pages of files to provide quick access buttons for.</p>
+</div>
+<p><span id="config.disable_file_pager" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.disable_file_pager</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, the pager is disabled. This prevents access to pages other than the first page of files.</p>
+</div>
+<p><span id="config.disable_thumbnails" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.disable_thumbnails</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, thumbnails are not shown.</p>
+</div>
+<p><span id="config.load_save_empty_thumbnail" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.load_save_empty_thumbnail</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this should be a displayable that will be shown with empty load/save slots.</p>
+</div>
+<p><span id="config.time_format" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.time_format</b></td>
+<td valign="top">= &quot;%b&#160;%d,&#160;%H:%M&quot;</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The format used for file times in the file entry slots.</p>
+</div>
+<p><span id="config.file_entry_format" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.file_entry_format</b></td>
+<td valign="top">= "%(time)s\n%(save_name)s"</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The format of file entries in the file entry slots.</p>
+</div>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:scrolling_load_save.png.html" title="scrolling load save.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-scrolling_load_save.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.scrolling_load_save" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.scrolling_load_save.html" title="renpy/doc/reference/functions/layout.scrolling load save">layout.scrolling_load_save</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This uses a scrolling area that contains file picker entries. The user picks one of these entries to load or save a file. There is one big thumbnail to the right of the screen, which corresponds to the currently hovered entry. (<a href="../reference/Configuration_Variables#config.thumbnail_width" title="renpy/doc/reference/Configuration Variables">config.thumbnail_width</a> and <a href="../reference/Configuration_Variables#config.thumbnail_height" title="renpy/doc/reference/Configuration Variables">config.thumbnail_height</a> control the size of this thumbnail.)</p>
+<p><span id="config.load_save_slots" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.load_save_slots</b></td>
+<td valign="top">= 50</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The number of normal slots to show.</p>
+</div>
+<p><span id="config.load_save_auto_slots" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.load_save_auto_slots</b></td>
+<td valign="top">= 5</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The number of autosave slots to show.</p>
+</div>
+<p><span id="config.load_save_quick_slots" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.load_save_quick_slots</b></td>
+<td valign="top">= 5</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The number of quicksave slots to show.</p>
+</div>
+<p><span id="config.load_save_empty_thumbnail" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.load_save_empty_thumbnail</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When not None, this should be a displayable that will be shown in the thumbnail frame when no save slot has been hovered.</p>
+</div>
+<p><span id="config.time_format" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.time_format</b></td>
+<td valign="top">= &quot;%b&#160;%d,&#160;%H:%M&quot;</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The format used for file times in the file entry slots.</p>
+</div>
+<p><span id="config.file_entry_format" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.file_entry_format</b></td>
+<td valign="top">= "%(time)s\n%(save_name)s"</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The format of file entries in the file entry slots.</p>
+</div>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:imagemap_load_save.png.html" title="imagemap load save.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-imagemap_load_save.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.imagemap_load_save" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.imagemap_load_save.html" title="renpy/doc/reference/functions/layout.imagemap load save">layout.imagemap_load_save</a></b></td>
+<td valign="top">(ground, idle, hover, selected_idle, selected_hover, hotspots, variant=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This layout uses an imagemap to handle loading and saving.</p>
+<p><i>ground</i> - The displayable used for disabled buttons, and areas that are not in a hotspot.</p>
+<p><i>idle</i> - The displayable used for unfocused unselected hotspots.</p>
+<p><i>hover</i> - The displayable used for focused unselected hotspots.</p>
+<p><i>selected_idle</i> - The displayable used for unfocused selected hotspots.</p>
+<p><i>selected_hover</i> - The displayable used for focused selected hotspots.</p>
+<p><i>hotspots</i> - A list of tuples defining the hotspots. Each tuple consists of</p>
+<ol>
+<li>The x-coordinate of the left side.</li>
+<li>The y-coordinate of the top side.</li>
+<li>The x-coordinate of the right side.</li>
+<li>The y-coordinate of the bottom side.</li>
+<li>The function of this hotspot.</li>
+</ol>
+<p>The function of the hotspot should be one of:</p>
+<ul>
+<li>"previous" - go to the previous page.</li>
+<li>"next" - go to the next page.</li>
+<li>"page_auto" - go to the auto-save page.</li>
+<li>"page_quick" - go to the quick-save page.</li>
+<li>"page_1", "page_2", "page_3", ... - go to the specified page. The page numbers must start with 1, and be dense (not skip any numbers).</li>
+<li>"slot_0", "slot_1", "slot_2", ... - a save/load slot. The slot numbers must start with 0, and be dense.</li>
+</ul>
+<p><i>variant</i> - Allows us to define only the save or load screens. This can be "save", "load", or None to define the save and load screens at once. If a save screen is defined, a load screen must be defined (perhaps with different parameters), and vice versa.</p>
+<p>Screenshots and slot text are placed inside windows that are laid out relative to the slot. Adjusting style.file_picker_ss_window controls the screenshot placement, and adjusting style.file_picker_text_window controls the placement of per-slot test. It will usually be necessary to adjust these styles, as the default places both in the upper left.</p>
+<p>Hotspot functions may also include the untranslated names of game menu buttons. If at least one such button is defined, the navigation is not shown, and the imagemap is expected to define all relevant game menu buttons.</p>
+<p>Despite the name, this function can take arbitrary displayables as well as images. The images or displayables used should be transparent to allow the navigation to show through, unless the game menu buttons are defined here.</p>
+<p><span id="config.disable_thumbnails" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.disable_thumbnails</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, thumbnails are not shown.</p>
+</div>
+<p><span id="config.load_save_empty_thumbnail" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.load_save_empty_thumbnail</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this should be a displayable that will be shown with empty load/save slots.</p>
+</div>
+<p><span id="config.time_format" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.time_format</b></td>
+<td valign="top">= &quot;%b&#160;%d,&#160;%H:%M&quot;</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The format used for file times in the file entry slots.</p>
+</div>
+<p><span id="config.file_entry_format" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.file_entry_format</b></td>
+<td valign="top">= "%(time)s\n%(save_name)s"</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The format of file entries in the file entry slots.</p>
+</div>
+</div>
+<p><br /></p>
+<p><a id="yesno_prompt_layouts" name="yesno_prompt_layouts"></a></p>
+<h2><span class="mw-headline">yesno_prompt layouts</span></h2>
+<p>The yesno_prompt layouts are responsible for defining yes/no prompt screens.</p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:classic_yesno_prompt.png.html" title="classic yesno prompt.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-classic_yesno_prompt.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.classic_yesno_prompt" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.classic_yesno_prompt.html" title="renpy/doc/reference/functions/layout.classic yesno prompt">layout.classic_yesno_prompt</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This displays the classic yes/no prompt, which is just a prompt above two buttons.</p>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:imagemap_yesno_prompt.png.html" title="imagemap yesno prompt.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-imagemap_yesno_prompt.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.imagemap_yesno_prompt" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.imagemap_yesno_prompt.html" title="renpy/doc/reference/functions/layout.imagemap yesno prompt">layout.imagemap_yesno_prompt</a></b></td>
+<td valign="top">(ground, idle, hover, hotspots, prompt_images={}):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This layout uses an imagemap to handle prompting the user with yes/no questions.</p>
+<p><i>ground</i> - The displayable used for disabled buttons, and areas that are not in a hotspot.</p>
+<p><i>idle</i> - The displayable used for unfocused hotspots.</p>
+<p><i>hover</i> - The displayable used for focused hotspots.</p>
+<p><i>hotspots</i> - A list of tuples defining the hotspots. Each tuple consists of</p>
+<ol>
+<li>The x-coordinate of the left side.</li>
+<li>The y-coordinate of the top side.</li>
+<li>The x-coordinate of the right side.</li>
+<li>The y-coordinate of the bottom side.</li>
+<li>The button replaced by this hotspot (one of "Yes" or "No").</li>
+</ol>
+<p><i>prompt_images</i> - A map listing prompt images to be used instead of prompt text.</p>
+<p>When a prompt is to be shown, it is first looked up in prompt_images. If a message image is found, then it is shown to the user. Otherwise, the default prompt (layout.ARE_YOU_SURE) is looked up, and if it is found, that image is shown to the user. Otherwise, the prompt is rendered as text.</p>
+<p>Placement of a prompt image is controlled by style properties associated with the image. Placement of the prompt text can be controlled using style.yesno_prompt, with the style of the text proper being controlled by style.yesno_prompt_text.</p>
+<p>Currently-used prompts are:</p>
+<dl>
+<dt>layout.ARE_YOU_SURE</dt>
+<dd>u"Are you sure?"</dd>
+<dt>layout.DELETE_SAVE</dt>
+<dd>u"Are you sure you want to delete this save?"</dd>
+<dt>layout.OVERWRITE_SAVE</dt>
+<dd>u"Are you sure you want to overwrite your save?"</dd>
+<dt>layout.LOADING</dt>
+<dd>u"Loading will lose unsaved progress.\nAre you sure you want to do this?"</dd>
+<dt>layout.QUIT</dt>
+<dd>u"Are you sure you want to quit?"</dd>
+<dt>layout.MAIN_MENU</dt>
+<dd>u"Are you sure you want to return to the main menu?\nThis will lose unsaved progress."</dd>
+</dl>
+<p>Hotspot functions may also include the untranslated names of game menu buttons. If at least one such button is defined, the navigation is not shown, and the imagemap is expected to define all relevant game menu buttons.</p>
+<p>Despite the name, this function can take arbitrary displayables as well as images. The images or displayables used should be transparent to allow the navigation to show through, unless the game menu buttons are defined here.</p>
+</div>
+<p><br /></p>
+<p><a id="preferences_layouts" name="preferences_layouts"></a></p>
+<h2><span class="mw-headline">preferences layouts</span></h2>
+<p>The preferences layouts are used to define the preferences screen.</p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:classic_preferences.png.html" title="classic preferences.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-classic_preferences.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.classic_preferences" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.classic_preferences.html" title="renpy/doc/reference/functions/layout.classic preferences">layout.classic_preferences</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This uses a three-column preferences layout. <span id="config.sample_sound" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.sample_sound</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A sound file used to test the sound volume.</p>
+</div>
+<p><span id="config.sample_voice.3DNone" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.sample_voice=None</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A sound file used to test the voice volume.</p>
+</div>
+<p><span id="config.has_transitions" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.has_transitions</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, the option to enable or disable transitions is shown.</p>
+</div>
+<p><span id="config.has_cps" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.has_cps</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, the option to control text speed is shown.</p>
+</div>
+<p><span id="config.has_afm" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.has_afm</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, the option to control auto-forward mode is shown.</p>
+</div>
+<p><span id="config.has_skipping" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.has_skipping</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, the option to control skipping read messages or not is shown</p>
+</div>
+<p><span id="config.has_skip_after_choice" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.has_skip_after_choice</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, the option to control skipping after choices is shown</p>
+</div>
+<p><span id="config.always_has_joystick" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.always_has_joystick</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, the link to the joystick page is always active.</p>
+</div>
+<p><span id="config.has_joystick" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.has_joystick</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, the link to the joystick page is shown.</p>
+</div>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:two_column_preferences.png.html" title="two column preferences.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-two_column_preferences.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.two_column_preferences" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.two_column_preferences.html" title="renpy/doc/reference/functions/layout.two column preferences">layout.two_column_preferences</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This uses a two-column preferences layout. Configuration variables are the same as for <a href="../reference/functions/layout.classic_preferences.html" title="renpy/doc/reference/functions/layout.classic preferences">layout.classic_preferences</a>.</p>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:one_column_preferences.png.html" title="one column preferences.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-one_column_preferences.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.one_column_preferences" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.one_column_preferences.html" title="renpy/doc/reference/functions/layout.one column preferences">layout.one_column_preferences</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This uses a one-column preferences layout. Configuration variables are the same as for <a href="../reference/functions/layout.classic_preferences.html" title="renpy/doc/reference/functions/layout.classic preferences">layout.classic_preferences</a>.</p>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:imagemap_preferences.png.html" title="imagemap preferences.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-imagemap_preferences.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.imagemap_preferences" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.imagemap_preferences.html" title="renpy/doc/reference/functions/layout.imagemap preferences">layout.imagemap_preferences</a></b></td>
+<td valign="top">(ground, idle, hover, selected_idle, selected_hover, hotspots):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This layout uses an imagemap to handle preferences.</p>
+<p><i>ground</i> - The displayable used for disabled buttons, and areas that are not in a hotspot.</p>
+<p><i>idle</i> - The displayable used for unfocused unselected hotspots.</p>
+<p><i>hover</i> - The displayable used for focused unselected hotspots.</p>
+<p><i>selected_idle</i> - The displayable used for unfocused selected hotspots.</p>
+<p><i>selected_hover</i> - The displayable used for focused selected hotspots.</p>
+<p><i>hotspots</i> - A list of tuples defining the hotspots. Each tuple consists of</p>
+<ol>
+<li>The x-coordinate of the left side.</li>
+<li>The y-coordinate of the top side.</li>
+<li>The x-coordinate of the right side.</li>
+<li>The y-coordinate of the bottom side.</li>
+<li>The function of this hotspot.</li>
+</ol>
+<p>There are two kinds of hotspots, buttons and bars. The buttons are:</p>
+<ul>
+<li>"Window", "Fullscreen" - The display preference.</li>
+<li>"All", "Some", None" - The transition preferences.</li>
+<li>"Joystick" - The button used to jump to the joystick preferences.</li>
+<li>"Seen Messages", "All Messages" - Control which messages are skipped.</li>
+<li>"Begin Skipping" - Forces skipping to begin.</li>
+<li>"Stop Skipping", "Keep Skipping" - Control skipping at menus.</li>
+<li>"Sound Test", "Voice Test" - Test the corresponding audio channels.</li>
+</ul>
+<p>The other type of hotspot is a horizontal bar. The selected images are used for the full portion of the bar, while the unselected images are used for the empty part of the bar. The known bars are:</p>
+<ul>
+<li>"Music Volume"</li>
+<li>"Sound Volume"</li>
+<li>"Voice Volume"</li>
+<li>"Auto-Forward Time"</li>
+<li>"Text Speed"</li>
+</ul>
+<p>Hotspot functions may also include the untranslated names of game menu buttons. If at least one such button is defined, the navigation is not shown, and the imagemap is expected to define all relevant game menu buttons.</p>
+<p>Despite the name, this function can take arbitrary displayables as well as images. The images or displayables used should be transparent to allow the navigation to show through, unless the game menu is defined here.</p>
+</div>
+<p><br /></p>
+<p><a id="joystick_preferences_layouts" name="joystick_preferences_layouts"></a></p>
+<h2><span class="mw-headline">joystick_preferences layouts</span></h2>
+<p>The joystick_preferences layout are used to define the joystick preferences screen.</p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:classic_joystick_preferences.png.html" title="classic joystick preferences.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-classic_joystick_preferences.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.classic_joystick_preferences" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.classic_joystick_preferences.html" title="renpy/doc/reference/functions/layout.classic joystick preferences">layout.classic_joystick_preferences</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The standard joystick preferences layout.</p>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<p><a id="standalone_layouts" name="standalone_layouts"></a></p>
+<h2><span class="mw-headline">standalone layouts</span></h2>
+<p>These provide interesting functionality to Ren'Py games, and they stand alone, so it's possible to call as many of them as you want.</p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:button_menu.png.html" title="button menu.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-button_menu.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.button_menu" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.button_menu.html" title="renpy/doc/reference/functions/layout.button menu">layout.button_menu</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This changes the in-game menus to use buttons defined in the current theme.</p>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<p><a id="Defining_New_Layouts" name="Defining_New_Layouts"></a></p>
+<h1><span class="mw-headline">Defining New Layouts</span></h1>
+<p>This section contains some notes on how to define your own layouts. If you're not interested in defining your own labels, then you can safely ignore this section.</p>
+<p>When it comes to defining layouts, there are two important principles you should follow:</p>
+<ol>
+<li><a href="../reference/functions/layout.provides.html" title="renpy/doc/reference/functions/layout.provides">layout.provides</a> must be called with the type of layout being defined, and it must be called before any theme function is called. For example, if a navigation layout is being defined, then <tt>layout.provides("navigation")</tt> should be called.</li>
+<li>The layout needs to implement the contract of it's layout kind. These contracts are described below.</li>
+</ol>
+<p>While the default layouts are enable through the use of functions on the <tt>layout</tt> object, this is by no means the only way to supply a layout. For a user-defined layout, it should be enough to place the call to <a href="../reference/functions/layout.provides.html" title="renpy/doc/reference/functions/layout.provides">layout.provides</a> in an <tt>init -2 python</tt> block, with the rest of the code residing in init blocks or labels as appropriate.</p>
+<p>If your layout defines new configuration variables, you should set <a href="../reference/Configuration_Variables#config.locked" title="renpy/doc/reference/Configuration Variables">config.locked</a> to False before creating them, and then back to True when you're done creating them. We suggest that configuration variables should be prefixed with the type of layout they're used by. Load/save variables should be prefixed by <code>config.load_save_</code>, navigation variables with <code>config.navigation_</code> and so on. (For compatibility reasons, the default layouts do not conform to this standard.)</p>
+<p><a id="main_menu_layouts_2" name="main_menu_layouts_2"></a></p>
+<h2><span class="mw-headline">main_menu layouts</span></h2>
+<p>Main_menu layouts need to call:</p>
+<pre>
+    layout<span class="sym">.</span><span class="kwd">provides</span><span class="sym">(</span><span class="str">'main_menu'</span><span class="sym">)</span>
+</pre>
+<p>Main menu layouts are expected to define a <tt>main_menu_screen</tt> label. This label is expected to:</p>
+<ul>
+<li>Show a fullscreen window of type mm_root. The code to do this is:</li>
+</ul>
+<pre>
+    <span class="kwa">python</span><span class="sym">:</span>
+        ui<span class="sym">.</span><span class="kwa">window</span><span class="sym">(</span>style<span class="sym">=</span><span class="str">'mm_root'</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">null</span><span class="sym">()</span>
+</pre>
+<ul>
+<li>Create a keymap that disables the game_menu binding. (This is optional, but it can prevent transitions from the main menu to itself.)</li>
+</ul>
+<pre>
+    <span class="kwa">python</span><span class="sym">:</span>
+        ui<span class="sym">.</span><span class="kwd">keymap</span><span class="sym">(</span>game_menu<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="kwa">None</span><span class="sym">))</span>
+</pre>
+<ul>
+<li>Displays the main menu on the screen. How this is done is generally up to the layout itself, but we strongly recommend you use <a href="../reference/Configuration_Variables#config.main_menu" title="renpy/doc/reference/Configuration Variables">config.main_menu</a> to control the generation of the menu. Note that the documentation for config.main_menu says that bare strings cause a jump out of context to occur; use <a href="../reference/functions/ui.jumpsoutofcontext.html" title="renpy/doc/reference/functions/ui.jumpsoutofcontext">ui.jumpsoutofcontext</a> to implement this properly. Using config.main_menu ensures that your layout will work even with extensions (like image galleries) that add options to the main menu.</li>
+</ul>
+<p><a id="navigation_layouts_2" name="navigation_layouts_2"></a></p>
+<h2><span class="mw-headline">navigation layouts</span></h2>
+<p>Navigation layouts need to call:</p>
+<pre>
+    layout<span class="sym">.</span><span class="kwd">provides</span><span class="sym">(</span><span class="str">'navigation'</span><span class="sym">)</span>
+</pre>
+<p>Navigation layouts are expected to redefine the layout.navigation function. The way to do this is to first define a function in an <tt>init python</tt> block, and then assign that function to layout.navigation.</p>
+<p><br />
+<span id="layout.navigation" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.navigation.html" title="renpy/doc/reference/functions/layout.navigation">layout.navigation</a></b></td>
+<td valign="top">(screen):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function is intended to be set by a navigation layout. It's legitimate to replace this function with one of your choosing, provided the signature remains the same.</p>
+<p>This function displays the navigation on the game menu. It's expected to set the background of the game menu. If <i>screen</i> is not None, it's also expected to display the navigation buttons defined in <a href="../reference/Configuration_Variables#config.game_menu" title="renpy/doc/reference/Configuration Variables">config.game_menu</a>, highlighting the one named in <i>screen</i>.</p>
+</div>
+<p><br />
+It's suggested that your navigation function use <a href="../reference/Configuration_Variables#config.game_menu" title="renpy/doc/reference/Configuration Variables">config.game_menu</a> to determine the game menu buttons to show to the user. (But note that the game menu is less often extended then the main menu, so this is correspondingly less important.)</p>
+<p><br /></p>
+<p><a id="load_save_layouts_2" name="load_save_layouts_2"></a></p>
+<h2><span class="mw-headline">load_save layouts</span></h2>
+<p>Load/save layouts need to call:</p>
+<pre>
+    layout<span class="sym">.</span><span class="kwd">provides</span><span class="sym">(</span><span class="str">'load_save'</span><span class="sym">)</span>
+</pre>
+<p>Load/save layouts are expected to provide two labels: <tt>load_screen</tt> and <tt>save_screen</tt>, which are used to load and save, respectively. These screens should call <a href="../reference/functions/layout.navigation.html" title="renpy/doc/reference/functions/layout.navigation">layout.navigation</a> with "load" or "save" as an argument, and are otherwise unconstrained in how they provide loading and saving functionality.</p>
+<p>Please see the section on <a href="../reference/Saving,_Loading,_and_Rollback#Load.2FSave_Functions" title="renpy/doc/reference/Saving, Loading, and Rollback">load/save functions</a> for the functions that would be used to actually implement these screens.</p>
+<p><a id="yesno_prompt_layouts_2" name="yesno_prompt_layouts_2"></a></p>
+<h2><span class="mw-headline">yesno_prompt layouts</span></h2>
+<p>Yes/no prompt layouts need to call:</p>
+<pre>
+    layout<span class="sym">.</span><span class="kwd">provides</span><span class="sym">(</span><span class="str">'yesno_prompt'</span><span class="sym">)</span>
+</pre>
+<p>Navigation layouts are expected to redefine the layout.yesno_prompt function. The way to do this is to first define a function in an <tt>init python</tt> block, and then assign that function to layout.yesno_prompt.</p>
+<p><br />
+<span id="layout.yesno_prompt" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/layout.yesno_prompt.html" title="renpy/doc/reference/functions/layout.yesno prompt">layout.yesno_prompt</a></b></td>
+<td valign="top">(screen, message):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function is intended to be customized by yesno_prompt layouts. It can be replaced by another function, provided the signature remains the same.</p>
+<p><i>screen</i> - The screen button that should be highlighted when this prompt is shown. If None, then no game menu navigation is shown.</p>
+<p><i>message</i> - The message that is shown to the user to prompt them to answer yes or no.</p>
+<p>This function returns True if the user clicks Yes, or False if the user clicks No.</p>
+</div>
+<p><br /></p>
+<p><a id="preferences_layouts_2" name="preferences_layouts_2"></a></p>
+<h2><span class="mw-headline">preferences layouts</span></h2>
+<p>Preferences layouts need to call:</p>
+<pre>
+    layout<span class="sym">.</span><span class="kwd">provides</span><span class="sym">(</span><span class="str">'preferences'</span><span class="sym">)</span>
+</pre>
+<p>The preferences layout should define a <tt>preferences_screen</tt> label, which contains code to set the preferences. This screen should call <a href="../reference/functions/layout.navigation.html" title="renpy/doc/reference/functions/layout.navigation">layout.navigation</a>("preferences"). It then needs to allow the user to alter the preferences, using the variables and functions defined in the <a href="../reference/Preferences.html" title="renpy/doc/reference/Preferences">preferences</a> section. Finally, it should:</p>
+<ul>
+<li>Allow the user to begin skipping, by jumping to the <tt>_begin_skipping</tt> label.</li>
+<li>Allow the user to go to the joystick preferences, by jumping to the <tt>joystick_preferences_screen</tt> label.</li>
+</ul>
+<p><a id="joystick_preferences_layouts_2" name="joystick_preferences_layouts_2"></a></p>
+<h2><span class="mw-headline">joystick_preferences layouts</span></h2>
+<p>Joystick preferences layouts need to call:</p>
+<pre>
+    layout<span class="sym">.</span><span class="kwd">provides</span><span class="sym">(</span><span class="str">'joystick_preferences'</span><span class="sym">)</span>
+</pre>
+<p>The preferences layout should define a <tt>joystick_preferences_screen</tt> label, which contains code to set the joystick preferences. This screen should call <a href="../reference/functions/layout.navigation.html" title="renpy/doc/reference/functions/layout.navigation">layout.navigation</a>("joystick_preferences"). Unfortunately, the joystick preferences are undocumented at this time.</p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<p>An example of a new main_menu layout:</p>
+<pre>
+<span class="kwa">init</span> <span class="sym">-</span><span class="num">2</span> <span class="kwa">python</span><span class="sym">:</span>
+    layout<span class="sym">.</span><span class="kwd">provides</span><span class="sym">(</span><span class="str">'main_menu'</span><span class="sym">)</span>
+
+    style<span class="sym">.</span>mm_button <span class="sym">=</span> <span class="kwd">Style</span><span class="sym">(</span>style<span class="sym">.</span>button<span class="sym">,</span> <span class="kwb">help</span><span class="sym">=</span><span class="str">"main menu button"</span><span class="sym">)</span>
+    style<span class="sym">.</span>mm_button_text <span class="sym">=</span> <span class="kwd">Style</span><span class="sym">(</span>style<span class="sym">.</span>button_text<span class="sym">,</span> <span class="kwb">help</span><span class="sym">=</span><span class="str">"main menu button (text)"</span><span class="sym">)</span>
+    style<span class="sym">.</span>mm_button<span class="sym">.</span>size_group <span class="sym">=</span> <span class="str">"mm"</span>
+
+<span class="kwa">label</span> main_menu_screen<span class="sym">:</span>
+    <span class="kwa">python</span><span class="sym">:</span>
+        layout<span class="sym">.</span><span class="kwd">button</span><span class="sym">(</span>u<span class="str">"Start Game"</span><span class="sym">,</span> <span class="str">"mm"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">jumpsoutofcontext</span><span class="sym">(</span><span class="str">'start'</span><span class="sym">),</span> xpos<span class="sym">=</span><span class="num">400</span><span class="sym">,</span> ypos<span class="sym">=</span><span class="num">400</span><span class="sym">)</span>
+        layout<span class="sym">.</span><span class="kwd">button</span><span class="sym">(</span>u<span class="str">"Continue Game"</span><span class="sym">,</span> <span class="str">"mm"</span><span class="sym">,</span> clicked<span class="sym">=</span><span class="kwd">_intra_jumps</span><span class="sym">(</span><span class="str">"load_screen"</span><span class="sym">,</span> <span class="str">"main_game_transition"</span><span class="sym">),</span> xpos<span class="sym">=</span><span class="num">450</span><span class="sym">,</span> ypos<span class="sym">=</span><span class="num">430</span><span class="sym">)</span>
+        layout<span class="sym">.</span><span class="kwd">button</span><span class="sym">(</span>u<span class="str">"Preferences"</span><span class="sym">,</span> <span class="str">"mm"</span><span class="sym">,</span> clicked<span class="sym">=</span><span class="kwd">_intra_jumps</span><span class="sym">(</span><span class="str">"preferences_screen"</span><span class="sym">,</span> <span class="str">"main_game_transition"</span><span class="sym">),</span> xpos<span class="sym">=</span><span class="num">500</span><span class="sym">,</span> ypos<span class="sym">=</span><span class="num">460</span><span class="sym">),</span>
+        layout<span class="sym">.</span><span class="kwd">button</span><span class="sym">(</span>u<span class="str">"Quit"</span><span class="sym">,</span> <span class="str">"mm"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">jumps</span><span class="sym">(</span><span class="str">"_quit"</span><span class="sym">),</span> xpos<span class="sym">=</span><span class="num">550</span><span class="sym">,</span> ypos<span class="sym">=</span><span class="num">490</span><span class="sym">)</span>
+
+        ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,641 @@
+<html><head><title>UI Functions - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#UI_Functions"><span class="tocnumber">1</span> <span class="toctext">UI Functions</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Single-Child_Widgets"><span class="tocnumber">1.1</span> <span class="toctext">Single-Child Widgets</span></a></li>
+<li class="toclevel-2"><a href="#Multiple-Child_Widgets"><span class="tocnumber">1.2</span> <span class="toctext">Multiple-Child Widgets</span></a></li>
+<li class="toclevel-2"><a href="#No-Child_Widgets"><span class="tocnumber">1.3</span> <span class="toctext">No-Child Widgets</span></a></li>
+<li class="toclevel-2"><a href="#Changes"><span class="tocnumber">1.4</span> <span class="toctext">Changes</span></a></li>
+<li class="toclevel-2"><a href="#Management_Functions"><span class="tocnumber">1.5</span> <span class="toctext">Management Functions</span></a></li>
+<li class="toclevel-2"><a href="#Clicked_Action_Functions"><span class="tocnumber">1.6</span> <span class="toctext">Clicked Action Functions</span></a></li>
+<li class="toclevel-2"><a href="#Adjustment"><span class="tocnumber">1.7</span> <span class="toctext">Adjustment</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><a id="UI_Functions" name="UI_Functions"></a></p>
+<h1><span class="mw-headline">UI Functions</span></h1>
+<p>While the say and menu statements are often enough for many games, there are times when more complex user interfaces are desired. For example, dating sim games can require more complex scheduling screens. These screens can be built using the UI functions.</p>
+<p>Most of the UI functions create widgets and add them to the screen. The UI functions manage the complexity of nesting widgets. The screen can then be shown to the user with <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>, and a value returned and used by the game script.</p>
+<p>To start, let's give a script snippet that uses the UI functions. The following displays a window containing three buttons, arraigned horizontally. The string assigned to <tt>choice</tt> varies depending on which of the three is picked.</p>
+<pre>
+$ ui<span class="sym">.</span><span class="kwa">window</span><span class="sym">()</span>
+$ ui<span class="sym">.</span><span class="kwd">hbox</span><span class="sym">()</span>
+
+$ ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"A"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="str">"A"</span><span class="sym">))</span>
+$ ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"B"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="str">"B"</span><span class="sym">))</span>
+$ ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"C"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="str">"C"</span><span class="sym">))</span>
+
+$ ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+$ choice <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">(</span>suppress_overlay<span class="sym">=</span><span class="kwa">True</span><span class="sym">)</span>
+</pre>
+<p>There are three kinds of widgets that can be created by the UI functions.</p>
+<ul>
+<li>The first kind of widget (of which <a href="../reference/functions/ui.window.html" title="renpy/doc/reference/functions/ui.window">ui.window</a> is one), takes a single child widget. When this kind of widget is open, the next widget to be created is added to it, and it then closes automatically.</li>
+</ul>
+<ul>
+<li>The second kind of widget can take an arbitrary number of child widgets. This kind of widget is exemplified by the layout widgets: vbox, hbox, and fixed. New widgets are added to this kind of widget until a matching call to <a href="../reference/functions/ui.close.html" title="renpy/doc/reference/functions/ui.close">ui.close</a> occurs, unless they are instead added to an open child of this widget.</li>
+</ul>
+<ul>
+<li>The third kind of widget cannot take any children. This kind of widget is exemplified by <a href="../reference/functions/ui.textbutton.html" title="renpy/doc/reference/functions/ui.textbutton">ui.textbutton</a>.</li>
+</ul>
+<p>There is also a set of functions that are used to manage the interaction, and a set of functions that can be used to perform various actions when buttons are clicked.</p>
+<p><a id="Single-Child_Widgets" name="Single-Child_Widgets"></a></p>
+<h2><span class="mw-headline">Single-Child Widgets</span></h2>
+<p><span id="ui.button" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.button.html" title="renpy/doc/reference/functions/ui.button">ui.button</a></b></td>
+<td valign="top">(clicked=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a button that can be clicked by the user. When this button is clicked or otherwise selected, the function supplied as the clicked argument is called. If it returns a value, that value is returned from <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+<p>Buttons created with this function contain another widget, specifically the next widget to be added. As a convenience, one can use <a href="../reference/functions/ui.textbutton.html" title="renpy/doc/reference/functions/ui.textbutton">ui.textbutton</a> to create a button with a text label. See also <a href="../reference/functions/ui.imagebutton.html" title="renpy/doc/reference/functions/ui.imagebutton">ui.imagebutton</a>, which creates a button in the form of an image.</p>
+<p><i>clicked</i> - A function that is called with no arguments when this button is clicked. If it returns a non-None value, then that value is returned from <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>. If clicked itself is None, the button is displayed in the "insensitive" (disabled) style.</p>
+<p><i>hovered</i> - A function that is called with no arguments when this button is focused. If it returns a non-None value, then that value is returned from <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+<p><i>unhovered</i> - A function that is called with no arguments when the button loses focus. It's also called at least once per interaction, when a button is not focused at the start of the interaction. The return value is currently ignored, but should be None.</p>
+<p><i>role</i> - The role this button undertakes. This can be the empty string, or "selected_".</p>
+<p><i>keymap</i> - A keymap that is used when this button is focused.</p>
+<p>Note that code in the clicked, hovered, and unhovered methods is run inside the current interaction. This means that the screen is not cleared while this code is run. Displayables may be added or removed from the current interaction, provided <a href="../reference/functions/renpy.restart_interaction.html" title="renpy/doc/reference/functions/renpy.restart interaction">renpy.restart_interaction</a> is called to let Ren'Py know that the interaction has been changed. You should not run code that causes a new interaction from inside these functions, except inside a new context using <a href="../reference/functions/renpy.call_in_new_context.html" title="renpy/doc/reference/functions/renpy.call in new context">renpy.call_in_new_context</a>, <a href="../reference/functions/renpy.invoke_in_new_context.html" title="renpy/doc/reference/functions/renpy.invoke in new context">renpy.invoke_in_new_context</a>, or <a href="../reference/functions/ui.callsinnewcontext.html" title="renpy/doc/reference/functions/ui.callsinnewcontext">ui.callsinnewcontext</a>.</p>
+</div>
+<p><br />
+<span id="ui.frame" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.frame.html" title="renpy/doc/reference/functions/ui.frame">ui.frame</a></b></td>
+<td valign="top">(**properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A frame contains a single widget. This is similar to a window, but may be styled differently.</p>
+</div>
+<p><br />
+<span id="ui.sizer" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.sizer.html" title="renpy/doc/reference/functions/ui.sizer">ui.sizer</a></b></td>
+<td valign="top">(maxwidth=None, maxheight=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a widget that can shrink the size allocated to the next widget added. If maxwidth or maxheight is not None, then the space allocated to the child in the appropriate direction is limited to the given amount.</p>
+<p>Please note that this only works with child widgets that can have a limited area allocated to them (like text), and not with ones that use a fixed area (like images).</p>
+<p><i>maxwidth</i> - The maximum width of the child widget, or None to not affect width.</p>
+<p><i>maxheight</i> - The maximum height of the child widget, or None ot not affect height.</p>
+</div>
+<p><br />
+<span id="ui.transform" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.transform.html" title="renpy/doc/reference/functions/ui.transform">ui.transform</a></b></td>
+<td valign="top">(function=None, alpha=1, rotate=None, zoom=1, xzoom=1, yzoom=1, style='transform', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Wraps its child in a <a href="../reference/functions/Transform.html" title="renpy/doc/reference/functions/Transform">Transform</a>, allowing the child to be rotated, zoomed, and alpha-modified. Parameters are as for <a href="../reference/functions/Transform.html" title="renpy/doc/reference/functions/Transform">Transform</a>.</p>
+</div>
+<p><br />
+<span id="ui.viewport" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.viewport.html" title="renpy/doc/reference/functions/ui.viewport">ui.viewport</a></b></td>
+<td valign="top">(child_size=(None, None), xadjustment=None, yadjustment=None, set_adjustments=True, mousewheel=False, draggable=False, style='viewport', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Displays a viewport on the screen. A viewport restricts the size of its child, and allows the child to be displayed at an offset.</p>
+<p><i>child_size</i> - The x and y size of the area the child is asked to render. If either is None, defaults to the size of this viewport.</p>
+<p><i>xadjustment</i> - A <a href="../reference/functions/ui.adjustment.html" title="renpy/doc/reference/functions/ui.adjustment">ui.adjustment</a> that's used for the x-axis of the viewpoert.</p>
+<p><i>yadjustment</i> - A <a href="../reference/functions/ui.adjustment.html" title="renpy/doc/reference/functions/ui.adjustment">ui.adjustment</a> that's used for the y-axis of the viewport.</p>
+<p><i>set_adjustments</i> - If true, the range and page size of the adjustments will be set by this viewport.</p>
+<p><i>mousewheel</i> - If true, the mouse wheel can be used to scroll the viewport.</p>
+<p><i>draggable</i> - If true, the mouse can be used to drag around the viewport.</p>
+<p>If xadjustment or yadjustment are None, adjustments are created automatically. These adjustments are available through the xadjustment and yadjustment properies of a viewport.</p>
+<p>In general, viewports are only useful when the xmaximum and ymaximum properties are specified. You'll also want to set clipping=True on the style, although this is part of the default viewport style.</p>
+</div>
+<p><br />
+<span id="ui.window" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.window.html" title="renpy/doc/reference/functions/ui.window">ui.window</a></b></td>
+<td valign="top">(**properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A window contains a single widget. It draws that window atop a background and with appropriate amounts of margin and padding, taken from the window properties supplied to this call. The next widget created is added to this window.</p>
+</div>
+<p><br /></p>
+<p><a id="Multiple-Child_Widgets" name="Multiple-Child_Widgets"></a></p>
+<h2><span class="mw-headline">Multiple-Child Widgets</span></h2>
+<p><span id="ui.fixed" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.fixed.html" title="renpy/doc/reference/functions/ui.fixed">ui.fixed</a></b></td>
+<td valign="top">(**properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a layout that places widgets at fixed locations relative to the origin of the enclosing widget. The layout takes up the entire area allocated to it. New widgets are added to this widget until the next call to <a href="../reference/functions/ui.close.html" title="renpy/doc/reference/functions/ui.close">ui.close</a>.</p>
+</div>
+<p><br />
+<span id="ui.grid" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.grid.html" title="renpy/doc/reference/functions/ui.grid">ui.grid</a></b></td>
+<td valign="top">(cols, rows, padding=0, transpose=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a layout that places widgets in an evenly spaced grid. New widgets are added to this grid until <a href="../reference/functions/ui.close.html" title="renpy/doc/reference/functions/ui.close">ui.close</a> is called. Widgets are added by going from left to right within a single row, and down to the start of the next row when a row is full. All cells must be filled (that is, exactly col * rows widgets must be added to the grid.)</p>
+<p>The children of this widget should have a fixed size that does not vary based on the space allocated to them. Failure to observe this restriction could lead to really odd layouts, or things being rendered off screen. This condition is relaxed in the appropriate dimension if xfill or yfill is set.</p>
+<p>Each cell of the grid is exactly the same size. By default, the grid is the smallest size that can accommodate all of its children, but it can be expanded to consume all available space in a given dimension by setting xfill or yfill to True, as appropriate. (Otherwise, xfill and yfill are inherited from the style.)</p>
+<p><i>cols</i> - The number of columns in this grid.</p>
+<p><i>rows</i> - The number of rows in this grid.</p>
+<p><i>padding</i> - The amount of space to leave between rows and columns.</p>
+<p><i>xfill</i> - True if the grid should consume all available width.</p>
+<p><i>yfill</i> - True if the grid should consume all available height.</p>
+<p><i>transpose</i> - If True, grid will fill down columns before filling across rows.</p>
+</div>
+<p><br />
+<span id="ui.hbox" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.hbox.html" title="renpy/doc/reference/functions/ui.hbox">ui.hbox</a></b></td>
+<td valign="top">(spacing=None, style='hbox', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a layout that places widgets next to each other, from left to right. New widgets are added to this hbox until <a href="../reference/functions/ui.close.html" title="renpy/doc/reference/functions/ui.close">ui.close</a> is called.</p>
+<p><i>spacing</i> - The number of pixels to leave between widgets. If None, take the amount of spacing from the style.</p>
+</div>
+<p><br />
+<span id="ui.vbox" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.vbox.html" title="renpy/doc/reference/functions/ui.vbox">ui.vbox</a></b></td>
+<td valign="top">(spacing=None, style='vbox', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a layout that places widgets next to each other, from top to bottom. New widgets are added to this vbox until <a href="../reference/functions/ui.close.html" title="renpy/doc/reference/functions/ui.close">ui.close</a> is called.</p>
+<p><i>spacing</i> - The number of pixels to leave between widgets. If None, take the amount of spacing from the style.</p>
+<p><br /></p>
+</div>
+<p><br />
+<span id="ui.side" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.side.html" title="renpy/doc/reference/functions/ui.side">ui.side</a></b></td>
+<td valign="top">(places, style='default', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This positions child widgets so that they surround a parent widget. It takes a single argument, <i>places</i>, which controls where each child widget is placed. Places is expected to be iterable, and each element should be in the list:</p>
+<p>'c', 't', 'b', 'l', 'r', 'tl', 'tr', 'bl', 'br'</p>
+<p>'c' means center, 't' top, 'tl' top left, 'br' bottom right, and so on. A side should be given the same number of children as the number of entries in the places list.</p>
+<p>The top and bottom children are rendered with a 0 requested height, while the left and right children are rendered with a 0 requested width. It is therefore suggested that you enforce a minimum width on the children that are placed in these slots.</p>
+<p>The center widget is rendered before the others. Other than that, the order widgets are rendered in is undefined.</p>
+</div>
+<p><br /></p>
+<p><a id="No-Child_Widgets" name="No-Child_Widgets"></a></p>
+<h2><span class="mw-headline">No-Child Widgets</span></h2>
+<p><span id="ui.autobar" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.autobar.html" title="renpy/doc/reference/functions/ui.autobar">ui.autobar</a></b></td>
+<td valign="top">(range, start, end, time, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Creates a bar (with a range of <i>range</i>) that automatically moves from <i>start</i> to <i>end</i> in <i>time</i> seconds.</p>
+</div>
+<p><br />
+<span id="ui.bar" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.bar.html" title="renpy/doc/reference/functions/ui.bar">ui.bar</a></b></td>
+<td valign="top">(range=None, value=None, changed=None, step=None, page=None, adjustment=None, style='bar', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a bar widget. The bar widget can be used to display data in a bar graph format, and optionally to report when the user clicks on a location in that bar.</p>
+<p><i>adjustment</i> - This should always be given as a keyword argument. If not none, it should be a <a href="../reference/functions/ui.adjustment.html" title="renpy/doc/reference/functions/ui.adjustment">ui.adjustment</a> that is to used by this bar, and the following arguments are ignored. If None, a new <a href="../reference/functions/ui.adjustment.html" title="renpy/doc/reference/functions/ui.adjustment">ui.adjustment</a> is created from the <i>range</i>, <i>value</i>, <i>changed</i>, <i>step</i>, and <i>page</i> arguments.</p>
+<p><i>style</i> - The style of this bar. As of 6.2.0, there are four styles that you can use:</p>
+<ul>
+<li><b>bar</b> - A horizontal bar, with the largest value to the right.</li>
+<li><b>scrollbar</b> - A horizontal scrollbar, with the largest value to the right.</li>
+<li><b>vbar</b> - A vertical bar, with the largest value to the top.</li>
+<li><b>vscrollbar</b> - A vertical scrollbar, with the largest value to the bottom.</li>
+</ul>
+<p>The width and height should be set with the xmaximum and ymaximum properties. For best results, if clicked is set then width should be at least twice as big as range.</p>
+</div>
+<p><br />
+<span id="ui.image" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.image.html" title="renpy/doc/reference/functions/ui.image">ui.image</a></b></td>
+<td valign="top">(im, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This loads an image, and displays it as a widget. The image may be the name of a file containing the image, or an arbitrary displayable.</p>
+</div>
+<p><br />
+<span id="ui.imagebutton" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.imagebutton.html" title="renpy/doc/reference/functions/ui.imagebutton">ui.imagebutton</a></b></td>
+<td valign="top">(idle_image, hover_image, clicked=None, image_style='image_button_image', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a button that contains two images. The first is the idle image, which is used when the mouse is not over the image, while the second is the hover image, which is used when the mouse is over the image. If the button is clicked or otherwise selected, then the clicked argument is called. If it returns a value, that value is returned from <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+<p><i>idle_image</i> - The file name of the image used when this button is idle (doesn't have the mouse pointer over it, or focus from keyboard or joystick). Must be specified.</p>
+<p><i>hover_image</i> - The file name of the image used when this button is hovered (the mouse pointer is over it, or the user has focused it with keyboard or joystick). Must be specified.</p>
+<p><i>clicked</i> - The function that is called when this button is clicked.</p>
+<p><i>hovered</i> - A function that is called with no arguments when this button is clicked. If it returns a non-None value, then that value is returned from <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+<p><i>unhovered</i> - A function that is called with no arguments when this button loses focus.</p>
+<p><i>image_style</i> - The style that is applied to the images that are used as part of the imagebutton.</p>
+<p><i>role</i> - The role this button undertakes. This can be the empty string, or "selected_".</p>
+<p><i>insensitive_image</i> - If specified, the file name of the image used when this button is disabled (clicked is None).</p>
+<p><i>activate_image</i> - If specified, the file name of the image used when this button is activated (the mouse button is being held down over it, or equivalents for keyboard and joystick).</p>
+<p><i>selected_idle_image</i>, <i>selected_hover_image</i>, <i>selected_insensitive_image</i> and <i>selected_activate_image</i> also exist. They are the equivalents of <i>idle_image</i>, <i>hover_image</i>, <i>insensitive_image</i> and <i>activate_image</i> which are used when this button is selected (represents the current state, like the "Save Game" button on the save game screen).</p>
+</div>
+<p><br />
+<span id="ui.imagemap" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.imagemap.html" title="renpy/doc/reference/functions/ui.imagemap">ui.imagemap</a></b></td>
+<td valign="top">(ground, selected, hotspots, unselected=None, style='imagemap', button_style='imagemap_button', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is called to create imagemaps. Parameters are roughly the same as <a href="../reference/functions/renpy.imagemap.html" title="renpy/doc/reference/functions/renpy.imagemap">renpy.imagemap</a>. The value of the hotspot is returned when <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a> returns.</p>
+</div>
+<p><br />
+<span id="ui.input" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.input.html" title="renpy/doc/reference/functions/ui.input">ui.input</a></b></td>
+<td valign="top">(default, length=None, allow=None, exclude='{}', button=None, changed=None, prefix="", suffix="", **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This displays a text area that accepts input from the user. Only ASCII is input reliably, although some non-ASCII languages may also work on some platforms.</p>
+<p><i>default</i> - The default value for the text area.</p>
+<p><i>length</i> - If not None, a limit on the number of characters that can be input.</p>
+<p><i>allow</i> - If not None, a string containing the characters that are allowed.</p>
+<p><i>exclude</i> - A string containing characters that are no allowed. The brace characters should always be disallowed, since they may accidentally cause a text tag to be shown.</p>
+<p><i>button</i> - If not None, then this should be a button. The input is only active when this button is focused.</p>
+<p><i>changed</i> - If not None, then this function is called when the text is changed.</p>
+<p><i>prefix</i> - A prefix included before the text to be edited.</p>
+<p><i>suffix</i> - A suffix included after the text to be edited.</p>
+<p>If changed is None, then the text is returned as the result of ui.interact() when enter is pressed. Otherwise, this cannot cause ui.interact() to terminate.</p>
+</div>
+<p><br />
+<span id="ui.keymap" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.keymap.html" title="renpy/doc/reference/functions/ui.keymap">ui.keymap</a></b></td>
+<td valign="top">(**keymap):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a pseudo-widget that adds a keymap to the screen. This function takes as keyword arguments the names of bindings or keysyms. These keywords should be given as their arguments a function, which is called with zero arguments when an appropriate keysym is pressed.</p>
+</div>
+<p><br />
+<span id="ui.menu" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.menu.html" title="renpy/doc/reference/functions/ui.menu">ui.menu</a></b></td>
+<td valign="top">(menuitems, style='menu', caption_style='menu_caption', choice_style='menu_choice', choice_chosen_style='menu_choice_chosen', choice_button_style='menu_choice_button', choice_chosen_button_style='menu_choice_chosen_button', location=None, focus=None, default=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a new menu widget. Unlike the `menu` statement or <a href="../reference/functions/renpy.display_menu.html" title="renpy/doc/reference/functions/renpy.display menu">renpy.display_menu</a> function, this menu widget is not enclosed in any sort of window. You'd have to do that yourself, if it is desired.</p>
+<p><i>menuitems</i> - A list of tuples that are the items to be added to this menu. The first element of a tuple is a string that is used for this menuitem. The second element is the value to be returned from <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a> if this item is selected, or None if this item is a non-selectable caption.</p>
+<p><i>location</i> - Some serializable and hashable object that represents the location of this menu in the game. (Normally, this is the name of the statement executing the menu.) If provided, then this logs which menuitems have been chosen, and changes the style of those menuitems to the choice_seen_style.</p>
+</div>
+<p><br />
+<span id="ui.null" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.null.html" title="renpy/doc/reference/functions/ui.null">ui.null</a></b></td>
+<td valign="top">(width=0, height=0, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This widget displays nothing on the screen. Why would one want to do this? If a widget requires contents, but you don't have any contents to provide it. It can also be used to create empty space, by giving non-zero <i>width</i> and <i>heigh</i> arguments.</p>
+</div>
+<p><br />
+<span id="ui.pausebehavior" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.pausebehavior.html" title="renpy/doc/reference/functions/ui.pausebehavior">ui.pausebehavior</a></b></td>
+<td valign="top">(delay, result=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a pseudo-widget that adds the pause behavior to the screen. The pause behavior is to return the supplied result when the given number of seconds elapses. This widget should not be added to any other widget, but should instead be only added to the screen itself.</p>
+<p>Please note that this widget will always pause for the given amount of time. If you want a pause that can be interrupted by the user, add in a saybehavior.</p>
+<p><i>delay</i> - The amount of time to pause, in seconds.</p>
+<p><i>result</i> - The result that will be retuned after the delay time elapses.</p>
+</div>
+<p><br />
+<span id="ui.saybehavior" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.saybehavior.html" title="renpy/doc/reference/functions/ui.saybehavior">ui.saybehavior</a></b></td>
+<td valign="top">(afm=None, dismiss=[ 'dismiss' ], allow_dismiss=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a pseudo-widget that adds the say behavior to the screen. The say behavior is to return True if the left mouse is clicked or enter is pressed. It also returns True in various other cases, such as if the current statement has already been seen. This widget should not be added to any other widget, but should instead be only added to the screen itself.</p>
+<p>If <i>afm</i> is present, it is a block of text, that's given to the auto forwarding mode algorithm to determine the auto-forwarding timeout.</p>
+<p>If <i>dismiss</i> is present, it is a list of names of keybindings that are used to dismiss this saybehavior.</p>
+<p>If <i>allow_dismiss</i> is present, it should be a function. This function is called without any arguments each time the user initiates a dismiss request. If the function returns True, the dismiss request is allowed, otherwise it is ignored. <i>Added in 5.6.6.</i></p>
+<p>There should only be one saybehavior shown at a time, otherwise they will fight for focus.</p>
+</div>
+<p><a id="Changes" name="Changes"></a></p>
+<h2><span class="mw-headline">Changes</span></h2>
+<p>The dismiss parameter was changed in 5.6.1 from a single keybinding to a list of keybindings.</p>
+<p><br /></p>
+<p><span id="ui.soundstopbehavior" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.soundstopbehavior.html" title="renpy/doc/reference/functions/ui.soundstopbehavior">ui.soundstopbehavior</a></b></td>
+<td valign="top">(channel, result=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Adding this behavior to the screen causes ui.interact to return <i>result</i> when there is no sound playing on the named music channel.</p>
+</div>
+<p><br />
+<span id="ui.text" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.text.html" title="renpy/doc/reference/functions/ui.text">ui.text</a></b></td>
+<td valign="top">(label, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a widget displaying a text label.</p>
+<p><i>label</i> - The text that will be displayed on the screen. It uses font properties. The label can also be a list containing both text strings in widgets, in the case of a widget, the widget is displayed as if it was text of the enclosing font. The height of the area allocated is that of the font, with the width being taked from a render of the widget.</p>
+<p><i>slow</i> - If True, the text will be typed at the screen at a rate determined by the slow_cps property, if set, or the "Text Speed" preference. If None (the default), then it will be typed at a speed determined by the slow_cps property. If False, then it will appear instantly.</p>
+<p><br />
+<i>slow_speed</i> - If slow is True, then this is the number of cps the text is displayed at, overriding the preference.</p>
+<p><i>slow_done</i> - If not None and slow is True, this is a callback that is called when we're done displaying text on the screen.</p>
+</div>
+<p><br />
+<span id="ui.timer" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.timer.html" title="renpy/doc/reference/functions/ui.timer">ui.timer</a></b></td>
+<td valign="top">(seconds, function, repeat=False, args=(), kwargs={}):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This sets up a timer that will call <i>function</i> after <i>seconds</i> seconds have elapsed. If <i>repeat</i> is true, then the function is called every <i>seconds</i> seconds thereafter.</p>
+<p><i>args</i> and <i>kwargs</i> are the positional and keyword arguments supplied to the function, respectively.</p>
+</div>
+<p><br /></p>
+<p><a id="Management_Functions" name="Management_Functions"></a></p>
+<h2><span class="mw-headline">Management Functions</span></h2>
+<p><span id="ui.add" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.add.html" title="renpy/doc/reference/functions/ui.add">ui.add</a></b></td>
+<td valign="top">(w, make_current=False, once=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is used to add a displayable to the current widget. If <i>make_current</i> is True, then the widget is made the current widget. If <i>once</i> is True, then the displayable will be made the current widget, but only for the next widget to be added.</p>
+</div>
+<p><br />
+<span id="ui.at" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.at.html" title="renpy/doc/reference/functions/ui.at">ui.at</a></b></td>
+<td valign="top">(position):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The ui.at function takes a position or motion, and applies it to the next widget created using a ui function.</p>
+</div>
+<p><br />
+<span id="ui.clear" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.clear.html" title="renpy/doc/reference/functions/ui.clear">ui.clear</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Clears the current layer of widgets. Not particularly useful in practice, and basically duplicative of <a href="../reference/functions/renpy.scene.html" title="renpy/doc/reference/functions/renpy.scene">renpy.scene</a>.</p>
+</div>
+<p><br />
+<span id="ui.close" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.close.html" title="renpy/doc/reference/functions/ui.close">ui.close</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This closes the currently open widget or layer. If a widget is closed, then we start adding to its parent, or the layer if no parent is open. If a layer is closed, we return to the previously open layer. An error is thrown if we close the last open layer.</p>
+</div>
+<p><br />
+<span id="ui.interact" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a></b></td>
+<td valign="top">(**kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Displays the current scene to the user, waits for a widget to indicate a return value, and returns that value to the user. As a side-effect, disables fast skip mode when executed.</p>
+<p>Some useful keyword arguments are:</p>
+<p><i>type</i> - The type of this interaction. See <a href="../reference/functions/renpy.last_interact_type.html" title="renpy/doc/reference/functions/renpy.last interact type">renpy.last_interact_type</a> for more details.</p>
+<p><i>show_mouse</i> - Should the mouse be shown during this interaction? Only advisory, as this doesn't work reliably.</p>
+<p><i>suppress_overlay</i> - This suppresses the display of the overlay during this interaction.</p>
+<p><i>suppress_underlay</i> - This suppresses the underlay during this interaction. The underlay contains the key and mouse bindings that let the user access the game menu. (As well as a number of other useful in-game functions.)</p>
+<p><i>suppress_window</i> - This suppresses the showing of an empty window when it otherwise would be shown.</p>
+<p><i>roll_forward</i> - The value returned if the user tries to roll forward. This is normally used in conjunction with <a href="../reference/functions/renpy.roll_forward_info.html" title="renpy/doc/reference/functions/renpy.roll forward info">renpy.roll_forward_info</a> and <a href="../reference/functions/renpy.checkpoint.html" title="renpy/doc/reference/functions/renpy.checkpoint">renpy.checkpoint</a>.</p>
+<p><i>clear</i> - If True, the transient layer will be cleared at the end of the interaction.</p>
+</div>
+<p><br /></p>
+<p><span id="ui.layer" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.layer.html" title="renpy/doc/reference/functions/ui.layer">ui.layer</a></b></td>
+<td valign="top">(name):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This causes widgets to be added to the named layer, until a matching call to <a href="../reference/functions/ui.close.html" title="renpy/doc/reference/functions/ui.close">ui.close</a>.</p>
+</div>
+<p><br />
+<span id="ui.remove" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.remove.html" title="renpy/doc/reference/functions/ui.remove">ui.remove</a></b></td>
+<td valign="top">(d):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This removes the displayable <i>d</i> from the current layer. This can only remove things from the layer directly, not from a displayable.</p>
+</div>
+<p><br />
+<span id="ui.tag" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.tag.html" title="renpy/doc/reference/functions/ui.tag">ui.tag</a></b></td>
+<td valign="top">(name):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This specifies the image tag for the next widget to be added to a layer. If the next widget to be created is not added to a layer, this is ignored. When a tag is specified, previous widgets with the same tag are removed from the layer.</p>
+</div>
+<p><br /></p>
+<p><a id="Clicked_Action_Functions" name="Clicked_Action_Functions"></a></p>
+<h2><span class="mw-headline">Clicked Action Functions</span></h2>
+<p>The result of these functions is suitable for use as the clicked argument used by <a href="../reference/functions/ui.button.html" title="renpy/doc/reference/functions/ui.button">ui.button</a>, <a href="../reference/functions/ui.imagebutton.html" title="renpy/doc/reference/functions/ui.imagebutton">ui.imagebutton</a>, and <a href="../reference/functions/ui.textbutton.html" title="renpy/doc/reference/functions/ui.textbutton">ui.textbutton</a>.</p>
+<p><br />
+<span id="ui.callsinnewcontext" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.callsinnewcontext.html" title="renpy/doc/reference/functions/ui.callsinnewcontext">ui.callsinnewcontext</a></b></td>
+<td valign="top">(label, *args, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function returns a function that, when called, calls the supplied label in a new context. Additional positional and keyword arguments are passed in to the called label.</p>
+</div>
+<p><br />
+<span id="ui.jumps" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.jumps.html" title="renpy/doc/reference/functions/ui.jumps">ui.jumps</a></b></td>
+<td valign="top">(label, transition=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function returns a function that, when called, jumps the game to the given label, ending the current interaction in the process. It's best used to supply the clicked argument to the various button widgets.</p>
+<p><i>transition</i>, if not None, specifies a transition to be used when the next interaction occurs. This may either be a transition, or a string. If a string, it is interpreted as a field on the config object, which is accessed to determine the transition that should occur. <i>(new in 6.9.0)</i></p>
+</div>
+<p><br />
+<span id="ui.jumpsoutofcontext" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.jumpsoutofcontext.html" title="renpy/doc/reference/functions/ui.jumpsoutofcontext">ui.jumpsoutofcontext</a></b></td>
+<td valign="top">(label):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function returns a function that, when called, exits the current context, and in the parent context jumps to the named label. It's intended to be used as the clicked argument to a button.</p>
+</div>
+<p><br />
+<span id="ui.returns" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.returns.html" title="renpy/doc/reference/functions/ui.returns">ui.returns</a></b></td>
+<td valign="top">(value):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function returns a function that, when called, returns the supplied value. It's best used to supply the clicked argument to the various button widgets.</p>
+</div>
+<p><br /></p>
+<p><a id="Adjustment" name="Adjustment"></a></p>
+<h2><span class="mw-headline">Adjustment</span></h2>
+<p><span id="ui.adjustment" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/ui.adjustment.html" title="renpy/doc/reference/functions/ui.adjustment">ui.adjustment</a></b></td>
+<td valign="top">(range=1, value=0, step=None, page=0, changed=None, adjustable=False, ranged=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Adjustment objects are used to represent a numeric value that can vary between 0 and a defined number. They also contain information on the steps the value can be adjusted by.</p>
+<p><i>range</i> is the limit of the range of the value. This may be an integer or a float.</p>
+<p><i>value</i> is the initial value of the adjustment.</p>
+<p><i>step</i> is the size of the steps the value can be adjusted by. The default for this value depends on page and range. If page is set, this defaults to 1/10 page. If range is a float, it defaults to 1/20th of the range, otherwise it defaults to 1 pixel.</p>
+<p><i>page</i> is the size of a page, used when the bar is in paging mode. If not set, defaults to 1/10th of the range.</p>
+<p>These four arguments correspond to fields on the adjustment object. The fields can be safely set before anything using the adjustment has been rendered. After that, they should be treated as read-only.</p>
+<p><i>changed</i> is a function that's called when the adjustment is changed. The function is called with one argument, the new value of the adjustment. This should be present for the bar to be adjustable.</p>
+<p><i>adjustable</i> controls whether bars without any changed functions are adjustable. If <i>changed</i> is not None, the bar is always adjustable, and this argument is ignored.</p>
+<p><i>ranged</i> is a function that is called with this adjustment as an argument when the adjustment's range has is set. <i>(new in 6.6.0)</i></p>
+<p>Adjustment objects have one method:</p>
+<p><span id="Adjustment.change" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>Adjustment.change</b></td>
+<td valign="top">(value):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Call this to set the value of the adjustment to <i>value</i>. This will redraw all displayables affected by this change.</p>
+</div>
+<p><br /></p>
+</div>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,583 @@
+<html><head><title>Animation and Transformation Language - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Animation_and_Transformation_Language" name="Animation_and_Transformation_Language"></a></p>
+<h1><span class="mw-headline">Animation and Transformation Language</span></h1>
+<p>The Animation and Transformation Language (ATL) provides a high-level way of choosing a displayable to show, positioning it on the screen, and applying transformations such as rotation, zoom, and alpha-modification. These can be changed over time, and in response to events.</p>
+<table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Animation_and_Transformation_Language"><span class="tocnumber">1</span> <span class="toctext">Animation and Transformation Language</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Ren.27Py_Script_Statements"><span class="tocnumber">1.1</span> <span class="toctext">Ren'Py Script Statements</span></a></li>
+<li class="toclevel-2"><a href="#ATL_Syntax_and_Semantics"><span class="tocnumber">1.2</span> <span class="toctext">ATL Syntax and Semantics</span></a></li>
+<li class="toclevel-2"><a href="#ATL_Statements"><span class="tocnumber">1.3</span> <span class="toctext">ATL Statements</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Interpolation_Statement"><span class="tocnumber">1.3.1</span> <span class="toctext">Interpolation Statement</span></a></li>
+<li class="toclevel-3"><a href="#Time_Statement"><span class="tocnumber">1.3.2</span> <span class="toctext">Time Statement</span></a></li>
+<li class="toclevel-3"><a href="#Expression_Statement"><span class="tocnumber">1.3.3</span> <span class="toctext">Expression Statement</span></a></li>
+<li class="toclevel-3"><a href="#Pass_Statement"><span class="tocnumber">1.3.4</span> <span class="toctext">Pass Statement</span></a></li>
+<li class="toclevel-3"><a href="#Repeat_Statement"><span class="tocnumber">1.3.5</span> <span class="toctext">Repeat Statement</span></a></li>
+<li class="toclevel-3"><a href="#Block_Statement"><span class="tocnumber">1.3.6</span> <span class="toctext">Block Statement</span></a></li>
+<li class="toclevel-3"><a href="#Choice_Statement"><span class="tocnumber">1.3.7</span> <span class="toctext">Choice Statement</span></a></li>
+<li class="toclevel-3"><a href="#Parallel_Statement"><span class="tocnumber">1.3.8</span> <span class="toctext">Parallel Statement</span></a></li>
+<li class="toclevel-3"><a href="#Event_Statement"><span class="tocnumber">1.3.9</span> <span class="toctext">Event Statement</span></a></li>
+<li class="toclevel-3"><a href="#On_Statement"><span class="tocnumber">1.3.10</span> <span class="toctext">On Statement</span></a></li>
+<li class="toclevel-3"><a href="#Contains_Statement"><span class="tocnumber">1.3.11</span> <span class="toctext">Contains Statement</span></a></li>
+<li class="toclevel-3"><a href="#Function_Statement"><span class="tocnumber">1.3.12</span> <span class="toctext">Function Statement</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Warpers"><span class="tocnumber">1.4</span> <span class="toctext">Warpers</span></a></li>
+<li class="toclevel-2"><a href="#Transform_Properties"><span class="tocnumber">1.5</span> <span class="toctext">Transform Properties</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Circular_Motion"><span class="tocnumber">1.5.1</span> <span class="toctext">Circular Motion</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#External_Events"><span class="tocnumber">1.6</span> <span class="toctext">External Events</span></a></li>
+<li class="toclevel-2"><a href="#Python_Equivalent"><span class="tocnumber">1.7</span> <span class="toctext">Python Equivalent</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><br /></p>
+<p><a id="Ren.27Py_Script_Statements" name="Ren.27Py_Script_Statements"></a></p>
+<h2><span class="mw-headline">Ren'Py Script Statements</span></h2>
+<p>Blocks of ATL code can be introduced in three ways.</p>
+<p><b>Transform Statement.</b> The first way is using the transform statement. The transform statement creats a position and motion function that can be supplied to the at clause of a show or scene statement. The syntax of the transform statement is:</p>
+<pre>
+transform_statement -&gt; "transform" name "(" parameters ")" ":"
+    atl_block
+</pre>
+<p>The transform statement should be run at init time. If it is found outside an init block, then it is automatically placed inside an init block with a priority of 0. The transform may have a list of parameters, which must be supplied when it is called. The syntax is the same as for labels, except that we do not allow a variable number of arguments.</p>
+<p><i>Name</i> must be given, and must be a python identifier. The transform created from the ATL block is bound to this name.</p>
+<p><b>Image Statement with ATL block.</b> The second way to use ATL is as part of an image statement with ATL block. This binds an image name to the given transform. As there's no way to supply parameters to this transform, it's only useful if the transform defines an animation. The syntax for an image statement with ATL block is:</p>
+<pre>
+image_statement -&gt; "image" image_name ":"
+    atl_block
+</pre>
+<p><br />
+<b>Scene and Show statements with ATL block.</b> The final way to use ATL is as part of a scene or show statement. This wraps the image being shown inside an ATL transformation.</p>
+<pre>
+atl_scene_statement -&gt; scene_statement ":"
+    atl_block
+
+atl_show_statement -&gt; show_statement ":"
+    atl_block
+</pre>
+<p><a id="ATL_Syntax_and_Semantics" name="ATL_Syntax_and_Semantics"></a></p>
+<h2><span class="mw-headline">ATL Syntax and Semantics</span></h2>
+<p>An ATL block consists of one or more logical lines, all at the same indentation, and indented relative to the statement containing the block. Each logical line in an ATL block must contain one or more ATL statements.</p>
+<p>There are two kinds of ATL statements: simple and complex. Simple statements do not take an ATL block. A single logical line may contain one or more ATL statements, separated by commas. A complex statement contains a block, must be on its own line. The first line of a complex statement always ends with a colon (":").</p>
+<p>By default, statements in a block are executed in the order in which they appear, starting with the first statement in the block. Execution terminates when the end of the block is reached. Time statements change this, as described in the appropriate section below.</p>
+<p>Execution of a block terminates when all statements in the block have terminated.</p>
+<p>If an ATL statement requires evaluation of an expression, such evaluation occurs when the transform is first added to the scene list. (Such as when using a show statement or ui function.)</p>
+<p><a id="ATL_Statements" name="ATL_Statements"></a></p>
+<h2><span class="mw-headline">ATL Statements</span></h2>
+<p>The following are the ATL statements.</p>
+<p><a id="Interpolation_Statement" name="Interpolation_Statement"></a></p>
+<h3><span class="mw-headline">Interpolation Statement</span></h3>
+<pre>
+interpolation_statement -&gt; 
+    ( warper simple_expression | "warp" simple_expression simple_expression )? 
+    ( property simple_expression ( "knot" simple_expression )* 
+    | "clockwise"
+    | "counterclockwise" 
+    | "circles" simple_expression
+    | simple_expression )*
+</pre>
+<p>The interpolation statement is the main way that ATL controls transformations.</p>
+<p>The first part of a the interpolation statement is used to select a a function that time-warps the interpolation. (That is, a function from linear time to non-linear time.) This can either be done by giving the name of a warper registered with ATL, or by giving the keyword "warp" followed by an expression giving a function. Either case is followed by a number, giving the number of seconds the the interpolation should take.</p>
+<p>If no warp function is given, the interpolation is run for 0 seconds, using the pause function.</p>
+<p>The warper and duration are used to compute a completion fraction. This is done by dividing the time taken by the interpolation by the duration of the interpolation. This is clamped to the duration, and then passed to the warper. The result returned by the warper is the completion fraction.</p>
+<p>The interpolation statement can then contain a number of of other clauses. When a property and value are present, then the value is the value the property will obtain at the end of the statement. The value can be obtained in several ways:</p>
+<ul>
+<li>If the value is followed by one or two knots, then spline motion is used. The starting point is the value of the property at the start of the interpolation, the end point is the property value, and the knots are used to control the spline.</li>
+<li>If the interpolation statement contains a "clockwise" or "counterclockwise" clause, circular motion is used, as described below.</li>
+<li>Otherwise, the value is linearly interpolated between the start and end locations, using the completion fraction.</li>
+</ul>
+<p>The "clockwise", "counterclockwise", and "circle" clauses are used in circular motion, described below.</p>
+<p>If a simple expression is present, it should evaluate to a transform with only a single interpolation statement, without a warper, splines, or circular motion. The properties from the transform are processes as if they were included in this statement.</p>
+<p>Some sample interpolations are:</p>
+<pre>
+    <span class="kwa">show</span> logo base<span class="sym">:</span>
+         <span class="slc"># Show the logo at the upper right side of the screen.</span>
+         xalign <span class="num">0.0</span> yalign <span class="num">1.0</span>
+
+         <span class="slc"># Take 1.0 seconds to move things back to the left.</span>
+         linear <span class="num">1.0</span> xalign <span class="num">0.0</span>
+
+         <span class="slc"># Take 1.0 seconds to move things to the location specified in the</span>
+         <span class="slc"># truecenter transform. Use the ease warper to do this.</span>
+         ease <span class="num">1.0</span> truecenter
+
+         <span class="slc"># Just pause for a second.</span>
+         <span class="kwa">pause</span> <span class="num">1.0</span>
+
+         <span class="slc"># Set the location to circle around.</span>
+         <span class="kwd">alignaround</span> <span class="sym">(</span><span class="num">.5</span><span class="sym">,</span> <span class="num">.5</span><span class="sym">)</span>
+
+         <span class="slc"># Use circular motion to bring us to spiral out to the top of</span>
+         <span class="slc"># the screen. Take 2 seconds to do so.</span>
+         linear <span class="num">2.0</span> yalign <span class="num">0.0</span> clockwise circles <span class="num">3</span>
+
+         <span class="slc"># Use a spline motion to move us around the screen.</span>
+         linear <span class="num">2.0</span> <span class="kwd">align</span> <span class="sym">(</span><span class="num">0.5</span><span class="sym">,</span> <span class="num">1.0</span><span class="sym">)</span> <span class="kwd">knot</span> <span class="sym">(</span><span class="num">0.0</span><span class="sym">,</span> <span class="num">.33</span><span class="sym">)</span> <span class="kwd">knot</span> <span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="num">.66</span><span class="sym">)</span>
+</pre>
+<p>An important special case is that the pause warper, followed by a time and nothing else, causes ATL execution to pause for that amount of time.</p>
+<p>Some properties can have values of multiple types. For example, the xpos property can be an int, float, or absolute. The behavior is undefined when an interpolation has old and new property values of different types.</p>
+<p><a id="Time_Statement" name="Time_Statement"></a></p>
+<h3><span class="mw-headline">Time Statement</span></h3>
+<pre>
+time_statement -&gt; "time" simple_expression
+</pre>
+<p>The time statement is a simple control statement. It contains a single simple_expression, which is evaluated to give a time, expressed as seconds from the start of execution of the containing block.</p>
+<p>When the time given in the statement is reached, the following statement begins to execute.This transfer of control occurs even if a previous statement is still executing, and causes any prior statement to immediately terminate.</p>
+<p>Time statements are implicitly preceded by a pause statement with an infinite time. This means that if control would otherwise reach the time statement, it waits until the time statement would take control.</p>
+<p>When there are multiple time statements in a block, they must strictly increase in order.</p>
+<pre>
+<span class="kwa">image</span> backgrounds<span class="sym">:</span>
+    <span class="str">"bg band"</span>
+    time <span class="num">2.0</span>
+    <span class="str">"bg whitehouse"</span>
+    time <span class="num">4.0</span>
+    <span class="str">"bg washington"</span>
+</pre>
+<p><a id="Expression_Statement" name="Expression_Statement"></a></p>
+<h3><span class="mw-headline">Expression Statement</span></h3>
+<pre>
+expression_statement -&gt; simple_expression ("with" simple_expression)?
+</pre>
+<p>An expression statement is a simple statement that starts with a simple expression. It then contains an optional with clause, with a second simple expression.</p>
+<p>The first simple expression may evaluate to a transform (defined with the transform statement) or a displayable. If it's a transform, that transform is executed. With clauses are ignored when a transform is supplied.</p>
+<p>The first simple expression may evaluate to an integer or floating point number. In that case, it's taken as a number of seconds to pause execution for.</p>
+<p>Otherwise, the expression is interpreted to be a displayable. This displayable replaces the child of the transform when this clause executes, making it useful for animation. If a with clause is present, the second expression is evaluated as a transition, and the transition is applied to the old and new displayables.</p>
+<pre>
+<span class="kwa">image</span> atl example<span class="sym">:</span>
+     <span class="slc"># Display logo_base.png</span>
+     <span class="str">"logo_base.png"</span>
+
+     <span class="slc"># Pause for 1.0 seconds.</span>
+     <span class="num">1.0</span>
+
+     <span class="slc"># Show logo_bw.png, with a dissolve.</span>
+     <span class="str">"logo_bw.png"</span> <span class="kwa">with</span> <span class="kwd">Dissolve</span><span class="sym">(</span><span class="num">0.5</span><span class="sym">,</span> alpha<span class="sym">=</span><span class="kwa">True</span><span class="sym">)</span>
+
+     <span class="slc"># Run the move_right tranform.</span>
+     move_right
+</pre>
+<p><a id="Pass_Statement" name="Pass_Statement"></a></p>
+<h3><span class="mw-headline">Pass Statement</span></h3>
+<pre>
+pass_statement -&gt; "pass"
+</pre>
+<p>The pass statement is a simple statement that causes nothing to happen. This can be used when there's a desire to separate statements, like when there are two sets of choice statements that would otherwise be back-to-back.</p>
+<p><a id="Repeat_Statement" name="Repeat_Statement"></a></p>
+<h3><span class="mw-headline">Repeat Statement</span></h3>
+<pre>
+repeat_statement -&gt; "repeat" (simple_expression)?
+</pre>
+<p>The repeat statement is a simple statement that causes the block containing it to resume execution from the beginning. If the expression is present, then it is evaluated to give an integer number of times the block will execute. (So a block ending with "repeat 2" will execute at most twice.)</p>
+<p>The repeat statement must be the last statement in a block.</p>
+<pre>
+<span class="kwa">show</span> logo base<span class="sym">:</span>
+    xalign <span class="num">0.0</span>
+    linear <span class="num">1.0</span> xalign <span class="num">1.0</span>
+    linear <span class="num">1.0</span> xalign <span class="num">0.0</span>
+    repeat
+</pre>
+<p><a id="Block_Statement" name="Block_Statement"></a></p>
+<h3><span class="mw-headline">Block Statement</span></h3>
+<pre>
+block_statement -&gt; "block" ":"
+    atl_block
+</pre>
+<p>The block statement is a complex statement that contains a block of ATL code. This can be used to group statements that will repeat.</p>
+<pre>
+<span class="kwa">label</span> logo base<span class="sym">:</span>
+    alpha <span class="num">0.0</span> xalign <span class="num">0.0</span> yalign <span class="num">0.0</span>
+    linear <span class="num">1.0</span> alpha <span class="num">1.0</span>
+
+    block<span class="sym">:</span>
+        linear <span class="num">1.0</span> xalign <span class="num">1.0</span>
+        linear <span class="num">1.0</span> xalign <span class="num">0.0</span>
+        repeat
+</pre>
+<p><a id="Choice_Statement" name="Choice_Statement"></a></p>
+<h3><span class="mw-headline">Choice Statement</span></h3>
+<pre>
+choice_statement -&gt; "choice" (simple_expression)? ":"
+    atl_block
+</pre>
+<p>The choice statement is a complex statement that defines one of a set of potential choices. Ren'Py will pick one of the choices in the set, and execute the ATL block associated with it, and then continue execution after the last choice in the choice set.</p>
+<p>Choice statements are greedily grouped into a choice set when more than one choice statement appears consecutively in a block. If the <i>simple_expression</i> is supplied, it is a floating-point weight given to that block, otherwise 1.0 is assumed.</p>
+<pre>
+<span class="kwa">image</span> eileen random<span class="sym">:</span>
+    choice<span class="sym">:</span>
+        <span class="str">"eileen happy"</span>
+    choice<span class="sym">:</span>
+        <span class="str">"eileen vhappy"</span>
+    choice<span class="sym">:</span>
+        <span class="str">"eileen concerned"</span>
+
+    <span class="kwa">pause</span> <span class="num">1.0</span>
+    repeat
+</pre>
+<p><a id="Parallel_Statement" name="Parallel_Statement"></a></p>
+<h3><span class="mw-headline">Parallel Statement</span></h3>
+<p>The parallel statement is used to define a set of ATL blocks to execute in parallel.</p>
+<pre>
+parallel_statement -&gt; "parallel" ":"
+    atl_block
+</pre>
+<p>Parallel statements are greedily grouped into a parallel set when more than one parallel statement appears consecutively in a block. The blocks of all parallel statements are then executed simultaneously. The parallel statement terminates when the last block terminates.</p>
+<p>The blocks within a set should be independent of each other, and manipulate different properties. When two blocks change the same property, the result is undefined.</p>
+<pre>
+<span class="kwa">show</span> logo base<span class="sym">:</span>
+    parallel<span class="sym">:</span>
+        xalign <span class="num">0.0</span>
+        linear <span class="num">1.3</span> xalign <span class="num">1.0</span>
+        linear <span class="num">1.3</span> xalign <span class="num">0.0</span>
+        repeat
+    parallel<span class="sym">:</span>
+        yalign <span class="num">0.0</span>
+        linear <span class="num">1.6</span> yalign <span class="num">1.0</span>
+        linear <span class="num">1.6</span> yalign <span class="num">0.0</span>
+        repeat
+</pre>
+<p><a id="Event_Statement" name="Event_Statement"></a></p>
+<h3><span class="mw-headline">Event Statement</span></h3>
+<pre>
+event_prod_statement -&gt; "event" name
+</pre>
+<p>The event statement is a simple statement that causes an event with the given name to be produced.</p>
+<p>When an event is produced inside a block, the block is checked to see if an event handler for the given name exists. If it does, control is transferred to the event handler. Otherwise, the event propagates to any containing event handler.</p>
+<p><a id="On_Statement" name="On_Statement"></a></p>
+<h3><span class="mw-headline">On Statement</span></h3>
+<p>The On statement is a complex statement that defines an event handler. On statements are greedily grouped into a single statement.</p>
+<pre>
+on_statement -&gt; "on" name ":"
+    atl_block
+</pre>
+<p>The on statement is used to handle events. When an event is handled, handling of any other event ends and handing of the new event immediately starts. When an event handler ends without another event occuring, the "default" event is produced (unless were already handing the "default" event).</p>
+<p>Execution of the on statement will never naturally end. (But it can be ended by the time statement, or an enclosing event handler.)</p>
+<pre>
+<span class="kwa">show</span> logo base<span class="sym">:</span>
+     on <span class="kwa">show</span><span class="sym">:</span>
+        alpha <span class="num">0.0</span>
+        linear <span class="num">.5</span> alpha <span class="num">1.0</span>
+     on <span class="kwa">hide</span><span class="sym">:</span>
+        linear <span class="num">.5</span> alpha <span class="num">0.0</span>
+</pre>
+<p><a id="Contains_Statement" name="Contains_Statement"></a></p>
+<h3><span class="mw-headline">Contains Statement</span></h3>
+<p>The contains statement sets the displayable contained by this ATL transform. (The child of the transform.) There are two variants of the contains statement.</p>
+<p><b>Contains Expression.</b> The contains expression variant takes an expression, and sets that expression as the child of the transform. This is useful when an ATL transform wishes to contain, rather than include, a second ATL transform.</p>
+<pre>
+contains_statement -&gt; "contains" expression
+</pre>
+<pre>
+<span class="kwa">transform</span> an_animation<span class="sym">:</span>
+     <span class="str">"1.png"</span>
+     <span class="kwa">pause</span> <span class="num">2</span>
+     <span class="str">"2.png"</span>
+     <span class="kwa">pause</span> <span class="num">2</span>
+     repeat
+
+<span class="kwa">image</span> move_an_animation<span class="sym">:</span>
+     contains an_animation
+
+     <span class="slc"># If we didn't use contains, we'd still be looping and would never reach here.</span>
+     xalign <span class="num">0.0</span>
+     linear <span class="num">1.0</span> yalign <span class="num">1.0</span>
+</pre>
+<p><br />
+<b>Contains Block.</b> The contains block allows one to define an ATL block that is used for the child of this ATL transform. One or more contains block statements will be greedily grouped together, wrapped inside a <a href="../reference/functions/Fixed.html" title="renpy/doc/reference/functions/Fixed">Fixed</a>, and set as the child of this transform.</p>
+<pre>
+contains_statement -&gt; "contains" ":"
+    atl_block
+</pre>
+<p>Each block should define a displayable to use, or else an error will occur. The contains statement executes instantaneously, without waiting for the children to complete. This statement is mostly syntactic sugar, as it allows arguments to be easily passed to the children.</p>
+<pre>
+<span class="kwa">image</span> test double<span class="sym">:</span>
+     contains<span class="sym">:</span>
+          <span class="str">"logo.png"</span>
+          xalign <span class="num">0.0</span>
+          linear <span class="num">1.0</span> xalign <span class="num">1.0</span>
+          repeat
+
+     contains<span class="sym">:</span>
+          <span class="str">"logo.png"</span>
+          xalign <span class="num">1.0</span>
+          linear <span class="num">1.0</span> xalign <span class="num">0.0</span>
+          repeat
+</pre>
+<p><a id="Function_Statement" name="Function_Statement"></a></p>
+<h3><span class="mw-headline">Function Statement</span></h3>
+<p>The function statement allows ATL to use Python functions to control the ATL properties.</p>
+<pre>
+function_statement -&gt; "function" expression
+</pre>
+<p>The functions have the same signature as those used with <a href="../reference/functions/Transform.html" title="renpy/doc/reference/functions/Transform">Transform</a>:</p>
+<ul>
+<li>The first argument is a transform object. Transform properties can be set on this object.</li>
+<li>The second argument is the shown timebase, the number of seconds since the function began executing.</li>
+<li>The third argument is the the animation timebase, which is the number of seconds something with the same tag has been on the screen.</li>
+<li>If the function returns a number, it will be called again after that number of seconds has elapsed. (0 seconds means to call the function as soon as possible.) If the function returns None, control will pass to the next ATL statement.</li>
+</ul>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    <span class="kwa">def</span> <span class="kwd">slide_function</span><span class="sym">(</span>trans<span class="sym">,</span> st<span class="sym">,</span> <span class="kwa">at</span><span class="sym">):</span>
+        <span class="kwa">if</span> st <span class="sym">&gt;</span> <span class="num">1.0</span><span class="sym">:</span>
+            trans<span class="sym">.</span>xalign <span class="sym">=</span> <span class="num">1.0</span>
+            <span class="kwa">return None</span>
+        <span class="kwa">else</span><span class="sym">:</span>
+            trans<span class="sym">.</span>xalign <span class="sym">=</span> st
+            <span class="kwa">return</span> <span class="num">0</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+    <span class="kwa">show</span> logo base<span class="sym">:</span>
+        function slide_function
+        <span class="kwa">pause</span> <span class="num">1.0</span>
+        repeat
+</pre>
+<p><a id="Warpers" name="Warpers"></a></p>
+<h2><span class="mw-headline">Warpers</span></h2>
+<p>A warper is a function that can change the amount of time an interpolation statement considers to have elapsed. The following warpers are defined by default. They are defined as functions from t to t', where t and t' are floating point numbers between 0.0 and 1.0. (If the statement has 0 duration, than t is 1.0 when it runs.)</p>
+<dl>
+<dt>pause</dt>
+<dd>Pause, then jump to the new value.</dd>
+<dd>If t == 1.0, t = 1.0. Otherwise, t' = 0.0.</dd>
+</dl>
+<dl>
+<dt>linear</dt>
+<dd>Linear interpolation.</dd>
+<dd>t' = t</dd>
+</dl>
+<dl>
+<dt>ease</dt>
+<dd>Start slow, speed up, then slow down.</dd>
+<dd>t' = .5 - math.cos(math.pi * t) / 2.0</dd>
+</dl>
+<dl>
+<dt>easein</dt>
+<dd>Start fast, then slow down.</dd>
+<dd>t' = math.cos((1.0 - t) * math.pi / 2.0</dd>
+</dl>
+<dl>
+<dt>easeout</dt>
+<dd>Start slow, then speed up.</dd>
+<dd>t' = 1.0 - math.cos(t * math.pi / 2.0)</dd>
+</dl>
+<p>New warpers can be defined using the renpy.atl_warper decorator, in a python early block. It should be placed in a file that is parsed before any file that uses the warper. The code looks like:</p>
+<pre>
+<span class="kwa">python</span> early <span class="kwa">hide</span><span class="sym">:</span>
+
+    <span class="sym">@</span>renpy<span class="sym">.</span>atl_warper
+    <span class="kwa">def</span> <span class="kwd">linear</span><span class="sym">(</span>t<span class="sym">):</span>
+        <span class="kwa">return</span> t
+</pre>
+<p><a id="Transform_Properties" name="Transform_Properties"></a></p>
+<h2><span class="mw-headline">Transform Properties</span></h2>
+<p>The following transform properties exist.</p>
+<p>When the type is given as position, it may be an int, absolute, or float. If it's a float, it's interpreted as a fraction of the size of the containing area (for pos) or displayable (for anchor).</p>
+<p>Note that not all properties are independent. For example, xalign and xpos both update some of the same underlying data. In a parallel statement, only one block should adjust horizontal position, and one should adjust vertical positions. (These may be the same block.) The angle and radius properties set both horizontal and vertical positions.</p>
+<dl>
+<dt>pos</dt>
+<dd>type: (position, position)</dd>
+<dd>default: (0, 0)</dd>
+<dd>The position, relative to the top-left corner of the containing area.</dd>
+</dl>
+<dl>
+<dt>xpos</dt>
+<dd>type: position</dd>
+<dd>default: 0</dd>
+<dd>The horizontal position, relative to the left side of the containing area.</dd>
+</dl>
+<dl>
+<dt>ypos</dt>
+<dd>type: position</dd>
+<dd>default: 0</dd>
+<dd>The vertical position, relative to the top of the containing area.</dd>
+</dl>
+<dl>
+<dt>anchor</dt>
+<dd>type: (position, position)</dd>
+<dd>default: (0, 0)</dd>
+<dd>The anchor position, relative to the top-left corner of the displayable.</dd>
+</dl>
+<dl>
+<dt>xanchor</dt>
+<dd>type: position</dd>
+<dd>default: 0</dd>
+<dd>The horizontal anchor position, relative to the left side of the displayable.</dd>
+</dl>
+<dl>
+<dt>yanchor</dt>
+<dd>type: position</dd>
+<dd>default: 0</dd>
+<dd>The vertical anchor position, relative to the top of the displayable.</dd>
+</dl>
+<dl>
+<dt>align</dt>
+<dd>type: (float, float)</dd>
+<dd>default: (0.0, 0.0)</dd>
+<dd>Equivalent to setting pos and anchor to the same value.</dd>
+</dl>
+<dl>
+<dt>xalign</dt>
+<dd>type: float</dd>
+<dd>default: 0.0</dd>
+<dd>Equivalent to setting xpos and xanchor to this value.</dd>
+</dl>
+<dl>
+<dt>yalign</dt>
+<dd>type: float</dd>
+<dd>default: 0.0</dd>
+<dd>Equivalent to setting ypos and yanchor to this value.</dd>
+</dl>
+<dl>
+<dt>rotate</dt>
+<dd>type: float or None</dd>
+<dd>default: None</dd>
+<dd>If None, no rotation occurs. Otherwise, the image will be rotated by this many degrees clockwise. Rotating the displayable causes it to be resized so that the width and height are equal to the hypotenuse of the original width and height. This can cause positioning to change if xanchor and yanchor are not 0.5.</dd>
+</dl>
+<dl>
+<dt>zoom</dt>
+<dd>type: float</dd>
+<dd>default: 1.0</dd>
+<dd>This causes the displayable to be zoomed by the supplied factor. This should always be greater than .5.</dd>
+</dl>
+<dl>
+<dt>xzoom</dt>
+<dd>type: float</dd>
+<dd>default: 1.0</dd>
+<dd>This causes the displayable to be horizontally zoomed by the supplied factor. This should always be greater than .5.</dd>
+</dl>
+<dl>
+<dt>yzoom</dt>
+<dd>type: float</dd>
+<dd>default: 1.0</dd>
+<dd>This causes the displayable to be vertically zoomed by the supplied factor. This should always be greater than .5.</dd>
+</dl>
+<dl>
+<dt>alpha</dt>
+<dd>type: float</dd>
+<dd>default: 1.0</dd>
+<dd>This controls the opacity of the displayable.</dd>
+</dl>
+<dl>
+<dt>around</dt>
+<dd>type: (position, position)</dd>
+<dd>default: (0.0, 0.0)</dd>
+<dd>If not None, specifies the polar coordinate center, relative to the upper-left of the containing area. Setting the center using this allows for circular motion in position mode.</dd>
+</dl>
+<dl>
+<dt>alignaround</dt>
+<dd>type: (float, float)</dd>
+<dd>default: (0.0, 0.0)</dd>
+<dd>If not None, specifies the polar coordinate center, relative to the upper-left of the containing area. Setting the center using this allows for circular motion in align mode.</dd>
+</dl>
+<dl>
+<dt>angle</dt>
+<dd>type: float</dd>
+<dd>Get the angle component of the polar coordinate position. This is undefined when the polar coordinate center is not set.</dd>
+</dl>
+<dl>
+<dt>radius</dt>
+<dd>type: position</dd>
+<dd>Get the radius component of the polar coordinate position. This is undefined when the polar coordinate center is not set.</dd>
+</dl>
+<dl>
+<dt>crop</dt>
+<dd>type: None or (int, int, int, int)</dd>
+<dd>default: None</dd>
+<dd>If not None, causes the displayable to be cropped to the given box. The box is specified as a tuple of (x, y, width, height).</dd>
+</dl>
+<dl>
+<dt>corner1</dt>
+<dd>type: None or (int, int)</dd>
+<dd>default: None</dd>
+<dd>If not None, gives the upper-left corner of the crop box. This takes priority over crop.</dd>
+</dl>
+<dl>
+<dt>corner2</dt>
+<dd>type: None or (int, int)</dd>
+<dd>default: None</dd>
+<dd>If not None, gives the lower right corner of the crop box. This takes priority over crop.</dd>
+</dl>
+<dl>
+<dt>size</dt>
+<dd>type: None or (int, int)</dd>
+<dd>default: None</dd>
+<dd>If not None, causes the displayable to be scaled to the given size.</dd>
+</dl>
+<dl>
+<dt>subpixel</dt>
+<dd>type: boolean</dd>
+<dd>default: False</dd>
+<dd>If True, causes things to be drawn on the screen using subpixel positioning.</dd>
+</dl>
+<dl>
+<dt>delay</dt>
+<dd>type: float</dd>
+<dd>default: 0.0</dd>
+<dd>If this transform is being used as a transition, then this is the duration of the transition.</dd>
+</dl>
+<p>These properties are applied in the following order:</p>
+<ol>
+<li>crop, corner1, corner2</li>
+<li>size</li>
+<li>rotate</li>
+<li>zoom, xzoom, yzoom</li>
+<li>position properties</li>
+</ol>
+<p><br /></p>
+<p><a id="Circular_Motion" name="Circular_Motion"></a></p>
+<h3><span class="mw-headline">Circular Motion</span></h3>
+<p>When an interpolation statement contains the "clockwise" or "counterclockwise" keywords, the interpolation will cause circular motion. Ren'Py will compare the start and end locations and figure out the polar coordinate center. Ren'Py will then compute the number of degrees it will take to go from the start angle to the end angle, in the specified direction of rotation. If the circles clause is given, Ren'Py will ensure that the appropriate number of circles will be made.</p>
+<p>Ren'Py will then interpolate the angle and radius properties, as appropriate, to cause the circular motion to happen. If the transform is in align mode, setting the angle and radius will set the align property. Otherwise, the pos property will be set.</p>
+<p><a id="External_Events" name="External_Events"></a></p>
+<h2><span class="mw-headline">External Events</span></h2>
+<p>The following events can triggered automatically:</p>
+<dl>
+<dt>start</dt>
+<dd>A pseudo-event, triggered on entering an on statement, if no event of higher priority has happened.</dd>
+</dl>
+<dl>
+<dt>show</dt>
+<dd>Triggered when the transform is shown using the show or scene statement, and no image with the given tag exists.</dd>
+</dl>
+<dl>
+<dt>replace</dt>
+<dd>Triggered when transform is shown using the show statement, replacing an image with the given tag.</dd>
+</dl>
+<dl>
+<dt>hide</dt>
+<dd>Triggered when the transform is hidden using the hide statement. The image will not actually hide until the ATL block finishes.</dd>
+</dl>
+<dl>
+<dt>hover</dt>
+<dt>idle</dt>
+<dt>selected_hover</dt>
+<dt>selected_idle</dt>
+<dd>Triggered when button containing this transform, or a button contained by this transform, enters the named state.</dd>
+</dl>
+<p><a id="Python_Equivalent" name="Python_Equivalent"></a></p>
+<h2><span class="mw-headline">Python Equivalent</span></h2>
+<p>The Python equivalent of an ATL transform is a <a href="../reference/functions/Transform.html" title="renpy/doc/reference/functions/Transform">Transform</a>. There is no way to create ATL code programatically.</p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

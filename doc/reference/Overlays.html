@@ -1,0 +1,27 @@
+<html><head><title>Overlays - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Overlays" name="Overlays"></a></p>
+<h1><span class="mw-headline">Overlays</span></h1>
+<p>Overlays are used to display information above the scene currently displayed. The overlay is regenerated each time an interaction with the user begins, making it suitable for displaying to the user things like statistics or dates. The overlay is generally displayed whenever transient things (like dialogue, thoughts and menus) are.</p>
+<p>Overlays are set up by adding to the <a href="../reference/Configuration_Variables#config.overlay_functions" title="renpy/doc/reference/Configuration Variables">config.overlay_functions</a> list a Python function which, when called, uses the ui functions to add widgets to the screen. By default, such widgets are added to the 'overlay' layer, but a call to <a href="../reference/functions/ui.layer.html" title="renpy/doc/reference/functions/ui.layer">ui.layer</a> can change the layer to any of the layers listed in <a href="../reference/Configuration_Variables#config.overlay_layers" title="renpy/doc/reference/Configuration Variables">config.overlay_layers</a>. These functions are called for each interaction, which allows the overlay to change to reflect the status of game variables. If a variable affecting the overlay changes during an interaction, <a href="../reference/functions/renpy.restart_interaction.html" title="renpy/doc/reference/functions/renpy.restart interaction">renpy.restart_interaction</a> should be called to regenerate the overlay.</p>
+<p>As an example, take the following code fragement. When added to a program, this displays a date image in the upper-right corner of the screen (as is done in Kanon). The image shown is based on the variable date. If date is None, then no date is shown. Otherwise, a png file beginning with the value of date is shown.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ date <span class="sym">=</span> <span class="str">"mar25"</span>
+
+    <span class="kwa">python hide</span><span class="sym">:</span>
+        <span class="kwa">def</span> <span class="kwd">date_overlay</span><span class="sym">():</span>
+            <span class="kwa">if</span> date<span class="sym">:</span>
+                ui<span class="sym">.</span><span class="kwa">image</span><span class="sym">(</span>date <span class="sym">+</span> <span class="str">".png"</span><span class="sym">,</span>
+                         xpos<span class="sym">=</span><span class="num">1.0</span><span class="sym">,</span> xanchor<span class="sym">=</span><span class="str">"right"</span><span class="sym">,</span>
+                         ypos<span class="sym">=</span><span class="num">0.0</span><span class="sym">,</span> yanchor<span class="sym">=</span><span class="str">"top"</span><span class="sym">)</span>
+
+        config<span class="sym">.</span>overlay_functions<span class="sym">.</span><span class="kwd">append</span><span class="sym">(</span>date_overlay<span class="sym">)</span>
+</pre>
+<p>Like all config variables, <a href="../reference/Configuration_Variables#config.overlay_functions" title="renpy/doc/reference/Configuration Variables">config.overlay_functions</a> should only be changed in an init block. If you need to toggle an overlay on and off, then the overlay function should be conditioned on some normal variable. This is done in the example above when date is None.</p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

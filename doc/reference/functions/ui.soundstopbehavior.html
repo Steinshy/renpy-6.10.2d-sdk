@@ -1,0 +1,27 @@
+<html><head><title>ui.soundstopbehavior - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.soundstopbehavior" name="ui.soundstopbehavior"></a></p>
+<h1><span class="mw-headline">ui.soundstopbehavior</span></h1>
+<p><span id="ui.soundstopbehavior" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.soundstopbehavior</strong></b></td>
+<td valign="top">(channel, result=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Adding this behavior to the screen causes ui.interact to return <i>result</i> when there is no sound playing on the named music channel.</p>
+</div>
+<pre>
+<span class="slc"># Wait until either the user clicks, or the sound stops playing.</span>
+<span class="kwa">python</span><span class="sym">:</span>
+    ui<span class="sym">.</span><span class="kwd">soundstopbehavior</span><span class="sym">(</span><span class="str">"music"</span><span class="sym">)</span>
+    ui<span class="sym">.</span><span class="kwd">saybehavior</span><span class="sym">()</span>
+    ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

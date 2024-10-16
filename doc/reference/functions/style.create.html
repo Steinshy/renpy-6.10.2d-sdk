@@ -1,0 +1,32 @@
+<html><head><title>style.create - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="style.create" name="style.create"></a></p>
+<h1><span class="mw-headline">style.create</span></h1>
+<p><span id="style.create" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">style.create</strong></b></td>
+<td valign="top">(name, parent):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Creates a new style.</p>
+<p><i>name</i> - The name of the new style, as a string.</p>
+<p><i>parent</i> - The parent of the new style, as a string. This is either 'default' or something more specific.</p>
+</div>
+<p><br /></p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ style<span class="sym">.</span><span class="kwd">create</span><span class="sym">(</span><span class="str">'my_say_label'</span><span class="sym">,</span> <span class="str">'say_label'</span><span class="sym">)</span>
+    $ style<span class="sym">.</span>my_say_label<span class="sym">.</span>color <span class="sym">=</span> <span class="str">"#f88"</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

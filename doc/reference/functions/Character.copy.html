@@ -1,0 +1,29 @@
+<html><head><title>Character.copy - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="Character.copy" name="Character.copy"></a></p>
+<h1><span class="mw-headline">Character.copy</span></h1>
+<p><span id="Character.copy" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>Character.copy</b></td>
+<td valign="top">(...):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The copy method on Characters takes the same arguments as the <tt>funcref Character</tt> constructor, with the exception that the <i>name</i> argument is optional. This method returns a new Character object, one that is created by combining the arguments of the original constructor and this method, with the arguments provided by this method taking precedence.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ e <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Eileen"</span><span class="sym">)</span>
+    $ e_red <span class="sym">=</span> e<span class="sym">.</span><span class="kwd">copy</span><span class="sym">(</span>color<span class="sym">=</span><span class="str">"#f00"</span><span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

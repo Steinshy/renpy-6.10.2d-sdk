@@ -1,0 +1,48 @@
+<html><head><title>DynamicDisplayable - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="DynamicDisplayable" name="DynamicDisplayable"></a></p>
+<h1><span class="mw-headline">DynamicDisplayable</span></h1>
+<p><span id="DynamicDisplayable" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">DynamicDisplayable</strong></b></td>
+<td valign="top">(function, *args, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This displayable evaluates a function, and uses the result of that function to determine what to show.</p>
+<p><i>function</i> should be function that should accept at least two arguments. The first argument is the time (in seconds) that the DynamicDisplayable has been shown for. The second argument is the number of seconds that a displayable with the same image tag has been shown for. Additional positional and keyword arguments passed to DynamicDisplayable are also given to the function. The function is expected to return a 2-tuple. The first element of this tuple should be a displayable. The second should be either the time (in seconds) that the return value is valid for, or None to indicate the return value is valid indefinitely.</p>
+<p>The function is evaluated at least once for each interaction. It is also evaluated again when the specified time has elapsed.</p>
+<p>Note that DynamicDisplayable does not accept properties. Instead, it uses the properties of the displayable returned by <i>function</i>.</p>
+<p>Note that <a class="mw-redirect" href="/wiki/ConditionSwitch.html" title="ConditionSwitch">ConditionSwitch</a> is a wrapper around DynamicDisplayable, and may be simpler depending on your needs.</p>
+<p>For compatibility with pre-5.6.3 versions of Ren'Py, DynamicDisplayable also accepts a string as the <i>function</i> argument. In this case, the string is evaluated once per interaction, with the result being used as the displayable for that interaction.</p>
+</div>
+<p><br /></p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+
+    gm_background <span class="sym">=</span> <span class="str">"gmbg1.png"</span>
+
+    <span class="kwa">def</span> <span class="kwd">game_menu_background</span><span class="sym">(</span>st<span class="sym">,</span> <span class="kwa">at</span><span class="sym">):</span>
+        <span class="kwa">return</span> gm_background<span class="sym">,</span> <span class="kwa">None</span>
+
+    style<span class="sym">.</span>gm_root<span class="sym">.</span>background <span class="sym">=</span> <span class="kwd">DynamicDisplayable</span><span class="sym">(</span>game_menu_background<span class="sym">)</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+
+    <span class="str">"Here, we'll show the game menu with background 1."</span>
+
+    $ gm_background <span class="sym">=</span> <span class="str">"gmbg2.png"</span>
+
+    <span class="str">"Now, we're showing it with background 2."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

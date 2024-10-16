@@ -1,0 +1,41 @@
+<html><head><title>renpy.music.set volume - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.music.set_volume" name="renpy.music.set_volume"></a></p>
+<h1><span class="mw-headline">renpy.music.set_volume</span></h1>
+<p><span id="renpy.music.set_volume" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.music.set_volume</strong></b></td>
+<td valign="top">(volume, delay=0, channel="music"):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This sets the volume of the named <i>channel</i>. The <i>volume</i> is a number between 0.0 and 1.0, and is interpreted as a fraction of the mixer volume for the channel.</p>
+<p>It takes <i>delay</i> seconds to change the volume. This value is persisted into saves, and participates in rollback.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+    <span class="slc"># Start some music playing in the background</span>
+    play music <span class="str">"mozart.ogg"</span>
+
+    <span class="str">"Some music is playing at normal volume."</span>
+
+    <span class="slc"># Lower the music volume by half</span>
+    $ renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">set_volume</span><span class="sym">(</span><span class="num">0.5</span><span class="sym">,</span> <span class="num">.5</span><span class="sym">,</span> channel<span class="sym">=</span><span class="str">"music"</span><span class="sym">)</span>
+
+    <span class="str">"Let's lower the music volume by half"</span>
+
+    <span class="slc"># Set back the music volume to its original volume number</span>
+    $ renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">set_volume</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">,</span> <span class="num">.5</span><span class="sym">,</span> channel<span class="sym">=</span><span class="num">7</span><span class="sym">)</span>
+
+    <span class="str">"Let's set back the music volume to its original volume number"</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

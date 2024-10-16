@@ -1,0 +1,66 @@
+<html><head><title>Transform - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="Transform" name="Transform"></a></p>
+<h1><span class="mw-headline">Transform</span></h1>
+<p><span id="Transform" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">Transform</strong></b></td>
+<td valign="top">(child=None, function=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A transform applies rotation, zooming, and alpha-blending to its child, in that order. These operations, along with positioning of the transformed object, are controlled by fields on the Transform object. Transform objects can be composed with minimal overhead.</p>
+<p><b>Parameters.</b> A transform takes these parameters:</p>
+<p><i>child</i> is the child of the Transform. This can be left None, in which case the Transform will act as a <a href="../../reference/Displayables#Position_and_Motion_functions" title="renpy/doc/reference/Displayables">Position and Motion function</a>.</p>
+<p><i>function</i> is a callback function that is called before the Transform is rendered, with the Transform object, the shown timebase, and the animation timebase. It can set any of the fields described below, to cause the Transform to alter how it is displayed. It is expected to return a floating-point number giving the amount of time before the Transform should be re-rendered, in seconds. If 0 is returned, the Transform will be re-rendered on the next frame.</p>
+<p><b>Fields.</b> The ATL <a href="../../reference/Animation_and_Transformation_Language#Transform_Properties" title="renpy/doc/reference/Animation and Transformation Language">transform properties</a> are available as fields on a Transform object.</p>
+<p>Additional fields are:</p>
+<ul>
+<li><tt>hide_request</tt> - This is set to true when the Transform is hidden.</li>
+<li><tt>hide_response</tt> - When <tt>hide_request</tt> is True, this can be set to False to prevent the Transform from being immediately hidden.</li>
+</ul>
+<p><b>Methods.</b> A transform has the following method:</p>
+<p><span id="update" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>update</b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The update method should be called on a transform after one or more fields have been changed outside of the callback function of that Transform.</p>
+</div>
+<p><span id="set_child" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>set_child</b></td>
+<td valign="top">(d):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Sets the child of this Transform to <i>d</i>.</p>
+</div>
+</div>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    <span class="kwa">def</span> <span class="kwd">move_rotate_zoom</span><span class="sym">(</span>d<span class="sym">,</span> st<span class="sym">,</span> <span class="kwa">at</span><span class="sym">):</span>
+         d<span class="sym">.</span>xpos <span class="sym">=</span> st <span class="sym">/</span> <span class="num">5.0</span>
+         d<span class="sym">.</span>zoom <span class="sym">=</span> <span class="num">1.0</span> <span class="sym">+</span> st <span class="sym">/</span> <span class="num">5.0</span>
+         d<span class="sym">.</span>alpha <span class="sym">=</span> <span class="kwb">max</span><span class="sym">(</span><span class="num">0.0</span><span class="sym">,</span> <span class="num">1.0</span> <span class="sym">-</span> st <span class="sym">/</span> <span class="num">5.0</span><span class="sym">)</span>
+
+         <span class="kwa">return</span> <span class="num">0</span>
+
+<span class="kwa">show</span> logo base <span class="kwa">at</span> <span class="kwd">Transform</span><span class="sym">(</span>function<span class="sym">=</span>move_rotate_zoom<span class="sym">)</span>
+</pre>
+<p><a id="See_Also" name="See_Also"></a></p>
+<h3><span class="mw-headline">See Also</span></h3>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

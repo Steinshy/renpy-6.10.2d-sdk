@@ -1,0 +1,31 @@
+<html><head><title>renpy.play - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.play" name="renpy.play"></a></p>
+<h1><span class="mw-headline">renpy.play</span></h1>
+<p><span id="renpy.play" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.play</strong></b></td>
+<td valign="top">(filename, channel=0, fadeout=0, fadein=0, tight=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is an alias for <a href="../../reference/functions/renpy.sound.play.html" title="renpy/doc/reference/functions/renpy.sound.play">renpy.sound.play</a></p>
+<p>Plays the named file once on the given channel. This will cause any playing sound effect to be stopped (after the given fadeout number of seconds, if necessary), and the new sound to be played in its place. The sound is faded in for the given number of seconds.</p>
+<p>The filename may be that of a file in an archive.</p>
+<p>If tight is True, then a fadeout of this sound will continue into the next-queued sound.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+$ renpy<span class="sym">.</span><span class="kwd">play</span><span class="sym">(</span><span class="str">"quindar.wav"</span><span class="sym">)</span>
+e <span class="str">"Ground control to Major Tom."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

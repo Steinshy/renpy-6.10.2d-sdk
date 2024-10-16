@@ -1,0 +1,31 @@
+<html><head><title>renpy.load module - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.load_module" name="renpy.load_module"></a></p>
+<h1><span class="mw-headline">renpy.load_module</span></h1>
+<p><span id="renpy.load_module" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.load_module</strong></b></td>
+<td valign="top">(name):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This loads the Ren'Py module named <i>name</i>. A Ren'Py module consists of Ren'Py code that is loaded into the usual (store) namespace, contained in a file named <i>name</i>.rpym or <i>name</i>.rpymc. If a .rpym file exists, and is newer than the corresponding .rpymc file, it is loaded and a new .rpymc file is created.</p>
+<p>All init code in the module is run before this function returns. An error is raised if the module <i>name</i> cannot be found, or is ambiguous.</p>
+<p>Module loading may only occur from inside an init block.</p>
+</div>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    <span class="kwa">if</span> language <span class="sym">==</span> <span class="str">"czech"</span><span class="sym">:</span>
+         renpy<span class="sym">.</span><span class="kwd">load_module</span><span class="sym">(</span><span class="str">"czech"</span><span class="sym">)</span>
+    <span class="kwa">elif</span> language <span class="sym">==</span> <span class="str">"japanese"</span><span class="sym">:</span>
+         renpy<span class="sym">.</span><span class="kwd">load_module</span><span class="sym">(</span><span class="str">"japanese"</span><span class="sym">)</span>
+    <span class="kwa">else</span><span class="sym">:</span>
+         renpy<span class="sym">.</span><span class="kwd">load_module</span><span class="sym">(</span><span class="str">"english"</span><span class="sym">)</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

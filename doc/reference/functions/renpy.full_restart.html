@@ -1,0 +1,38 @@
+<html><head><title>renpy.full restart - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.full_restart" name="renpy.full_restart"></a></p>
+<h1><span class="mw-headline">renpy.full_restart</span></h1>
+<p><span id="renpy.full_restart" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.full_restart</strong></b></td>
+<td valign="top">(transition=config.end_game_transition, label="_invoke_main_menu", target="_main_menu"):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This causes a full restart of Ren'Py. This resets the state of Ren'Py to what it was when the init blocks finished running, and then restarts the game. After some init code runs, <i>transition</i> will be set to run on the next interaction, and control will be transferred to <i>label</i>. The default label initializes the main menu context, and then invokes <i>target</i>. <i>target</i> can be a screen, like "preferences_screen" or "load_screen".</p>
+<p>It generally doesn't make sense to specify both <i>label</i> and <i>target</i>. <i>(changed in 6.9.0)</i></p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="str">'The author would like to thank everyone who makes original</span>
+<span class="str"> English-language bishoujo games, and the people on the Lemmasoft forums</span>
+<span class="str"> who encouraged him.'</span>
+
+<span class="str">"We can't wait to see what you do with this. Good luck!"</span>
+
+$ minutes<span class="sym">,</span> seconds <span class="sym">=</span> <span class="kwb">divmod</span><span class="sym">(</span><span class="kwb">int</span><span class="sym">(</span>renpy<span class="sym">.</span><span class="kwd">get_game_runtime</span><span class="sym">()),</span> <span class="num">60</span><span class="sym">)</span>
+<span class="str">"It took you %(minutes)d minutes and %(seconds)d seconds to</span>
+<span class="str"> finish this demo."</span>
+
+$ renpy<span class="sym">.</span><span class="kwd">full_restart</span><span class="sym">()</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

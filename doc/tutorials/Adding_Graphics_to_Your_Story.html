@@ -1,0 +1,242 @@
+<html><head><title>Adding Graphics to Your Story - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a></p><table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Adding_Graphics_to_Your_Story"><span class="tocnumber">1</span> <span class="toctext">Adding Graphics to Your Story</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Initializing_the_Graphics"><span class="tocnumber">1.1</span> <span class="toctext">Initializing the Graphics</span></a></li>
+<li class="toclevel-2"><a href="#Showing_graphics_before_the_game_begins"><span class="tocnumber">1.2</span> <span class="toctext">Showing graphics before the game begins</span></a></li>
+<li class="toclevel-2"><a href="#Scene_Backgrounds"><span class="tocnumber">1.3</span> <span class="toctext">Scene Backgrounds</span></a></li>
+<li class="toclevel-2"><a href="#Character_Graphics"><span class="tocnumber">1.4</span> <span class="toctext">Character Graphics</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Custom_positions"><span class="tocnumber">1.4.1</span> <span class="toctext">Custom positions</span></a></li>
+<li class="toclevel-3"><a href="#Overlapping_images"><span class="tocnumber">1.4.2</span> <span class="toctext">Overlapping images</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Hiding_Graphics"><span class="tocnumber">1.5</span> <span class="toctext">Hiding Graphics</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Explicity"><span class="tocnumber">1.5.1</span> <span class="toctext">Explicity</span></a></li>
+<li class="toclevel-3"><a href="#Implicitly_with_show"><span class="tocnumber">1.5.2</span> <span class="toctext">Implicitly with show</span></a></li>
+<li class="toclevel-3"><a href="#Implicitly_with_scene"><span class="tocnumber">1.5.3</span> <span class="toctext">Implicitly with scene</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Special_Effects"><span class="tocnumber">1.6</span> <span class="toctext">Special Effects</span></a></li>
+<li class="toclevel-2"><a href="#Getting_What_You_Want_to_Happen.2C_to_Happen"><span class="tocnumber">1.7</span> <span class="toctext">Getting What You Want to Happen, to Happen</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><a id="Adding_Graphics_to_Your_Story" name="Adding_Graphics_to_Your_Story"></a></p>
+<h2><span class="mw-headline">Adding Graphics to Your Story</span></h2>
+<p><a id="Initializing_the_Graphics" name="Initializing_the_Graphics"></a></p>
+<h3><span class="mw-headline">Initializing the Graphics</span></h3>
+<p>The first step in using a graphic image is to tell Ren'Py about it in an init block with an <a href="../reference/The_Ren%27Py_Language#image" title="renpy/doc/reference/The Ren&apos;Py Language">image statement</a>. You create a Ren'Py image from either solid colors or files (really, any <a href="../reference/Displayables.html" title="renpy/doc/reference/Displayables">Displayable</a>):</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> black <span class="sym">=</span> <span class="str">"#000000"</span>
+    <span class="kwa">image</span> bg park <span class="sym">=</span> <span class="str">"park.jpg"</span>
+    <span class="kwa">image</span> eileen happy <span class="sym">=</span> <span class="str">"eileen1.png"</span>
+    <span class="kwa">image</span> eileen sad <span class="sym">=</span> <span class="str">"eileen2.png"</span>
+    <span class="kwa">image</span> eileen surprised <span class="sym">=</span> <span class="str">"eileen3.png"</span>
+</pre>
+<p>As you see, image names can be more than one word. We'll talk about why this is useful in the section on hiding images. Image names and character objects don't have anything to do with each other, so you can re-use character names as image names.</p>
+<p><a id="Showing_graphics_before_the_game_begins" name="Showing_graphics_before_the_game_begins"></a></p>
+<h3><span class="mw-headline">Showing graphics before the game begins</span></h3>
+<p>If you want to show a picture before the player gets to the main screen, then use the label "splashscreen" like so:</p>
+<pre>
+<span class="kwa">label</span> splashscreen<span class="sym">:</span>
+    <span class="kwa">show</span> opening picture name
+    $ renpy<span class="sym">.</span><span class="kwa">pause</span><span class="sym">(</span><span class="num">2.0</span><span class="sym">)</span>
+    <span class="kwa">return</span>
+</pre>
+<p>The line "$ renpy.pause(2.0)" will show the picture for two seconds. Change the number if you want to show it for a different time. If you leave the brackets empty, so:</p>
+<pre>
+<span class="kwa">label</span> splashscreen<span class="sym">:</span>
+    <span class="kwa">show</span> opening picture name
+    $ renpy<span class="sym">.</span><span class="kwa">pause</span><span class="sym">()</span>
+    <span class="kwa">return</span>
+</pre>
+<p>Then Ren'Py will show the picture until the player clicks the mouse or presses "Return".</p>
+<p><a id="Scene_Backgrounds" name="Scene_Backgrounds"></a></p>
+<h3><span class="mw-headline">Scene Backgrounds</span></h3>
+<p>The <a href="../reference/The_Ren%27Py_Language#scene" title="renpy/doc/reference/The Ren&apos;Py Language">scene statement</a> clears the display of what's on it and optionally places a new background on the display:</p>
+<pre>
+<span class="kwa">scene</span> bg park
+</pre>
+<p>(Please recall that "bg park" is the name of the image; bg is not a keyword.)</p>
+<p><a id="Character_Graphics" name="Character_Graphics"></a></p>
+<h3><span class="mw-headline">Character Graphics</span></h3>
+<p>Character graphics and other objects which are drawn in the foreground are displayed with the <a href="../reference/The_Ren%27Py_Language#show" title="renpy/doc/reference/The Ren&apos;Py Language">show statement</a>:</p>
+<pre>
+<span class="kwa">show</span> eileen happy
+</pre>
+<p>A show statement without any modifiers shows the image centered in the screen. You can also display images on the sides:</p>
+<pre>
+<span class="kwa">show</span> eileen happy <span class="kwa">at</span> right
+</pre>
+<pre>
+<span class="kwa">show</span> eileen happy <span class="kwa">at</span> left
+</pre>
+<p><a id="Custom_positions" name="Custom_positions"></a></p>
+<h4><span class="mw-headline">Custom positions</span></h4>
+<p>Ren'Py already has some standard positions defined, but inevitably there will come a time when you want to position an image in a specific place.</p>
+<p>You do that by using Position:</p>
+<pre>
+ <span class="kwa">show</span> eileen happy <span class="kwa">at</span> <span class="kwd">Position</span><span class="sym">(</span>xpos <span class="sym">=</span> <span class="num">0.5</span><span class="sym">,</span> xanchor<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> ypos<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span>
+ yanchor<span class="sym">=</span><span class="num">0.5</span><span class="sym">)</span>
+</pre>
+<p><b>xpos</b> describes a point on the background to Ren'Py in terms of how far it is from the left-hand edge. If you use a whole number (e.g. 129) Ren'Py will assume you mean pixels. If, as above, you use a decimal number between 0 and 1, Ren'Py will calculate it as a proportion of the width. So 0.25 would be interpreted as "a quarter of the way across the background from the left."</p>
+<p><b>xanchor</b> describes a point on the image you want to position, again in terms of how far it is from the left hand side. Just as in xpos above, use a whole number to count pixels, or a decimal between 0 and 1 if you want to describe it as a proportion of the width.</p>
+<p>Ren'Py now will show the image so that the xpos and xanchor points are in the same place.</p>
+<p>Reduce the xpos value to move it left, increase the xpos value to move it right.</p>
+<p><b>ypos</b> and <b>yanchor</b> follow exactly the same rules, describing to Ren'Py how far the point is from the top of the image. (So to move an image <i>down</i>, you need to <i>increase</i> the ypos value.)</p>
+<p>If you're going to use a custom Position more than once, then you can give it a name, like so:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ gardenpath <span class="sym">=</span> <span class="kwd">Position</span><span class="sym">(</span>xpos<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> xanchor<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> ypos<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yanchor<span class="sym">=</span><span class="num">0.5</span><span class="sym">)</span>
+</pre>
+<p>Then you can use it just like any pre-defined Position:</p>
+<pre>
+<span class="kwa">show</span> eileen happy <span class="kwa">at</span> gardenpath
+</pre>
+<p><a id="Overlapping_images" name="Overlapping_images"></a></p>
+<h4><span class="mw-headline">Overlapping images</span></h4>
+<p>When an image is added to a scene, Ren'Py adds it on its own, separate layer. By default each new layer is added on top of the ones which already exist.</p>
+<p>Most of the time images added to a scene do not overlap, so it doesn't matter which layers they are on. However if you want to add the appearance of depth to a scene, then an easy way to do this is to partly overlap the images. The player will interpret a larger image on the topmost layer as closest to their viewpoint, and a smaller image drawn partly behind it as further back into the scene.</p>
+<p>Imagine for a moment that we've made a background picture of a house with a garden, and we want to show two characters: one in the foreground and one a little way behind that, who will appear to be halfway up the garden.</p>
+<p>In a real game you'd probably want to make custom positions for these images, but for simplicity, imagine that they're drawn so that they'll be correctly positioned when they're displayed in the default position.</p>
+<p>Having the characters overlap correctly is no problem when beginning a new scene:</p>
+<pre>
+<span class="kwa">scene</span> bg houseGarden
+<span class="kwa">show</span> distantChar
+<span class="kwa">show</span> foregroundChar
+<span class="kwa">with</span> dissolve
+</pre>
+<p>However if the scene is already showing, and we want distantChar to appear (perhaps having just come out of the house), then:</p>
+<pre>
+<span class="sym">***</span> Wrong<span class="sym">! ***</span>
+
+<span class="kwa">scene</span> bg houseGarden
+<span class="kwa">show</span> foregroundChar
+<span class="kwa">with</span> dissolve
+
+ <span class="str">"The sounds of argument in the house cease and distantChar</span>
+<span class="str"> comes running out into the garden."</span>
+
+<span class="kwa">show</span> distantChar <span class="kwa">with</span> dissolve
+
+<span class="sym">***</span> Wrong<span class="sym">! ***</span>
+</pre>
+<p>The code above will <i>not</i> give the effect we want: distatChar will be added to a layer above foregroundChar, and so the overlapping will be the wrong way round.</p>
+<p>The way to get the effect we want is to use the <b>behind</b> keyword like this:</p>
+<pre>
+<span class="sym">...</span>
+ <span class="str">"The sounds of argument in the house cease and distantChar</span>
+<span class="str"> comes running out into the garden."</span>
+
+<span class="kwa">show</span> distantChar <span class="kwa">behind</span> foregroundChar <span class="kwa">with</span> dissolve
+</pre>
+<p>Now the images are correctly overlapped.</p>
+<p>You don't have to worry when you're using "show" to replace one image of a character with another. Ren'Py will automatically place the new image on the same layer where the old one was.</p>
+<p><a id="Hiding_Graphics" name="Hiding_Graphics"></a></p>
+<h3><span class="mw-headline">Hiding Graphics</span></h3>
+<p>Hiding graphics which were displayed with the show statement can be accomplished in three ways:</p>
+<p><a id="Explicity" name="Explicity"></a></p>
+<h4><span class="mw-headline">Explicity</span></h4>
+<p>First, you can explicitly hide a graphic which was shown using the <a href="../reference/The_Ren%27Py_Language#hide" title="renpy/doc/reference/The Ren&apos;Py Language">hide statement</a>:</p>
+<pre>
+<span class="kwa">hide</span> eileen
+</pre>
+<p>If an image consists of more than one word, you only need to tell the hide statement about the first word (the "image tag"). This means that you don't have to keep track of the version of the character graphic that you've shown most recently.</p>
+<p><a id="Implicitly_with_show" name="Implicitly_with_show"></a></p>
+<h4><span class="mw-headline">Implicitly with show</span></h4>
+<p>The show statement will automatically replace the image with the same image tag which us currently being shown (though not quite in the same way as a hide statement). For example:</p>
+<pre>
+<span class="kwa">show</span> eileen happy
+e <span class="str">"I'm happy."</span>
+<span class="kwa">show</span> eileen sad
+e <span class="str">"Now I'm sad."</span>
+</pre>
+<p>does the right thing &#8212; you don't get two copies of eileen on top of each other.</p>
+<p><a id="Implicitly_with_scene" name="Implicitly_with_scene"></a></p>
+<h4><span class="mw-headline">Implicitly with scene</span></h4>
+<p>The scene statement clears all images off of the screen, so if you're changing scenes you don't need to hide anything first.</p>
+<p><a id="Special_Effects" name="Special_Effects"></a></p>
+<h3><span class="mw-headline">Special Effects</span></h3>
+<p>All of the statements which show and hide images can be modified by adding a <b>with clause</b> (see: <a href="../reference/The_Ren%27Py_Language#with" title="renpy/doc/reference/The Ren&apos;Py Language">with statement</a>):</p>
+<pre>
+<span class="kwa">scene</span> bg park <span class="kwa">with</span> fade
+</pre>
+<pre>
+<span class="kwa">show</span> eileen happy <span class="kwa">with</span> dissolve
+</pre>
+<p>There are many special effects available, but those are the two most commonly used. (It seems like only George Lucas can get away with stuff like side wipes, but if you want to try, you can check out the full list of <a href="../reference/Transitions#predefined" title="renpy/doc/reference/Transitions">Pre-Defined Transitions</a>.)</p>
+<p><a id="Getting_What_You_Want_to_Happen.2C_to_Happen" name="Getting_What_You_Want_to_Happen.2C_to_Happen"></a></p>
+<h3><span class="mw-headline">Getting What You Want to Happen, to Happen</span></h3>
+<p>Neither the scene statement nor the show statement, on their own, immediately display to the screen. Rather they queue images up, so if you combined them:</p>
+<pre>
+<span class="kwa">scene</span> bg park
+<span class="kwa">show</span> eileen happy
+<span class="kwa">show</span> ted happy <span class="kwa">at</span> left
+</pre>
+<p>it will display all at once. The <i>with</i> statement and clause both change this. So if you wrote this:</p>
+<pre>
+<span class="kwa">scene</span> bg park <span class="kwa">with</span> fade
+<span class="kwa">show</span> eileen happy <span class="kwa">with</span> dissolve
+<span class="kwa">show</span> ted happy <span class="kwa">at</span> left <span class="kwa">with</span> dissolve
+</pre>
+<p>Ren'Py will first fade the background in, then dissolve eileen onto the screen, then dissolve ted onto the screen. To get a single fade into the new background with eileen and ted on it, use the statement form of "with" after you've told Ren'Py what you want on the screen:</p>
+<pre>
+<span class="kwa">show</span> bg park
+<span class="kwa">show</span> eileen happy
+<span class="kwa">show</span> ted happy
+<span class="kwa">with</span> dissolve
+</pre>
+<p>(Please note: for historical reasons, this is not the same as:</p>
+<pre>
+<span class="kwa">show</span> bg park
+<span class="kwa">show</span> eileen happy
+<span class="kwa">show</span> ted happy <span class="kwa">with</span> dissolve
+</pre>
+<p>Which will cause the background and eileen to display without a transition and then show ted with a dissolve transition. In general, if you're using more than one statement, only use the <i>with</i> statement on its own line.)</p>
+<p>As a result of the show statement's queueing behavior, this won't work:</p>
+<pre>
+<span class="kwa">show</span> eileen happy
+<span class="kwa">show</span> eileen sad
+<span class="kwa">show</span> eileen morose
+<span class="kwa">show</span> eileen elated
+</pre>
+<p>the reader will only see the last one. If you want to show several versions of a character without interacting with the reader, you need to use the with clause to get them displayed:</p>
+<pre>
+<span class="kwa">show</span> eileen happy <span class="kwa">with</span> dissolve
+<span class="kwa">show</span> eileen sad <span class="kwa">with</span> dissolve
+<span class="kwa">show</span> eileen morose <span class="kwa">with</span> dissolve
+<span class="kwa">show</span> eileen elated <span class="kwa">with</span> dissolve
+</pre>
+<table align="center" border="1" cellpadding="10" cellspacing="1" style="background: #fff0e0; text-align: center;" width="80%">
+<tr>
+<td width="30%">Previous:<br />
+<a href="../tutorials/Your_First_Dialogue.html" title="renpy/doc/tutorials/Your First Dialogue">Your First Dialogue</a></td>
+<td width="40%"><b><a href="../tutorials/Ren%27Py_Web_Tutorial.html" title="renpy/doc/tutorials/Ren&apos;Py Web Tutorial">Ren'Py Web Tutorial</a></b></td>
+<td width="30%">Next:<br />
+<a href="../tutorials/Giving_the_User_a_Choice_With_Menus.html" title="renpy/doc/tutorials/Giving the User a Choice With Menus">Giving the User a Choice With Menus</a></td>
+</tr>
+</table>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a></p></div>
+	</body></html>

@@ -1,0 +1,42 @@
+<html><head><title>ui.add - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.add" name="ui.add"></a></p>
+<h1><span class="mw-headline">ui.add</span></h1>
+<p><span id="ui.add" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.add</strong></b></td>
+<td valign="top">(w, make_current=False, once=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is used to add a displayable to the current widget. If <i>make_current</i> is True, then the widget is made the current widget. If <i>once</i> is True, then the displayable will be made the current widget, but only for the next widget to be added.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="slc"># This is called when the quick save button is clicked.</span>
+<span class="kwa">label</span> _quick_save<span class="sym">:</span>
+    <span class="kwa">call</span> _enter_menu_without_scene <span class="kwa">from</span> __call__enter_menu_4
+
+    <span class="slc"># Save the game.</span>
+    $ renpy<span class="sym">.</span><span class="kwd">save</span><span class="sym">(</span><span class="str">'quicksave'</span><span class="sym">,</span> <span class="kwd">_</span><span class="sym">(</span><span class="str">'Quick Save'</span><span class="sym">))</span>
+
+    <span class="slc"># Tell the user that we saved the game.</span>
+    $ ui<span class="sym">.</span><span class="kwd">add</span><span class="sym">(</span><span class="kwd">Solid</span><span class="sym">((</span><span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">128</span><span class="sym">)))</span> <span class="slc"># adds a full screen 50% transparent black overlay</span>
+    $ ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span><span class="kwd">_</span><span class="sym">(</span><span class="str">'The game has been saved using quick save.'</span><span class="sym">),</span>
+              xpos<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> xanchor<span class="sym">=</span><span class="str">'center'</span><span class="sym">,</span> ypos<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yanchor<span class="sym">=</span><span class="str">'center'</span><span class="sym">)</span>
+
+    $ ui<span class="sym">.</span><span class="kwd">saybehavior</span><span class="sym">()</span>
+    $ ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">(</span>suppress_overlay<span class="sym">=</span><span class="kwa">True</span><span class="sym">,</span> suppress_underlay<span class="sym">=</span><span class="kwa">True</span><span class="sym">)</span>
+
+    <span class="kwa">return</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

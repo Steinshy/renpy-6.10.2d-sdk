@@ -1,0 +1,87 @@
+<html><head><title>A Simple Ren&amp;#39;Py Script - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="A_Simple_Ren.27Py_Script" name="A_Simple_Ren.27Py_Script"></a></p>
+<h1><span class="mw-headline">A Simple Ren'Py Script</span></h1>
+<p>The following is a simple but complete Ren'Py script. The colors are added to make it easier to read, and aren't part of the script proper.</p>
+<pre>
+<span class="kwa">image</span> bg whitehouse <span class="sym">=</span> <span class="str">"whitehouse.jpg"</span>
+<span class="kwa">image</span> eileen happy <span class="sym">=</span> <span class="str">"eileen_happy.png"</span>
+<span class="kwa">image</span> eileen upset <span class="sym">=</span> <span class="str">"eileen_upset.png"</span>
+<span class="kwa">define</span> e <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">'Eileen'</span><span class="sym">)</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+
+    <span class="kwa">scene</span> bg whitehouse
+    <span class="kwa">show</span> eileen happy
+
+    e <span class="str">"I'm standing in front of the White House."</span>
+
+    <span class="kwa">show</span> eileen upset
+
+    e <span class="str">"I once wanted to go on a tour of the West Wing, but you have to</span>
+<span class="str">       know somebody to get in."</span>
+
+    <span class="str">"For some reason, she really seems upset about this."</span>
+
+    e <span class="str">"I considered sneaking in, but that probably isn't a good idea."</span>
+</pre>
+<p>The beginning of this script consists of declarations of resources used throughout the game. First, three images are defined:</p>
+<pre>
+<span class="kwa">image</span> bg whitehouse <span class="sym">=</span> <span class="str">"whitehouse.jpg"</span>
+<span class="kwa">image</span> eileen happy <span class="sym">=</span> <span class="str">"eileen_happy.png"</span>
+<span class="kwa">image</span> eileen upset <span class="sym">=</span> <span class="str">"eileen_upset.png"</span>
+</pre>
+<p>These definitions create what in Ren'Py terminology are called <a href="../reference/Displayables.html" title="renpy/doc/reference/Displayables">Displayables</a>, which can then be referred to in other script statements, such as `show`, by name. It's worth noting that the names must be valid Python variable names, which cannot start with numbers.</p>
+<p>In the next line in the init block, a <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> variable is defined:</p>
+<pre>
+defined e <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">'Eileen'</span><span class="sym">)</span>
+</pre>
+<p>In this case, the statement is creating a variable, `e`, and assigning to it the result of a call to the <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> function with the argument `'Eileen'`. In simpler terms, it creates a shortcut for use when writing lines of dialogue in the script, so that the full name Eileen doesn't have to be typed out every time she says something.</p>
+<p>The next line introduces the `label` statement:</p>
+<pre>
+<span class="kwa">label</span> start<span class="sym">:</span>
+</pre>
+<p>A label provides a spot for other Ren'Py script statements to call or jump to. By default, the Ren'Py main menu jumps to the label `start` when you start a new game.</p>
+<p>Following the `start` label is the part of the script where you write the actual interactive game, so to speak. First, a `scene` statement:</p>
+<pre>
+    <span class="kwa">scene</span> bg whitehouse
+</pre>
+<p>This scene statement simply adds the previously defined Displayable `bg whitehouse` to the screen.</p>
+<p>Next, a `show` statement:</p>
+<pre>
+    <span class="kwa">show</span> eileen happy
+</pre>
+<p>This show statement adds the previously defined `eileen happy` to the screen, on top of the image shown by the preceding scene statement.</p>
+<pre>
+    e <span class="str">"I'm standing in front of the White House."</span>
+</pre>
+<p>This line is an example of a `say` statement, although you will notice that it doesn't start with an actual 'say' keyword. Since `say` statements make up the bulk of a game script, they use the most basic syntax possible.</p>
+<p>Here, the statement starts with the previously defined Python variable `e`, which is used to indicate to the Ren'Py interpreter that the line of dialogue should be shown on screen with the name defined in the call to its <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> function - 'Eileen', of course.</p>
+<p>Next comes another `show` statement:</p>
+<pre>
+    <span class="kwa">show</span> eileen upset
+</pre>
+<p>This line demonstrates one of the subtle advantages to using a show statement in combination with a multi-word Displayable label. Recall that in the init block, there were `eileen happy` and `eileen upset` definitions. When the show statement executes, it first checks whether there are already any images on the screen where the first word of the name matches the first word of the new image to show. If it finds any, the previous image is hidden and replaced with the new one.</p>
+<p>Put simply, the `eileen happy` image already on the screen is hidden and replaced with `eileen upset`, since they both start with `eileen`.</p>
+<p>Next is another line of Eileen dialogue:</p>
+<pre>
+    e <span class="str">"I once wanted to go on a tour of the West Wing, but you have to</span>
+<span class="str">       know somebody to get in."</span>
+</pre>
+<p>This line happens to be split onto two physical script lines, but will be joined when shown on screen. Note that script line breaks will not be carried into the displayed line - if you want to force a linebreak on screen, you will need to use an explicit newline (`\n`).</p>
+<p>Next, another say statement, in its simplest form:</p>
+<pre>
+    <span class="str">"For some reason, she really seems upset about this."</span>
+</pre>
+<p>The simplest say statement is just one quoted string. It will be shown on screen without a character name label, and is thus generally used as narration of POV character thoughts.</p>
+<p>Finally, the last line is more dialogue:</p>
+<pre>
+    e <span class="str">"I considered sneaking in, but that probably isn't a good idea."</span>
+</pre>
+<p>After you click on the final line of dialogue in-game, you will be returned to the main menu.</p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

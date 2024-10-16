@@ -1,0 +1,585 @@
+<html><head><title>The Ren&amp;#39;Py Language (Simple) - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="The_Ren.27Py_Language_.28Simple.29" name="The_Ren.27Py_Language_.28Simple.29"></a></p>
+<h1><span class="mw-headline">The Ren'Py Language (Simple)</span></h1>
+<p>This page provides a simple overview of the Ren'Py language intended for non-programmers. There is also a <a href="../reference/The_Ren%27Py_Language.html" title="renpy/doc/reference/The Ren&apos;Py Language">more technical version</a> of this page for more advanced users.</p>
+<p>This simple version may not contain the same amount of detail, and may not be strictly accurate in a technical sense, but instead aims to give the reader an understanding of the common usage of the language features described, skipping exact detail for utility.</p>
+<table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#The_Ren.27Py_Language_.28Simple.29"><span class="tocnumber">1</span> <span class="toctext">The Ren'Py Language (Simple)</span></a>
+<ul>
+<li class="toclevel-2"><a href="#The_Structure_of_Ren.27Py_Scripts"><span class="tocnumber">1.1</span> <span class="toctext">The Structure of Ren'Py Scripts</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Lines"><span class="tocnumber">1.1.1</span> <span class="toctext">Lines</span></a></li>
+<li class="toclevel-3"><a href="#Comments"><span class="tocnumber">1.1.2</span> <span class="toctext">Comments</span></a></li>
+<li class="toclevel-3"><a href="#Blocks"><span class="tocnumber">1.1.3</span> <span class="toctext">Blocks</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Init_Blocks"><span class="tocnumber">1.2</span> <span class="toctext">Init Blocks</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Defining_Images"><span class="tocnumber">1.2.1</span> <span class="toctext">Defining Images</span></a></li>
+<li class="toclevel-3"><a href="#Defining_Characters"><span class="tocnumber">1.2.2</span> <span class="toctext">Defining Characters</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Basic_Script_Commands"><span class="tocnumber">1.3</span> <span class="toctext">Basic Script Commands</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Speech"><span class="tocnumber">1.3.1</span> <span class="toctext">Speech</span></a></li>
+<li class="toclevel-3"><a href="#Show"><span class="tocnumber">1.3.2</span> <span class="toctext">Show</span></a></li>
+<li class="toclevel-3"><a href="#Hide"><span class="tocnumber">1.3.3</span> <span class="toctext">Hide</span></a></li>
+<li class="toclevel-3"><a href="#Scene"><span class="tocnumber">1.3.4</span> <span class="toctext">Scene</span></a></li>
+<li class="toclevel-3"><a href="#With"><span class="tocnumber">1.3.5</span> <span class="toctext">With</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Audio"><span class="tocnumber">1.4</span> <span class="toctext">Audio</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Play"><span class="tocnumber">1.4.1</span> <span class="toctext">Play</span></a>
+<ul>
+<li class="toclevel-4"><a href="#Channels"><span class="tocnumber">1.4.1.1</span> <span class="toctext">Channels</span></a></li>
+<li class="toclevel-4"><a href="#Fade"><span class="tocnumber">1.4.1.2</span> <span class="toctext">Fade</span></a></li>
+<li class="toclevel-4"><a href="#Playlists"><span class="tocnumber">1.4.1.3</span> <span class="toctext">Playlists</span></a></li>
+<li class="toclevel-4"><a href="#Formats"><span class="tocnumber">1.4.1.4</span> <span class="toctext">Formats</span></a></li>
+</ul>
+</li>
+<li class="toclevel-3"><a href="#Stop"><span class="tocnumber">1.4.2</span> <span class="toctext">Stop</span></a></li>
+<li class="toclevel-3"><a href="#Queue"><span class="tocnumber">1.4.3</span> <span class="toctext">Queue</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Labels"><span class="tocnumber">1.5</span> <span class="toctext">Labels</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Jump"><span class="tocnumber">1.5.1</span> <span class="toctext">Jump</span></a></li>
+<li class="toclevel-3"><a href="#Call_and_Return"><span class="tocnumber">1.5.2</span> <span class="toctext">Call and Return</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Variables_and_Control_Structures"><span class="tocnumber">1.6</span> <span class="toctext">Variables and Control Structures</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Menu"><span class="tocnumber">1.6.1</span> <span class="toctext">Menu</span></a></li>
+<li class="toclevel-3"><a href="#If"><span class="tocnumber">1.6.2</span> <span class="toctext">If</span></a></li>
+<li class="toclevel-3"><a href="#Call"><span class="tocnumber">1.6.3</span> <span class="toctext">Call</span></a></li>
+<li class="toclevel-3"><a href="#While"><span class="tocnumber">1.6.4</span> <span class="toctext">While</span></a></li>
+<li class="toclevel-3"><a href="#Pass"><span class="tocnumber">1.6.5</span> <span class="toctext">Pass</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><br /></p>
+<p><a id="The_Structure_of_Ren.27Py_Scripts" name="The_Structure_of_Ren.27Py_Scripts"></a></p>
+<h2><span class="mw-headline">The Structure of Ren'Py Scripts</span></h2>
+<p><a id="Lines" name="Lines"></a></p>
+<h3><span class="mw-headline">Lines</span></h3>
+<p>Ren'Py scripts consist of one or more .rpy files. These script files may be read in any order, and all of them together make up a Ren'Py script. When the game is started, Ren'Py will find the 'start' <a href="#label" title="">label</a> and step through the lines one by one in order, doing whatever each line tells it to, until it runs out of script.</p>
+<p>As Ren'Py runs through the script, it generally treats every line in the script file as a separate instruction; however, there are some exceptions:</p>
+<ul>
+<li>If you've opened a parenthesis and not closed it, then Ren'Py will keep reading on to the next line to find the closed parenthesis. Similarly, Ren'Py will match quotes enclosing text across lines. For example, the following are considered all one instruction:</li>
+</ul>
+<pre>
+    $ a <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span>
+        <span class="str">'Abigail'</span><span class="sym">,</span>
+        color<span class="sym">=</span><span class="str">"#454580"</span>
+        <span class="sym">)</span>
+</pre>
+<pre>
+    <span class="str">"I was disoriented,</span>
+<span class="str">    feeling like my thoughts</span>
+<span class="str">    were split up, and</span>
+<span class="str">    scattered somehow."</span>
+</pre>
+<ul>
+<li>If you want to split something across multiple lines, you can end one line with a backslash (\) and continue on the next line, e.g.:</li>
+</ul>
+<pre>
+    $ e <span class="sym">=</span> m <span class="sym">*</span> \
+    c <span class="sym">*</span> c
+</pre>
+<p>is equivalent to:</p>
+<pre>
+    $ e <span class="sym">=</span> m <span class="sym">*</span> c <span class="sym">*</span> c
+</pre>
+<p><br /></p>
+<p><a id="Comments" name="Comments"></a></p>
+<h3><span class="mw-headline">Comments</span></h3>
+<p>If you want to make notes within your script, then you can use comments. It's generally considered a good idea to write comments describing anything you think you'll need to remember - perhaps why a particular condition is checked, or what a variable is used for. To write a comment, simply type a hash (#). Ren'Py will ignore everything from that point until the end of the line, so you can write anything you like.</p>
+<pre>
+    <span class="slc"># This line is a comment and will be ignored.</span>
+    <span class="slc"># This line will be ignored too.</span>
+    <span class="str">"This line is going to be picked up by Ren'Py and used as dialogue"</span>
+    <span class="str">"This is dialogue"</span> <span class="slc"># but this bit on the end is a comment.</span>
+</pre>
+<p>Note that because Ren'Py's ignoring the comments, it's not checking for parentheses or quotes or backslashes on the end of the line - so comments can never be extended over more than one line in your script file without putting another hash in.</p>
+<p><br /></p>
+<p><a id="Blocks" name="Blocks"></a></p>
+<h3><span class="mw-headline">Blocks</span></h3>
+<p>Sometimes, a collection of lines need to be grouped together. This happens most frequently for <a href="#label" title="">labels</a>, but also for <a href="#if" title="">conditional statements</a> and <a href="#while" title="">loops</a> and so on. Lines which are collected together are called 'blocks', and are written with an extra indentation in the script file:</p>
+<pre>
+line 1
+    line a
+    line b
+line 2
+    line c
+    line d
+</pre>
+<p>In this example, here are three blocks. One block contains everything, the second block lines a and b, and the third contains lines c and d.</p>
+<p>Note that lines a and b are said to be associated with line 1 - typically, line 1 will describe <i>why</i> lines a and b are in a block, e.g.:</p>
+<pre>
+    <span class="kwa">if</span> <span class="sym">(</span>x <span class="sym">&lt;</span> <span class="num">10</span><span class="sym">):</span>
+        <span class="slc"># The lines in this block are only run if x is less than ten</span>
+        <span class="str">"Sam"</span> <span class="str">"Oh no!"</span>
+        <span class="str">"Sam"</span> <span class="str">"Ecks is less than ten!"</span>
+    <span class="slc"># But these lines - outside of the if's block - are run regardless of the value of x.</span>
+    <span class="str">"We wandered down the road a bit more, looking for anything else as interesting as that ecks."</span>
+</pre>
+<p>Note that lines which start a new block end with a colon (:). If a line ends with a colon, Ren'Py will expect to find a new block beneath it; if a line doesn't end in a colon, a new block shouldn't be started after that line.</p>
+<p>The entire script will be divided up into <a href="#label" title="">label</a> blocks and <a href="#init" title="">init</a> blocks - these control the overall flow of the game; Ren'Py will always start at the 'start' label.</p>
+<p><a id="Init_Blocks" name="Init_Blocks"></a></p>
+<h2><span class="mw-headline">Init Blocks</span></h2>
+<div id="init" />
+<p>Init blocks are used to define things which are going to be used again and again throughout your script. Typically, this includes images and <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Characters</a>. It's generally a bad idea to define anything which has a changing state in an init block; it's best to stick to things which remain the same throught the game, like background images, character sprites and so on.</p>
+<p>When the game first starts, all of the init blocks in all of the game scripts are run; if any init blocks are later encountered in the middle of the script they're ignored and skipped entirely.</p>
+<p>An init block is started by the word 'init', followed by a colon, e.g.:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="slc"># code for init block goes here</span>
+    <span class="slc"># more init code</span>
+</pre>
+<p>The most common things to find within an init block are definitions of <a href="../reference/functions/Image.html" title="renpy/doc/reference/functions/Image">Images</a> and <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Characters</a>:</p>
+<p><a id="Defining_Images" name="Defining_Images"></a></p>
+<h3><span class="mw-headline">Defining Images</span></h3>
+<div id="image" />
+<p>Images must be defined in an init block.</p>
+<p>When we define an image we give a name to an image file by which we can refer to it later in the script - so when we want to <a href="#show" title="">show</a> a character sprite or start a new <a href="#scene" title="">scene</a> in a different background, we can use the images that we defined earlier.</p>
+<p>An image is defined by the command 'image', followed by a name for that image, then an equals sign, then the filename for the image file we wish to use. Place the image file in the game directory alongside the script, and Ren'Py will be able to find it.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> eileen <span class="sym">=</span> <span class="str">"eileen.png"</span>
+</pre>
+<p>Note that you can give images names with spaces in - if you do this, Ren'Py pays special attention to the first word of the name (see the <a href="#show" title="">show</a> and <a href="#hide" title="">hide</a> commands for more details) so it's wise to group your images by that first part, e.g.:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> eileen happy <span class="sym">=</span> <span class="str">"eileen-happy.png"</span>
+    <span class="kwa">image</span> eileen sad <span class="sym">=</span> <span class="str">"eileen-sad.png"</span>
+</pre>
+<p><a id="Defining_Characters" name="Defining_Characters"></a></p>
+<h3><span class="mw-headline">Defining Characters</span></h3>
+<div id="character" />
+<p>Also commonly defined in init blocks are Characters - a Character allows a quick and easy way to attach a name to dialogue, format text and so on, rather than having to type out the Character's full name and assign colours every time that Character speaks.</p>
+<p>In its simplest form, one defines a character as follows:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ l <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Lucy"</span><span class="sym">)</span>
+</pre>
+<p>The dollar sign at the beginning of the line tells Ren'Py that this is a Python line. This is necessary for defining characters because there's no Ren'Py command to do it for us - Characters have too many options! The next part - 'l' in the example above - is the name by which we refer to that character in the rest of the script. The last part creates the Character itself; here we're just supplying the name which we want to be displayed when that character is used.</p>
+<p>Creating a Character for each of the characters in your VN is not by any means <i>essential</i>, but at the very least it can help to save you typing the character name out each time they speak.</p>
+<p>For further details on Characters and the many other options they have, see the article on <a href="../reference/Defining_Characters.html" title="renpy/doc/reference/Defining Characters">Defining Characters</a>.</p>
+<p><a id="Basic_Script_Commands" name="Basic_Script_Commands"></a></p>
+<h2><span class="mw-headline">Basic Script Commands</span></h2>
+<p>The following items are a list of common commands Ren'Py understands, along with a usage explanation and example for each. While some effort has been made to order the list sensibly, it's unavoidable that sometimes references to later in the list will be necessary.</p>
+<p><a id="Speech" name="Speech"></a></p>
+<h3><span class="mw-headline">Speech</span></h3>
+<div id="speech" />
+<p>Speech displays text onto the screen, then waits for the user to click the mouse button or hit space or enter before proceeding to the next instruction. Speech falls into two categories - narration or dialogue.</p>
+<p>Narration is simplest - it consists of the text to be narrated, enclosed between quotes, e.g.:</p>
+<pre>
+    <span class="str">"It was a dark and stormy night"</span>
+</pre>
+<p>Note that you can use either single or double quotes, but you must start and end the text with the same kind of quote. Of course, this means that you can include single-quotes in double-quoted text and vice-versa:</p>
+<pre>
+    <span class="str">"'Twas the night before Christmas"</span>
+
+    <span class="str">'I could tell it was going to be one of "those" days.'</span>
+</pre>
+<p>Dialogue is used to have particular characters speak. Because the reader can't tell the difference between one character's voice and another's, when all their dialogue is just text, the name of the character speaking is displayed alongside the dialogue. Of course, this means that you have to specify the name of the character in the script, which is done by writing the character's name (in quotes) first, then the dialogue for that character immediately afterward, e.g.:</p>
+<pre>
+    <span class="str">"Hamlet"</span> <span class="str">"Alas, poor Yorick! I knew him, Horatio, a fellow of infinite jest, of most excellent fancy."</span>
+</pre>
+<p>If you have defined a <a href="#character" title="">Character</a> (in an <a href="#init" title="">init</a> block), you can use that Character instead of the name when writing dialogue, e.g.:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ e <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Eileen"</span><span class="sym">)</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+    e <span class="str">"Hello!"</span>
+</pre>
+<p><a id="Show" name="Show"></a></p>
+<h3><span class="mw-headline">Show</span></h3>
+<div id="show" />
+<p>The show command is used for adding a sprite to a scene. The sprite must previously have been defined as an image in an <a href="#init" title="">init block</a>, as the show command uses the image name.</p>
+<p>In its most basic form, the show command consists of the word 'show', followed by the name of the image to show, e.g.:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> eileen <span class="sym">=</span> <span class="str">"eileen.png"</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+    <span class="kwa">show</span> eileen
+</pre>
+<p>This will show the image named 'eileen' - the one from the file 'eileen.png' - in the bottom-centre of the screen.</p>
+<p>When you show an image, Ren'Py will look for an image which is already in the scene which shares the same first part of the name - if such an image exists, Ren'Py will remove it before showing the new image. This means that - for example - you don't have to hide old sprites of the same character when you're changing an expression.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> eileen happy <span class="sym">=</span> <span class="str">"eileen-happy.png"</span>
+    <span class="kwa">image</span> eileen sad <span class="sym">=</span> <span class="str">"eileen-sad.png"</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+    <span class="kwa">show</span> eileen happy
+    <span class="kwa">show</span> eileen sad
+</pre>
+<p>When the second 'show' command is run, Ren'Py looks at the first part of the image name - in this case 'eileen' - and examines all the images already in the scene for an image with that tag. The previous 'eileen happy' also had 'eileen' for the first part of the image name, so this is removed from the scene before the second show takes place. This ensures that only one Eileen is on-screen at the same time.</p>
+<p><br />
+Of course, it's not particularly useful to only be able to show things in the centre of the screen, so the show command can also be followed by an 'at' giving a position at which to place the new image in the scene:</p>
+<pre>
+    <span class="kwa">show</span> eileen <span class="kwa">at</span> left
+</pre>
+<p>This will show the 'eileen' image at the left of the screen. The positions that Ren'Py understands out of the box are as follows:</p>
+<ul>
+<li>left - at the left side, down against the bottom of the screen.</li>
+<li>right - at the right side, down against the bottom of the screen.</li>
+<li>center - in the middle, down against the bottom of the screen.</li>
+<li>truecenter - centred both horizontally and vertically.</li>
+<li>offscreenleft - just off the left side of the screen, down against the bottom.</li>
+<li>offscreenright - just off the right side of the screen, down against the bottom.</li>
+</ul>
+<p>Alternately, you can define your own positions with the <a href="../reference/functions/Position.html" title="renpy/doc/reference/functions/Position">Position</a> function</p>
+<p><a id="Hide" name="Hide"></a></p>
+<h3><span class="mw-headline">Hide</span></h3>
+<div id="hide" />
+<p>The hide command is the opposite of the show command - it removes an image from a scene.</p>
+<p>The syntax is similar - simply the word 'hide' followed by the name of the image to hide:</p>
+<pre>
+    <span class="kwa">show</span> eileen happy <span class="kwa">at</span> left
+    <span class="slc"># now there is one character in the scene</span>
+    <span class="kwa">show</span> lucy upset <span class="kwa">at</span> right
+    <span class="slc"># now there are two characters in the scene</span>
+    <span class="kwa">hide</span> eileen
+    <span class="slc"># now there is only one character remaining</span>
+    <span class="kwa">hide</span> lucy
+    <span class="slc"># and now there are none</span>
+</pre>
+<p>As you can see from the above example, only the first part of the image name is necessary - in the same way that the 'show' command will replace an image in the scene just based on the first part of the image name, equally the hide command only needs this much to find it and hide it. Also note that it is not necessary to specify the position of the character to hide. In fact, even if you specify these things they will be ignored.</p>
+<p><a id="Scene" name="Scene"></a></p>
+<h3><span class="mw-headline">Scene</span></h3>
+<div id="scene" />
+<p>The scene command is used to start a new scene - this involves removing all images from the current scene and changing the background image to suit the new scene.</p>
+<p>The scene command is followed by the image name for the new background image:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> bg funfair <span class="sym">=</span> <span class="str">"funfair.jpg"</span>
+    <span class="kwa">image</span> bg ferris <span class="sym">=</span> <span class="str">"ferriswheel.jpg"</span>
+    <span class="kwa">image</span> eileen <span class="sym">=</span> <span class="str">"eileen.png"</span>
+<span class="kwa">label</span> start<span class="sym">:</span>
+    <span class="kwa">scene</span> bg funfair
+    <span class="kwa">show</span> eileen <span class="kwa">at</span> left
+    <span class="slc"># Now the background is 'funfair.jpg' and Eileen is shown at the left.</span>
+
+    <span class="sym">...</span>
+
+    <span class="kwa">scene</span> bg ferris
+    <span class="slc"># Now Eileen has been removed and the background replaced by 'ferriswheel.jpg'.</span>
+</pre>
+<p><a id="With" name="With"></a></p>
+<h3><span class="mw-headline">With</span></h3>
+<div id="with" />
+<p>The with statement acts as a modifier to a previous command, adding a transition effect. It can be appended to the end of a 'show', 'hide' or 'scene' statement to have that action performed with the given transition. For example:</p>
+<pre>
+    <span class="kwa">show</span> eileen <span class="kwa">with</span> dissolve
+</pre>
+<p>Will dissolve Eileen in instead of her popping instantly into place.</p>
+<p>Transitions that Ren'Py understands out of the box can be found in the list of <a href="../reference/Transitions#predefined" title="renpy/doc/reference/Transitions">predefined transitions</a>.</p>
+<p>Ren'Py will wait for a transition to finish before continuing, so if you instruct it to perform several in a row, it could take several seconds to complete:</p>
+<pre>
+    <span class="kwa">scene</span> bg funfair <span class="kwa">with</span> fade
+    <span class="slc"># Ren'Py waits for the funfair scene to fade in before...</span>
+    <span class="kwa">show</span> eileen <span class="kwa">at</span> left <span class="kwa">with</span> dissolve
+    <span class="slc"># Ren'Py waits for Eileen to fully dissolve in before...</span>
+    <span class="kwa">hide</span> eileen <span class="kwa">with</span> moveoutleft
+    <span class="slc"># Ren'Py waits for Eileen to completely disappear off the side of the screen before...</span>
+    <span class="str">"Who was that?"</span>
+</pre>
+<p>Of course, sometimes this isn't desirable - you may wish for the scene to fade in, with a character sprite already displayed, in which case you need to stretch the with over more than one statement. If you place the with clause on a line on its own, then instead of being tied to one specific show, hide or scene, it will apply to every such command since the last dialogue or menu - or the last statement which did have its own with clause.</p>
+<pre>
+    <span class="kwa">scene</span> bg funfair
+    <span class="kwa">show</span> eileen <span class="kwa">at</span> left
+    <span class="kwa">show</span> lucy <span class="kwa">at</span> right
+    <span class="kwa">with</span> fade
+</pre>
+<p>In the above example, whatever the previous scene was will fade to black, then a scene containing eileen and lucy in front of the 'bg funfair' background will fade in all as one single transition.</p>
+<pre>
+    <span class="kwa">scene</span> bg funfair <span class="kwa">with</span> fade
+    <span class="kwa">show</span> eileen <span class="kwa">at</span> left
+    <span class="kwa">show</span> lucy <span class="kwa">at</span> right
+    <span class="kwa">with</span> dissolve
+</pre>
+<p>In this example, however, the scene command had its own 'with' clause, so the 'with dissolve' at the end only applies to the two 'show' commands. So the previous scene will fade to black, then the new scene at the funfair will fade in, and as soon as that has finished Eileen and Lucy will both dissolve in at the same time.</p>
+<p><a id="Audio" name="Audio"></a></p>
+<h2><span class="mw-headline">Audio</span></h2>
+<p><a id="Play" name="Play"></a></p>
+<h3><span class="mw-headline">Play</span></h3>
+<div id="play" />
+<p>The play statement is used for playing sound effects or music tracks.</p>
+<p>To play music, follow the play command with the word 'music', then the filename of the music file you wish to play:</p>
+<pre>
+play music <span class="str">"entertainer.ogg"</span>
+</pre>
+<p>To play a sound, follow the play command with the word 'sound', then the filename of the sound file you wish to play:</p>
+<pre>
+play sound <span class="str">"explosion.ogg"</span>
+</pre>
+<p>When you play music, Ren'Py will loop the music, playing it over and over again; when you play a sound, Ren'Py will play it only once.</p>
+<p><a id="Channels" name="Channels"></a></p>
+<h4><span class="mw-headline">Channels</span></h4>
+<p>Sound output is divided into 'channels'. You can only be playing one piece of audio - sound or music - on a single channel at once. If you want to play two sounds simultaneously, you will need to specify that the second one is played on a different channel - this can be done by adding 'channel' and then the number of the channel you wish to use to the end of the command:</p>
+<pre>
+play sound <span class="str">"explosion.ogg"</span> channel <span class="num">0</span>
+play sound <span class="str">"yeehah.ogg"</span> channel <span class="num">1</span>
+</pre>
+<p>By default, sounds are played on channel 0, and music is played on channel 7. Of course, this means that if you are only playing one sound at a time, you don't need to worry about channels - sounds can be played over music just fine.</p>
+<p><a id="Fade" name="Fade"></a></p>
+<h4><span class="mw-headline">Fade</span></h4>
+<p>By default, Ren'Py will stop any audio you already have playing on a channel if you play something new; if you want to specify a fadeout for an already-playing music or sound effect, then add 'fadeout' followed by a time in seconds to fade for to the end of the command.</p>
+<pre>
+play music <span class="str">"waltz.ogg"</span> fadeout <span class="num">1</span>
+</pre>
+<p>Similarly, if you want to fade the new piece of music in, then use the 'fadein' keyword. One can combine any or all of these keywords in the same command:</p>
+<pre>
+play music <span class="str">"waltz.ogg"</span> fadeout <span class="num">1</span> fadein <span class="num">2</span>
+</pre>
+<p>The above example will fade whatever music is currently playing out over the course of one second, and fade in "waltz.ogg" over the course of two seconds.</p>
+<p><a id="Playlists" name="Playlists"></a></p>
+<h4><span class="mw-headline">Playlists</span></h4>
+<p>Lastly, if you would prefer to give several pieces of music or sounds to be played one after another, you can give the play command a list of files instead of just a single filename. To use a list, use square brackets ([, ]) around a list of filenames separated by commas.</p>
+<pre>
+play music <span class="sym">[</span><span class="str">"waltz.ogg"</span><span class="sym">,</span> <span class="str">"tango.ogg"</span><span class="sym">,</span> <span class="str">"rumba.ogg"</span><span class="sym">]</span>
+</pre>
+<p>The above example will play "waltz.ogg", then once it is finished play "tango.ogg", then "rumba.ogg", then start again at the beginning with "waltz.ogg".</p>
+<p><a id="Formats" name="Formats"></a></p>
+<h4><span class="mw-headline">Formats</span></h4>
+<p>Ren'Py will play files in the following formats:</p>
+<ul>
+<li>Ogg Vorbis (.ogg)</li>
+<li>PCM Wave (.wav)</li>
+<li>FLAC (.flac)</li>
+<li>Shorten (.shn)</li>
+<li>MP3 (.mp3)</li>
+<li>Various mod formats</li>
+</ul>
+<p>Audio files should be saved at 44100Hz to avoid crackle.</p>
+<p><a id="Stop" name="Stop"></a></p>
+<h3><span class="mw-headline">Stop</span></h3>
+<div id="stop" />
+<p>Stop is the opposite of the <a href="#play" title="">play</a> command; it stops whatever audio is currently playing. Similarly to play, you can choose from either 'stop sound' to stop a sound effect, or 'stop music' to stop playing music.</p>
+<pre>
+stop sound
+</pre>
+<p>Similarly to <a href="#play" title="">play</a>, you can specify a fadeout for the audio you're stopping by adding the word 'fadeout' followed by a time in seconds.</p>
+<pre>
+stop music fadeout <span class="num">1.5</span>
+</pre>
+<p>The above example fades the currently-playing music out over the course of one and a half seconds.</p>
+<p>You can also stop the audio that's playing on a particular channel. Again, this is done in a similar manner to the <a href="#play" title="">play</a> command - simply append 'channel' and the channel number you wish to stop after the stop command, e.g.:</p>
+<pre>
+stop sound channel <span class="num">2</span>
+</pre>
+<p>Since you are only stopping audio which has already been <a href="#play" title="">played</a>, the default channels are the same - channel 0 for sound effects and channel 7 for music.</p>
+<p><a id="Queue" name="Queue"></a></p>
+<h3><span class="mw-headline">Queue</span></h3>
+<div id="queue" />
+<p>The queue command queues up music files or sound effects to play after the currently-playing audio has finished. Ren'Py will queue the file you specify to play immediately after the currently-playing music has finished.</p>
+<p>The simple usage of the command is similar to the <a href="#play" title="">play</a> command - the queue command is followed by one of 'sound' or 'music' depending on whether you want to queue a music track or a sound effect, then the filename of the audio file you wish to queue:</p>
+<pre>
+queue music <span class="str">"waltz.ogg"</span>
+</pre>
+<p>If you call the queue command a second time before the first piece of music finishes, your newly-queued file will <i>replace</i> the existing queued item and be played as soon as the currently-playing audio has finished.</p>
+<pre>
+play music <span class="str">"waltz.ogg"</span>
+queue music <span class="str">"tango.ogg"</span>
+
+<span class="str">"There's a waltz playing in the background..."</span>
+queue music <span class="str">"rumba.ogg"</span>
+</pre>
+<p>In the above example, first "waltz.ogg" is started playing, and then "tango.ogg" is queued. Then, the game displays some dialogue and waits for the user to click to continue.</p>
+<ul>
+<li>If the user clicks before the waltz finishes playing, then "rumba.ogg" is queued - this replaces the already-queued tango and after the waltz has finished, the rumba will follow.</li>
+<li>If the user waits for the waltz to finish before continuing, then the previously-queued tango will play immediately after the waltz, and when the rumba is queued it will be played immediately after the tango finishes.</li>
+</ul>
+<p>In either scenario, once the rumba finishes it will continue to loop just the rumba.</p>
+<p><br /></p>
+<p>If you wish to queue up more than one file at once, then you can supply a list of file names, separated by commas, inside square brackets ([, ]) instead of a single file name.</p>
+<pre>
+play music <span class="str">"rumba.ogg"</span>
+queue music <span class="sym">[</span><span class="str">"waltz.ogg"</span><span class="sym">,</span> <span class="str">"tango.ogg"</span><span class="sym">]</span>
+</pre>
+<p>In this example, the rumba plays. Two files are added to the queue, so when the rumba finishes, it will play the waltz next; when the waltz finishes, it will play the tango. When the tango finishes, the entire queue will loop, so the waltz will play, then the tango, then the waltz again, then the tango again, and so on.</p>
+<p><br /></p>
+<p>Similarly to the <a href="#play" title="">play</a> command, you can specify a channel on which to queue the audio, by adding 'channel' followed by the channel number to the end of the command.</p>
+<pre>
+queue sound <span class="str">"explosion.ogg"</span> channel <span class="num">2</span>
+</pre>
+<p>Note that you cannot queue music to a channel which is currently playing sound effects, or sound effects to a channel that is currently playing music. Each channel has its own queue, so you can queue - for example - music on the default channel and sound effects on the default channel and both of your queued items will be played independently.</p>
+<p><a id="Labels" name="Labels"></a></p>
+<h2><span class="mw-headline">Labels</span></h2>
+<div id="label" />
+<p>Labels are used to divide a Ren'Py script up into sections, and also to allow a non-linear progression through those sections.</p>
+<p>Generally, Ren'Py will run each line of the script in the order it finds them, so by way of example:</p>
+<pre>
+<span class="str">"This line is run first"</span>
+
+<span class="str">"This line is run second"</span>
+
+<span class="str">"This line is run third"</span>
+
+<span class="slc"># and so on...</span>
+</pre>
+<p>However, in order to write a branching story, or perhaps a story in which some parts are repeated, we use labels. Labels contain <a href="#blocks" title="">blocks</a> of Ren'Py script, and consist of the word 'label' followed by a name, followed by a colon(:) - which denotes that it contains a block.</p>
+<pre>
+<span class="kwa">label</span> start<span class="sym">:</span>
+    <span class="str">"This line is under the 'start' label."</span>
+    <span class="str">"As is this one."</span>
+<span class="kwa">label</span> next<span class="sym">:</span>
+    <span class="str">"But this one is under the label 'next'."</span>
+<span class="kwa">label</span> last<span class="sym">:</span>
+    <span class="str">"And this one is under 'last'."</span>
+</pre>
+<p>Label names have to be unique across your entire script, because Ren'Py uses them to identify that particular place in the script - you can't have two labels with the same name, because Ren'Py wouldn't be able to tell those two label blocks apart. Label names cannot have spaces in, so it's common to use underscores to separate words in a label name:</p>
+<pre>
+<span class="kwa">label not</span> valid<span class="sym">:</span>
+    <span class="slc"># The preceeding label won't work, because it has spaces in the name.</span>
+<span class="kwa">label</span> perfectly_valid<span class="sym">:</span>
+    <span class="slc"># The label 'perfectly_valid', on the other hand, is fine.</span>
+</pre>
+<p>When Ren'Py reaches the end of a label block - for example the line "As is this one." in the above example - it simply continues on to the following label block, so in the example above the four lines are delivered in the order they're written, one after another, as if the label statements weren't there at all. Using the <a href="#jump" title="">jump</a> and <a href="#call" title="">call</a> commands, however, we can move between labels in a non-linear fashion.</p>
+<p><a id="Jump" name="Jump"></a></p>
+<h3><span class="mw-headline">Jump</span></h3>
+<div id="jump" />
+<p>The jump command instructs Ren'Py to skip immediately to the label which is given, ignoring all of the script in between the present position and that label. Jumps can be forward or backward through the file, or even in a different script file in the same game directory.</p>
+<p>The jump command consists of the word 'jump' followed by the name of the label to jump to:</p>
+<pre>
+<span class="kwa">jump</span> some_label
+</pre>
+<p>Because the label could be anywhere, the jump command allows us to write scripts in a non-linear order, for example:</p>
+<pre>
+<span class="kwa">label</span> start<span class="sym">:</span>
+    <span class="str">"This line of dialogue will be spoken first."</span>
+
+    <span class="kwa">jump</span> stage_two
+
+<span class="kwa">label</span> stage_three<span class="sym">:</span>
+    <span class="str">"This line will be spoken third."</span>
+
+    <span class="kwa">jump</span> end
+
+    <span class="str">"This line will never be run."</span>
+
+<span class="kwa">label</span> stage_two<span class="sym">:</span>
+    <span class="str">"This line will be spoken second."</span>
+
+    <span class="kwa">jump</span> stage_three
+
+<span class="kwa">label</span> end<span class="sym">:</span>
+    <span class="str">"And this line will be last."</span>
+</pre>
+<p>Ren'Py cannot execute the line in the middle ("This line will never be run") because it's impossible to step line-after-line from a label to that dialogue line. The 'jump end' command will get in the way and re-direct Ren'Py to the 'end' label before it ever gets to that line of dialogue.</p>
+<p><a id="Call_and_Return" name="Call_and_Return"></a></p>
+<h3><span class="mw-headline">Call and Return</span></h3>
+<div id="call" />
+<p>Call instructs Ren'Py to go off and run the code at another label, and then return and carry on from this point afterwards.</p>
+<p>The call command consists of the word 'call', followed by the name of the label to call:</p>
+<pre>
+<span class="kwa">call</span> subroutine
+</pre>
+<p>At the other end, the command 'return' tells Ren'Py to go back to the point of the call:</p>
+<pre>
+<span class="kwa">label</span> subroutine<span class="sym">:</span>
+    <span class="str">"Do some stuff."</span>
+
+    <span class="kwa">return</span>
+</pre>
+<p>This means that if there is a part of your script which you want to re-use at multiple points, then you can use call to visit that part from anywhere else in your script and return to those different places without having to know each of their label names.</p>
+<pre>
+<span class="kwa">label</span> start<span class="sym">:</span>
+    <span class="str">"The teacher starts droning on about Hamlet..."</span>
+
+    <span class="kwa">call</span> boring
+
+    <span class="str">"I think I missed something. Now she's talking about Rozencrantz and... someone..."</span>
+    <span class="str">"Tom Stoppard? Was he in Hamlet?"</span>
+
+    <span class="kwa">call</span> boring
+
+    <span class="kwa">jump</span> end
+
+<span class="kwa">label</span> boring<span class="sym">:</span>
+    <span class="str">"I can't keep my eyes open... so dull..."</span>
+    <span class="str">"Ah! Did I fall asleep?"</span>
+
+    <span class="kwa">return</span>
+
+<span class="kwa">label</span> end<span class="sym">:</span>
+    <span class="str">"Huh. The lesson seems to be over. That was quick!"</span>
+</pre>
+<p>This will produce the following dialogue:</p>
+<ul>
+<li>"The teacher starts droning on about Hamlet..."</li>
+<li><b>"I can't keep my eyes open... so dull..."</b></li>
+<li><b>"Ah! Did I fall asleep?"</b></li>
+<li>"I think I missed something. Now she's talking about Rozencrantz and... someone..."</li>
+<li>"Tom Stoppard? Was he in Hamlet?"</li>
+<li><b>"I can't keep my eyes open... so dull..."</b></li>
+<li><b>"Ah! Did I fall asleep?"</b></li>
+<li>"Huh. The lesson seems to be over. That was quick!"</li>
+</ul>
+<p>Note that the bold lines above are those included in the 'boring' label which call skips to, after which it returns to the point in the script it was called from.</p>
+<p><br /></p>
+<p><a id="Variables_and_Control_Structures" name="Variables_and_Control_Structures"></a></p>
+<h2><span class="mw-headline">Variables and Control Structures</span></h2>
+<div id="variables" />
+<p><a id="Menu" name="Menu"></a></p>
+<h3><span class="mw-headline">Menu</span></h3>
+<p>Sample code</p>
+<pre>
+<span class="kwa">menu</span><span class="sym">:</span>
+    <span class="str">"yes"</span><span class="sym">:</span>
+        <span class="str">"yes"</span>
+        <span class="kwa">jump</span> yes
+    <span class="str">"no"</span><span class="sym">:</span>
+        <span class="str">"no"</span>
+        <span class="kwa">jump</span> no
+
+<span class="kwa">label</span> yes<span class="sym">:</span>
+
+    <span class="str">"I agree."</span>
+
+<span class="kwa">label</span> no<span class="sym">:</span>
+
+    <span class="str">"I don't agree."</span>
+</pre>
+<p>The yes and no are your options; you can add as many as you like.</p>
+<p>The&#160;: after each option lets you tell Ren'py what happens next like going to another page of sript or adding text</p>
+<p><a id="If" name="If"></a></p>
+<h3><span class="mw-headline">If</span></h3>
+<div id="if" />
+<p><a id="Call" name="Call"></a></p>
+<h3><span class="mw-headline">Call</span></h3>
+<div id="call" />
+<p><a id="While" name="While"></a></p>
+<h3><span class="mw-headline">While</span></h3>
+<div id="while" />
+<p><a id="Pass" name="Pass"></a></p>
+<h3><span class="mw-headline">Pass</span></h3>
+<div id="pass" />
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,27 @@
+<html><head><title>ui.gamemenus - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.gamemenus" name="ui.gamemenus"></a></p>
+<h1><span class="mw-headline">ui.gamemenus</span></h1>
+<p><span id="ui.gamemenus" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.gamemenus</strong></b></td>
+<td valign="top">(screen=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function returns a function that, when called, enters the game menu. If <i>screen</i> is given, that screen is initially shown. It may be one of "load_screen", "save_screen", or "preferences_screen". If not, the default screen is used.</p>
+</div>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    <span class="kwa">def</span> <span class="kwd">overlay</span><span class="sym">():</span>
+         ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Prefs"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">gamemenus</span><span class="sym">(</span><span class="str">"preferences_screen"</span><span class="sym">),</span> xalign<span class="sym">=</span><span class="num">1.0</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.0</span><span class="sym">)</span>
+
+    config<span class="sym">.</span>overlay_functions<span class="sym">.</span><span class="kwd">append</span><span class="sym">(</span>overlay<span class="sym">)</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

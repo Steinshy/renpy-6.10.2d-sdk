@@ -1,0 +1,55 @@
+<html><head><title>SnowBlossom - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="SnowBlossom" name="SnowBlossom"></a></p>
+<h1><span class="mw-headline">SnowBlossom</span></h1>
+<p><span id="SnowBlossom" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">SnowBlossom</strong></b></td>
+<td valign="top">(image, count=10, border=50, xspeed=(20, 50), yspeed=(100, 200), start=0, horizontal=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This implements the snowblossom effect, which is a simple linear motion up or down, left, or right. This effect can be used for falling cherry blossoms, falling snow, rising bubbles, and drifting dandelions, along with other things.</p>
+<p><i>image</i> - The image that is to be used for the particles. This can actually be any displayable, so it's okay to use an Animation as an argument to this parameter.</p>
+<p><i>count</i> - The number of particles to maintain at any given time. (Realize that not all of the particles may be on the screen at once.)</p>
+<p><i>border</i> - How many pixels off the screen to maintain a particle for. This is used to ensure that a particle is not displayed on the screen when it is created, and that it is completely off the screen when it is destroyed.</p>
+<p><i>xspeed</i> - The horizontal speed of the particles, in pixels per second. This may be a single integer, or it may be a tuple of two integers. In the latter case, the two numbers are used as a range from which to pick the horizontal speed for each particle. The numbers can be positive or negative, as long as the second is larger then the first.</p>
+<p><i>yspeed</i> - The vertical speed of the particles, in pixels per second. This may be a single integer, but it should almost certainly be a pair of integers which are used as a range from which to pick the vertical speed of each particle. (Using a single number will lead to every particle being used in a wave... not what is wanted.) The second number in the tuple should be larger then the first.</p>
+<p><i>start</i> - This is the number of seconds it will take to start all particles moving. Setting this to a non-zero number prevents an initial wave of particles from overwhelming the screen. Each particle will start in a random amount of time less than this number of seconds.</p>
+<p><i>fast</i> - If true, then all particles will be started at once, and they will be started at random places on the screen, rather then on the top or bottom.</p>
+<p><i>horizontal</i> - If true, the particles start on the left or right edge of the screen. If false, they start along the top or bottom edge.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> blossoms <span class="sym">=</span> <span class="kwd">SnowBlossom</span><span class="sym">(</span><span class="kwd">Animation</span><span class="sym">(</span><span class="str">"sakura1.png"</span><span class="sym">,</span> <span class="num">0.15</span><span class="sym">,</span>
+                                           <span class="str">"sakura2.png"</span><span class="sym">,</span> <span class="num">0.15</span><span class="sym">))</span>
+
+<span class="kwa">show</span> snowblossom
+
+<span class="str">"Finally, there's now a particle motion system in</span>
+<span class="str"> Ren'Py."</span>
+
+<span class="str">"It can be used to animate things like falling cherry</span>
+<span class="str"> blossoms, falling snow, and rising bubbles."</span>
+
+<span class="str">"While there's convenient support for things rising and</span>
+<span class="str"> falling in straight lines, it's also possible to define</span>
+<span class="str"> your own motions."</span>
+
+<span class="str">"The sky's the limit."</span>
+
+<span class="str">"Or the ground, in the case of these cherry blossoms."</span>
+
+<span class="kwa">hide</span> snowblossom <span class="kwa">with</span> dissolve
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

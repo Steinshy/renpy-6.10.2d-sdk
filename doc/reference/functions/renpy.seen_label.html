@@ -1,0 +1,34 @@
+<html><head><title>renpy.seen label - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.seen_label" name="renpy.seen_label"></a></p>
+<h1><span class="mw-headline">renpy.seen_label</span></h1>
+<p><span id="renpy.seen_label" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.seen_label</strong></b></td>
+<td valign="top">(label):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns true if the named label has executed at least once on the current user's system, and false otherwise. This can be used to unlock scene galleries, for example.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+    <span class="kwa">if</span> renpy<span class="sym">.</span><span class="kwd">seen_label</span><span class="sym">(</span><span class="str">"one_time_only"</span><span class="sym">):</span>
+        <span class="kwa">jump</span> every_time
+
+<span class="kwa">label</span> one_time_only<span class="sym">:</span>
+    <span class="str">"This code only runs the first time through the game."</span>
+
+<span class="kwa">label</span> every_time<span class="sym">:</span>
+    <span class="str">"While this runs every time through the game."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

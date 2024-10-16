@@ -1,0 +1,47 @@
+<html><head><title>ui.frame - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.frame" name="ui.frame"></a></p>
+<h1><span class="mw-headline">ui.frame</span></h1>
+<p><span id="ui.frame" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.frame</strong></b></td>
+<td valign="top">(**properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A frame contains a single widget. This is similar to a window, but may be styled differently.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    <span class="slc"># Stats Window</span>
+    ui<span class="sym">.</span><span class="kwd">frame</span><span class="sym">(</span>xpos<span class="sym">=</span><span class="num">0</span><span class="sym">,</span>
+             ypos<span class="sym">=</span><span class="num">0</span><span class="sym">,</span>
+             xanchor<span class="sym">=</span><span class="str">'left'</span><span class="sym">,</span>
+             yanchor<span class="sym">=</span><span class="str">'top'</span><span class="sym">,</span>
+             xfill<span class="sym">=</span><span class="kwa">True</span><span class="sym">,</span>
+             <span class="sym">)</span>
+
+    ui<span class="sym">.</span><span class="kwd">vbox</span><span class="sym">()</span>
+
+    ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span><span class="str">'Statistics'</span><span class="sym">)</span>
+    ui<span class="sym">.</span><span class="kwd">null</span><span class="sym">(</span>height<span class="sym">=</span><span class="num">20</span><span class="sym">)</span>
+
+    <span class="kwa">for</span> name<span class="sym">,</span> <span class="kwb">range</span><span class="sym">,</span> value <span class="kwa">in</span> stats<span class="sym">:</span>
+        ui<span class="sym">.</span><span class="kwd">hbox</span><span class="sym">()</span>
+        ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span>name<span class="sym">,</span> minwidth<span class="sym">=</span><span class="num">150</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">bar</span><span class="sym">(</span><span class="kwb">range</span><span class="sym">,</span> value<span class="sym">,</span> ypos<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yanchor<span class="sym">=</span><span class="str">'center'</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span> <span class="slc"># for the ui.hbox</span>
+
+    ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span> <span class="slc"># for the ui.vbox</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

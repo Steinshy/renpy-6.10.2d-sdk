@@ -1,0 +1,31 @@
+<html><head><title>renpy.seen image - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.seen_image" name="renpy.seen_image"></a></p>
+<h1><span class="mw-headline">renpy.seen_image</span></h1>
+<p><span id="renpy.seen_image" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.seen_image</strong></b></td>
+<td valign="top">(name):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns True if the named image has been seen at least once on the user's system. An image has been seen if it's been displayed using the <a href="../../reference/The_Ren%27Py_Language#show" title="renpy/doc/reference/The Ren&apos;Py Language">show statement</a>, <a href="../../reference/The_Ren%27Py_Language#scene" title="renpy/doc/reference/The Ren&apos;Py Language">scene statement</a>, or <a href="../../reference/functions/renpy.show.html" title="renpy/doc/reference/functions/renpy.show">renpy.show</a> function. (Note that there are cases where the user won't actually see the image, like a show immediately followed by a hide.)</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">if</span> renpy<span class="sym">.</span><span class="kwd">seen_image</span><span class="sym">(</span><span class="str">"eileen happy"</span><span class="sym">):</span>
+    <span class="kwa">scene</span> black
+    <span class="kwa">show</span> eileen happy
+    $ renpy<span class="sym">.</span><span class="kwa">pause</span><span class="sym">()</span>
+<span class="kwa">else</span><span class="sym">:</span>
+    <span class="kwa">scene</span> black
+    centered <span class="str">"This image is locked."</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,32 @@
+<html><head><title>renpy.log - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.log" name="renpy.log"></a></p>
+<h1><span class="mw-headline">renpy.log</span></h1>
+<p><span id="renpy.log" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.log</strong></b></td>
+<td valign="top">(msg):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If <a href="../../reference/Configuration_Variables#config.log" title="renpy/doc/reference/Configuration Variables">config.log</a> is not set, this does nothing. Otherwise, it opens the logfile (if not already open), formats the message to 70 columns, and prints it to the logfile.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ config<span class="sym">.</span>log <span class="sym">=</span> <span class="str">"debuglog.txt"</span>
+
+<span class="str">"Debug message coming up..."</span>
+
+$ renpy<span class="sym">.</span><span class="kwd">log</span><span class="sym">(</span><span class="str">"This message goes to the debuglog.txt"</span><span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,117 @@
+#contentSub {
+    margin-top: 3px;
+}
+
+BODY {
+background: #fff;
+}
+
+#ca-nstab-main.selected { 
+display: none;
+}
+
+#ca-viewsource {
+display: none !important;
+}
+
+#p-cactions {
+position: absolute;
+left: auto;
+right: 1em;
+top: .7em;
+text-align: right;
+}
+
+#ca-talk.new a {
+color: #c88;
+}
+
+#p-Navigation h5, #p-search h5 {
+display: none;
+}
+
+#p-cactions li {
+border: 0px;
+margin: 0px;
+padding: 0px;
+background: none;
+}
+
+#p-cactions li:selected {
+border: 0px;
+margin: 0px;
+padding: 0px;
+background: none;
+}
+
+#p-cactions li a {
+background: none;
+color: rgb(0, 88, 150);
+}
+
+#p-cactions li.selected a {
+background: none;
+color: rgb(0, 88, 150);
+}
+
+#content {
+margin-top: 3em;
+background: none;
+}
+
+#content, #content table {
+color: #333;
+}
+
+#pt-mytalk  {
+display: none !important;
+}
+
+h1 {
+border-bottom: none;
+font-weight: bold;
+font-size: 200%;
+margin-bottom: .6em;
+}
+
+h1, h2, h3, h4 {
+color: #333;
+font-family: serif;
+line-height: 1.2em;
+}
+
+#content {
+border: 0px;
+}
+
+.portlet {
+padding-top: .5em;
+}
+
+.portlet .pBody {
+border: 0px;
+background: auto;
+}
+
+.portlet h5 {
+text-transform: none;
+}
+
+#bodyContent {
+margin-right: 12.5%;
+margin-left: 12.5%;
+font-size: 110%;
+}
+
+.firstHeading {
+margin-right: 12.5%;
+margin-left: 12.5%;
+}
+
+#p-logo,
+#p-logo a,
+#p-logo a:hover {
+height: 230px;
+}
+
+#column-one { padding-top: 225px; }

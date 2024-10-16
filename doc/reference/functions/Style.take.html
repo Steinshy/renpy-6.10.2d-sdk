@@ -1,0 +1,32 @@
+<html><head><title>Style.take - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="Style.take" name="Style.take"></a></p>
+<h1><span class="mw-headline">Style.take</span></h1>
+<p><span id="Style.take" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>Style.take</b></td>
+<td valign="top">(other):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This expects <i>other</i> to be a style object. It takes style customizations from <i>other</i>, and applies them to this style.</p>
+</div>
+<p><br /></p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ style<span class="sym">.</span>mm_button_text<span class="sym">.</span>size <span class="sym">=</span> <span class="num">30</span>
+    $ style<span class="sym">.</span>mm_button_text<span class="sym">.</span>yalign <span class="sym">=</span> <span class="num">1.0</span>
+
+    $ style<span class="sym">.</span>gm_nav_button_text<span class="sym">.</span><span class="kwd">take</span><span class="sym">(</span>style<span class="sym">.</span>mm_button_text<span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

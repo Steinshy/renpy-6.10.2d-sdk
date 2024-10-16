@@ -1,0 +1,99 @@
+<html><head><title>Preferences - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Preferences" name="Preferences"></a></p>
+<h1><span class="mw-headline">Preferences</span></h1>
+<p>Preferences can be updated using the following variables and functions.</p>
+<p><span id="_preferences.fullscreen" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>_preferences.fullscreen</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>True if Ren'Py should be run in a fullscreen mode. See <a href="../reference/Configuration_Variables#config.default_fullscreen" title="renpy/doc/reference/Configuration Variables">config.default_fullscreen</a> for a simple way to set the default value of this the first time a user runs your game.</p>
+</div>
+<p><span id="_preferences.transitions" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>_preferences.transitions</b></td>
+<td valign="top">= 2</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The kinds of transitions to show. 0 for no transitons, 2 for all transitions. A lesser-used value is 1, which shows all transitions except default transitions.</p>
+</div>
+<p><span id="_preferences.text_cps" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>_preferences.text_cps</b></td>
+<td valign="top">= 0</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The number of characters per second to show slow text at. 0 means to show infinitely fast. A sensible range is between 1 and 150. The default value of this can be set with <a href="../reference/Configuration_Variables#config.default_text_cps" title="renpy/doc/reference/Configuration Variables">config.default_text_cps</a>.</p>
+</div>
+<p><span id="_preferences.afm_time" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>_preferences.afm_time</b></td>
+<td valign="top">= 0</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The number of seconds to delay after showing <a href="../reference/Configuration_Variables#config.afm_characters" title="renpy/doc/reference/Configuration Variables">config.afm_characters</a> (default 250) characters in auto-forward mode. A sensible range is between 1 and 40 seconds. If set to 0, auto-forward mode is disabled.</p>
+</div>
+<p><span id="_preferences.skip_unseen" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>_preferences.skip_unseen</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, skipping will skip unseen messages. If False, only seen messages will be skipped.</p>
+</div>
+<p><span id="_preferences.skip_after_choices" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>_preferences.skip_after_choices</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, skipping continues past menus. If False, skipping stops a menus.</p>
+</div>
+<p><span id="_preferences.set_volume" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>_preferences.set_volume</b></td>
+<td valign="top">(mixer, volume):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Sets the volume of the given mixer to the given volume. <i>mixer</i> is usually 'sfx', 'voice', or 'music', volume ranges between 0 and 1.0.</p>
+</div>
+<p><span id="_preferences.get_volume" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>_preferences.get_volume</b></td>
+<td valign="top">(mixer):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Gets the volume of <i>mixer</i>, which is usually 'sfx', 'voice', or 'music'. The returned volume ranges between 0 and 1.0.</p>
+</div>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

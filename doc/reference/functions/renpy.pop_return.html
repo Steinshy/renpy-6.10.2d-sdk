@@ -1,0 +1,37 @@
+<html><head><title>renpy.pop return - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.pop_return" name="renpy.pop_return"></a></p>
+<h1><span class="mw-headline">renpy.pop_return</span></h1>
+<p><span id="renpy.pop_return" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.pop_return</strong></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This pops a level off of the return stack, restoring the values of dynamic variables as it does, but not returning anywhere. This can be used to construct a multi-level return.</p>
+</div>
+<pre>
+<span class="kwa">label</span> sub_1<span class="sym">:</span>
+    <span class="str">"This is shown second."</span>
+    <span class="kwa">call</span> sub_2
+    <span class="str">"This is never shown."</span>
+    <span class="kwa">return</span>
+
+<span class="kwa">label</span> sub_2<span class="sym">:</span>
+    <span class="str">"This is shown third."</span>
+    $ renpy<span class="sym">.</span><span class="kwd">pop_return</span><span class="sym">()</span>
+    <span class="kwa">return</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+    <span class="str">"This is shown first."</span>
+    <span class="kwa">call</span> sub_1
+    <span class="str">"This is shown fourth."</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,151 @@
+<html><head><title>Remembering User Choices - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a></p><p><a id="Remembering_User_Choices" name="Remembering_User_Choices"></a></p>
+<h2><span class="mw-headline">Remembering User Choices</span></h2>
+<p><a id="Changing_Game_Flow_Based_on_Earlier_Choices" name="Changing_Game_Flow_Based_on_Earlier_Choices"></a></p>
+<h3><span class="mw-headline">Changing Game Flow Based on Earlier Choices</span></h3>
+<p>You can remember user choices by assigning to variables. For example:</p>
+<pre>
+<span class="kwa">menu</span><span class="sym">:</span>
+    <span class="str">"Buy her an Iguana"</span><span class="sym">:</span>
+        $ gift <span class="sym">=</span> <span class="str">"iguana"</span>
+        b <span class="str">"I'll take an iguana, my good man!"</span>
+    <span class="str">"Buy her a Corn Snake"</span><span class="sym">:</span>
+        $ gift <span class="sym">=</span> <span class="str">"corn snake"</span>
+        b <span class="str">"I'll take a Corn Snake, my good man!"</span>
+    <span class="str">"Buy her a tortoise"</span><span class="sym">:</span>
+        $ gift <span class="sym">=</span> <span class="str">"tortoise"</span>
+        b <span class="str">"Give me your slowest tortoise, please!"</span>
+</pre>
+<p>Please note that a single "=" is used to assign a variable.</p>
+<p>Later in the game, you can then use the <a href="../reference/The_Ren%27Py_Language#if" title="renpy/doc/reference/The Ren&apos;Py Language">if statement</a> to change the script based on the previous choice:</p>
+<pre>
+b <span class="str">"Open it, Mary."</span>
+<span class="kwa">if</span> gift <span class="sym">==</span> <span class="str">"iguana"</span><span class="sym">:</span>
+    m <span class="str">"Oh Bob, I've always wanted an iguana!"</span>
+<span class="kwa">if</span> gift <span class="sym">==</span> <span class="str">"corn snake"</span><span class="sym">:</span>
+    m <span class="str">"Oh Bob, I needed a corn snake that matches my red dress! Thank you so much!"</span>
+<span class="kwa">if</span> gift <span class="sym">==</span> <span class="str">"tortoise"</span>
+    m <span class="str">"Bob! It's so slow! I love you!"</span>
+</pre>
+<p>Please note that the double "==" is used to test for equality.</p>
+<p>You can call your variables anything that you like, as long as it doesn't conflict with keywords or character objects. The only rule with variables is that you have to assign to a variable before you can use it in a conditional.</p>
+<p><a id="Implementing_a_Point-Based_Game" name="Implementing_a_Point-Based_Game"></a></p>
+<h3><span class="mw-headline">Implementing a Point-Based Game</span></h3>
+<p>A point-based game is one in which the choices that a user makes at menus cumulatively change the story after many of them have been made.</p>
+<p>First, you'll need to decide what you want to be able to gain points for. For example, you might want the user to be able to win points by (1) building big muscles (strength) (2) learning to juggle large numbers of objects (dexterity) and (3) performing chemical experiments and creating increasingly advanced forms of life (mad science).</p>
+<p>Next, you'll need to initialize the variables that you're going to use to keep track of these points. You do this immediately after the start label:</p>
+<pre>
+<span class="kwa">label</span> start<span class="sym">:</span>
+    $ strength_points <span class="sym">=</span> <span class="num">0</span>
+    $ dexterity_points <span class="sym">=</span> <span class="num">0</span>
+    $ mad_science_points <span class="sym">=</span> <span class="num">0</span>
+</pre>
+<p>During the game, you'll present the user with choices that affect these points, and then modify the variables based on the choices. To increase the points, use:</p>
+<pre>
+$ variable <span class="sym">+=</span> <span class="num">1</span>
+</pre>
+<p>(That's plus followed by equals.) You can use any number, it doesn't have to be 1. To decrease the points:</p>
+<pre>
+$ variable <span class="sym">-=</span> <span class="num">1</span>
+</pre>
+<p>(That's minus followed by equals.) You can again use any number, not just 1.</p>
+<p>For example:</p>
+<pre>
+<span class="kwa">menu</span><span class="sym">:</span>
+    <span class="str">"Go to the gym"</span><span class="sym">:</span>
+        $ strength_points <span class="sym">+=</span> <span class="num">1</span>
+        <span class="str">"The gym was hot and sweaty."</span>
+        <span class="str">"I picked up heavy things, then put them down again."</span>
+        <span class="str">"I always wonder why I bother, since I could achieve</span>
+<span class="str">         the same thing by not picking them up in the first place."</span>
+    <span class="str">"Practice juggling balls"</span><span class="sym">:</span>
+        $ dexterity_points <span class="sym">+=</span> <span class="num">1</span>
+        <span class="str">"I practiced juggling seven balls."</span>
+        <span class="str">"It was hard, but I finally managed to get it at least once."</span>
+    <span class="str">"Practice juggling angry porcupines"</span><span class="sym">:</span>
+        $ dexterity_points <span class="sym">+=</span> <span class="num">3</span>
+        $ strength_points <span class="sym">-=</span> <span class="num">1</span>
+        <span class="str">"Practicing with angry porcupines really sharpened my reflexes.</span>
+<span class="str">         Unfortunately, I'm feeling weak from blood loss."</span>
+    <span class="str">"Invent a happy porcupine"</span><span class="sym">:</span>
+        $ mad_science_points <span class="sym">+=</span> <span class="num">1</span>
+        <span class="str">"Unfortunately I was only able to create a melancholy echidna,</span>
+<span class="str">         but I learned a lot and I was sure that next time would be better."</span>
+</pre>
+<p>(You can of course customize the responses based on the current points, using the techniques outlined in the earlier section on variables.)</p>
+<p>Finally, customize your ending using the variables:</p>
+<pre>
+<span class="kwa">if</span> strength_points <span class="sym">&gt;</span> <span class="kwb">max</span><span class="sym">(</span>dexterity_points<span class="sym">,</span> mad_science_points<span class="sym">):</span>
+
+    <span class="str">"You pick up a cow and jump over the moon."</span>
+
+<span class="kwa">elif</span> dexterity_points <span class="sym">&gt;</span> <span class="kwb">max</span><span class="sym">(</span>strength_points<span class="sym">,</span> mad_science_points<span class="sym">):</span>
+
+    <span class="str">"You juggle 215 balls and set the world record."</span>
+
+<span class="kwa">else</span><span class="sym">:</span>
+
+    <span class="str">"You create the perfect companion and retire with it to the castle</span>
+<span class="str">     built by the army of servile eight-armed giant gorilla-men</span>
+<span class="str">     you created earlier in the day."</span>
+
+<span class="kwa">return</span>
+</pre>
+<p>The above code decides ties in favor of the last option (mad science). If you would like to be explicit about how to handle ties, it's more complicated, as there are seven possible conditions, but still quite doable. It looks like this:</p>
+<pre>
+<span class="kwa">if</span> strength_points <span class="sym">&gt;</span> <span class="kwb">max</span><span class="sym">(</span>dexterity_points<span class="sym">,</span> mad_science_points<span class="sym">):</span>
+
+    <span class="str">"You pick up a cow and jump over the moon."</span>
+
+<span class="kwa">elif</span> dexterity_points <span class="sym">&gt;</span> <span class="kwb">max</span><span class="sym">(</span>strength_points<span class="sym">,</span> mad_science_points<span class="sym">):</span>
+
+    <span class="str">"You juggle 215 balls and set the world record."</span>
+
+<span class="kwa">elif</span> mad_science_points <span class="sym">&gt;</span> <span class="kwb">max</span><span class="sym">(</span>strength_points<span class="sym">,</span> dexterity_points<span class="sym">):</span>
+
+    <span class="str">"You create the perfect companion and retire with it to the castle</span>
+<span class="str">     built by the army of servile eight-armed giant gorilla-men</span>
+<span class="str">     you created earlier in the day."</span>
+
+<span class="kwa">elif</span> strength_points <span class="sym">==</span> dexterity_points <span class="sym">==</span> mad_science_points<span class="sym">:</span>
+
+    <span class="str">"Your band of servile sixteen-armed giant gorilla-men built you</span>
+<span class="str">     three castles, which you juggle to impress the perfect companion</span>
+<span class="str">     you created earlier in the day."</span>
+
+<span class="kwa">elif</span> strength_points <span class="sym">==</span> dexterity_points<span class="sym">:</span>
+
+    <span class="str">"You juggle three large boulders and many attractive people of</span>
+<span class="str">     the opposite sex swoon."</span>
+
+<span class="kwa">elif</span> dexterity_points <span class="sym">==</span> mad_science_points<span class="sym">:</span>
+
+    <span class="str">"You invent a species of round humming bird, and juggle 5,000</span>
+<span class="str">     of them at once."</span>
+
+<span class="kwa">elif</span> strength_points <span class="sym">==</span> mad_science_points<span class="sym">:</span>
+
+    <span class="str">"You invent a 30 ton 24-armed gorilla man, and then pick him up</span>
+<span class="str">     so that he can paint the top part of the house he's building</span>
+<span class="str">     for you."</span>
+
+<span class="kwa">return</span>
+</pre>
+<p>The ordering of the conditions above is important, because later alternatives assume that previous ones have been false. In general, you want to first test if any single variable wins, then test if they're all the same, then test to see which ones tied. This strategy avoids several possible pitfalls in the game logic.</p>
+<p><br /></p>
+<table align="center" border="1" cellpadding="10" cellspacing="1" style="background: #fff0e0; text-align: center;" width="80%">
+<tr>
+<td width="30%">Previous:<br />
+<a href="../tutorials/Giving_the_User_a_Choice_With_Menus.html" title="renpy/doc/tutorials/Giving the User a Choice With Menus">Giving the User a Choice With Menus</a></td>
+<td width="40%"><b><a href="../tutorials/Ren%27Py_Web_Tutorial.html" title="renpy/doc/tutorials/Ren&apos;Py Web Tutorial">Ren'Py Web Tutorial</a></b></td>
+<td width="30%">Next:<br />
+<a href="../tutorials/Branching_%26_Recombining_the_Story.html" title="renpy/doc/tutorials/Branching &amp; Recombining the Story">Branching &amp; Recombining the Story</a></td>
+</tr>
+</table>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a></p></div>
+	</body></html>

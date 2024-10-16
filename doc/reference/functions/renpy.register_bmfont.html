@@ -1,0 +1,42 @@
+<html><head><title>renpy.register bmfont - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.register_bmfont" name="renpy.register_bmfont"></a></p>
+<h1><span class="mw-headline">renpy.register_bmfont</span></h1>
+<p><span id="renpy.register_bmfont" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.register_bmfont</strong></b></td>
+<td valign="top">(name=None, size=None, bold=False, italics=False, underline=False, filename=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This registers a BMFont with the given details. Please note that size, bold, italic, and underline are all advisory (used for matching), and do not change the appearance of the font.</p>
+<p>Please see <a class="external text" href="http://www.angelcode.com/products/bmfont/" rel="nofollow" title="http://www.angelcode.com/products/bmfont/">the BMFont home page</a> for the tool that creates BMFonts. Ren'Py expects that the <i>filename</i> parameter will be to a file in the BMFont text format, that describes a 32-bit font. The Alpha channel should contain the font information, while the Red, Green, and Blue channels should be set to one. The image files, kerning, and other control information is read out of the BMFont file.</p>
+<p><i>name</i> - The name of the font being registered</p>
+<p><i>size</i> - The size of the font being registered</p>
+<p><i>bold</i> - The boldness of the font being registered</p>
+<p><i>italics</i> - The italicness of the font being registered</p>
+<p><i>underline</i> - The underline of the font being registered</p>
+<p><i>filename</i> - The file containing bmfont control information.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ renpy<span class="sym">.</span><span class="kwd">register_bmfont</span><span class="sym">(</span><span class="str">"bmfont"</span><span class="sym">,</span> <span class="num">22</span><span class="sym">,</span> filename<span class="sym">=</span><span class="str">"bmfont.fnt"</span><span class="sym">)</span>
+    $ ebf <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">'Eileen'</span><span class="sym">,</span> color<span class="sym">=(</span><span class="num">200</span><span class="sym">,</span> <span class="num">255</span><span class="sym">,</span> <span class="num">200</span><span class="sym">,</span> <span class="num">255</span><span class="sym">),</span>
+                      what_font<span class="sym">=</span><span class="str">"bmfont"</span><span class="sym">,</span> what_size<span class="sym">=</span><span class="num">22</span><span class="sym">)</span>
+
+ebf <span class="str">"Finally, Ren'Py supports BMFonts."</span>
+</pre>
+<p><i>(new in 6.8.0)</i></p>
+<p><a id="Note" name="Note"></a></p>
+<h2><span class="mw-headline">Note</span></h2>
+<p>It's is recommended that you select both Latin and General Punctuation subsets when using a bmfont as the default.font. Missing the latter causes a crash when style inspector is called up.</p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

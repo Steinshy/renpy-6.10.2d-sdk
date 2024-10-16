@@ -1,0 +1,52 @@
+<html><head><title>ui.textbutton - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.textbutton" name="ui.textbutton"></a></p>
+<h1><span class="mw-headline">ui.textbutton</span></h1>
+<p><span id="ui.textbutton" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.textbutton</strong></b></td>
+<td valign="top">(text, clicked=None, text_style='button_text', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a button that is labelled with some text.</p>
+<p><i>text</i> - The text of this button.</p>
+<p><i>clicked</i> - A function that is called with no arguments when this button is clicked. If it returns a non-None value, then that value is returned from <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>(). If this would add new content to the screen, it's best if this is of the form <a href="../../reference/functions/ui.returns.html" title="renpy/doc/reference/functions/ui.returns">ui.returns</a>(UserFunctionThatDisplaysThings): see examples below.</p>
+<p><i>hovered</i> - A function that is called with no arguments when this button is focused. If it returns a non-None value, then that value is returned from <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>().</p>
+<p><i>unhovered</i> - A function that is called with no arguments when the button loses focus.</p>
+<p><i>text_style</i> - The style that is used for button text.</p>
+<p><i>role</i> - The role this button undertakes. This can be the empty string, or "selected_".</p>
+<p>Note that code in the clicked, hovered, and unhovered methods is run inside the current interaction. This means that the screen is not cleared while this code is run. Displayables may be added or removed from the current interaction, provided <a href="../../reference/functions/renpy.restart_interaction.html" title="renpy/doc/reference/functions/renpy.restart interaction">renpy.restart_interaction</a> is called to let Ren'Py know that the interaction has been changed. You should not run code that causes a new interaction from inside these functions, except inside a new context using <a href="../../reference/functions/renpy.call_in_new_context.html" title="renpy/doc/reference/functions/renpy.call in new context">renpy.call_in_new_context</a>, <a href="../../reference/functions/renpy.invoke_in_new_context.html" title="renpy/doc/reference/functions/renpy.invoke in new context">renpy.invoke_in_new_context</a>, or <a href="../../reference/functions/ui.callsinnewcontext.html" title="renpy/doc/reference/functions/ui.callsinnewcontext">ui.callsinnewcontext</a>.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    <span class="kwa">while True</span><span class="sym">:</span>
+        ui<span class="sym">.</span><span class="kwd">vbox</span><span class="sym">()</span>
+        ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Keep going"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">((</span><span class="str">"keep"</span><span class="sym">,</span> <span class="kwa">True</span><span class="sym">)),</span> xminimum<span class="sym">=</span><span class="num">250</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Finish"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">((</span><span class="str">"done"</span><span class="sym">,</span> <span class="kwa">True</span><span class="sym">)),</span> xminimum<span class="sym">=</span><span class="num">250</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+
+        <span class="kwb">type</span><span class="sym">,</span> value <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+
+        <span class="kwa">if</span> <span class="kwb">type</span> <span class="sym">==</span> <span class="str">"done"</span><span class="sym">:</span>
+            <span class="kwa">break</span>
+</pre>
+<p><a id="See_also" name="See_also"></a></p>
+<h2><span class="mw-headline">See also</span></h2>
+<ul>
+<li><a href="../../reference/functions/ui.text.html" title="renpy/doc/reference/functions/ui.text">ui.text</a></li>
+<li><a href="../../reference/functions/ui.button.html" title="renpy/doc/reference/functions/ui.button">ui.button</a></li>
+<li><a href="../../reference/functions/ui.imagebutton.html" title="renpy/doc/reference/functions/ui.imagebutton">ui.imagebutton</a></li>
+<li><a href="../../reference/functions/ui.returns.html" title="renpy/doc/reference/functions/ui.returns">ui.returns</a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

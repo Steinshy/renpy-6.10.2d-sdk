@@ -1,0 +1,33 @@
+<html><head><title>ComposeTransition - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ComposeTransition" name="ComposeTransition"></a></p>
+<h1><span class="mw-headline">ComposeTransition</span></h1>
+<p><span id="ComposeTransition" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ComposeTransition</strong></b></td>
+<td valign="top">(trans, before=None, after=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This allows transitions to be composed before they are applied.</p>
+<p><i>trans</i> - The top-level transition.</p>
+<p><i>before</i> - If not None, a transition that is applied to the old and new screens, and used as the old screen for <i>trans</i>.</p>
+<p><i>after</i> - If not None, a transition that is applied to the old and new screens, and used as the new screen for <i>trans</i>.</p>
+<p>This may not work with all transitions.</p>
+</div>
+<p><br /></p>
+<p><br /></p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+$ moveinoutdissolve <span class="sym">=</span> <span class="kwd">ComposeTransition</span><span class="sym">(</span>dissolve<span class="sym">,</span> before<span class="sym">=</span>moveoutleft<span class="sym">,</span> after<span class="sym">=</span>moveinright<span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

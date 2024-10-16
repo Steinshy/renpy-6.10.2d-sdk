@@ -1,0 +1,28 @@
+<html><head><title>renpy.checkpoint - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.checkpoint" name="renpy.checkpoint"></a></p>
+<h1><span class="mw-headline">renpy.checkpoint</span></h1>
+<p><span id="renpy.checkpoint" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.checkpoint</strong></b></td>
+<td valign="top">(data=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a checkpoint that the user can rollback to. The checkpoint is placed at the statement after the last statement that interacted with the user. Once this function has been called, there should be no more interaction with the user in the current Python block.</p>
+<p><i>data</i> - If not None, this contains data that can be accessed using <a href="../../reference/functions/renpy.roll_forward_info.html" title="renpy/doc/reference/functions/renpy.roll forward info">renpy.roll_forward_info</a> if and when the current statement is re-executed due to the user rolling back and then rolling forward again.</p>
+<p>renpy.checkpoint should be called after <a href="../../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+</div>
+<p><br /></p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<p>See the example in <a href="../../reference/functions/renpy.roll_forward_info.html" title="renpy/doc/reference/functions/renpy.roll forward info">renpy.roll_forward_info</a>.</p>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,87 @@
+<html><head><title>renpy.easy displayable - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.easy_displayable" name="renpy.easy_displayable"></a></p>
+<h1><span class="mw-headline">renpy.easy_displayable</span></h1>
+<p><span id="renpy.easy_displayable" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.easy_displayable</strong></b></td>
+<td valign="top">(d, none=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This takes an "easy displayable", and returns a <a href="../../reference/Displayables.html" title="renpy/doc/reference/Displayables">Displayable</a>. Easy displayables may be Displayables, or may be strings. If a string, then:</p>
+<ul>
+<li>If the string starts with #, a <a href="../../reference/functions/Solid.html" title="renpy/doc/reference/functions/Solid">Solid</a> of the given color is returned.</li>
+<li>Otherwise, an <a href="../../reference/functions/Image.html" title="renpy/doc/reference/functions/Image">Image</a> is returned.</li>
+</ul>
+<p>If <i>none</i> is True and d is None, then None is returned. Otherwise, if d is None, an exception is thrown.</p>
+</div>
+<p><a id="Usage" name="Usage"></a></p>
+<h2><span class="mw-headline">Usage</span></h2>
+<p>Probably the most practical uses for this function are when you are defining a user interface or making your own <a href="../../reference/User-Defined_Displayables.html" title="renpy/doc/reference/User-Defined Displayables">custom displayable</a>.</p>
+<p>For example, suppose you are making a custom displayable that shows a different image for "healthy", "hurt" and "unconscious" (of course, in practise you can use a <a href="../../reference/functions/ConditionSwitch.html" title="renpy/doc/reference/functions/ConditionSwitch">ConditionSwitch</a> for this, but for the sake of the example, just roll with it). You could do something like this:</p>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+
+    <span class="kwa">class</span> <span class="kwd">CharacterStatus</span><span class="sym">(</span>renpy<span class="sym">.</span>Displayable<span class="sym">):</span>
+
+        <span class="kwa">def</span> <span class="kwd">__init__</span><span class="sym">(</span>self<span class="sym">,</span> character<span class="sym">,</span> healthy<span class="sym">,</span> hurt<span class="sym">,</span> unconscious<span class="sym">, **</span>properties<span class="sym">):</span>
+            renpy<span class="sym">.</span>Displayable<span class="sym">.</span><span class="kwd">__init__</span><span class="sym">(</span>self<span class="sym">, **</span>properties<span class="sym">)</span>
+
+            self<span class="sym">.</span>character   <span class="sym">=</span> character
+
+            <span class="slc">####################################################################</span>
+            <span class="slc">#                                                                  #</span>
+            <span class="slc">#    Here we use renpy.easy_displayable to set the three different #</span>
+            <span class="slc"># displayables for the three different states.                     #</span>
+            <span class="slc">#                                                                  #</span>
+            <span class="slc">#    Note that for the hurt image, you can pass None, and the      #</span>
+            <span class="slc"># healthy image will be used instead.                              #</span>
+            <span class="slc">#                                                                  #</span>
+            <span class="slc">####################################################################</span>
+
+            self<span class="sym">.</span>healthy     <span class="sym">=</span> renpy<span class="sym">.</span><span class="kwd">easy_displayable</span><span class="sym">(</span>healthy<span class="sym">)</span>
+            self<span class="sym">.</span>unconscious <span class="sym">=</span> renpy<span class="sym">.</span><span class="kwd">easy_displayable</span><span class="sym">(</span>unconscious<span class="sym">)</span>
+            self<span class="sym">.</span>hurt        <span class="sym">=</span> renpy<span class="sym">.</span><span class="kwd">easy_displayable</span><span class="sym">(</span>hurt<span class="sym">,</span> none<span class="sym">=</span><span class="kwa">True</span><span class="sym">)</span>
+
+            <span class="kwa">if</span> self<span class="sym">.</span>hurt <span class="kwa">is None</span><span class="sym">:</span>
+                self<span class="sym">.</span>hurt <span class="sym">=</span> self<span class="sym">.</span>healthy
+
+            <span class="slc">####################################################################</span>
+
+        <span class="kwa">def</span> <span class="kwd">render</span><span class="sym">(</span>self<span class="sym">,</span> width<span class="sym">,</span> height<span class="sym">,</span> st<span class="sym">,</span> <span class="kwa">at</span><span class="sym">):</span>
+
+            <span class="kwa">if</span> self<span class="sym">.</span>character<span class="sym">.</span>health <span class="sym">&gt;=</span> <span class="num">50</span><span class="sym">:</span>
+                displayable <span class="sym">=</span> self<span class="sym">.</span>healthy
+            <span class="kwa">elif</span> self<span class="sym">.</span>character<span class="sym">.</span>health <span class="sym">==</span> <span class="num">0</span><span class="sym">:</span>
+                displayable <span class="sym">=</span> self<span class="sym">.</span>unconscious
+            <span class="kwa">else</span><span class="sym">:</span>
+                displayable <span class="sym">=</span> self<span class="sym">.</span>hurt
+
+            r <span class="sym">=</span> <span class="kwd">Render</span><span class="sym">(</span>width<span class="sym">,</span> height<span class="sym">)</span>
+            r<span class="sym">.</span><span class="kwd">blit</span><span class="sym">(</span>renpy<span class="sym">.</span><span class="kwd">render</span><span class="sym">(</span>displayable<span class="sym">,</span> width<span class="sym">,</span> height<span class="sym">,</span> st<span class="sym">,</span> <span class="kwa">at</span><span class="sym">), (</span><span class="num">0</span><span class="sym">,</span><span class="num">0</span><span class="sym">))</span>
+            <span class="kwa">return</span> r
+
+        <span class="kwa">def</span> <span class="kwd">visit</span><span class="sym">(</span>self<span class="sym">):</span>
+            <span class="kwa">return</span> <span class="sym">[</span> self<span class="sym">.</span>healthy<span class="sym">,</span> self<span class="sym">.</span>hurt<span class="sym">,</span> self<span class="sym">.</span>unconscious <span class="sym">]</span>
+
+        <span class="kwa">def</span> <span class="kwd">per_interact</span><span class="sym">(</span>self<span class="sym">):</span>
+            renpy<span class="sym">.</span><span class="kwd">redraw</span><span class="sym">(</span>self<span class="sym">,</span> <span class="num">0</span><span class="sym">)</span>
+</pre>
+<p>By doing this you can create one of these custom displayables like this:</p>
+<pre>
+<span class="kwa">image</span> eileen_status <span class="sym">=</span> <span class="kwd">CharacterStatus</span><span class="sym">(</span>
+    eileen<span class="sym">,</span>
+    <span class="kwd">Animation</span><span class="sym">(</span><span class="str">"eileen_vhappy.png"</span><span class="sym">,</span> <span class="num">1.0</span><span class="sym">,</span> <span class="str">"eileen_happy.png"</span><span class="sym">,</span> <span class="num">1.0</span><span class="sym">),</span>
+    <span class="kwa">None</span><span class="sym">,</span>
+    <span class="str">"unconscious_character.png"</span><span class="sym">)</span>
+</pre>
+<p>Because of renpy.easy_displayable(), you can seamlessly mix an <a href="../../reference/functions/Animation.html" title="renpy/doc/reference/functions/Animation">Animation</a>, a static image loaded from a file name, and even "<tt>None</tt>" - all with very little code within the custom displayable itself. You could even use colours (for example, instead of the unconscious character image, just have a black portrait by using "<tt>#000</tt>" instead of "<tt>unconscious_character.png</tt>").</p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

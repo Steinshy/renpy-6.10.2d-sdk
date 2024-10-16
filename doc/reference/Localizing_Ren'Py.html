@@ -1,0 +1,37 @@
+<html><head><title>Localizing Ren&amp;#39;Py - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Localizing_Ren.27Py" name="Localizing_Ren.27Py"></a></p>
+<h1><span class="mw-headline">Localizing Ren'Py</span></h1>
+<p>While Ren'Py is by default set up to operate in an English speaking environment, it is not limited to such settings. Assuming a proper font is loaded, Ren'Py scripts can contain any language expressible in Unicode.</p>
+<p>There are two things in the Ren'Py library that may need to be translated into a user's language. The first is the main menu. There is no explicit support for doing this, but as the <a href="../reference/Configuration_Variables#config.main_menu" title="renpy/doc/reference/Configuration Variables">config.main_menu</a> variable supports changing the text of the main menu, it also supports translating said text.</p>
+<p>The second thing that needs to be translated is the game menu. The <a href="../reference/Configuration_Variables#config.translations" title="renpy/doc/reference/Configuration Variables">config.translations</a> dictionary is used to translate text in the game menu into your language. If a key in this map corresponds to the English text that would be displayed, the value corresponding to that key is displayed again. For example:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ config<span class="sym">.</span>translations <span class="sym">= {</span>
+        <span class="str">"Yes"</span> <span class="sym">:</span> u<span class="str">"HIja'"</span><span class="sym">,</span>
+        <span class="str">"No"</span> <span class="sym">:</span> u<span class="str">"ghobe'"</span><span class="sym">,</span>
+        <span class="slc"># etc.</span>
+        <span class="sym">}</span>
+</pre>
+<p>The <i>u</i> characters prefixed to the strings on the right, while not strictly necessary in this case, are used to tell Python that the string is in Unicode rather than ASCII. This is useful if your language uses non-ascii characters.</p>
+<p><br /></p>
+<p><a id="The___Function" name="The___Function"></a></p>
+<h2><span class="mw-headline">The _ Function</span></h2>
+<p>Translation actually occurs using a function, named _, to look up the translation of a string. The default function uses config.translations as described above, but _ can be re-defined to use an alternate means of determining the translation.</p>
+<p><span id="_" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b>_</b></td>
+<td valign="top">(s):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function is called to translate s into the local language.</p>
+</div>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

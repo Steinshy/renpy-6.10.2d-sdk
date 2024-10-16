@@ -1,0 +1,65 @@
+<html><head><title>ui.adjustment - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.adjustment" name="ui.adjustment"></a></p>
+<h1><span class="mw-headline">ui.adjustment</span></h1>
+<p><span id="ui.adjustment" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.adjustment</strong></b></td>
+<td valign="top">(range=1, value=0, step=None, page=0, changed=None, adjustable=False, ranged=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Adjustment objects are used to represent a numeric value that can vary between 0 and a defined number. They also contain information on the steps the value can be adjusted by.</p>
+<p><i>range</i> is the limit of the range of the value. This may be an integer or a float.</p>
+<p><i>value</i> is the initial value of the adjustment.</p>
+<p><i>step</i> is the size of the steps the value can be adjusted by. The default for this value depends on page and range. If page is set, this defaults to 1/10 page. If range is a float, it defaults to 1/20th of the range, otherwise it defaults to 1 pixel.</p>
+<p><i>page</i> is the size of a page, used when the bar is in paging mode. If not set, defaults to 1/10th of the range.</p>
+<p>These four arguments correspond to fields on the adjustment object. The fields can be safely set before anything using the adjustment has been rendered. After that, they should be treated as read-only.</p>
+<p><i>changed</i> is a function that's called when the adjustment is changed. The function is called with one argument, the new value of the adjustment. This should be present for the bar to be adjustable.</p>
+<p><i>adjustable</i> controls whether bars without any changed functions are adjustable. If <i>changed</i> is not None, the bar is always adjustable, and this argument is ignored.</p>
+<p><i>ranged</i> is a function that is called with this adjustment as an argument when the adjustment's range has is set. <i>(new in 6.6.0)</i></p>
+<p>Adjustment objects have one method:</p>
+<p><span id="Adjustment.change" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>Adjustment.change</b></td>
+<td valign="top">(value):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Call this to set the value of the adjustment to <i>value</i>. This will redraw all displayables affected by this change.</p>
+</div>
+<p><br /></p>
+</div>
+<p><br /></p>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    <span class="kwa">def</span> <span class="kwd">store_value</span><span class="sym">(</span>x<span class="sym">):</span>
+         <span class="kwa">global</span> value
+         value <span class="sym">=</span> x
+
+<span class="kwa">python hide</span><span class="sym">:</span>
+    store<span class="sym">.</span>value <span class="sym">=</span> <span class="num">50</span>
+    adj <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">adjustment</span><span class="sym">(</span><span class="num">100</span><span class="sym">,</span> store<span class="sym">.</span>value<span class="sym">,</span> changed<span class="sym">=</span>store_value<span class="sym">)</span>
+
+    <span class="slc"># These two bars adjust together.</span>
+    ui<span class="sym">.</span><span class="kwd">bar</span><span class="sym">(</span>adjustment<span class="sym">=</span>adj<span class="sym">,</span> xalign<span class="sym">=</span><span class="num">0</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0</span><span class="sym">)</span>
+    ui<span class="sym">.</span><span class="kwd">bar</span><span class="sym">(</span>adjustment<span class="sym">=</span>adj<span class="sym">,</span> xalign<span class="sym">=</span><span class="num">1.0</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.1</span><span class="sym">)</span>
+
+    <span class="slc"># Let the user indicate he's done.</span>
+    ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Done."</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="kwa">True</span><span class="sym">),</span> xalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">)</span>
+    ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+<span class="str">"The value chosen was %(value)d."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

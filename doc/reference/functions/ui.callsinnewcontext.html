@@ -1,0 +1,32 @@
+<html><head><title>ui.callsinnewcontext - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.callsinnewcontext" name="ui.callsinnewcontext"></a></p>
+<h1><span class="mw-headline">ui.callsinnewcontext</span></h1>
+<p><span id="ui.callsinnewcontext" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.callsinnewcontext</strong></b></td>
+<td valign="top">(label, *args, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function returns a function that, when called, calls the supplied label in a new context. Additional positional and keyword arguments are passed in to the called label.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    <span class="kwa">def</span> <span class="kwd">overlay</span><span class="sym">():</span>
+         ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Save"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">callsinnewcontext</span><span class="sym">(</span><span class="str">"_game_menu_save"</span><span class="sym">),</span> xalign<span class="sym">=</span><span class="num">0.0</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.0</span><span class="sym">)</span>
+         ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Prefs"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">callsinnewcontext</span><span class="sym">(</span><span class="str">"_game_menu"</span><span class="sym">,</span> <span class="str">"_prefs_screen"</span><span class="sym">),</span> xalign<span class="sym">=</span><span class="num">1.0</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">0.0</span><span class="sym">)</span>
+
+    config<span class="sym">.</span>overlay_functions<span class="sym">.</span><span class="kwd">append</span><span class="sym">(</span>overlay<span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,1267 @@
+<html><head><title>Configuration Variables - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Configuration_Variables" name="Configuration_Variables"></a></p>
+<h1><span class="mw-headline">Configuration Variables</span></h1>
+<p>Much of the the configuration of Ren'Py is done using configuration variable. These variables, when assigned in a python block, change the behavior of the interpreter. As configuration variables aren't saved, and many need to be set before the GUI initializes, it makes sense to set all configuration variables inside init blocks. An example setting of variables is:</p>
+<pre>
+<span class="kwa">init</span> <span class="sym">-</span><span class="num">1</span> <span class="kwa">python</span><span class="sym">:</span>
+    config<span class="sym">.</span>screen_width <span class="sym">=</span> <span class="num">640</span>
+    config<span class="sym">.</span>screen_height <span class="sym">=</span> <span class="num">480</span>
+</pre>
+<table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Configuration_Variables"><span class="tocnumber">1</span> <span class="toctext">Configuration Variables</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Commonly_Used"><span class="tocnumber">1.1</span> <span class="toctext">Commonly Used</span></a></li>
+<li class="toclevel-2"><a href="#Occasionally_Used"><span class="tocnumber">1.2</span> <span class="toctext">Occasionally Used</span></a></li>
+<li class="toclevel-2"><a href="#Rarely_or_Internally_Used"><span class="tocnumber">1.3</span> <span class="toctext">Rarely or Internally Used</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><br /></p>
+<p><a id="Commonly_Used" name="Commonly_Used"></a></p>
+<h2><span class="mw-headline">Commonly Used</span></h2>
+<p><span id="config.archives" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.archives</b></td>
+<td valign="top">= [ ]</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of archive files that will be searched for images.</p>
+</div>
+<p><span id="config.developer" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.developer</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If set to True, developer mode is enabled. (Note that this is set to True by the default script template.)</p>
+</div>
+<p><span id="config.help" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.help</b></td>
+<td valign="top">= "README.html"</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This controls the functionality of the help system invoked by the help button on the main and game menus, or by pressing f1 or command-?.</p>
+<ul>
+<li>If None, the help system is disabled and does not show up on menus.</li>
+<li>If a string corresponding to a label found in the script, that label is invoked in a new context. This allows you to define an in-game help-screen.</li>
+<li>Otherwise, this is interpreted as a filename relative to the base directory, that is opened in a web browser.</li>
+</ul>
+<p><i>(new in 6.8.0)</i></p>
+</div>
+<p><span id="config.screen_height" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.screen_height</b></td>
+<td valign="top">= 600</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This sets the height of the screen.</p>
+</div>
+<p><span id="config.screen_width" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.screen_width</b></td>
+<td valign="top">= 800</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This sets the width of the screen.</p>
+</div>
+<p><span id="config.translations" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.translations</b></td>
+<td valign="top">= dict(...)</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a map used to translate text in the game menu into your language. See <a href="../reference/Localizing_Ren%27Py.html" title="renpy/doc/reference/Localizing Ren&apos;Py">Localizing Ren'Py</a> for how to use it, and <a class="external text" href="http://www.renpy.org/wiki/renpy/doc/cookbook/Translations" rel="nofollow" title="http://www.renpy.org/wiki/renpy/doc/cookbook/Translations">here</a> for a list of available translations.</p>
+</div>
+<p><span id="config.window_icon" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.window_icon</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is expected to be the filename of an image giving an icon that is used for the window on Linux and Mac OS X. This should be a large image, with 8-bit alpha.</p>
+</div>
+<p><span id="config.windows_icon" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.windows_icon</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is expected to be the filename of an image giving an icon that is used for the window on Windows. This should be a 32x32 image with 1-bit alpha. (Opaque images work the best.)</p>
+</div>
+<p><span id="config.window_title" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.window_title</b></td>
+<td valign="top">= "A Ren'Py Game"</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is prepended to <a href="../reference/Store_Variables#_window_subtitle" title="renpy/doc/reference/Store Variables">_window_subtitle</a> to produce the caption for the window.</p>
+</div>
+<p><span id="config.save_directory" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.save_directory</b></td>
+<td valign="top">= "..."</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is used to generate the default directory in which games and persistent information are saved. The directory name generated depends on the platform:</p>
+<ul>
+<li>Windows:&#160;%APPDATA%/RenPy/<i>save_directory</i></li>
+<li>Mac OS X: ~/Library/RenPy/<i>save_directory</i></li>
+<li>Linux/Other: ~/.renpy/<i>save_directory</i></li>
+</ul>
+<p>This should be set in a python early block, as the save directory name must be known before init code runs, as persistent information is made available to init code.</p>
+<p>This directory may be overridden by user invocation. Code that needs to know the save directory should read <a href="../reference/Configuration_Variables#config.savedir" title="renpy/doc/reference/Configuration Variables">config.savedir</a> instead. <i>(new in 6.7.0)</i></p>
+</div>
+<p><a id="Occasionally_Used" name="Occasionally_Used"></a></p>
+<h2><span class="mw-headline">Occasionally Used</span></h2>
+<p><span id="config.adv_nvl_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.adv_nvl_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A transition that is used when showing NVL-mode text directly after ADV-mode text.</p>
+</div>
+<p><span id="config.after_load_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.after_load_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A transition that is used after loading, when entering the loaded game.</p>
+</div>
+<p><span id="config.auto_load" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.auto_load</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, the name of a save file to automatically load when Ren'Py starts up. This is intended for developer use, rather than for end users. Setting this to "1" will automatically load the game in save slot 1. <i>(new in 6.10.0)</i></p>
+</div>
+<p><span id="config.automatic_images" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.automatic_images</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this causes Ren'Py to automatically define images. When not set to None, this should be set to a list of separators. (For example, <tt>[ ' ', '_', '/' ]</tt>.) Ren'Py will scan through the list of files on disk and in archives. When it finds a file ending with .png or .jpg, it will strip the extension, and break it apart at the separators, to create an image name. If the name consists of at least two components, and no image with that name already is defined, Ren'Py will define that image to refer to a filename.</p>
+<p>For example, if your game directory contains:</p>
+<ul>
+<li>eileen_happy.png, Ren'Py will define the image "eileen happy".</li>
+<li>lucy/mad.png, Ren'Py will define the image "lucy mad".</li>
+<li>mary.png, Ren'Py will do nothing. (As the image does not have two components.)</li>
+</ul>
+<p><i>(new in 6.10.0)</i></p>
+</div>
+<p><span id="config.automatic_images_strip" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.automatic_images_strip</b></td>
+<td valign="top">= []</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of strings giving prefixes that are stripped out when defining automatic images. This can be used to remove directory names, when directories contain images. <i>(new in 6.10.2)</i></p>
+</div>
+<p><span id="config.debug" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.debug</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Enables some minor debugging functionality (mostly by turning some missing files into errors.) This should always be turned off in a release.</p>
+</div>
+<p><span id="config.debug_image_cache" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.debug_image_cache</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, Ren'Py will print the contents of the image cache to standard output (wherever that goes) whenever the contents of the image cache change.</p>
+</div>
+<p><span id="config.debug_sound" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.debug_sound</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Enables debugging of sound functionality. This disables the supression of errors when generating sound. However, if a sound card is missing or flawed, then such errors are normal, and enabling this may prevent Ren'Py from functioning normally. This should always be False in a released game.</p>
+</div>
+<p><span id="config.default_fullscreen" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.default_fullscreen</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This sets the default value of the fullscreen preference. This should be True or False. If None, this is ignored, allowing other code to set the default value. (It's usually set to False in options.rpy.)</p>
+<p>The file saves/persistent in the game directory must be deleted for this to take effect.</p>
+</div>
+<p><span id="config.default_text_cps" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.default_text_cps</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this sets the default number of characters per second to show. 0 is special cased to mean an infinite number of characters per second. (It's usually set to 0 in options.rpy.)</p>
+<p>The file saves/persistent in the game directory must be deleted for this to take effect.</p>
+</div>
+<p><span id="config.empty_window" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.empty_window</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is called when <a href="../reference/Store_Variables#_window" title="renpy/doc/reference/Store Variables">_window</a> is True, and no window has been shown on the screen. (That is, no call to <a href="../reference/functions/renpy.shown_window.html" title="renpy/doc/reference/functions/renpy.shown window">renpy.shown_window</a> has occured.) It's expected to show an empty window on the screen, and return without causing an interaction.</p>
+<p>The default implementation of this uses the <a href="../reference/Store_Variables#narrator" title="renpy/doc/reference/Store Variables">narrator</a> character to display a blank line without interacting.</p>
+</div>
+<p><span id="config.end_game_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.end_game_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The transition that is used to display the main menu after the game ends normally, either by invoking return with no place to return to, or by calling <a href="../reference/functions/renpy.full_restart.html" title="renpy/doc/reference/functions/renpy.full restart">renpy.full_restart</a>.</p>
+</div>
+<p><span id="config.end_splash_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.end_splash_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The transition that is used to display the main menu after the end of the splashscreen.</p>
+</div>
+<p><span id="config.enter_sound" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.enter_sound</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is a sound file that is played when entering the game menu without clicking a button. (For example, when right-clicking during the game.)</p>
+</div>
+<p><span id="config.enter_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.enter_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this variable should give a transition that will be used when entering the game menu.</p>
+</div>
+<p><span id="config.exit_sound" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.exit_sound</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is a sound file that is played when exiting the game menu without clicking a button. (For example, when right-clicking inside the game menu.)</p>
+</div>
+<p><span id="config.exit_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.exit_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this variable should give a transition that will be performed when exiting the game menu.</p>
+</div>
+<p><span id="config.font_replacement_map" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.font_replacement_map</b></td>
+<td valign="top">= dict()</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a map from (font, bold, italics) to (font, bold, italics), used to replace a font with one that's specialized as having bold and/or italics. For example, if you wanted to have everything using an italic version of "Vera.ttf" use "VeraIt.ttf" instead, you could write config.font_replacement_map["Vera.ttf", False, True] = ("VeraIt.ttf", False, False). Please note that these mappings only apply to specific variants of a font. In this case, requests for a bold italic version of vera will get a bold italic version of vera, rather than a bold version of the italic vera.</p>
+</div>
+<p><span id="config.framerate" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.framerate</b></td>
+<td valign="top">= 100</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is the upper limit on the number of frames Ren'Py will attempt to display per second.</p>
+</div>
+<p><span id="config.game_main_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.game_main_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The transition that is used to display the main menu after leaving the game menu. This is used when the load and preferences screens are invoked from the main menu, and it's also used when the user picks "Main Menu" from the game menu.</p>
+</div>
+<p><span id="config.game_menu" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.game_menu</b></td>
+<td valign="top">= [ ... ]</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is used to customize the choices on the game menu. Please read <a href="../reference/Main_and_Game_Menus.html" title="renpy/doc/reference/Main and Game Menus">Main and Game Menus</a> for more details on the contents of this variable.</p>
+</div>
+<p><span id="config.game_menu_music" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.game_menu_music</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, a music file to play when at the game menu.</p>
+</div>
+<p><span id="config.has_autosave" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.has_autosave</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If true, the game will autosave. If false, no autosaving will occur.</p>
+</div>
+<p><span id="config.hyperlink_callback" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.hyperlink_callback</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A function that is called with the argument to a hyperlink when that hyperlink is clicked. Defaults to a function that inteprets the argument as a label, which is called in a new context when the hyperlink is clicked. The default function also dispatches arguments beginning with "http:" as urls, opening a web browser for them.</p>
+</div>
+<p><span id="config.hyperlink_focus" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.hyperlink_focus</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, a function that is called when a hyperlink gains or loses focus. When focus is gained, this function is called with a single argument, the argument of the hyperlink. When focus is lost, the function is called with None as its argument.</p>
+</div>
+<p><span id="config.hyperlink_styler" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.hyperlink_styler</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A function that is called to determine the style of hyperlinks. The function is called with a single argument, the argument of the hyperlink. It should return a style object, not a string. <i>(new in 6.6.2)</i></p>
+</div>
+<p><span id="config.image_cache_size" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.image_cache_size</b></td>
+<td valign="top">= 8</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is used to set the size of the image cache, as a multiple of the screen size. This is mostly a suggestion, as if Ren'Py ever needs to display more than this amount of images at once, it will cache them all. But it will stop predictively loading images when the cache is filled beyond this, and it will try to drop images from the cache until it shrinks below this size. If this is too small, there will be more disk access as images are loaded and re-loaded. If this is too large, memory usage will be increased as images are kept in memory.</p>
+</div>
+<p><span id="config.main_game_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.main_game_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The transition used when entering the game menu from the main menu, as is done when clicking "Load Game" or "Preferences".</p>
+</div>
+<p><span id="config.main_menu" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.main_menu</b></td>
+<td valign="top">= [ ( "Start Game", "start", "True" ), ("Continue Game", ... ), ("Preferences", ... ), ("Quit Game", ...) ]</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is used to give the main menu that is shown to the user when the game first starts. It is a list of tuples, where the first element of each tuple is the title of the menu button, and the second element is a label that we jump to when that button is selected. (This jump exits the context in which the start menu executes.) The second element may also be a function, in which case it is called when the item is selected, in the menu context. The third element in each tuple is an expression, which is evaluated each time the main menu is displayed. If the expression evaluates to false, the menu choice is disabled.</p>
+<p>For more information, see <a href="../reference/Main_and_Game_Menus.html" title="renpy/doc/reference/Main and Game Menus">Main_and_Game_Menus</a></p>
+</div>
+<p><span id="config.main_menu_music" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.main_menu_music</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, a music file to play when at the main menu.</p>
+</div>
+<p><span id="config.menu_clear_layers" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.menu_clear_layers</b></td>
+<td valign="top">= []</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of layer names (as strings) that are cleared when entering the game menu. <i>(new in 6.10.2)</i></p>
+</div>
+<p><span id="config.menu_window_subtitle" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.menu_window_subtitle</b></td>
+<td valign="top">= ""</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The <a href="../reference/Store_Variables#_window_subtitle" title="renpy/doc/reference/Store Variables">_window_subtitle</a> variable is set to this value when entering the main or game menus. <i>(new in 6.7.1)</i></p>
+</div>
+<p><span id="config.misssing_background" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.misssing_background</b></td>
+<td valign="top">= "black"</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is the background that is used when config.developer is True and an undefined image is used in a scene statement. This is an image name, not a displayable. The image must be defined. <i>(new in 6.8.0)</i></p>
+</div>
+<p><span id="config.mouse" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.mouse</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This variable controls the use of user-defined mouse cursors. If None, the system mouse is used, which is usually a black-and-white mouse cursor. Otherwise, this should be a dictionary giving the mouse animations for various mouse types. Keys used by the default library include "default", "say", "with", "menu", "prompt", "imagemap", "pause", "mainmenu", and "gamemenu". The "default" key should always be present. The values in the dictionary should be list of frames making up the mouse cursor. Each frame is an (image, x-offset, y-offset) tuple. Image is a filename of an image, while x- and y- offset are the offsets of the hotspot within the image. The frames are played back at 20hz, and the animation loops after all frames have been shown. Please note that to show a frame more than once, it must be repeated in a frame list. That is implemented efficiently.</p>
+</div>
+<p><span id="config.nvl_adv_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.nvl_adv_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A transition that is used when showing ADV-mode text directly after NVL-mode text.</p>
+</div>
+<p><span id="config.overlay_functions" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.overlay_functions</b></td>
+<td valign="top">= [ ]</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of functions. When called, each function is expected to return a list of displayables, which are added to the overlay list. See the section on overlays for more.</p>
+</div>
+<p><span id="config.thumbnail_height" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.thumbnail_height</b></td>
+<td valign="top">= 75</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The height of the thumbnails that are taken when the game is saved. These thumbnails are shown when the game is loaded. Please note that the thumbnail is shown at the size it was taken at, rather than the value of this setting when the thumbnail is shown to the user.</p>
+<p>The default is set by the load_save layout, and so may differ from these values.</p>
+</div>
+<p><span id="config.thumbnail_width" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.thumbnail_width</b></td>
+<td valign="top">= 100</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The width of the thumbnails that are taken when the game is saved. These thumbnails are shown when the game is loaded. Please note that the thumbnail is shown at the size it was taken at, rather than the value of this setting when the thumbnail is shown to the user.</p>
+<p>The default is set by the load_save layout, and so may differ from these values.</p>
+</div>
+<p><span id="config.window_hide_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.window_hide_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The transition used by the <code>window hide</code> statement when no transition has been explicitly specified.</p>
+</div>
+<p><span id="config.window_overlay_functions" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.window_overlay_functions</b></td>
+<td valign="top">= []</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of overlay functions that are only called when the window is shown. <i>(new in 6.10.0)</i></p>
+</div>
+<p><span id="config.window_show_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.window_show_transition</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The transition used by the <code>window show</code> statement when no transition has been explicitly specified.</p>
+</div>
+<p><a id="Rarely_or_Internally_Used" name="Rarely_or_Internally_Used"></a></p>
+<h2><span class="mw-headline">Rarely or Internally Used</span></h2>
+<p><span id="config.afm_bonus" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.afm_bonus</b></td>
+<td valign="top">= 25</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The number of bonus characters added to every string when auto-forward mode is in effect.</p>
+</div>
+<p><span id="config.afm_callback" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.afm_callback</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, a python function that is called to determine if it is safe to auto-forward. The intent is that this can be used by a voice system to disable auto-forwarding when a voice is playing.</p>
+</div>
+<p><span id="config.afm_characters" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.afm_characters</b></td>
+<td valign="top">= 250</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The number of characters in a string it takes to cause the amount of time specified in the auto forward mode preference to be delayed before auto-forward mode takes effect.</p>
+</div>
+<p><span id="config.all_character_callbacks" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.all_character_callbacks</b></td>
+<td valign="top">= [ ]</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of callbacks that are called by all characters. This list is prepended to the list of character-specific callbacks.</p>
+</div>
+<p><span id="config.allow_skipping" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.allow_skipping</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If set to False, the user is not able to skip over the text of the game.</p>
+</div>
+<p><span id="config.args" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.args</b></td>
+<td valign="top">= [ ]</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of command line arguments supplied to the game. These are prefixed by --arg on the command line that launches Ren'Py.</p>
+</div>
+<p><span id="config.auto_choice_delay" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.auto_choice_delay</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None,this variable gives a number of seconds that Ren'Py will pause at an in-game menu before picking a random choice from that menu. We'd expect this variable to always be set to None in released games, but setting it to a number will allow for automated demonstrations of games without much human interaction.</p>
+</div>
+<p><span id="config.autosave_frequency" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.autosave_frequency</b></td>
+<td valign="top">= 200</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Roughly, the number of interactions that will occur before an autosave occurs. To disable autosaving, set <a href="../reference/Configuration_Variables#config.has_autosave" title="renpy/doc/reference/Configuration Variables">config.has_autosave</a> to False, don't change this variable.</p>
+</div>
+<p><span id="config.character_callback" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.character_callback</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The default value of the callback parameter of <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a>.</p>
+</div>
+<p><span id="config.clear_layers" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.clear_layers</b></td>
+<td valign="top">= []</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of names of layers to clear when entering the main and game menus. <i>(new in 6.7.0)</i></p>
+</div>
+<p><span id="config.editor" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.editor</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is expected to be a command line for an editor that is invoked when the launch_editor (normally shift-E) key is pressed. The following substitutions make sense here:</p>
+<ul>
+<li>&#160;%(filename)s - The filename of the most interesting file to be edited. This is the file that should be shown to the user.</li>
+<li>&#160;%(line)d - The line number of the most interesting file to show to the user.</li>
+<li>&#160;%(otherfiles)s - Other, less-interesting files to show to the user.</li>
+<li>&#160;%(allfiles)s - All the files.</li>
+</ul>
+<p><i>filename</i>, <i>otherfiles</i>, and <i>allfiles</i> have shell-relevant characters escaped with backslashes. <i>otherfiles</i> and <i>allfiles</i> separate files with <a href="../reference/Configuration_Variables#config.editor_file_separator" title="renpy/doc/reference/Configuration Variables">config.editor_file_separator</a> (by default '" "', a double-quote, a space, and a quote). Since all filenames should be enclosed in double-quotes, this means that <i>otherfiles</i> and <i>allfiles</i> will create several quoted files. If two double-quotes occur in a row the string, then they are both removed. (This allows an empty allfiles to be used.) <i>(changed in 6.7.1)</i></p>
+<p>A reasonable example is:</p>
+<pre>
+<span class="kwa">init python</span><span class="sym">:</span>
+    config<span class="sym">.</span>editor <span class="sym">=</span> <span class="str">'myeditor "%(filename)s" +line:%(line)d "%(otherfiles)s"'</span>
+</pre>
+<p>This defaults to the value of the RENPY_EDITOR environment variable. If not defined by that variable or user code, this is set automatically by the Ren'Py launcher.</p>
+</div>
+<p><span id="config.editor_file_separator" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.editor_file_separator</b></td>
+<td valign="top">= '" "'</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The separator used between filenames when lists of files are provided to the editor.</p>
+</div>
+<p><span id="config.editor_transient" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.editor_transient</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is expected to be a command line for an editor that is invoked on transient files, such as lint results, parse errors, and tracebacks. Substitutions are as for config.editor.</p>
+<p>This defaults to the value of the RENPY_EDITOR_TRANSIENT environment variable. If not defined by that variable or user code, this is set automatically by the Ren'Py launcher.</p>
+</div>
+<p><span id="config.fade_music" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.fade_music</b></td>
+<td valign="top">= 0.0</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is the amount of time in seconds to spend fading the old track out before a new music track starts. This should probably be fairly short, so the wrong music doesn't play for too long.</p>
+</div>
+<p><span id="config.fast_skipping" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.fast_skipping</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Set this to True to allow fast skipping outside of developer mode.</p>
+</div>
+<p><span id="config.file_open_callback" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.file_open_callback</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is a function that is called with the file name when a file needs to be opened. It should return a file-like object, or None to load the file using the usual Ren'Py mechanisms. Your file-like object must implement at least the read, seek, tell, and close methods. <i>(new in 6.10.0)</i></p>
+</div>
+<p><span id="config.focus_crossrange_penalty" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.focus_crossrange_penalty</b></td>
+<td valign="top">= 1024</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is the amount of penalty to apply to moves perpendicular to the selected direction of motion, when moving focus with the keyboard.</p>
+</div>
+<p><span id="config.hard_rollback_limit" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.hard_rollback_limit</b></td>
+<td valign="top">= 100</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is the number of steps that Ren'Py will let the user interactively rollback. Set this to 0 to disable rollback entirely, although we don't recommend that, as rollback is useful to let the user see text he skipped by mistake.</p>
+</div>
+<p><span id="config.hide" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.hide</b></td>
+<td valign="top">= renpy.hide</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A function that is called when the hide statement is executed. This should take the same arguments as <a href="../reference/functions/renpy.hide.html" title="renpy/doc/reference/functions/renpy.hide">renpy.hide</a>.</p>
+</div>
+<p><span id="config.implicit_with_none" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.implicit_with_none</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, then by default the equivalent of a "with None" statement will be performed after interactions caused by dialogue (through the <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> object), menus (and <a href="../reference/functions/renpy.display_menu.html" title="renpy/doc/reference/functions/renpy.display menu">renpy.display_menu</a>), <a href="../reference/functions/renpy.input.html" title="renpy/doc/reference/functions/renpy.input">renpy.input</a>, and <a href="../reference/functions/renpy.imagemap.html" title="renpy/doc/reference/functions/renpy.imagemap">renpy.imagemap</a>. All of the above functions take a <i>with_none</i> parameter, which will override this variable.</p>
+</div>
+<p><span id="config.interact_callbacks" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.interact_callbacks</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of functions that are called (without any arguments) when an interaction is started or restarted.</p>
+</div>
+<p><span id="config.joystick" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.joystick</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Governs if joystick support is enabled. If False, Joystick detection is disabled.</p>
+</div>
+<p><span id="config.keymap" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.keymap</b></td>
+<td valign="top">= dict(...)</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This variable contains a keymap giving the keys and mouse buttons assigned to each possible operation. Please see the section on <a href="../reference/Keymap.html" title="renpy/doc/reference/Keymap">Keymaps</a> for more information.</p>
+</div>
+<p><span id="config.label_callback" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.label_callback</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is a function that is called whenever a label is reached. It is called with two parameters. The first is the name of the label. The second is true if the label was reached through jumping, calling, or creating a new context, and false otherwise. <i>(new in 6.9.0)</i></p>
+</div>
+<p><span id="config.label_overrides" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.label_overrides</b></td>
+<td valign="top">= {</td>
+</tr>
+</table>
+<div class="renpy-doc">}
+<p>This variable gives a way of causing jumps and calls of labels in Ren'Py code to be redirected to other labels. For example, if you add a mapping from "start" to "mystart", all jumps and calls to "start" will go to "mystart" instead.</p>
+</div>
+<p><span id="config.layer_clipping" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.layer_clipping</b></td>
+<td valign="top">= {</td>
+</tr>
+</table>
+<div class="renpy-doc">}
+<p>Controls layer clipping. This is a map from layer names to (x, y, height, width) tuples, where x and y are the coordinates of the upper-left corner of the layer, with height and width giving the layer size.</p>
+<p>If a layer is not mentioned in config.layer_clipping, then it is assumed to take up the full screen.</p>
+</div>
+<p><span id="config.layers" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.layers</b></td>
+<td valign="top">= [ 'master', 'transient', 'overlay' ]</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This variable gives a list of all of the layers that Ren'Py knows about, in the order that they will be displayed to the screen. (The lowest layer is the first entry in the list.) Ren'Py uses the layers "master", "transient", and "overlay" internally, so they should always be in this list.</p>
+</div>
+<p><span id="config.lint_hooks" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.lint_hooks</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a list of functions that are called, with no arguments, when lint is run. The functions are expected to check the script data for errors, and print any they find to standard output (using the python print statement is fine in this case).</p>
+</div>
+<p><span id="config.load_before_transition" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.load_before_transition</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, the start of an interaction will be delayed until all images used by that interaction have loaded. (Yeah, it's a lousy name.)</p>
+</div>
+<p><span id="config.log" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.log</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is expected to be a filename. Much of the text shown to the user by say or menu statements will be logged to this file.</p>
+</div>
+<p><span id="config.missing_image_callback" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.missing_image_callback</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this function is called when an attempt to load an image fails. It may return None, or it may return an image manipulator. If an image manipulator is returned, that image manipulator is loaded in the place of the missing image.</p>
+</div>
+<p><span id="config.mouse_hide_time" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.mouse_hide_time</b></td>
+<td valign="top">= 30</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The mouse is hidden after this number of seconds has elapsed without any mouse input. This should be set to longer then the expected time it will take to read a single screen, so mouse users will not experience the mouse appearing then disappearing between clicks.</p>
+</div>
+<p><span id="config.overlay_during_with" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.overlay_during_with</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>True if we want overlays to be shown during with statements, or False if we'd prefer that they be hidden during the with statements.</p>
+</div>
+<p><span id="config.overlay_layers" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.overlay_layers</b></td>
+<td valign="top">= [ 'overlay' ]</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a list of all of the overlay layers. Overlay layers are cleared before the overlay functions are called. "overlay" should always be in this list.</p>
+</div>
+<p><span id="config.periodic_callback" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.periodic_callback</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this should be a function. The function is called, with no arguments, at around 20hz.</p>
+</div>
+<p><span id="config.predict_statements" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.predict_statements</b></td>
+<td valign="top">= 10</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is the number of statements, including the current one, to consider when doing predictive image loading. A breadth-first search from the current statement is performed until this many statements is considered, and any image referenced in those statements is potentially predictively loaded. Setting this to 0 will disable predictive loading of images.</p>
+</div>
+<p><span id="config.profile" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.profile</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If set to True, some profiling information will be output to stdout (wherever that may go to).</p>
+</div>
+<p><span id="config.rollback_enabled" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.rollback_enabled</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Should the user be allowed to rollback the game? If set to False, the user cannot interactively rollback. (The feature still works for loading savegames when the script changes.)</p>
+</div>
+<p><span id="config.rollback_length" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.rollback_length</b></td>
+<td valign="top">= 128</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When there are more than this many statements in the rollback log, Ren'Py will consider trimming the log.</p>
+</div>
+<p><span id="config.say_allow_dismiss" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.say_allow_dismiss</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this should be a function. The function is called with no arguments when the user attempts to dismiss a say statement. If this function returns true, the dismissal is allowed, otherwise it is ignored.</p>
+</div>
+<p><span id="config.say_menu_text_filter" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.say_menu_text_filter</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, then this is a function that is given the text found in strings in the say and menu statements. It is expected to return new (or the same) strings to replace them.</p>
+</div>
+<p><span id="config.say_sustain_callbacks" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.say_sustain_callbacks</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of functions that are called, without arguments, before the second and later interactions caused by a line of dialogue with pauses in it. Used to sustain voice through pauses.</p>
+</div>
+<p><span id="config.savedir" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.savedir</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The complete path to the directory in which the game is saved. This should only be set in a python early block. See also <a href="../reference/Configuration_Variables#config.save_directory" title="renpy/doc/reference/Configuration Variables">config.save_directory</a>, which generates the default value for this if it is not set during a python early block.</p>
+</div>
+<p><span id="config.scene" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.scene</b></td>
+<td valign="top">= renpy.scene</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A function that's used in place of <a href="../reference/functions/renpy.scene.html" title="renpy/doc/reference/functions/renpy.scene">renpy.scene</a> by the scene statement. Note that this is used to clear the screen, and <a href="../reference/Configuration_Variables#config.show" title="renpy/doc/reference/Configuration Variables">config.show</a> is used to show a new image. This should have the same signature as <a href="../reference/functions/renpy.scene.html" title="renpy/doc/reference/functions/renpy.scene">renpy.scene</a>.</p>
+</div>
+<p><br />
+<span id="config.script_version" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.script_version</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this is interpreted as a script version. The library will use this script version to enable some compatibility features, if necessary. If None, we assume this is a latest-version script.</p>
+<p>This is normally set in a file added by the Ren'Py launcher when distributions are built.</p>
+</div>
+<p><span id="config.searchpath" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.searchpath</b></td>
+<td valign="top">= [ 'common', 'game' ]</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of directories that are searched for images, music, archives, and other media, but not scripts. This is initialized to a list containing "common" and the name of the game directory, which changes depending on the name of the exe file. This variable is not used to load scripts, as scripts will be loaded before it can be set.</p>
+</div>
+<p><br />
+<span id="config.show" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.show</b></td>
+<td valign="top">= renpy.show</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A function that is used in place of <a href="../reference/functions/renpy.show.html" title="renpy/doc/reference/functions/renpy.show">renpy.show</a> by the show and scene statements. This should have the same signature as <a href="../reference/functions/renpy.show.html" title="renpy/doc/reference/functions/renpy.show">renpy.show</a>.</p>
+</div>
+<p><span id="config.skip_delay" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.skip_delay</b></td>
+<td valign="top">= 75</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The amount of time that dialogue will be shown for, when skipping statements using ctrl, in milliseconds. (Although it's nowhere near that precise in practice.)</p>
+</div>
+<p><span id="config.skip_indicator" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.skip_indicator</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, the library will display a skip indicator when skipping through the script.</p>
+</div>
+<p><span id="config.sound" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.sound</b></td>
+<td valign="top">= True</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, sound works. If False, the sound/mixer subsystem is completely disabled.</p>
+</div>
+<p><span id="config.sound_sample_rate" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.sound_sample_rate</b></td>
+<td valign="top">= 44100</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The sample rate that the sound card will be run at. If all of your wav files are of a lower rate, changing this to that rate may make things more efficent.</p>
+</div>
+<p><span id="config.start_interact_callbacks" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.start_interact_callbacks</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>A list of functions that are called (without any arguments) when an interaction is started. These callbacks are not called when an interaction is restarted.</p>
+</div>
+<p><span id="config.sticky_positions" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.sticky_positions</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Sticky positions causes the at clause of a show or scene statement to be remembered for as long as that character is on the screen. Future show statements without at clauses will be given the remembered at clause. This lets us easily change the character's expression without changing their position on the screen. Sticky positions does not interact well with multiple layers, when they are used with the show, hide, and scene statements via an onlayer clause.</p>
+</div>
+<p><span id="config.top_layers" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.top_layers</b></td>
+<td valign="top">= [ ]</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a list of names of layers that are displayed above all other layers, and do not participate in a transition that is applied to all layers. If a layer name is listed here, it should not be listed in config.layers.</p>
+</div>
+<p><span id="config.transient_layers" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.transient_layers</b></td>
+<td valign="top">= [ 'transient' ]</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This variable gives a list of all of the transient layers. Transient layers are layers that are cleared after each interaction. "transient" should always be in this list.</p>
+</div>
+<p><span id="config.with_callback" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.with_callback</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this should be a function that is called when a with statement occurs. This function can be responsible for putting up transient things on the screen during the transition. The function is called with a single argument, which is the transition that is occuring. It is expected to return a transition, which may or may not be the transition supplied as its argument.</p>
+</div>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

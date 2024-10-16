@@ -1,0 +1,53 @@
+<html><head><title>anim.State - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="anim.State" name="anim.State"></a></p>
+<h1><span class="mw-headline">anim.State</span></h1>
+<p><span id="anim.State" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">anim.State</strong></b></td>
+<td valign="top">(name, image, *atlist, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a state that can be used in an <a href="../../reference/functions/anim.SMAnimation.html" title="renpy/doc/reference/functions/anim.SMAnimation">anim.SMAnimation</a>.</p>
+<p><i>name</i> - A string giving the name of this state.</p>
+<p><i>image</i> - The displayable that is shown to the user while we are in (entering) this state. For convenience, this can also be a string or tuple, which is interpreted with <a href="../../reference/functions/Image.html" title="renpy/doc/reference/functions/Image">Image</a>.</p>
+<p><i>image</i> should be None when this State is used with motion, to indicate that the image will be replaced with the child of the motion.</p>
+<p><i>atlist</i> - A list of functions to call on the image. (In general, if something can be used in an at clause, it can be used here as well.)</p>
+<p>If any keyword arguments are given, they are used to construct a <a href="../../reference/functions/Position.html" title="renpy/doc/reference/functions/Position">Position</a> object, that modifies the position of the image.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> blinking <span class="sym">=</span> anim<span class="sym">.</span><span class="kwd">SMAnimation</span><span class="sym">(</span><span class="str">"a"</span><span class="sym">,</span>
+        anim<span class="sym">.</span><span class="kwd">State</span><span class="sym">(</span><span class="str">"a"</span><span class="sym">,</span> <span class="str">"eyes_open.png"</span><span class="sym">),</span>
+
+        <span class="slc"># This edge keeps us showing the eyes open for a second.</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"a"</span><span class="sym">,</span> <span class="num">1.0</span><span class="sym">,</span> <span class="str">"a"</span><span class="sym">,</span> prob<span class="sym">=</span><span class="num">60</span><span class="sym">),</span>
+
+        <span class="slc"># This edge causes the eyes to start closing...</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"a"</span><span class="sym">,</span> <span class="num">0.25</span><span class="sym">,</span> <span class="str">"b"</span><span class="sym">),</span>
+
+        <span class="slc"># ..because it brings us here.</span>
+        anim<span class="sym">.</span><span class="kwd">State</span><span class="sym">(</span><span class="str">"b"</span><span class="sym">,</span> <span class="str">"eyes_half.png"</span><span class="sym">),</span>
+
+        <span class="slc"># And so on...</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"b"</span><span class="sym">,</span> <span class="num">0.25</span><span class="sym">,</span> <span class="str">"c"</span><span class="sym">),</span>
+        anim<span class="sym">.</span><span class="kwd">State</span><span class="sym">(</span><span class="str">"c"</span><span class="sym">,</span> <span class="str">"eyes_closed.png"</span><span class="sym">),</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"c"</span><span class="sym">,</span> <span class="num">0.25</span><span class="sym">,</span> <span class="str">"d"</span><span class="sym">),</span>
+        anim<span class="sym">.</span><span class="kwd">State</span><span class="sym">(</span><span class="str">"d"</span><span class="sym">,</span> <span class="str">"eyes_half.png"</span><span class="sym">),</span>
+
+        <span class="slc"># And back to a.</span>
+        anim<span class="sym">.</span><span class="kwd">Edge</span><span class="sym">(</span><span class="str">"d"</span><span class="sym">,</span> <span class="num">0.5</span><span class="sym">,</span> <span class="str">"a"</span><span class="sym">)</span>
+        <span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

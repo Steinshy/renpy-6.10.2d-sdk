@@ -1,0 +1,37 @@
+<html><head><title>ui.vbox - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.vbox" name="ui.vbox"></a></p>
+<h1><span class="mw-headline">ui.vbox</span></h1>
+<p><span id="ui.vbox" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.vbox</strong></b></td>
+<td valign="top">(spacing=None, style='vbox', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a layout that places widgets next to each other, from top to bottom. New widgets are added to this vbox until <a href="../../reference/functions/ui.close.html" title="renpy/doc/reference/functions/ui.close">ui.close</a> is called.</p>
+<p><i>spacing</i> - The number of pixels to leave between widgets. If None, take the amount of spacing from the style.</p>
+<p><br /></p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    <span class="slc"># Single-child widget, contains the following ui.vbox</span>
+    ui<span class="sym">.</span><span class="kwa">window</span><span class="sym">()</span>
+
+    <span class="slc"># Multiple-child widget - all new widgets following this will be</span>
+    <span class="slc"># added as children to it, until the next ui.close</span>
+    ui<span class="sym">.</span><span class="kwd">vbox</span><span class="sym">()</span>
+    ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span><span class="str">"To get to the next screen, click the 'Continue' button."</span><span class="sym">)</span>
+    ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

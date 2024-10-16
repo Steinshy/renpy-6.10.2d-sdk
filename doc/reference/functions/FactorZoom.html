@@ -1,0 +1,40 @@
+<html><head><title>FactorZoom - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="FactorZoom" name="FactorZoom"></a></p>
+<h1><span class="mw-headline">FactorZoom</span></h1>
+<p><span id="FactorZoom" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">FactorZoom</strong></b></td>
+<td valign="top">(start, end, time, after_child=None, time_warp=None, bilinear=True, opaque=True, anim_timebase=False, repeat=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This causes a zoom to take place, using image scaling. When used as an `at` clause, this creates a displayable. The render of this displayable is always of the supplied size. The child displayable is rendered, and then scaled by an appropriate factor, interpolated between the start and end factors. The rectangle is then scaled to the supplied size. The zoom will take <i>time</i> seconds, after which it will show the end, unless an <i>after_child</i> is given.</p>
+<p>The algorithm used for scaling does not perform any interpolation or other smoothing.</p>
+<p><i>start</i> - The start zoom factor, a floating point number.</p>
+<p><i>end</i> - The end zoom factor, a floating point number.</p>
+<p><i>time</i> - The amount of time it will take to interpolate from the start to the end factors.</p>
+<p><i>after_child</i> - If present, a second child widget. This displayable will be rendered after the zoom completes. Use this to snap to a sharp displayable after the zoom is done.</p>
+<p><i>time_warp</i> - If not None, a function that takes a fractional period (between 0.0 and 0.1), and returns a fractional period. Use this to implement non-linear zooms. This function may be pickled, so it cannot be a lambda or other non-top-level function.</p>
+<p><i>bilinear</i> - If True, the default, this will use bilinear filtering. If false, this will use ugly yet fast nearest neighbor filtering.</p>
+<p><i>opaque</i> - If True and bilinear is True, this will use a very efficient method that does not support transparency. If False, this supports transparency, but is less efficient.</p>
+<p><i>anim_timebase</i> - is true to use the animation timebase, false to use the displayable timebase.</p>
+<p><i>repeat</i> - causes the zoom to repeat every <i>time</i> seconds.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">show</span> eileen happy <span class="kwa">at</span> <span class="kwd">FactorZoom</span><span class="sym">(</span><span class="num">0.5</span><span class="sym">,</span> <span class="num">1.0</span><span class="sym">,</span> <span class="num">2.0</span><span class="sym">,</span> opaque<span class="sym">=</span><span class="kwa">False</span><span class="sym">),</span> center
+
+<span class="str">"FactorZoom can scale displayables up and down in size."</span>
+
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

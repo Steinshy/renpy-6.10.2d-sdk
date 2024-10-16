@@ -1,0 +1,53 @@
+<html><head><title>ui.bar - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.bar" name="ui.bar"></a></p>
+<h1><span class="mw-headline">ui.bar</span></h1>
+<p><span id="ui.bar" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.bar</strong></b></td>
+<td valign="top">(range=None, value=None, changed=None, step=None, page=None, adjustment=None, style='bar', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a bar widget. The bar widget can be used to display data in a bar graph format, and optionally to report when the user clicks on a location in that bar.</p>
+<p><i>adjustment</i> - This should always be given as a keyword argument. If not none, it should be a <a href="../../reference/functions/ui.adjustment.html" title="renpy/doc/reference/functions/ui.adjustment">ui.adjustment</a> that is to used by this bar, and the following arguments are ignored. If None, a new <a href="../../reference/functions/ui.adjustment.html" title="renpy/doc/reference/functions/ui.adjustment">ui.adjustment</a> is created from the <i>range</i>, <i>value</i>, <i>changed</i>, <i>step</i>, and <i>page</i> arguments.</p>
+<p><i>style</i> - The style of this bar. As of 6.2.0, there are four styles that you can use:</p>
+<ul>
+<li><b>bar</b> - A horizontal bar, with the largest value to the right.</li>
+<li><b>scrollbar</b> - A horizontal scrollbar, with the largest value to the right.</li>
+<li><b>vbar</b> - A vertical bar, with the largest value to the top.</li>
+<li><b>vscrollbar</b> - A vertical scrollbar, with the largest value to the bottom.</li>
+</ul>
+<p>The width and height should be set with the xmaximum and ymaximum properties. For best results, if clicked is set then width should be at least twice as big as range.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+     ui<span class="sym">.</span><span class="kwd">vbox</span><span class="sym">()</span>
+
+     ui<span class="sym">.</span><span class="kwd">hbox</span><span class="sym">()</span>
+     ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span><span class="str">"Non-adjustable bar: "</span><span class="sym">)</span>
+     ui<span class="sym">.</span><span class="kwd">bar</span><span class="sym">(</span><span class="num">100</span><span class="sym">,</span> <span class="num">75</span><span class="sym">)</span>
+     ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+
+     ui<span class="sym">.</span><span class="kwd">hbox</span><span class="sym">()</span>
+     ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span><span class="str">"Adjustable bar: "</span><span class="sym">)</span>
+     adj <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">adjustment</span><span class="sym">(</span><span class="num">100</span><span class="sym">,</span> <span class="num">50</span><span class="sym">,</span> adjustable<span class="sym">=</span><span class="kwa">True</span><span class="sym">)</span>
+     ui<span class="sym">.</span><span class="kwd">bar</span><span class="sym">(</span>adjustment<span class="sym">=</span>adj<span class="sym">)</span>
+     ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+
+     ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Done"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="kwa">True</span><span class="sym">))</span>
+     ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+
+     value <span class="sym">=</span> adj<span class="sym">.</span>value
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

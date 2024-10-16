@@ -1,0 +1,34 @@
+<html><head><title>Alpha - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="Alpha" name="Alpha"></a></p>
+<h1><span class="mw-headline">Alpha</span></h1>
+<p><span id="Alpha" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">Alpha</strong></b></td>
+<td valign="top">(start, end, time, repeat=False, bounce=False, time_warp=None, add_sizes=False, anim_timebase=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Alpha returns a function that, when called with a displayable, allows the alpha of that displayable to be changed over time. It's a more expensive version of <a href="../../reference/functions/im.Alpha.html" title="renpy/doc/reference/functions/im.Alpha">im.Alpha</a> that works with any displayable, and can change over time.</p>
+<p><i>start</i> is the alpha at the start, a number between 0 and 1.</p>
+<p><i>end</i> is the alpha at the end, a number between 0 and 1.</p>
+<p><i>time</i> is the time, in seconds, it takes to complete one cycle. If <i>repeat</i> is True, then the cycle repeats when it finishes, if False, the motion stops after one period. If <i>bounce</i> is True, the alpha goes from <i>start</i> to <i>end</i> to <i>start</i> in a single period, if False, it goes from <i>start</i> to <i>end</i> only.</p>
+<p><i>time_warp</i>, if given, is a function that takes a fractional time period (a number between 0.0 and 1.0) and returns a fractional time period. This function must be pickleable.</p>
+<p><i>anim_timebase</i> is true to use the animation timebase, false to use the displayable timebase.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+    <span class="kwa">show</span> eileen happy <span class="kwa">at</span> <span class="kwd">Alpha</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">1</span><span class="sym">,</span> <span class="num">2.0</span><span class="sym">)</span>
+
+    e <span class="str">"It'll take me 2 seconds to get here completely."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

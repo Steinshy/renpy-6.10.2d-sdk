@@ -1,0 +1,254 @@
+<html><head><title>Themes - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Themes"><span class="tocnumber">1</span> <span class="toctext">Themes</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Theme_Functions"><span class="tocnumber">1.1</span> <span class="toctext">Theme Functions</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Component_functions"><span class="tocnumber">1.1.1</span> <span class="toctext">Component functions</span></a></li>
+<li class="toclevel-3"><a href="#Component_functions_2"><span class="tocnumber">1.1.2</span> <span class="toctext">Component functions</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Theme_Modifiers"><span class="tocnumber">1.2</span> <span class="toctext">Theme Modifiers</span></a></li>
+<li class="toclevel-2"><a href="#Custom_Theme"><span class="tocnumber">1.3</span> <span class="toctext">Custom Theme</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><a id="Themes" name="Themes"></a></p>
+<h1><span class="mw-headline">Themes</span></h1>
+<p>Themes provide a simple way of changing the look of the main and game menus. A single function call applies styles to many of the elements of the main and game menus, giving a consistent look to the interface.</p>
+<p>Theme functions should be called after the config.screen_width, config.screen_height, and library.script_version variables have been set, and after any layout functions have been called. They should be called before any style is changed by hand.</p>
+<p><a id="Theme_Functions" name="Theme_Functions"></a></p>
+<h2><span class="mw-headline">Theme Functions</span></h2>
+<p>These theme functions are</p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:roundrect.png.html" title="roundrect.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-roundrect.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="theme.roundrect" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/theme.roundrect.html" title="renpy/doc/reference/functions/theme.roundrect">theme.roundrect</a></b></td>
+<td valign="top">(widget="#003c78", widget_hover="#0050a0", widget_text="#c8e1ff", widget_selected="#ffffc8", disabled="#404040", disabled_text="#c8c8c8", label=,"#ffffff" frame="#6496c8", window="#000000c0", text_size=None, small_text_size=None, mm_root=..., gm_root=..., less_rounded=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This enables the use of the roundrect theme. By default, this theme styles the game in a blue color scheme. However, by supplying one or more of the parameters given below, the color scheme can be changed.</p>
+<p><i>widget</i> - The background color of non-focued buttons and sliders.</p>
+<p><i>widget_hover</i> - The background color of focused buttons and sliders.</p>
+<p><i>widget_text</i> - The text color of non-selected buttons.</p>
+<p><i>widget_selected</i> - The text color of selected buttons.</p>
+<p><i>disabled</i> - The background color of disabled buttons.</p>
+<p><i>disabled_text</i> - The text color of disabled buttons.</p>
+<p><i>label</i> - The text color of non-selected labels.</p>
+<p><i>frame</i> - The background color of frames.</p>
+<p><i>mm_root</i> - A displayable (such as an Image or Solid) that will be used as the background for the main menu.</p>
+<p><i>gm_root</i> - A displayable (such as an Image or Solid) that will be used as the background for the game menu.</p>
+<p><i>less_rounded</i> - If True, causes the buttons to appear less rounded in 800x600 mode (has no effect in 640x480 mode).</p>
+<p><i>text_size</i> - The size of text, such as button captions, labels, and prompts. Defaults to 18 if the screen is 640 pixels wide or less, and 22 otherwise.</p>
+<p><i>small_text_size</i> - The size of the text on large buttons. Defaults to 12 if the screen is 640 pixels wide or less, and 16 otherwise.</p>
+<p><i>widget</i>, <i>widget_hover</i>, <i>disabled</i>, and <i>frame</i> may either be single colors, or tuples containing two colors. In the latter case, a vertical gradient is used.</p>
+<a id="Component_functions" name="Component_functions"></a>
+<h3><span class="mw-headline">Component functions</span></h3>
+<p>The following functions exist to allow you to add elements of the roundrect theme to another theme. The other theme must have been set up before these functions can be used. Arguments are as for roundrect, except that all must be specified (no defaulting occurs).</p>
+<ul>
+<li><b>theme.roundrect_labels</b>(text_size, label)</li>
+<li><b>theme.roundrect_frames</b>(less_rounded, frame)</li>
+<li><b>theme.roundrect_buttons</b>(text_size, less_rounded, widget, widget_hover, widget_text, widget_selected, disabled, disabled_text)</li>
+<li><b>theme.roundrect_large_buttons</b>(text_size, less_rounded, widget, widget_hover, widget_text, widget_selected, disabled, disabled_text)</li>
+<li><b>theme.roundrect_prompts</b>(text_size, label)</li>
+<li><b>theme.roundrect_bars</b>(widget, widget_hover)</li>
+</ul>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:outline.png.html" title="outline.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-outline.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="theme.outline" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/theme.outline.html" title="renpy/doc/reference/functions/theme.outline">theme.outline</a></b></td>
+<td valign="top">(inside="#fff", idle="#e66", hover="#48f", selected="#84f", insensitive="#ccc", label="#484", prompt="#484", background="#fee", large_button="#fff8f8", text_size=22, small_text_size=16):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function selects a theme that is based on outlining text in different colors.</p>
+<p><i>inside</i> - The color of text inside the various outlines.</p>
+<p><i>idle</i> - The outline color of the text of an idle button or bar.</p>
+<p><i>hover</i> - The outline color of a hovered button or bar.</p>
+<p><i>selected</i> - The outline color of a selected button.</p>
+<p><i>insensitive</i> - The outline color of an insensitive button.</p>
+<p><i>label</i> - The outline color of a label.</p>
+<p><i>prompt</i> - The outline color of a prompt.</p>
+<p><i>background</i> - A displayable used for the game and main menu backgrounds.</p>
+<p><i>large_button</i> - The background color of large backgrounds.</p>
+<p><i>text_size</i> - The size of large text. (Used for buttons, labels, and prompts.)</p>
+<p><i>small_text_size</i> - The size of small text. (Used in large buttons.)</p>
+<a id="Component_functions_2" name="Component_functions_2"></a>
+<h3><span class="mw-headline">Component functions</span></h3>
+<p>The following functions exist to allow you to add elements of the outline theme to another theme. The other theme must have been set up before these functions can be used. Arguments are as for theme.outline, except that all must be specified (no defaulting occurs).</p>
+<ul>
+<li>theme.outline_frames()</li>
+<li>theme.outline_buttons(inside, idle, hover, selected, insensitive, text_size)</li>
+<li>theme.outline_large_buttons(inside, idle, hover, selected, insensitive, text_size, large_button)</li>
+<li>theme.outline_prompts(inside, prompt, text_size)</li>
+<li>theme.outline_labels(inside, label, text_size)</li>
+<li>theme.outline_bars(inside, idle, hover)</li>
+</ul>
+<p><br /></p>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:ancient.png.html" title="ancient.png"><img alt="" border="0" class="thumbimage" height="135" src="../images/180px-ancient.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="theme.ancient" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/theme.ancient.html" title="renpy/doc/reference/functions/theme.ancient">theme.ancient</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a theme that attempts to emulate the theme used by Ren'Py 6.5.0 when no theme was explicitly specified.</p>
+</div>
+<p><br clear="both" /></p>
+<p><br /></p>
+<p><a id="Theme_Modifiers" name="Theme_Modifiers"></a></p>
+<h2><span class="mw-headline">Theme Modifiers</span></h2>
+<p>These are functions that can be called after a theme function, allowing you to change a portion of a theme.</p>
+<p><br />
+<span id="theme.image_buttons" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/theme.image_buttons.html" title="renpy/doc/reference/functions/theme.image buttons">theme.image_buttons</a></b></td>
+<td valign="top">(d):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Used to define buttons in terms of 5-tuples of image filenames. This expects its single parameter, <i>d</i>, to be a dictionary mapping untranslated button names to 5-tuples. Each 5-tuple should contain 5 filenames, giving the image used for the button when:</p>
+<ul>
+<li>The button is idle.</li>
+<li>The button is hovered.</li>
+<li>The button is selected and idle.</li>
+<li>The button is selected and hovered.</li>
+<li>The button is insensitive.</li>
+</ul>
+<p>in that order.</p>
+</div>
+<p><br />
+<span id="theme.image_labels" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/theme.image_labels.html" title="renpy/doc/reference/functions/theme.image labels">theme.image_labels</a></b></td>
+<td valign="top">(d):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Replaces labels with images. This takes a single parameter, <i>d</i>, which is expected to be a map from the text of a label to an image file.</p>
+</div>
+<p><br /></p>
+<p><a id="Custom_Theme" name="Custom_Theme"></a></p>
+<h2><span class="mw-headline">Custom Theme</span></h2>
+<p>It's also possible to define your own Ren'Py theme. A custom theme consists of Ren'Py code that does the following.</p>
+<ul>
+<li>Calls <a href="../reference/functions/layout.defaults.html" title="renpy/doc/reference/functions/layout.defaults">layout.defaults</a>() to initialize the layouts. Calling this function is the responsibility of the theme, and custom themes must also do it.</li>
+<li>Set up the base styles to reflect the requirements of the theme.</li>
+</ul>
+<p>Often, the base styles come in <i>name</i>/<i>name</i>_text pairs. In these cases, <i>name</i> represents a <a href="../reference/functions/Button.html" title="renpy/doc/reference/functions/Button">Button</a> or <a href="../reference/functions/Window.html" title="renpy/doc/reference/functions/Window">Window</a> with style <i>name</i>, in which a <a href="../reference/functions/Text.html" title="renpy/doc/reference/functions/Text">Text</a> with style <i>name</i>_text lives.</p>
+<p>The base styles are:</p>
+<dl>
+<dt><span id="frame"><b>style.frame</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dd>Used for frames on top of which the rest of the interface can comfortably sit.</dd>
+</dl>
+<dl>
+<dt><span id="button"><b>style.button</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dt><span id="button_text"><b>style.button_text</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dd>Used for buttons, especially buttons whose primary purpose is navigating through the interface. (Like the main menu and the game menu navigation buttons.)</dd>
+</dl>
+<dl>
+<dt><span id="small_button"><b>style.small_button</b> (inherits from <a href="#button" title="">style.button</a>)</span></dt>
+<dt><span id="small_button_text"><b>style.small_button_text</b> (inherits from <a href="#button_text" title="">style.button_text</a>)</span></dt>
+<dd>Used for smaller navigation buttons. It might make sense to set a minimum width on buttons, but small_buttons should be allowed to shrink as small as possible.</dd>
+</dl>
+<dl>
+<dt><span id="radio_button"><b>style.radio_button</b> (inherits from <a href="#button" title="">style.button</a>)</span></dt>
+<dt><span id="radio_button_text"><b>style.radio_button_text</b> (inherits from <a href="#button_text" title="">style.button_text</a>)</span></dt>
+<dd>Used for buttons that are arranged in a group, such that only one of the buttons in the group can be selected at a time.</dd>
+</dl>
+<dl>
+<dt><span id="check_button"><b>style.check_button</b> (inherits from <a href="#button" title="">style.button</a>)</span></dt>
+<dt><span id="check_button_text"><b>style.check_button_text</b> (inherits from <a href="#button_text" title="">style.button_text</a>)</span></dt>
+<dd>Used for buttons that toggle their selected state to indicate if an option is set or not. (These aren't used in any of the pre-defined layouts.)</dd>
+</dl>
+<dl>
+<dt><span id="large_button"><b>style.large_button</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dt><span id="large_button_text"><b>style.large_button_text</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dd>Used for large buttons, such as file picker entries, that can contain a large amount of text and other information.</dd>
+</dl>
+<dl>
+<dt><span id="label"><b>style.label</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dt><span id="label_text"><b>style.label_text</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dd>Used for labels, which are small text messages that never change.</dd>
+</dl>
+<dl>
+<dt><span id="prompt"><b>style.prompt</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dt><span id="prompt_text"><b>style.prompt_text</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dd>Used for prompts, longer text messages which may change at runtime.</dd>
+</dl>
+<dl>
+<dt><span id="bar"><b>style.bar</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dt><span id="vbar"><b>style.vbar</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dd>Used for horizontal and vertical bars, respectively. Bars are generally intended to indicate a quantity or an amount of progress, but aren't expected to be adjusted by the user.</dd>
+</dl>
+<dl>
+<dt><span id="slider"><b>style.slider</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dt><span id="vslider"><b>style.vslider</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dd>Used for horizontal and vertical sliders, respectively. Sliders are bars that are used to adjust a value.</dd>
+</dl>
+<dl>
+<dt><span id="scrollbar"><b>style.scrollbar</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dt><span id="vscrollbar"><b>style.vscrollbar</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dd>Used for horizontal and vertical scrollbars, respectively.</dd>
+</dl>
+<dl>
+<dt><span id="mm_root"><b>style.mm_root</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dt><span id="gm_root"><b>style.gm_root</b> (inherits from <a href="#default" title="">style.default</a>)</span></dt>
+<dd>Used for the backgrounds of the main and game menus, respectively.</dd>
+</dl>
+<p>Generally, themes should not adjust the margins, positioning properties, or maximum sizes of these styles. An exception is that the bars are expected to set a maximum size in a direction perpendicular to the orientation of the bar (ymaximum for bar and scrollbar; xmaximum for vbar and vscrollbar). No limitations apply to the _text styles.</p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

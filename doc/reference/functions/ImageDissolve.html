@@ -1,0 +1,118 @@
+<html><head><title>ImageDissolve - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ImageDissolve" name="ImageDissolve"></a></p>
+<h1><span class="mw-headline">ImageDissolve</span></h1>
+<p><span id="ImageDissolve" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ImageDissolve</strong></b></td>
+<td valign="top">(image, time, reverse=False, old_widget=None, new_widget=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This dissolves the old scene into the new scene, using an image to control the dissolve process. Basically, this means that white pixels come in first and black last.</p>
+<p>The two children should be the same size, or the behavior of ImageDissolve is undefined.</p>
+<p><i>image</i> - The image that will be used to control this transition. The image should be the same size as the scene being dissolved.</p>
+<p><i>time</i> - The amount of time the dissolve will take.</p>
+<p><i>reverse</i> - This reverses the ramp and the direction of the window slide. When True, black pixels dissolve in first, and white pixels come in last.</p>
+<p><i>alpha</i> - If True, the resulting displayable will have an alpha channel, at the cost of some speed. If False, it will be treated as opaque, but be faster.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ slowcirciris <span class="sym">=</span> <span class="kwd">ImageDissolve</span><span class="sym">(</span><span class="str">"circiris.png"</span><span class="sym">,</span> <span class="num">5.0</span><span class="sym">,</span> <span class="num">8</span><span class="sym">)</span>
+    $ circirisout <span class="sym">=</span> <span class="kwd">ImageDissolve</span><span class="sym">(</span><span class="str">"circiris.png"</span><span class="sym">,</span> <span class="num">1.0</span><span class="sym">,</span> <span class="num">8</span><span class="sym">)</span>
+    $ circirisoutramp <span class="sym">=</span> <span class="kwd">ImageDissolve</span><span class="sym">(</span><span class="str">"circiris.png"</span><span class="sym">,</span> <span class="num">3.0</span><span class="sym">,</span> ramp<span class="sym">=[</span> <span class="num">16</span> <span class="sym">*</span> i <span class="kwa">for</span> i <span class="kwa">in</span> <span class="kwb">range</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">15</span><span class="sym">) +</span> <span class="kwb">range</span><span class="sym">(</span><span class="num">15</span><span class="sym">,</span> <span class="num">0</span><span class="sym">, -</span><span class="num">1</span><span class="sym">) +</span> <span class="kwb">range</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">15</span><span class="sym">) +</span> <span class="kwb">range</span><span class="sym">(</span><span class="num">15</span><span class="sym">,</span> <span class="num">0</span><span class="sym">, -</span><span class="num">1</span><span class="sym">) +</span> <span class="kwb">range</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">15</span><span class="sym">)  +</span> <span class="kwb">range</span><span class="sym">(</span><span class="num">15</span><span class="sym">,</span> <span class="num">0</span><span class="sym">, -</span><span class="num">1</span><span class="sym">) +</span> <span class="kwb">range</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">15</span><span class="sym">) ] )</span>
+    $ circirisin <span class="sym">=</span> <span class="kwd">ImageDissolve</span><span class="sym">(</span><span class="str">"circiris.png"</span><span class="sym">,</span> <span class="num">1.0</span><span class="sym">,</span> <span class="num">8</span><span class="sym">,</span> reverse<span class="sym">=</span><span class="kwa">True</span><span class="sym">)</span>
+
+    $ demotrans <span class="sym">=</span> <span class="kwd">ImageDissolve</span><span class="sym">(</span><span class="str">"demotrans.png"</span><span class="sym">,</span> <span class="num">3.0</span><span class="sym">,</span> <span class="num">16</span><span class="sym">)</span>
+
+e <span class="str">"ImageDissolve allows us to have dissolve transitions that are</span>
+<span class="str">   controlled by images."</span>
+
+e <span class="str">"This lets us specify very complex transitions, fairly</span>
+<span class="str">   simply."</span>
+
+e <span class="str">"Let's try some, and then I'll show how they work."</span>
+
+e <span class="str">"There are two ImageDissolve transitions present by</span>
+<span class="str">   default in the standard config."</span>
+
+<span class="kwa">scene</span> black <span class="kwa">with</span> blinds
+<span class="kwa">scene</span> bg washington
+<span class="kwa">show</span> eileen happy
+<span class="kwa">with</span> blinds
+
+e <span class="str">"The blinds transition opens and closes what looks like</span>
+<span class="str">   vertical blinds."</span>
+
+<span class="kwa">scene</span> black <span class="kwa">with</span> squares
+<span class="kwa">scene</span> bg washington
+<span class="kwa">show</span> eileen happy
+<span class="kwa">with</span> squares
+
+e <span class="str">"The squares transition uses these squares to show</span>
+<span class="str">   things."</span>
+
+e <span class="str">"I'm not sure why anyone would want to use it, but it</span>
+<span class="str">   was used in some translated games, so we added it."</span>
+
+e <span class="str">"There are also a few transitions that aren't in the</span>
+<span class="str">   standard config."</span>
+
+e <span class="str">"These ones require images the size of the screen, and</span>
+<span class="str">   so we couldn't include them as the size of the screen</span>
+<span class="str">   can change from game to game."</span>
+
+e <span class="str">"You can find them defined in the source of the demo</span>
+<span class="str">   script."</span>
+
+<span class="kwa">scene</span> black <span class="kwa">with</span> circirisin
+
+e <span class="str">"We can hide things with a circirisin..."</span>
+
+<span class="kwa">with None</span>
+<span class="kwa">scene</span> bg washington
+<span class="kwa">with</span> circirisout
+
+e <span class="str">"... and show them again with a circirisout."</span>
+
+e <span class="str">"The ramp parameter lets things dissolve in and out</span>
+<span class="str">   along the way."</span>
+
+<span class="kwa">scene</span> bg whitehouse <span class="kwa">with</span> circirisoutramp
+
+e <span class="str">"It's even possible to have weird custom transitions."</span>
+
+<span class="kwa">scene</span> circiris <span class="kwa">with</span> demotrans
+
+e <span class="str">"What we're showing here is the picture that's used in</span>
+<span class="str">   the circiris transitions."</span>
+
+e <span class="str">"If you take a look, the center of it is white, while</span>
+<span class="str">   the edges are darker."</span>
+
+e <span class="str">"When we use an ImageDissolve, the white will dissolve</span>
+<span class="str">   in first, followed by progressively darker colors."</span>
+
+e <span class="str">"Let's try it."</span>
+
+<span class="kwa">with None</span>
+<span class="kwa">scene</span> bg washington
+<span class="kwa">show</span> eileen happy
+<span class="kwa">with</span> slowcirciris
+
+
+e <span class="str">"It's also possible to reverse the transition, so that</span>
+<span class="str">   the black pixels are dissolved in first."</span>
+
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

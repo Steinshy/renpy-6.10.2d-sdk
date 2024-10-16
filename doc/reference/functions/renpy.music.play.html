@@ -1,0 +1,37 @@
+<html><head><title>renpy.music.play - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.music.play" name="renpy.music.play"></a></p>
+<h1><span class="mw-headline">renpy.music.play</span></h1>
+<p><span id="renpy.music.play" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.music.play</strong></b></td>
+<td valign="top">(filenames, channel="music", loop=None, fadeout=None, synchro_start=False, fadein=0, tight=False, if_changed=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This stops the music currently playing on the named <i>channel</i>, dequeues any queued music, and begins playing the specified file or files.</p>
+<p><i>filenames</i> may be a single file, or a list of files.</p>
+<p><i>loop</i> - If True, the tracks will loop once they finish playing. If False, they will not. If None, takes the default for the channel.</p>
+<p><i>fadeout</i> - If None, the fadeout time is taken from <a href="../../reference/Configuration_Variables#config.fade_music" title="renpy/doc/reference/Configuration Variables">config.fade_music</a>, otherwise it is a time in seconds to fade out for.</p>
+<p><i>synchro_start</i> - If True, all the channels that have had play called on them with synchro_start set to True will be started at the same time, in a sample accurate manner. This can be used to, for instance, have a piece of music separated into separate percussion, melody, and background chord audio files, and play them simultaneously.</p>
+<p><i>fadein</i> - The number of seconds to fade the music in for, on the first loop only.</p>
+<p><i>tight</i> - If True, then fadeouts will span into the next-queued sound. If False, it will not, and if None, takes the channel default.</p>
+<p><i>if_changed</i> - If True, and the music file is currently playing, then it will not be stopped/faded out and faded back in again, but instead will be kept playing. (This will always queue up an additional loop of the music.)</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+    <span class="slc"># Start some music playing in the background with a fade in effect 2</span>
+    <span class="slc"># seconds after the start of the music play</span>
+    $ renpy<span class="sym">.</span>music<span class="sym">.</span><span class="kwd">play</span><span class="sym">(</span><span class="str">"mozart.ogg"</span><span class="sym">,</span> fadein<span class="sym">=</span><span class="num">2</span><span class="sym">)</span>
+</pre>
+<p><b>See also</b>: <a href="../../reference/Audio.html" title="renpy/doc/reference/Audio">Audio</a></p>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

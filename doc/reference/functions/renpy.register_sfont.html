@@ -1,0 +1,48 @@
+<html><head><title>renpy.register sfont - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.register_sfont" name="renpy.register_sfont"></a></p>
+<h1><span class="mw-headline">renpy.register_sfont</span></h1>
+<p><span id="renpy.register_sfont" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.register_sfont</strong></b></td>
+<td valign="top">(name=None, size=None, bold=False, italics=False, underline=False, filename=None, spacewidth=10, default_kern=0, kerns={}, charset=u'!"#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{{{!}}}~'):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This registers an SFont with the given details. Please note that size, bold, italic, and underline are all advisory (used for matching), and do not change the appearance of the font.</p>
+<p><i>name</i> - The name of the font being registered</p>
+<p><i>size</i> - The size of the font being registered</p>
+<p><i>bold</i> - The boldness of the font being registered</p>
+<p><i>italics</i> - The italicness of the font being registered</p>
+<p><i>underline</i> - The underline of the font being registered</p>
+<p><i>filename</i> - The file containing the sfont image</p>
+<p><i>spacewidth</i> - The width of a space character</p>
+<p><i>default_kern</i> - The default kern spacing between characters</p>
+<p><i>kerns</i> - A map from two-character strings to the kern that should be used between those characters</p>
+<p><i>charset</i> - The character set of the font. A string containing characters in the order in which they are found in the image.</p>
+<p>The default character set for a SFont is:</p>
+<pre>
+! " # $ % &amp; ' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; &lt; = &gt; ? 
+@ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ \ ] ^ _ 
+` a b c d e f g h i j k l m n o p q r s t u v w x y z { | } ~
+</pre></div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ renpy<span class="sym">.</span><span class="kwd">register_sfont</span><span class="sym">(</span><span class="str">"skyfont"</span><span class="sym">,</span> <span class="num">22</span><span class="sym">,</span> filename<span class="sym">=</span><span class="str">"skyfont.png"</span><span class="sym">,</span> default_kern<span class="sym">=-</span><span class="num">1</span><span class="sym">)</span>
+    $ esf <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">'Eileen'</span><span class="sym">,</span> color<span class="sym">=(</span><span class="num">200</span><span class="sym">,</span> <span class="num">255</span><span class="sym">,</span> <span class="num">200</span><span class="sym">,</span> <span class="num">255</span><span class="sym">),</span>
+                      what_font<span class="sym">=</span><span class="str">"skyfont"</span><span class="sym">,</span> what_size<span class="sym">=</span><span class="num">22</span><span class="sym">,</span>
+                      what_drop_shadow<span class="sym">=(</span><span class="num">1</span><span class="sym">,</span> <span class="num">1</span><span class="sym">))</span>
+
+esf <span class="str">"For even more control, Ren'Py supports SFonts."</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

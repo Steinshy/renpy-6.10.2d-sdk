@@ -1,0 +1,45 @@
+<html><head><title>Movie - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="Movie" name="Movie"></a></p>
+<h1><span class="mw-headline">Movie</span></h1>
+<p><span id="Movie" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">Movie</strong></b></td>
+<td valign="top">(fps=24, size=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a displayable that displays the current movie.</p>
+<p><i>fps</i> - The framerate that the movie should be shown at. (This is currently ignored, but the parameter is kept for backwards compatibility. The framerate is auto-detected.)</p>
+<p><i>size</i>- This should always be specified. A tuple giving the width and height of the movie.</p>
+<p>The contents of this displayable when a movie is not playing are undefined. (And may change when a rollback occurs.)</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> movie <span class="sym">=</span> <span class="kwd">Movie</span><span class="sym">(</span>size<span class="sym">=(</span><span class="num">352</span><span class="sym">,</span> <span class="num">240</span><span class="sym">))</span>
+
+<span class="kwa">label</span> newscast<span class="sym">:</span>
+    <span class="kwa">show</span> movie <span class="kwa">at</span> <span class="kwd">Position</span><span class="sym">(</span>xpos<span class="sym">=</span><span class="num">420</span><span class="sym">,</span> ypos<span class="sym">=</span><span class="num">25</span><span class="sym">,</span> xanchor<span class="sym">=</span><span class="num">0</span><span class="sym">,</span> yanchor<span class="sym">=</span><span class="num">0</span><span class="sym">)</span>
+    <span class="kwa">show</span> eileen happy
+
+    play movie <span class="str">'newscast.mpg'</span>
+
+    e <span class="str">"Ren'Py can even overlay rendered images on top of a movie, although that's</span>
+<span class="str">       more taxing for your CPU."</span>
+
+    e <span class="str">"It's like I'm some sort of newscaster or something."</span>
+
+    stop movie
+    <span class="kwa">hide</span> movie
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

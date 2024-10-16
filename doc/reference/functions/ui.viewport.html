@@ -1,0 +1,45 @@
+<html><head><title>ui.viewport - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.viewport" name="ui.viewport"></a></p>
+<h1><span class="mw-headline">ui.viewport</span></h1>
+<p><span id="ui.viewport" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.viewport</strong></b></td>
+<td valign="top">(child_size=(None, None), xadjustment=None, yadjustment=None, set_adjustments=True, mousewheel=False, draggable=False, style='viewport', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Displays a viewport on the screen. A viewport restricts the size of its child, and allows the child to be displayed at an offset.</p>
+<p><i>child_size</i> - The x and y size of the area the child is asked to render. If either is None, defaults to the size of this viewport.</p>
+<p><i>xadjustment</i> - A <a href="../../reference/functions/ui.adjustment.html" title="renpy/doc/reference/functions/ui.adjustment">ui.adjustment</a> that's used for the x-axis of the viewpoert.</p>
+<p><i>yadjustment</i> - A <a href="../../reference/functions/ui.adjustment.html" title="renpy/doc/reference/functions/ui.adjustment">ui.adjustment</a> that's used for the y-axis of the viewport.</p>
+<p><i>set_adjustments</i> - If true, the range and page size of the adjustments will be set by this viewport.</p>
+<p><i>mousewheel</i> - If true, the mouse wheel can be used to scroll the viewport.</p>
+<p><i>draggable</i> - If true, the mouse can be used to drag around the viewport.</p>
+<p>If xadjustment or yadjustment are None, adjustments are created automatically. These adjustments are available through the xadjustment and yadjustment properies of a viewport.</p>
+<p>In general, viewports are only useful when the xmaximum and ymaximum properties are specified. You'll also want to set clipping=True on the style, although this is part of the default viewport style.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+    <span class="kwa">python hide</span><span class="sym">:</span>
+        ui<span class="sym">.</span><span class="kwd">side</span><span class="sym">([</span><span class="str">'c'</span><span class="sym">,</span> <span class="str">'b'</span><span class="sym">,</span> <span class="str">'r'</span><span class="sym">],</span> spacing<span class="sym">=</span><span class="num">5</span><span class="sym">)</span>
+        vp <span class="sym">=</span> ui<span class="sym">.</span><span class="kwd">viewport</span><span class="sym">(</span>draggable<span class="sym">=</span><span class="kwa">True</span><span class="sym">,</span> mousewheel<span class="sym">=</span><span class="kwa">True</span><span class="sym">,</span> xmaximum<span class="sym">=</span><span class="num">400</span><span class="sym">,</span> ymaximum<span class="sym">=</span><span class="num">400</span><span class="sym">,</span> xalign<span class="sym">=</span><span class="num">.5</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">.1</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwa">image</span><span class="sym">(</span><span class="str">"mainmenu.jpg"</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">bar</span><span class="sym">(</span>adjustment<span class="sym">=</span>vp<span class="sym">.</span>xadjustment<span class="sym">,</span> style<span class="sym">=</span><span class="str">'scrollbar'</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">bar</span><span class="sym">(</span>adjustment<span class="sym">=</span>vp<span class="sym">.</span>yadjustment<span class="sym">,</span> style<span class="sym">=</span><span class="str">'vscrollbar'</span><span class="sym">)</span>
+        ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span>
+
+        ui<span class="sym">.</span><span class="kwd">textbutton</span><span class="sym">(</span><span class="str">"Dismiss"</span><span class="sym">,</span> clicked<span class="sym">=</span>ui<span class="sym">.</span><span class="kwd">returns</span><span class="sym">(</span><span class="kwa">True</span><span class="sym">),</span> xalign<span class="sym">=</span><span class="num">0.5</span><span class="sym">,</span> yalign<span class="sym">=</span><span class="num">.9</span><span class="sym">)</span>
+
+        ui<span class="sym">.</span><span class="kwd">interact</span><span class="sym">()</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

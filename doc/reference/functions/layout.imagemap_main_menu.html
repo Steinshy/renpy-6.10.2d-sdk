@@ -1,0 +1,87 @@
+<html><head><title>layout.imagemap main menu - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="layout.imagemap_main_menu" name="layout.imagemap_main_menu"></a></p>
+<h1><span class="mw-headline">layout.imagemap_main_menu</span></h1>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:imagemap_main_menu.jpg.html" title="imagemap main menu.jpg"><img alt="" border="0" class="thumbimage" height="135" src="../../images/180px-imagemap_main_menu.jpg" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.imagemap_main_menu" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">layout.imagemap_main_menu</strong></b></td>
+<td valign="top">(ground, selected, hotspots, idle=None, variant=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p><i>ground</i> - The ground image. This is used for parts of the screen that are not defined.</p>
+<p><i>selected</i> - The selected image. This used for hotspots that are hovered.</p>
+<p><i>hotspots</i> - A list of tuples defining the hotspot. Each tuple consists of:</p>
+<ol>
+<li>The x-coordinate of the left side.</li>
+<li>The y-coordinate of the top side.</li>
+<li>The x-coordinate of the right side.</li>
+<li>The y-coordinate of the bottom side.</li>
+<li>Either the (untranslated) name of the main menu button this hotspot is equivalent to, or, a label in the program to jump to when this hotspot is clicked.</li>
+</ol>
+<p><i>idle</i> - If not None, an image that is used for images that are not hovered. If this is None, it defaults to ground. <i>(new in 6.10.1)</i></p>
+<p><i>variant</i> - The variant of the main menu to define. The variable _main_menu_variant is used to select a variant to show to the user. <i>(new in 6.10.1)</i></p>
+<p>Despite the name, this function can take arbitrary displayables (like Animations) as well as images.</p>
+</div>
+<p><br clear="both" />
+<a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span> <span class="sym">-</span><span class="num">2</span> <span class="kwa">python</span><span class="sym">:</span>
+    layout<span class="sym">.</span><span class="kwd">imagemap_main_menu</span><span class="sym">(</span><span class="str">"menu2.jpg"</span><span class="sym">,</span> <span class="str">"menu1.jpg"</span><span class="sym">, [</span>
+        <span class="sym">(</span><span class="num">111</span><span class="sym">,</span> <span class="num">248</span><span class="sym">,</span> <span class="num">392</span> <span class="sym">,</span><span class="num">313</span><span class="sym">,</span> <span class="str">"Start Game"</span><span class="sym">),</span>
+        <span class="sym">(</span><span class="num">111</span><span class="sym">,</span> <span class="num">313</span><span class="sym">,</span> <span class="num">392</span><span class="sym">,</span> <span class="num">378</span><span class="sym">,</span> <span class="str">"Load Game"</span><span class="sym">),</span>
+        <span class="sym">(</span><span class="num">48</span><span class="sym">,</span> <span class="num">432</span><span class="sym">,</span> <span class="num">237</span><span class="sym">,</span> <span class="num">529</span><span class="sym">,</span> <span class="str">"Preferences"</span><span class="sym">),</span>
+        <span class="sym">(</span><span class="num">48</span><span class="sym">,</span><span class="num">529</span><span class="sym">,</span><span class="num">237</span><span class="sym">,</span><span class="num">576</span><span class="sym">,</span> <span class="str">"Quit"</span><span class="sym">),</span>
+        <span class="sym">(</span><span class="num">48</span><span class="sym">,</span> <span class="num">435</span><span class="sym">,</span> <span class="num">237</span><span class="sym">,</span> <span class="num">482</span><span class="sym">,</span> <span class="str">"instructions"</span><span class="sym">),</span>
+        <span class="sym">])</span>
+</pre>
+<p>Here's an example that shows how main menu variants can work.</p>
+<pre>
+<span class="kwa">init</span> <span class="sym">-</span><span class="num">2</span> <span class="kwa">python</span><span class="sym">:</span>
+
+    layout<span class="sym">.</span><span class="kwd">imagemap_main_menu</span><span class="sym">(</span>
+        <span class="str">"gui_set_a/gui_main_menu_a.png"</span><span class="sym">,</span>
+        <span class="str">"gui_set_a/gui_main_menu_b.png"</span><span class="sym">,</span>
+        <span class="sym">[ (</span><span class="num">613</span><span class="sym">,</span> <span class="num">107</span><span class="sym">,</span> <span class="num">776</span><span class="sym">,</span> <span class="num">190</span><span class="sym">,</span> <span class="str">"Start Game"</span><span class="sym">),</span>
+          <span class="sym">(</span><span class="num">613</span><span class="sym">,</span> <span class="num">207</span><span class="sym">,</span> <span class="num">776</span><span class="sym">,</span> <span class="num">291</span><span class="sym">,</span> <span class="str">"Load Game"</span><span class="sym">),</span>
+          <span class="sym">(</span><span class="num">613</span><span class="sym">,</span> <span class="num">307</span><span class="sym">,</span> <span class="num">776</span><span class="sym">,</span> <span class="num">391</span><span class="sym">,</span> <span class="str">"Preferences"</span><span class="sym">),</span>
+          <span class="sym">(</span><span class="num">613</span><span class="sym">,</span> <span class="num">408</span><span class="sym">,</span> <span class="num">776</span><span class="sym">,</span> <span class="num">492</span><span class="sym">,</span> <span class="str">"Quit"</span><span class="sym">) ],</span>
+        variant <span class="sym">=</span> <span class="str">'locked'</span>
+        <span class="sym">)</span>
+
+    layout<span class="sym">.</span><span class="kwd">imagemap_main_menu</span><span class="sym">(</span>
+        <span class="str">"gui_set_b/gui_main_menu_a.png"</span><span class="sym">,</span>
+        <span class="str">"gui_set_b/gui_main_menu_b.png"</span> <span class="sym">,</span>
+        <span class="sym">[</span>
+            <span class="sym">(</span><span class="num">646</span><span class="sym">,</span> <span class="num">108</span><span class="sym">,</span> <span class="num">777</span><span class="sym">,</span> <span class="num">174</span><span class="sym">,</span> <span class="str">"Start Game"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">646</span><span class="sym">,</span> <span class="num">188</span><span class="sym">,</span> <span class="num">777</span><span class="sym">,</span> <span class="num">254</span><span class="sym">,</span> <span class="str">"Load Game"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">646</span><span class="sym">,</span> <span class="num">267</span><span class="sym">,</span> <span class="num">777</span><span class="sym">,</span> <span class="num">334</span><span class="sym">,</span> <span class="str">"Preferences"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">646</span><span class="sym">,</span> <span class="num">347</span><span class="sym">,</span> <span class="num">777</span><span class="sym">,</span> <span class="num">415</span><span class="sym">,</span> <span class="str">"extras"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">646</span><span class="sym">,</span> <span class="num">427</span><span class="sym">,</span> <span class="num">777</span><span class="sym">,</span> <span class="num">492</span><span class="sym">,</span> <span class="str">"Quit"</span><span class="sym">),</span>
+            <span class="sym">],</span>
+        variant <span class="sym">=</span> <span class="str">'unlocked'</span>
+        <span class="sym">)</span>
+
+<span class="kwa">label</span> main_menu<span class="sym">:</span>
+
+    <span class="kwa">if</span> persistent<span class="sym">.</span>extra_unlocked<span class="sym">:</span>
+        $ _main_menu_variant <span class="sym">=</span> <span class="str">'unlocked'</span>
+    <span class="kwa">else</span><span class="sym">:</span>
+        $ _main_menu_variant <span class="sym">=</span> <span class="str">'locked'</span>
+
+    <span class="kwa">jump</span> main_menu_screen
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

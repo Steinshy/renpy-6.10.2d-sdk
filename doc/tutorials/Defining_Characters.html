@@ -1,0 +1,60 @@
+<html><head><title>Defining Characters - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a></p><p><a id="Defining_Characters" name="Defining_Characters"></a></p>
+<h2><span class="mw-headline">Defining Characters</span></h2>
+<p>Characters in Ren'Py are very powerful objects, but in common practice they're very easy. (If you want to get into the really powerful stuff, check out the <a href="../reference/Defining_Characters.html" title="renpy/doc/reference/Defining Characters">Defining Characters</a> chapter of the reference manual.) (Please note through all of these examples that characters <i>must</i> be defined inside of an init block.)</p>
+<p>The simplest way to define a character is:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ jane <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Jane"</span><span class="sym">)</span>
+</pre>
+<p>In practice, this is a little <i>too</i> simple. You should choose a color for the character's name. You do this by a standard red-green-blue hex triplet: #rrggbb. To make Jane's name appear in medium green:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ jane <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Jane"</span><span class="sym">,</span> color<span class="sym">=</span><span class="str">"#009900"</span><span class="sym">)</span>
+</pre>
+<p>A useful color chart may be found <a class="external text" href="http://www.immigration-usa.com/html_colors.html" rel="nofollow" title="http://www.immigration-usa.com/html_colors.html">here</a>.</p>
+<p>Still common, but less so, is to use an image in place of the name. To do this, instead of giving jane a name, you give the filename of an image (placed in the game directory of our Ren'Py project), and tell Ren'Py that the name is really an image:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ jane <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"jane_label.png"</span><span class="sym">,</span> <span class="kwa">image</span><span class="sym">=</span><span class="kwa">True</span><span class="sym">)</span>
+</pre>
+<p>The other common thing that you might want to do with characters is to make the text that they say appear in a different color. This makes both the label and the text for whatever Jane says appear in medium green:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ jane <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Jane"</span><span class="sym">,</span> color<span class="sym">=</span><span class="str">"#009900"</span><span class="sym">,</span> what_color<span class="sym">=</span><span class="str">"#009900"</span><span class="sym">)</span>
+</pre>
+<p><br />
+When defining characters with more than a few lines, it's a good idea to make the Ren'Py name of the character as short as possible. So rather than:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ jane <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Jane"</span><span class="sym">)</span>
+</pre>
+<p>it's better to write:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ j <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Jane"</span><span class="sym">)</span>
+</pre>
+<p>It will save you a lot of typing in the long run, and is usually just as readable when you're editing your story.</p>
+<p>When definining more than one character, don't forget that they only have to be in an <a href="../tutorials/Ren%27Py_Script_Structure#init" title="renpy/doc/tutorials/Ren&apos;Py Script Structure">init block</a>, you don't need an init block for each one:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ j <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Jane"</span><span class="sym">)</span>
+    $ a <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Adam"</span><span class="sym">)</span>
+    $ s <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="str">"Sara"</span><span class="sym">)</span>
+</pre>
+<table align="center" border="1" cellpadding="10" cellspacing="1" style="background: #fff0e0; text-align: center;" width="80%">
+<tr>
+<td width="30%">Previous:<br />
+<a href="../tutorials/Ren%27Py_Script_Structure.html" title="renpy/doc/tutorials/Ren&apos;Py Script Structure">Ren'Py Script Structure</a></td>
+<td width="40%"><b><a href="../tutorials/Ren%27Py_Web_Tutorial.html" title="renpy/doc/tutorials/Ren&apos;Py Web Tutorial">Ren'Py Web Tutorial</a></b></td>
+<td width="30%">Next:<br />
+<a href="../tutorials/Your_First_Dialogue.html" title="renpy/doc/tutorials/Your First Dialogue">Your First Dialogue</a></td>
+</tr>
+</table>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a></p></div>
+	</body></html>

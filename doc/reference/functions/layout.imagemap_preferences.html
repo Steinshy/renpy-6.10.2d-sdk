@@ -1,0 +1,95 @@
+<html><head><title>layout.imagemap preferences - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="layout.imagemap_preferences" name="layout.imagemap_preferences"></a></p>
+<h1><span class="mw-headline">layout.imagemap_preferences</span></h1>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:imagemap_preferences.png.html" title="imagemap preferences.png"><img alt="" border="0" class="thumbimage" height="135" src="../../images/180px-imagemap_preferences.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.imagemap_preferences" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">layout.imagemap_preferences</strong></b></td>
+<td valign="top">(ground, idle, hover, selected_idle, selected_hover, hotspots):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This layout uses an imagemap to handle preferences.</p>
+<p><i>ground</i> - The displayable used for disabled buttons, and areas that are not in a hotspot.</p>
+<p><i>idle</i> - The displayable used for unfocused unselected hotspots.</p>
+<p><i>hover</i> - The displayable used for focused unselected hotspots.</p>
+<p><i>selected_idle</i> - The displayable used for unfocused selected hotspots.</p>
+<p><i>selected_hover</i> - The displayable used for focused selected hotspots.</p>
+<p><i>hotspots</i> - A list of tuples defining the hotspots. Each tuple consists of</p>
+<ol>
+<li>The x-coordinate of the left side.</li>
+<li>The y-coordinate of the top side.</li>
+<li>The x-coordinate of the right side.</li>
+<li>The y-coordinate of the bottom side.</li>
+<li>The function of this hotspot.</li>
+</ol>
+<p>There are two kinds of hotspots, buttons and bars. The buttons are:</p>
+<ul>
+<li>"Window", "Fullscreen" - The display preference.</li>
+<li>"All", "Some", None" - The transition preferences.</li>
+<li>"Joystick" - The button used to jump to the joystick preferences.</li>
+<li>"Seen Messages", "All Messages" - Control which messages are skipped.</li>
+<li>"Begin Skipping" - Forces skipping to begin.</li>
+<li>"Stop Skipping", "Keep Skipping" - Control skipping at menus.</li>
+<li>"Sound Test", "Voice Test" - Test the corresponding audio channels.</li>
+</ul>
+<p>The other type of hotspot is a horizontal bar. The selected images are used for the full portion of the bar, while the unselected images are used for the empty part of the bar. The known bars are:</p>
+<ul>
+<li>"Music Volume"</li>
+<li>"Sound Volume"</li>
+<li>"Voice Volume"</li>
+<li>"Auto-Forward Time"</li>
+<li>"Text Speed"</li>
+</ul>
+<p>Hotspot functions may also include the untranslated names of game menu buttons. If at least one such button is defined, the navigation is not shown, and the imagemap is expected to define all relevant game menu buttons.</p>
+<p>Despite the name, this function can take arbitrary displayables as well as images. The images or displayables used should be transparent to allow the navigation to show through, unless the game menu is defined here.</p>
+</div>
+<pre>
+<span class="kwa">init</span> <span class="sym">-</span><span class="num">2</span> <span class="kwa">python</span><span class="sym">:</span>
+    layout<span class="sym">.</span><span class="kwd">imagemap_preferences</span><span class="sym">(</span>
+        <span class="str">"prefs_ground.jpg"</span><span class="sym">,</span>
+        <span class="str">"prefs_idle.jpg"</span><span class="sym">,</span>
+        <span class="str">"prefs_hover.jpg"</span><span class="sym">,</span>
+        <span class="str">"prefs_selected_idle.jpg"</span><span class="sym">,</span>
+        <span class="str">"prefs_selected_hover.jgp"</span><span class="sym">,</span>
+        <span class="sym">[</span>
+            <span class="sym">(</span><span class="num">38</span><span class="sym">,</span> <span class="num">62</span><span class="sym">,</span> <span class="num">170</span><span class="sym">,</span> <span class="num">121</span><span class="sym">,</span> <span class="str">"Window"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">175</span><span class="sym">,</span> <span class="num">62</span><span class="sym">,</span> <span class="num">296</span><span class="sym">,</span> <span class="num">121</span><span class="sym">,</span> <span class="str">"Fullscreen"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">105</span><span class="sym">,</span> <span class="num">150</span><span class="sym">,</span> <span class="num">200</span><span class="sym">,</span> <span class="num">185</span><span class="sym">,</span> <span class="str">"All"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">205</span><span class="sym">,</span> <span class="num">150</span><span class="sym">,</span> <span class="num">294</span><span class="sym">,</span> <span class="num">185</span><span class="sym">,</span> <span class="str">"None"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">180</span><span class="sym">,</span> <span class="num">300</span><span class="sym">,</span> <span class="num">318</span><span class="sym">,</span> <span class="num">339</span><span class="sym">,</span> <span class="str">"Joystick"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">410</span><span class="sym">,</span> <span class="num">63</span><span class="sym">,</span> <span class="num">479</span><span class="sym">,</span> <span class="num">102</span><span class="sym">,</span> <span class="str">"Seen Messages"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">480</span><span class="sym">,</span> <span class="num">63</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="num">102</span><span class="sym">,</span> <span class="str">"All Messages"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">384</span><span class="sym">,</span> <span class="num">106</span><span class="sym">,</span> <span class="num">548</span><span class="sym">,</span> <span class="num">144</span><span class="sym">,</span> <span class="str">"Begin Skipping"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">403</span><span class="sym">,</span> <span class="num">198</span><span class="sym">,</span> <span class="num">466</span><span class="sym">,</span> <span class="num">237</span><span class="sym">,</span> <span class="str">"Stop Skipping"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">467</span><span class="sym">,</span> <span class="num">198</span><span class="sym">,</span> <span class="num">543</span><span class="sym">,</span> <span class="num">237</span><span class="sym">,</span> <span class="str">"Keep Skipping"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">725</span><span class="sym">,</span> <span class="num">181</span><span class="sym">,</span> <span class="num">790</span><span class="sym">,</span> <span class="num">213</span><span class="sym">,</span> <span class="str">"Sound Test"</span><span class="sym">),</span>
+
+            <span class="sym">(</span><span class="num">564</span><span class="sym">,</span> <span class="num">53</span><span class="sym">,</span> <span class="num">788</span><span class="sym">,</span> <span class="num">87</span><span class="sym">,</span> <span class="str">"Music Volume"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">565</span><span class="sym">,</span> <span class="num">136</span><span class="sym">,</span> <span class="num">789</span><span class="sym">,</span> <span class="num">170</span><span class="sym">,</span> <span class="str">"Sound Volume"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">564</span><span class="sym">,</span> <span class="num">252</span><span class="sym">,</span> <span class="num">788</span><span class="sym">,</span> <span class="num">286</span><span class="sym">,</span> <span class="str">"Voice Volume"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">318</span><span class="sym">,</span> <span class="num">287</span><span class="sym">,</span> <span class="num">542</span><span class="sym">,</span> <span class="num">321</span><span class="sym">,</span> <span class="str">"Auto-Forward Time"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">56</span><span class="sym">,</span> <span class="num">233</span><span class="sym">,</span> <span class="num">278</span><span class="sym">,</span> <span class="num">268</span><span class="sym">,</span> <span class="str">"Text Speed"</span><span class="sym">),</span>
+
+            <span class="slc"># Also define the game menu buttons.</span>
+            <span class="sym">(</span><span class="num">26</span><span class="sym">,</span> <span class="num">485</span><span class="sym">,</span> <span class="num">168</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="str">"Return"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">245</span><span class="sym">,</span> <span class="num">485</span><span class="sym">,</span> <span class="num">410</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="str">"Save Game"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">522</span><span class="sym">,</span> <span class="num">485</span><span class="sym">,</span> <span class="num">688</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="str">"Load Game"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">104</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="num">286</span><span class="sym">,</span> <span class="num">589</span><span class="sym">,</span> <span class="str">"Preferences"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">374</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="num">550</span><span class="sym">,</span> <span class="num">589</span><span class="sym">,</span> <span class="str">"Main Menu"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">675</span><span class="sym">,</span> <span class="num">535</span><span class="sym">,</span> <span class="num">790</span><span class="sym">,</span> <span class="num">589</span><span class="sym">,</span> <span class="str">"Quit"</span><span class="sym">),</span>
+            <span class="sym">])</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

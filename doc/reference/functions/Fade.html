@@ -1,0 +1,36 @@
+<html><head><title>Fade - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="Fade" name="Fade"></a></p>
+<h1><span class="mw-headline">Fade</span></h1>
+<p><span id="Fade" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">Fade</strong></b></td>
+<td valign="top">(out_time, hold_time, in_time, old_widget=None, new_widget=None, color=None, widget=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This returns an object that can be used as an argument to a with statement to fade the old scene into a solid color, waits for a given amount of time, and then fades from the solid color into the new scene.</p>
+<p><i>out_time</i> - The amount of time that will be spent fading from the old scene to the solid color. A float, given as seconds.</p>
+<p><i>hold_time</i> - The amount of time that will be spent displaying the solid color. A float, given as seconds.</p>
+<p><i>in_time</i> - The amount of time that will be spent fading from the solid color to the new scene. A float, given as seconds.</p>
+<p><i>color</i> - The solid color that will be fade to. A tuple containing three components, each between 0 or 255. This can also be `None`.</p>
+<p><i>widget</i> - This is a widget that will be faded to, if color is `None`. This allows a fade to be to an image rather than just a solid color.</p>
+<p>If both <i>color</i> and <i>widget</i> are `None`, then the fade is to black.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ fade <span class="sym">=</span> <span class="kwd">Fade</span><span class="sym">(</span><span class="num">.5</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">.5</span><span class="sym">)</span> <span class="slc"># Fade to black and back.</span>
+
+<span class="kwa">scene</span> bg washington <span class="kwa">with</span> fade
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,148 @@
+<html><head><title>List of Properties - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="List_of_Properties" name="List_of_Properties"></a></p>
+<h1><span class="mw-headline">List of Properties</span></h1>
+<p>This is a list of properties, loosely grouped by the use of the property.</p>
+<table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#List_of_Properties"><span class="tocnumber">1</span> <span class="toctext">List of Properties</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Text_Properties"><span class="tocnumber">1.1</span> <span class="toctext">Text Properties</span></a></li>
+<li class="toclevel-2"><a href="#Window_Properties"><span class="tocnumber">1.2</span> <span class="toctext">Window Properties</span></a></li>
+<li class="toclevel-2"><a href="#Button_Properties"><span class="tocnumber">1.3</span> <span class="toctext">Button Properties</span></a></li>
+<li class="toclevel-2"><a href="#Bar_Properties"><span class="tocnumber">1.4</span> <span class="toctext">Bar Properties</span></a></li>
+<li class="toclevel-2"><a href="#Box_Properties"><span class="tocnumber">1.5</span> <span class="toctext">Box Properties</span></a></li>
+<li class="toclevel-2"><a href="#Position_Properties"><span class="tocnumber">1.6</span> <span class="toctext">Position Properties</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><a id="Text_Properties" name="Text_Properties"></a></p>
+<h2><span class="mw-headline">Text Properties</span></h2>
+<p>The following properties are used by <a href="../reference/functions/Text.html" title="renpy/doc/reference/functions/Text">Text</a> displayables.</p>
+<p><b id="antialias">antialias</b> --- If True, the text will be antialiased. Otherwise, it will be left jagged.</p>
+<p><b id="black_color">black_color</b> --- This should be an RGBA triple. When an SFont is used, this is the color the black will be mapped to. This property is ignored when a truetype font is used. The alpha channel in this color is ignored.</p>
+<p><b id="bold">bold</b> --- If True, then this text will be rendered in bold.</p>
+<p><b id="color">color</b> --- The color in which the text will be displayed on the screen, as an RGBA tuple. When an SFont is used, this is the color that white in that Sfont will be displayed as.</p>
+<p><b id="drop_shadow">drop_shadow</b> --- This is used to control the generation of a drop shadow on text. It's either a 2-element tuple, a list of tuples, or None. If it's a tuple, then the 2 elements control the drop shadow offsets in X and Y, respectively. If it's a list, then it's expected to be a list of 2-element tuples, each of which is the drop shadow. Using a list like [ (-1, -1), (1, -1), (-1, 1), (1, 1) ] creates outlined text instead of a drop-shadow. If None, then no drop shadow is created for the text.</p>
+<p><b id="drop_shadow_color">drop_shadow_color</b> --- The color of the drop-shadow. Example: "#000"</p>
+<p><b id="first_indent">first_indent</b> --- This is used to give, in pixels, the indentation of the first line of text in the text widget. It can be used to indent the first line of a paragraph of text. (Not that that's a good idea on a computer monitor, better to leave a blank line between paragraphs.)</p>
+<p><b id="font">font</b> --- The font that will be used to render text. This is either the name of a file containing a truetype font, or the name of a font. In the former case, the font is loaded from the file. In the latter case, the filename is used to search SFonts registered with register_sfont, and truetype fonts found on the system font directory.</p>
+<p><b id="size">size</b> --- The size of the font that is used to display the text on the screen. Please note that the meaning of this can vary from font to font, and bears only a weak relationship with the number of pixels high that the font will be on the screen.</p>
+<p><b id="italic">italic</b> --- If True, then this text will be rendered in italics.</p>
+<p><b id="justify">justify</b> --- If True, additional whitespace is inserted between words so that the left and right margins of each line are even. This is not performed on the last line of a paragraph.</p>
+<p><b id="language">language</b> --- The language (really, language family) that's used to display the text. Right now, this is one of two choices: "western" for western-style text which is broken at spaces, "eastasian" for Chinese/Japanese text, which can be broken between characters.</p>
+<p><b id="layout">layout</b> --- Controls how line-breaking occurs. This defaults to "greedy", which attempts to put as much as possible on each line. It may also be "subtitle", which tries to make the lines even in length.</p>
+<p><b id="line_spacing">line_spacing</b> --- This is used to increase or decrease the spacing between lines of text by a constant number of pixels. A positive value increases, while a negative value decreases the spacing.</p>
+<p><b id="minwidth">minwidth</b> --- The minimum width in pixels of this text. If the rendered text is smaller than this, it is right-padded with whitespace until it is at least this many pixels long.</p>
+<p><b id="outlines">outlines</b> --- A list of 2 or 4-component tuples, giving the size, color, and optionally the x and y offsets of outlines around the text. An outline is a block of text that has been expanded in size by a given number of pixels. The x and y offsets can be omitted. The first tuple in the list is furthest from the screen, while the last is closest. <i>(new in 6.8.0)</i></p>
+<p><b id="rest_indent">rest_indent</b> --- This is used to give, in pixels, the indentation of the second and later lines of a text widget. It can be used to give a hanging indent to quoted dialogue.</p>
+<p><b id="slow_cps">slow_cps</b> --- If a number, causes text to be shown at a rate of that many characters per second. If True, takes that number from the "Text Speed" preference.</p>
+<p><b id="slow_cps_multiplier">slow_cps_multiplier</b> --- A multiplier that will be applied to the number of characters shown per second. For example, 2.0 causes characters to be shown twice as fast.</p>
+<p><b id="slow_abortable">slow_abortable</b> --- If True, slow text can be aborted by clicking the mouse.</p>
+<p><b id="text_align">text_align</b> --- This is used to control the horizontal alignment of the lines of text in the area allocated to the Text widget containing that text. It only really has any effect if the text is more than one line long. It's a number between 0 and 1, which gives the fraction of empty space that should be to the left of each line of text. (To center text, it should be 0.5.)</p>
+<p><b id="text_y_fudge">text_y_fudge</b> --- This fudges the y position of a block of text by adding whitespace above the first line.</p>
+<p><b id="underline">underline</b> --- If true, then this text will be rendered with an underline.</p>
+<p><a id="Window_Properties" name="Window_Properties"></a></p>
+<h2><span class="mw-headline">Window Properties</span></h2>
+<p>The properties control the look of <a href="../reference/functions/Window.html" title="renpy/doc/reference/functions/Window">Windows</a> and <a href="../reference/functions/Button.html" title="renpy/doc/reference/functions/Button">Buttons</a>.</p>
+<p><b id="background">background</b> --- A Displayable that is used as the background for the window. This needs to be a Displayable that always draws exactly the size requested of it, which usually means either a <a href="../reference/functions/Solid.html" title="renpy/doc/reference/functions/Solid">Solid</a> or a <a href="../reference/functions/Frame.html" title="renpy/doc/reference/functions/Frame">Frame</a>. This can also be None, which means that there is no background on this window. (All the other window properties that refer to a background still work. Just think of them as if their background was transparent.)</p>
+<p><b id="foreground">foreground</b> --- This is drawn in the same way as the background, except it is drawn above the contents of the window.</p>
+<p><b id="left_margin">left_margin</b> --- The amount of transparent space left to the left of this window. If a floating point number, it is scaled to the available width.</p>
+<p><b id="right_margin">right_margin</b> --- The amount of transparent space left to the right of this window. If a floating point number, it is scaled to the available width.</p>
+<p><b id="top_margin">top_margin</b> --- The amount of transparent space left to the top of this window. If a floating point number, it is scaled to the available height.</p>
+<p><b id="bottom_margin">bottom_margin</b> --- The amount of transparent space left to the bottom of this window. If a floating point number, it is scaled to the available height.</p>
+<p><b id="xmargin">xmargin</b> --- This is a convenient (and backwards compatible) way of setting left_margin and right_margin to the same value.</p>
+<p><b id="ymargin">ymargin</b> --- This is a convenient (and backwards compatible) way of setting top_margin and bottom_margin to the same value.</p>
+<p><b id="left_padding">left_padding</b> --- The amount of space left between the edge of the border and the left side of the contents of the window. If a float, it is scaled to the width of the window.</p>
+<p><b id="right_padding">right_padding</b> --- The amount of space left between the edge of the border and the right side of the contents of the window. If a float, it is scaled to the width of the window.</p>
+<p><b id="top_padding">top_padding</b> --- The amount of space left between the edge of the border and the top side of the contents of the window. If a float, it is scaled to the height of the window.</p>
+<p><b id="bottom_padding">bottom_padding</b> --- The amount of space left between the edge of the border and the bottom side of the contents of the window. If a float, it is scaled to the height of the window.</p>
+<p><b id="xpadding">xpadding</b> --- A convenient (and backwards compatible) way of setting left_padding and right_padding to the same value.</p>
+<p><b id="ypadding">ypadding</b> --- A convenient (and backwards compatible) way of setting top_padding and bottom_padding to the same value.</p>
+<p><b id="xfill">xfill</b> --- If True, the window will expand to fill all available space in the x direction. If False, it will shrink to fit its contents.</p>
+<p><b id="yfill">yfill</b> --- If True, the window will expand to fill all available space in the y direction. If False, it will shrink to fit its contents.</p>
+<p><b id="xminimum">xminimum</b> --- The minimum size of this window in the x direction, including margins and padding. If the window would be smaller than this, it is grown to be at least this size. If a floating point number, it is scaled to the available width.</p>
+<p><b id="yminimum">yminimum</b> --- The minimum size of this window in the y direction, including margins and padding. If the window would be smaller than this, it is grown to be at least this size. If a floating point number, it is scaled to the available height.</p>
+<p><b id="size_group">size_group</b> --- If not None, this should be set to a string. All windows or buttons with a given string as their size_group are rendered at the same width. <i>(new in 6.6.0)</i></p>
+<p><b id="clipping">clipping</b> - If true and the child is bigger than the maximum size set for this window, it will be clipped to the size of the window.</p>
+<p><a id="Button_Properties" name="Button_Properties"></a></p>
+<h2><span class="mw-headline">Button Properties</span></h2>
+<p>These are only applicable to <a href="../reference/functions/Button.html" title="renpy/doc/reference/functions/Button">Buttons</a>.</p>
+<p><b id="hover_sound">hover_sound</b> --- The sound to play when this widget becomes hovered.</p>
+<p><b id="activate_sound">activate_sound</b> --- The sound to play when the widget is activated, by clicking on or otherwise selecting it.</p>
+<p><b id="focus_mask">focus_mask</b> --- This is used as a mask that determines if a button should be focused or not. If False, a default rectangle is used as the mask. Otherwise, if the special value True, the rendered displayable is used as the mask, or else the value is interpreted as a displayable, rendered to the size of the button, and used. In either case, the alpha value of the mask is what's used, with any non-zero amount of alpha indicating that a pixel is part of the mask. <i>New in 5.6.5.</i></p>
+<p><b id="focus_rect">focus_rect</b> --- If not None, this gives as a (x, y, width, height) tuple the focus rectangle of a button, as an offset from the upper-left corner of the button. For proper keyboard navigation, the focus rectangles of images are not allowed to overlap. By setting this and focus_mask on an imagebutton, one can have imagebuttons that overlap, but yet still support keyboard focus. This should almost certainly never be set on an individual image, but rather for each individual button (and it's rare to do even that).</p>
+<p><b id="time_policy">time_policy</b> --- A function that is responsible for modifying the displayable timebase of displayables used by buttons. This function expects to be given a time, a state object, and a style object, and is expected to return a new time and a new state. (The state object defaults to None the first time time_policy is called.) This function may want to determine the style prefix by inspecting its .prefix field. The default time_policy does not change the time.</p>
+<p><b id="child">child</b> --- If not None, this displayable is displayed in the place of the child of this button.</p>
+<p><b id="mouse">mouse</b> --- If not None, a string giving the name of the mouse cursor that is used when this button is focused. The name must be listed in config.mouse. This also works with other focusable displayables.</p>
+<p><br /></p>
+<p><a id="Bar_Properties" name="Bar_Properties"></a></p>
+<h2><span class="mw-headline">Bar Properties</span></h2>
+<p>The <a href="../reference/functions/ui.bar.html" title="renpy/doc/reference/functions/ui.bar">ui.bar</a> has a few properties that are specific to it, that control the look of the bars. The bar has gutters on the left and the right. The remaining space is the space in which the bar can change, with the division of the bar being the fraction of this space representing the bar's value as a fraction of the range.</p>
+<p>When the bar is drawn, the thumb's shadow is drawn first, followed by the left and right sides of the bar, followed by the thumb.</p>
+<p><b id="bar_vertical">bar_vertical</b> --- If true, the bar is drawn vertically, if false, horizontally.</p>
+<p><b id="bar_invert">bar_invert</b> --- If true, the value of the bar is represented on the right/top side of the bar, rather then the left/bottom side of the bar.</p>
+<p><b id="bar_resizing">bar_resizing</b> --- If true, we resize the sub-bars, rather than rendering them full size and then cropping.</p>
+<p><b id="left_gutter">left_gutter</b> --- The size of the left gutter of a horizontal bar, in pixels. (Named fore_gutter internally.)</p>
+<p><b id="right_gutter">right_gutter</b> --- The size of the right gutter of a horizontal bar, in pixels. (Named aft_gutter internally.)</p>
+<p><b id="top_gutter">top_gutter</b> --- The size of the top gutter of a vertical bar, in pixels. (Named fore_gutter internally.)</p>
+<p><b id="bottom_gutter">bottom_gutter</b> --- The size of the bottom gutter of a vertical bar, in pixels. (Named aft_gutter internally)</p>
+<p><b id="left_bar">left_bar</b> --- A Displayable that is used to draw the left side of a horizontal bar. This displayable is first rendered at the full size of the bar, and then cropped so only the left side is visible. (Named fore_bar internally.)</p>
+<p><b id="right_bar">right_bar</b> --- A Displayable that is used to draw the right side of a horizontal bar. This displayable is first rendered at the full size of the bar, and then cropped so only the right side is visible. (Named aft_bar internally.)</p>
+<p><b id="top_bar">top_bar</b> --- A Displayable that is used to draw the top of a vertical bar. This displayable is first rendered at the full size of the bar, and then cropped so only the top is visible. (Named fore_bar internally.)</p>
+<p><b id="bottom_bar">bottom_bar</b> --- A Displayable that is used to draw the bottom of a vertical bar. This displayable is first rendered at the full size of the bar, and then cropped so only the bottom is visible. (Named aft_bar internally.)</p>
+<p><b id="thumb">thumb</b> --- If not None, this is a thumb image that is drawn over the break between the sides of the bar.</p>
+<p><b id="thumb_shadow">thumb_shadow</b> --- If not None, a shadow of the thumb that is drawn underneath the break between the sides of the bar.</p>
+<p><b id="thumb_offset">thumb_offset</b> --- The amount by which the thumb overlaps the bars, in pixels. To have the left and right bars continue unbroken, set this to half the width of the thumb. For compatibility's sake, we take the absolute value of this property.</p>
+<p><b id="unscrollable">unscrollable</b> --- Controls what happens if the bar is unscrollable (if the range is set to 0, as is the case with a <a href="../reference/functions/ui.viewport.html" title="renpy/doc/reference/functions/ui.viewport">ui.viewport</a> containing a displayable smaller than itself. There are three possible values:</p>
+<ul>
+<li>None - Renders the bar normally. (default)</li>
+<li>"insensitive" - Renders the bar in insensitive mode. This can be styled differently than a normal bar.</li>
+<li>"hide" - Prevents the bar from rendering at all. Space will be allocated for the bar, but nothing will be drawn in that space.</li>
+</ul>
+<p><i>(new in 6.8.0)</i></p>
+<p><a id="Box_Properties" name="Box_Properties"></a></p>
+<h2><span class="mw-headline">Box Properties</span></h2>
+<p>The <a href="../reference/functions/HBox.html" title="renpy/doc/reference/functions/HBox">HBox</a>, <a href="../reference/functions/VBox.html" title="renpy/doc/reference/functions/VBox">VBox</a>, and <a href="../reference/functions/Fixed.html" title="renpy/doc/reference/functions/Fixed">Fixed</a> displayables are instances of a common MultiBox displayable. These properties control how these displayables are laid out.</p>
+<p><b id="box_layout">box_layout</b> --- If "horizontal", the box is laid out in a horizontal manner. If "vertical", the box is laid out in a vertical fashion. If "fixed", the layout of the box is controlled by the position properties of the children of the box, and the rest of these properties are ignored. If None, the layout of the box is controlled by the function that created the box.</p>
+<p><b id="spacing">spacing</b> --- The spacing between elements in the box, in pixels. This is also used for <a href="../reference/functions/ui.grid.html" title="renpy/doc/reference/functions/ui.grid">ui.grid</a> and <a href="../reference/functions/ui.side.html" title="renpy/doc/reference/functions/ui.side">ui.side</a>. This was formerly known as box_spacing, an alias which still works.</p>
+<p><b id="first_spacing">first_spacing</b> --- If not None, the spacing between the first two elements in the box, in pixels. This is only used for boxes. This was formerly known as box_first_spacing, an alias that still works.</p>
+<p><b id="xfill">xfill</b> --- If True, the box will expand to fill all available space in the x direction. If False, it will shrink to fit its contents.</p>
+<p><b id="yfill">yfill</b> --- If True, the box will expand to fill all available space in the y direction. If False, it will shrink to fit its contents.</p>
+<p><a id="Position_Properties" name="Position_Properties"></a></p>
+<h2><span class="mw-headline">Position Properties</span></h2>
+<p>Position properties are applied to displayables that are smaller than the space allocated to them. They apply to all displayables, and control the placement of the widget in the space. For example, position properties can be used to control the placement of a dialogue window on the screen.</p>
+<p>Position properties work best when a small displayables is placed into empty space. This is the case for say windows, and the menus that are displayed as part of the main menu. Position properties work on other displayables, but the vagaries of how space is allocated can make some of the results counterintuitive.</p>
+<p>Positioning works by placing the displayable such that an anchor (specified relative to the displayable) is at the same location as the position (specified relative to the available space).</p>
+<p><b id="xanchor">xanchor</b> --- The x-axis location of the anchor, relative to the upper-left corner of the displayable. This may be an absolute number of pixels, or a floating point number which is interpreted as a fraction of the size of the displayable.</p>
+<p><b id="xpos">xpos</b> --- The x-axis location of the position, relative to the upper-left corner of the available space. This may be an absolute number of pixels, or a floating point number which is interpreted as a fraction of the size of the available space.</p>
+<p><b id="xalign">xalign</b> --- A shortcut for specifying xanchor and xpos at the same time. This should almost always be assigned a floating point number. As an example, xanchor=0.5 will center a displayable in the available space.</p>
+<p><b id="yanchor">yanchor</b> --- The y-axis location of the anchor, relative to the upper-left corner of the displayable. This may be an absolute number of pixels, or a floating point number which is interpreted as a fraction of the size of the displayable.</p>
+<p><b id="ypos">ypos</b> --- The y-axis location of the position, relative to the upper-left corner of the available space. This may be an absolute number of pixels, or a floating point number which is interpreted as a fraction of the size of the available space.</p>
+<p><b id="yalign">yalign</b> --- A shortcut for specifying yanchor and ypos at the same time. This should almost always be assigned a floating point number.</p>
+<p><b id="xoffset">xoffset</b> --- An offset, in pixels, that is added to the position computed using xpos and xanchor.</p>
+<p><b id="yoffset">yoffset</b> --- An offset, in pixels, that is added to the position computed using ypos and yanchor.</p>
+<p>Assuming xpos, ypos, xanchor, and yanchor have all been converted to pixels if necessary, the position of the upper-left corner of a displayable relative to the upper-left corner of the area it is laid out in can be expressed as:</p>
+<ul>
+<li>x = xpos - xanchor + xoffset</li>
+<li>y = ypos - yanchor + yoffset</li>
+</ul>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

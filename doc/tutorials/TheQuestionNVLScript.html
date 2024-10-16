@@ -1,0 +1,292 @@
+<html><head><title>TheQuestionNVLScript - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a></p><p><a id="The_Question_-_NVL-Mode_Script" name="The_Question_-_NVL-Mode_Script"></a></p>
+<h1><span class="mw-headline">The Question - NVL-Mode Script</span></h1>
+<p>This script is intended to be dropped in over script.rpy in the the_question directory. In addition, this script uses <a class="internal" href="http://www.renpy.org/w/images/8/8f/nvl_window.png" title="nvl window.png">Media:nvl_window.png</a> as the background.</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+
+    <span class="slc"># Declare images used by this game.</span>
+    <span class="kwa">image</span> bg lecturehall <span class="sym">=</span> <span class="str">"lecturehall.jpg"</span>
+    <span class="kwa">image</span> bg uni <span class="sym">=</span> <span class="str">"uni.jpg"</span>
+    <span class="kwa">image</span> bg meadow <span class="sym">=</span> <span class="str">"meadow.jpg"</span>
+    <span class="kwa">image</span> bg club <span class="sym">=</span> <span class="str">"club.jpg"</span>
+
+    <span class="kwa">image</span> sylvie normal <span class="sym">=</span> <span class="str">"sylvie_normal.png"</span>
+    <span class="kwa">image</span> sylvie giggle <span class="sym">=</span> <span class="str">"sylvie_giggle.png"</span>
+    <span class="kwa">image</span> sylvie smile <span class="sym">=</span> <span class="str">"sylvie_smile.png"</span>
+    <span class="kwa">image</span> sylvie surprised <span class="sym">=</span> <span class="str">"sylvie_surprised.png"</span>
+
+    <span class="kwa">image</span> sylvie2 normal <span class="sym">=</span> <span class="str">"sylvie2_normal.png"</span>
+    <span class="kwa">image</span> sylvie2 giggle <span class="sym">=</span> <span class="str">"sylvie2_giggle.png"</span>
+    <span class="kwa">image</span> sylvie2 smile <span class="sym">=</span> <span class="str">"sylvie2_smile.png"</span>
+    <span class="kwa">image</span> sylvie2 surprised <span class="sym">=</span> <span class="str">"sylvie2_surprised.png"</span>
+
+    $ s <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="kwa">None</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">,</span> what_prefix<span class="sym">=</span><span class="str">"</span><span class="esc">\"</span><span class="str">"</span><span class="sym">,</span> what_suffix<span class="sym">=</span><span class="str">"</span><span class="esc">\"</span><span class="str">"</span><span class="sym">,</span> what_color<span class="sym">=</span><span class="str">"#c8ffc8"</span><span class="sym">)</span>
+    $ m <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="kwa">None</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">,</span> what_prefix<span class="sym">=</span><span class="str">"</span><span class="esc">\"</span><span class="str">"</span><span class="sym">,</span> what_suffix<span class="sym">=</span><span class="str">"</span><span class="esc">\"</span><span class="str">"</span><span class="sym">,</span> what_color<span class="sym">=</span><span class="str">"#ffc8c8"</span><span class="sym">)</span>
+    $ narrator <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="kwa">None</span><span class="sym">,</span> kind<span class="sym">=</span>nvl<span class="sym">)</span>
+
+<span class="kwa">init python</span><span class="sym">:</span>
+
+    <span class="kwa">menu</span> <span class="sym">=</span> nvl_menu
+
+    <span class="slc"># The color of a menu choice when it isn't hovered.</span>
+    style<span class="sym">.</span>nvl_menu_choice<span class="sym">.</span>idle_color <span class="sym">=</span> <span class="str">"#ccccccff"</span>
+
+    <span class="slc"># The color of a menu choice when it is hovered.</span>
+    style<span class="sym">.</span>nvl_menu_choice<span class="sym">.</span>hover_color <span class="sym">=</span> <span class="str">"#ffffffff"</span>
+
+    <span class="slc"># The color of the background of a menu choice, when it isn't</span>
+    <span class="slc"># hovered.</span>
+    style<span class="sym">.</span>nvl_menu_choice_button<span class="sym">.</span>idle_background <span class="sym">=</span> <span class="str">"#00000000"</span>
+
+    <span class="slc"># The color of the background of a menu choice, when it is</span>
+    <span class="slc"># hovered.</span>
+    style<span class="sym">.</span>nvl_menu_choice_button<span class="sym">.</span>hover_background <span class="sym">=</span> <span class="str">"#ff000044"</span>
+
+    <span class="slc"># How far from the left menu choices should be indented.</span>
+    style<span class="sym">.</span>nvl_menu_choice_button<span class="sym">.</span>left_margin <span class="sym">=</span> <span class="num">20</span>
+
+
+    style<span class="sym">.</span>nvl_window<span class="sym">.</span>background <span class="sym">=</span> <span class="str">"nvl_window.png"</span>
+    style<span class="sym">.</span>nvl_window<span class="sym">.</span>xpadding <span class="sym">=</span> <span class="num">55</span>
+    style<span class="sym">.</span>nvl_window<span class="sym">.</span>ypadding <span class="sym">=</span> <span class="num">55</span>
+
+    config<span class="sym">.</span>empty_window <span class="sym">=</span> nvl_show_core
+    config<span class="sym">.</span>window_hide_transition <span class="sym">=</span> dissolve
+    config<span class="sym">.</span>window_show_transition <span class="sym">=</span> dissolve
+
+
+<span class="slc"># The game starts here.</span>
+<span class="kwa">label</span> start<span class="sym">:</span>
+
+    $ bl_game <span class="sym">=</span> <span class="kwa">False</span>
+
+    play music <span class="str">"illurock.ogg"</span>
+
+    <span class="kwa">scene</span> bg lecturehall
+    <span class="kwa">with</span> fade
+
+    <span class="kwa">window show</span>
+
+    <span class="str">"Well, professor Eileen's lecture was interesting, but to be honest, I couldn't concentrate on it very much."</span>
+
+    <span class="str">"I had a lot of other thoughts on my mind, and they all ended up with a question."</span>
+
+    <span class="str">"A question I've been meaning to ask someone."</span>
+
+    <span class="kwa">window hide</span>
+    nvl clear
+
+    <span class="kwa">scene</span> bg uni
+    <span class="kwa">with</span> fade
+    <span class="kwa">window show</span>
+
+    <span class="str">"When we came out of the university, I saw her."</span>
+
+    <span class="kwa">window hide</span>
+    <span class="kwa">show</span> sylvie normal
+    <span class="kwa">with</span> dissolve
+    <span class="kwa">window show</span>
+
+    <span class="str">"She was a wonderful person. I've known her ever since we were children, and she's always been a good friend."</span>
+
+    <span class="str">"But... Recently... I think..."</span>
+    <span class="str">"... that I wanted more."</span>
+
+    <span class="str">"More just talking... more than just walking home together when our classes ended."</span>
+
+    <span class="kwa">menu</span><span class="sym">:</span>
+        <span class="str">"And I decided..."</span>
+
+        <span class="str">"... to ask her right away."</span><span class="sym">:</span>
+
+            <span class="kwa">jump</span> rightaway
+
+        <span class="str">"... to ask her later."</span><span class="sym">:</span>
+
+            <span class="kwa">jump</span> later
+
+
+<span class="kwa">label</span> rightaway<span class="sym">:</span>
+
+    nvl clear
+
+    <span class="kwa">show</span> sylvie smile
+
+    s <span class="str">"Oh, hi, do we walk home together?"</span>
+    m <span class="str">"Yes..."</span>
+    <span class="str">"I said and my voice was already shaking."</span>
+
+    nvl clear
+
+    <span class="kwa">window hide</span>
+    <span class="kwa">scene</span> bg meadow
+    <span class="kwa">with</span> fade
+    <span class="kwa">window show</span>
+
+    <span class="str">"We reached the meadows just outside our hometown. Autumn was so beautiful here."</span>
+    <span class="str">"When we were children, we often played here."</span>
+
+    m <span class="str">"Hey... ummm..."</span>
+
+    <span class="kwa">window hide</span>
+    <span class="kwa">show</span> sylvie smile
+    <span class="kwa">with</span> dissolve
+    <span class="kwa">window show</span>
+
+    <span class="str">"She turned to me and smiled."</span>
+    <span class="str">"I'll ask her..."</span>
+    m <span class="str">"Ummm... will you..."</span>
+    m <span class="str">"Will you be my artist for a visual novel?"</span>
+
+    <span class="kwa">show</span> sylvie surprised
+
+    nvl clear
+
+    <span class="str">"Silence."</span>
+    <span class="str">"She is shocked. And then..."</span>
+
+    <span class="kwa">show</span> sylvie smile
+
+    s <span class="str">"Sure, but what is a</span> <span class="esc">\"</span><span class="str">visual novel?</span><span class="esc">\"</span><span class="str">"</span>
+
+    <span class="kwa">menu</span><span class="sym">:</span>
+
+        <span class="str">"It's a story with pictures."</span><span class="sym">:</span>
+            <span class="kwa">jump</span> vn
+
+        <span class="str">"It's a hentai game."</span><span class="sym">:</span>
+            <span class="kwa">jump</span> hentai
+
+<span class="kwa">label</span> vn<span class="sym">:</span>
+
+    nvl clear
+
+    m <span class="str">"It's a story with pictures and music. And you'll be able to make choices that influence the outcome of the story."</span>
+    s <span class="str">"So it's like those choose-your-adventure books?"</span>
+    m <span class="str">"Exactly! I plan on making a small romantic story. I figured you could help me... since I know how you like to draw."</span>
+
+    <span class="kwa">show</span> sylvie normal
+
+    s <span class="str">"Well, I can try. I hope I don't disappoint you."</span>
+    m <span class="str">"You can't disappoint me, you know that."</span>
+
+    <span class="kwa">jump</span> marry
+
+<span class="kwa">label</span> hentai<span class="sym">:</span>
+
+    nvl clear
+
+    $ bl_game <span class="sym">=</span> <span class="kwa">True</span>
+
+    m <span class="str">"Why it's a game with lots of sex."</span>
+    s <span class="str">"You mean, like a boy's love game? I've always wanted to make one of those. I'll get right on it!"</span>
+
+    <span class="kwa">hide</span> sylvie
+    <span class="kwa">with</span> dissolve
+
+    <span class="str">"..."</span>
+
+    m <span class="str">"That wasn't what I meant!"</span>
+
+    <span class="kwa">jump</span> marry
+
+<span class="kwa">label</span> marry<span class="sym">:</span>
+
+    <span class="kwa">window hide</span>
+    nvl clear
+
+    <span class="kwa">scene</span> black
+    <span class="kwa">with</span> dissolve
+
+    <span class="str">"--- years later ---"</span>
+
+    nvl clear
+
+    <span class="kwa">scene</span> bg club
+    <span class="kwa">with</span> dissolve
+    <span class="kwa">window show</span>
+
+    <span class="str">"And so, we became a visual novel creating team. We made games and had a lot of fun making them."</span>
+
+    <span class="kwa">if</span> bl_game<span class="sym">:</span>
+        <span class="str">"Well, apart from that Boy's Love game she insisted on making."</span>
+
+    <span class="kwa">window hide</span>
+    nvl clear
+
+    <span class="kwa">show</span> sylvie2 normal
+    <span class="kwa">with</span> dissolve
+    <span class="kwa">window show</span>
+
+    <span class="str">"And one day, she asked me..."</span>
+
+    s <span class="str">"Hey..."</span>
+    m <span class="str">"Yes?"</span>
+
+    <span class="kwa">show</span> sylvie2 giggle
+
+    s <span class="str">"Marry me!"</span>
+    m <span class="str">"What???"</span>
+
+    <span class="kwa">show</span> sylvie2 surprised
+
+    s <span class="str">"Well, don't you love me?"</span>
+    m <span class="str">"I do, actually."</span>
+
+    nvl clear
+    <span class="kwa">show</span> sylvie2 smile
+
+    s <span class="str">"See? We've been making romantic visual novels, spending time together, helping each other... and when you give love to others, love will come to you."</span>
+    m <span class="str">"Hmmm, that's a nice thought."</span>
+
+    <span class="kwa">show</span> sylvie2 giggle
+
+    s <span class="str">"I just made that up."</span>
+    m <span class="str">"But it's good."</span>
+
+    nvl clear
+    <span class="kwa">show</span> sylvie2 normal
+
+    s <span class="str">"I know. So, will you marry me?"</span>
+    m <span class="str">"Ummm, of course I will. I've actually been meaning to ask you, but since you brought it up..."</span>
+    s <span class="str">"I know, but you are so indecisive, that I thought I'd take the initiative. "</span>
+    m <span class="str">"I guess... It's all about asking the right question... at the right time."</span>
+
+    <span class="kwa">show</span> sylvie2 giggle
+
+    s <span class="str">"It is. But now, stop being theoretical, and give me a kiss!"</span>
+
+    nvl clear
+    <span class="kwa">window hide</span>
+    <span class="kwa">scene</span> black
+    <span class="kwa">with</span> dissolve
+
+    <span class="str">"And we got married shortly after that. In fact, we made many more visual novels. And together, we lived happily ever after."</span>
+
+    <span class="str">".:. Good Ending."</span>
+
+    <span class="kwa">return</span>
+
+<span class="kwa">label</span> later<span class="sym">:</span>
+
+    nvl clear
+    <span class="kwa">window hide</span>
+
+    <span class="kwa">scene</span> black
+    <span class="kwa">with</span> dissolve
+
+    <span class="str">"And so I decided to ask her later."</span>
+    <span class="str">"But I was indecisive."</span>
+    <span class="str">"I couldn't ask her that day, and I couldn't ask her later. I guess I will never know now."</span>
+
+    <span class="str">".:. Bad Ending."</span>
+
+    <span class="kwa">return</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a></p></div>
+	</body></html>

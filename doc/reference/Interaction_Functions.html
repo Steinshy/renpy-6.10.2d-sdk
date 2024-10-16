@@ -1,0 +1,882 @@
+<html><head><title>Interaction Functions - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Interaction_Functions" name="Interaction_Functions"></a></p>
+<h1><span class="mw-headline">Interaction Functions</span></h1>
+<p>The Ren'Py interaction functions are available so that you can customize interactions with the user taking advantage of the same code which the normal interactions use.</p>
+<table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Interaction_Functions"><span class="tocnumber">1</span> <span class="toctext">Interaction Functions</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Statement_Helper_Functions"><span class="tocnumber">1.1</span> <span class="toctext">Statement Helper Functions</span></a></li>
+<li class="toclevel-2"><a href="#Context_Functions"><span class="tocnumber">1.2</span> <span class="toctext">Context Functions</span></a></li>
+<li class="toclevel-2"><a href="#Debugging_Functions"><span class="tocnumber">1.3</span> <span class="toctext">Debugging Functions</span></a></li>
+<li class="toclevel-2"><a href="#Ren.27Py_Statement_Functions"><span class="tocnumber">1.4</span> <span class="toctext">Ren'Py Statement Functions</span></a></li>
+<li class="toclevel-2"><a href="#Scene_List_Access"><span class="tocnumber">1.5</span> <span class="toctext">Scene List Access</span></a></li>
+<li class="toclevel-2"><a href="#Miscellaneous_Utility_Functions"><span class="tocnumber">1.6</span> <span class="toctext">Miscellaneous Utility Functions</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><br /></p>
+<p><a id="Statement_Helper_Functions" name="Statement_Helper_Functions"></a></p>
+<h3><span class="mw-headline">Statement Helper Functions</span></h3>
+<p>The following functions either implement new game behavior that didn't merit its own statement, or complement the behavior of statements.</p>
+<p><br />
+<span id="renpy.block_rollback" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.block_rollback.html" title="renpy/doc/reference/functions/renpy.block rollback">renpy.block_rollback</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Prevents the game from rolling back to before the current statement.</p>
+</div>
+<p><br />
+<span id="renpy.checkpoint" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.checkpoint.html" title="renpy/doc/reference/functions/renpy.checkpoint">renpy.checkpoint</a></b></td>
+<td valign="top">(data=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a checkpoint that the user can rollback to. The checkpoint is placed at the statement after the last statement that interacted with the user. Once this function has been called, there should be no more interaction with the user in the current Python block.</p>
+<p><i>data</i> - If not None, this contains data that can be accessed using <a href="../reference/functions/renpy.roll_forward_info.html" title="renpy/doc/reference/functions/renpy.roll forward info">renpy.roll_forward_info</a> if and when the current statement is re-executed due to the user rolling back and then rolling forward again.</p>
+<p>renpy.checkpoint should be called after <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+</div>
+<p><br /></p>
+<p><span id="renpy.choice_for_skipping" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.choice_for_skipping.html" title="renpy/doc/reference/functions/renpy.choice for skipping">renpy.choice_for_skipping</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is called to indicate to the skipping code that we have reached a choice. If we're skipping, and if the skip after choices preference is not True, then this disables skipping. This should only be needed in a custom interaction function.</p>
+</div>
+<p><br />
+<span id="renpy.clear_game_runtime" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.clear_game_runtime.html" title="renpy/doc/reference/functions/renpy.clear game runtime">renpy.clear_game_runtime</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Resets the game runtime timer down to 0.</p>
+<p>The game runtime counter counts the number of seconds that have elapsed while waiting for user input in the current context. (So it doesn't count time spent in the game menu.)</p>
+</div>
+<p><br />
+<span id="renpy.current_interact_type" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.current_interact_type.html" title="renpy/doc/reference/functions/renpy.current interact type">renpy.current_interact_type</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns the value of the <i>type</i> parameter supplied to ui.interact() during the current interaction. See <a href="../reference/functions/renpy.last_interact_type.html" title="renpy/doc/reference/functions/renpy.last interact type">renpy.last_interact_type</a> for possible interaction types.</p>
+</div>
+<p><br />
+<span id="renpy.display_menu" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.display_menu.html" title="renpy/doc/reference/functions/renpy.display menu">renpy.display_menu</a></b></td>
+<td valign="top">(items, window_style='menu_window', interact=True, with_none=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Displays a menu containing the given items, returning the value of the item the user selects.</p>
+<p><i>items</i> - A list of tuples that are the items to be added to this menu. The first element of a tuple is a string that is used for this menuitem. The second element is the value to be returned if this item is selected, or None if this item is a non-selectable caption.</p>
+<p><i>interact</i> - If True, then an interaction occurs. If False, no such interaction occurs, and the user should call <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a> manually.</p>
+<p><i>with_none</i> - If True, causes a "with None" statement to be run after each interaction. If None (the default), checks config.implicit_with_none to determine if a "with None" should be run.</p>
+</div>
+<p><br />
+<span id="renpy.display_say" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.display_say.html" title="renpy/doc/reference/functions/renpy.display say">renpy.display_say</a></b></td>
+<td valign="top">(who, what, ...):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Called by <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> to implement the say statement.</p>
+</div>
+<p><br />
+<span id="renpy.full_restart" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.full_restart.html" title="renpy/doc/reference/functions/renpy.full restart">renpy.full_restart</a></b></td>
+<td valign="top">(transition=config.end_game_transition, label="_invoke_main_menu", target="_main_menu"):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This causes a full restart of Ren'Py. This resets the state of Ren'Py to what it was when the init blocks finished running, and then restarts the game. After some init code runs, <i>transition</i> will be set to run on the next interaction, and control will be transferred to <i>label</i>. The default label initializes the main menu context, and then invokes <i>target</i>. <i>target</i> can be a screen, like "preferences_screen" or "load_screen".</p>
+<p>It generally doesn't make sense to specify both <i>label</i> and <i>target</i>. <i>(changed in 6.9.0)</i></p>
+</div>
+<p><br />
+<span id="renpy.game_menu" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.game_menu.html" title="renpy/doc/reference/functions/renpy.game menu">renpy.game_menu</a></b></td>
+<td valign="top">(screen=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Invokes the game menu.</p>
+<p><i>screen</i> is the screen to access, usually one of "load_screen", "save_screen", or "preferences_screen", but the user can define other game menu screens. If None, it defaults to the value of <a href="../reference/Main_and_Game_Menus#_game_menu_screen" title="renpy/doc/reference/Main and Game Menus">_game_menu_screen</a>.</p>
+</div>
+<p><br />
+<span id="renpy.get_game_runtime" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.get_game_runtime.html" title="renpy/doc/reference/functions/renpy.get game runtime">renpy.get_game_runtime</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns the number of seconds that have elapsed in gameplay since the last call to clear_game_timer, as a float.</p>
+<p>The game runtime counter counts the number of seconds that have elapsed while waiting for user input in the current context. (So it doesn't count time spent in the game menu.)</p>
+</div>
+<p><br />
+<span id="renpy.get_reshow_say" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.get_reshow_say.html" title="renpy/doc/reference/functions/renpy.get reshow say">renpy.get_reshow_say</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Gets a function that, when called, will reshow the previous say statement. Does not cause an interaction to occur.</p>
+</div>
+<p><br />
+<span id="renpy.get_roll_forward" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.get_roll_forward.html" title="renpy/doc/reference/functions/renpy.get roll forward">renpy.get_roll_forward</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Gets the roll forward info for the current interaction. This function is intended to be used by overlay functions. The overlay function should return the result of this function to cause a roll-forward to happen.</p>
+<p>Note that it only makes sense to use this inside of an interaction. See <a href="../reference/functions/renpy.roll_forward_info.html" title="renpy/doc/reference/functions/renpy.roll forward info">renpy.roll_forward_info</a> for information on how to get the roll forward info outside of an interaction.</p>
+</div>
+<p><br />
+<span id="renpy.get_transition" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.get_transition.html" title="renpy/doc/reference/functions/renpy.get transition">renpy.get_transition</a></b></td>
+<td valign="top">(layer=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Gets the transition that has been scheduled to occur using <a href="../reference/functions/renpy.transition.html" title="renpy/doc/reference/functions/renpy.transition">renpy.transition</a>.</p>
+<p><i>layer</i> - if not None, finds the transition occuring for that specific layer.</p>
+</div>
+<p><br />
+<span id="renpy.imagemap" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.imagemap.html" title="renpy/doc/reference/functions/renpy.imagemap">renpy.imagemap</a></b></td>
+<td valign="top">(ground, selected, hotspots, unselected=None, overlays=False, style='imagemap', with_none=None, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Displays an imagemap. An image map consists of two images and a list of hotspots that are defined on that image. When the user clicks on a hotspot, the value associated with that hotspot is returned. Despite the name, this takes arbitrary displayables, not just image manipulators.</p>
+<p><i>ground</i> - The name of the file containing the ground image. The ground image is displayed for areas that are not part of any hotspots.</p>
+<p><i>selected</i> - The name of the file containing the selected image. This image is displayed in hotspots when the mouse is over them.</p>
+<p><i>hotspots</i> - A list of tuples defining the hotspots in this image map. Each tuple has the format (x0, y0, x1, y1, result). (x0, y0) gives the coordinates of the upper-left corner of the hotspot, (x1, y1) gives the lower-right corner, and result gives the value returned from this function if the mouse is clicked in the hotspot.</p>
+<p><i>unselected</i> - If provided, then it is the name of a file containing the image that's used to fill in hotspots that are not selected as part of any image. If not provided, the ground image is used instead.</p>
+<p><i>overlays</i> - If True, overlays are displayed when this imagemap is active. If False, the overlays are suppressed.</p>
+<p><i>with_none</i> - If True, causes a "with None" statement to be run after each interaction. If None (the default), checks config.implicit_with_none to determine if a "with None" should be run.</p>
+</div>
+<p><br />
+<span id="renpy.input" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.input.html" title="renpy/doc/reference/functions/renpy.input">renpy.input</a></b></td>
+<td valign="top">(prompt, default=<i>, allow=None, exclude='{}', length=None, with_none=None):</i></td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This pops up a window requesting that the user enter in some text. It returns the entered text.</p>
+<p><i>prompt</i> - A prompt that is used to ask the user for the text.</p>
+<p><i>default</i> - A default for the text that this input can return.</p>
+<p><i>length</i> - If given, a limit to the amount of text that this function will return.</p>
+<p><i>allow</i> - If not None, then if an input character is not in this string, it is ignored.</p>
+<p><i>exclude</i> - If not None, then if an input character is in this set, it is ignored.</p>
+<p><i>with_none</i> - If True, causes a "with None" statement to be run after each interaction. If None (the default), checks config.implicit_with_none to determine if a "with None" should be run.</p>
+</div>
+<p><br />
+<span id="renpy.last_interact_type" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.last_interact_type.html" title="renpy/doc/reference/functions/renpy.last interact type">renpy.last_interact_type</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns the value of the <i>type</i> parameter supplied to ui.interact() during the last interaction. Default types are:</p>
+<ul>
+<li>"say" - Normal say statements.</li>
+<li>"nvl" - NVL-mode say statements.</li>
+<li>"imagemap" - <a href="../reference/functions/renpy.imagemap.html" title="renpy/doc/reference/functions/renpy.imagemap">renpy.imagemap</a></li>
+<li>"pause" - <a href="../reference/functions/renpy.pause.html" title="renpy/doc/reference/functions/renpy.pause">renpy.pause</a></li>
+<li>"input" - <a href="../reference/functions/renpy.input.html" title="renpy/doc/reference/functions/renpy.input">renpy.input</a></li>
+<li>"menu" - Menus.</li>
+<li>"misc" - Other interactions.</li>
+</ul>
+<p>In addition to these, other values can be created by giving the <i>say</i> argument to <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> or <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>.</p>
+</div>
+<p><br />
+<span id="renpy.pause" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.pause.html" title="renpy/doc/reference/functions/renpy.pause">renpy.pause</a></b></td>
+<td valign="top">(delay=None, music=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When called with no arguments, this pauses and waits for the user to click before advancing the script. If given a delay parameter, then Ren'Py will wait for that amount of time before continuing, unless a user clicks to interrupt the delay. This is useful to, for instance, show an image that will stay on screen for a certain amount of time and then proceed to the next script statement without waiting for a click forever.</p>
+<p><i>delay</i> - The number of seconds to delay.</p>
+<p><i>music</i> - If supplied, and music is playing, this takes precedence over the delay parameter. It gives a time, in seconds, into the currently playing music track. Ren'Py will pause until the music has played up to that point.</p>
+<p>Returns True if the pause was interrupted by the user hitting a key or clicking a mouse, or False if the pause was ended by the appointed time being reached.</p>
+</div>
+<p><br />
+<span id="renpy.predict" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.predict.html" title="renpy/doc/reference/functions/renpy.predict">renpy.predict</a></b></td>
+<td valign="top">(img):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Forces prediction of the supplied image or displayable. This will cause it to be loaded into the image cache during the next (and only the next) interaction, if there's any free time.</p>
+</div>
+<p><br />
+<span id="renpy.predict_display_say" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.predict_display_say.html" title="renpy/doc/reference/functions/renpy.predict display say">renpy.predict_display_say</a></b></td>
+<td valign="top">(who, what, ...):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is the default function used by <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> to predict images that will be used by <a href="../reference/functions/renpy.display_say.html" title="renpy/doc/reference/functions/renpy.display say">renpy.display_say</a>.</p>
+</div>
+<p><br />
+<span id="renpy.quit" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.quit.html" title="renpy/doc/reference/functions/renpy.quit">renpy.quit</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This causes Ren'Py to exit entirely.</p>
+</div>
+<p><br />
+<span id="renpy.show_display_say" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.show_display_say.html" title="renpy/doc/reference/functions/renpy.show display say">renpy.show_display_say</a></b></td>
+<td valign="top">(who, what, who_args={}, what_args={}, window_args={}, image=False, no_ctc_what=..., **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is called (by default) by <a href="../reference/functions/renpy.display_say.html" title="renpy/doc/reference/functions/renpy.display say">renpy.display_say</a> to add the widgets corresponding to a screen of dialogue to the user. It is not expected to be called by the user, but instead to be called by <a href="../reference/functions/renpy.display_say.html" title="renpy/doc/reference/functions/renpy.display say">renpy.display_say</a>, or by a function passed as the <i>show_function argument</i> to <a href="../reference/functions/Character.html" title="renpy/doc/reference/functions/Character">Character</a> or <a href="../reference/functions/renpy.display_say.html" title="renpy/doc/reference/functions/renpy.display say">renpy.display_say</a>.</p>
+<p><i>who</i> - The name of the character that is speaking, or None to not show this name to the user.</p>
+<p><i>what</i> - What that character is saying. Please note that this may not be a string, as it can also be a list containing both text and displayables, suitable for use as the first argument of <a href="../reference/functions/ui.text.html" title="renpy/doc/reference/functions/ui.text">ui.text</a>.</p>
+<p><i>who_args</i> - Additional keyword arguments intended to be supplied to the <a href="../reference/functions/ui.text.html" title="renpy/doc/reference/functions/ui.text">ui.text</a> that creates the who widget of this dialogue.</p>
+<p><i>what_args</i> - Additional keyword arguments intended to be supplied to the <a href="../reference/functions/ui.text.html" title="renpy/doc/reference/functions/ui.text">ui.text</a> that creates the what widget of this dialogue.</p>
+<p><i>window_args</i> - Additional keyword arguments intended to be supplied to the <a href="../reference/functions/ui.window.html" title="renpy/doc/reference/functions/ui.window">ui.window</a> that creates the who widget of this dialogue.</p>
+<p><i>image</i> - If True, then who should be interpreted as an image or displayable rather than a text string.</p>
+<p><i>callback</i> - If not None, a function that should be called with no arguments before each time something is shown.</p>
+<p><i>no_ctc_what</i> - The contents of <i>what</i> before the click-to-continue indicator was appended.</p>
+<p><i>kwargs</i> - Additional keyword arguments should be ignored.</p>
+<p>This function is required to return the <a href="../reference/functions/ui.text.html" title="renpy/doc/reference/functions/ui.text">ui.text</a> widget displaying the what text.</p>
+</div>
+<p><br />
+<span id="renpy.shown_window" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.shown_window.html" title="renpy/doc/reference/functions/renpy.shown window">renpy.shown_window</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This should be called when a window is shown on the screen. Calling this prevents <a href="../reference/Configuration_Variables#config.empty_window" title="renpy/doc/reference/Configuration Variables">config.empty_window</a> from being called when <a href="../reference/Store_Variables#_window" title="renpy/doc/reference/Store Variables">_window</a> is true. (And hence, prevents the empty window from being shown.)</p>
+</div>
+<p><br />
+<span id="renpy.transition" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.transition.html" title="renpy/doc/reference/functions/renpy.transition">renpy.transition</a></b></td>
+<td valign="top">(trans, layer=None, always=False):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Sets the transition that will be used for the next interaction. This is useful when the next interaction doesn't take a with clause, as is the case with interactions in the <a href="../reference/functions/renpy.pause.html" title="renpy/doc/reference/functions/renpy.pause">renpy.pause</a>, <a href="../reference/functions/renpy.input.html" title="renpy/doc/reference/functions/renpy.input">renpy.input</a>, and <a href="../reference/functions/renpy.imagemap.html" title="renpy/doc/reference/functions/renpy.imagemap">renpy.imagemap</a> functions.</p>
+<p><i>trans</i> - The desired <a href="../reference/Transitions.html" title="renpy/doc/reference/Transitions">transition</a>.</p>
+<p><i>layer</i> - If the layer setting is not None, then the transition will be applied only to the layer named. Please note that only some transitions can be applied to specific layers.</p>
+<p><i>always</i> - If True, forces the transition to be used, potentially overriding the game preference setting for showing all or no transitions.</p>
+</div>
+<p><br />
+<span id="renpy.restart_interaction" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.restart_interaction.html" title="renpy/doc/reference/functions/renpy.restart interaction">renpy.restart_interaction</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Calling this restarts the current interaction, while keeping any ongoing transitions.</p>
+<p>This should be called whenever displayables are added or removed over the course of an interaction, or when the information used to construct the overlay changes.</p>
+<p><br /></p>
+</div>
+<p><br />
+<span id="renpy.reshow_say" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.reshow_say.html" title="renpy/doc/reference/functions/renpy.reshow say">renpy.reshow_say</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Reshows the last say statement. Does not cause an interaction to occur.</p>
+</div>
+<p><br />
+<span id="renpy.roll_forward_info" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.roll_forward_info.html" title="renpy/doc/reference/functions/renpy.roll forward info">renpy.roll_forward_info</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When re-executing a statement after rollback, this returns the data stored using <a href="../reference/functions/renpy.checkpoint.html" title="renpy/doc/reference/functions/renpy.checkpoint">renpy.checkpoint</a> the last time this statement was executed. If this statement is not being re-executed due to a rollback, this returns None.</p>
+<p>Often, this data is passed as the roll_forward parameter of <a href="../reference/functions/ui.interact.html" title="renpy/doc/reference/functions/ui.interact">ui.interact</a>. It's important to check to ensure that the value is valid before using it in this way.</p>
+</div>
+<p><br /></p>
+<p><a id="Context_Functions" name="Context_Functions"></a></p>
+<h3><span class="mw-headline">Context Functions</span></h3>
+<p>Contexts store the current scene lists and execution location. Ren'Py supports a stack of contexts, but only the top-level context is saved to the save file.</p>
+<p><br />
+<span id="renpy.context" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.context.html" title="renpy/doc/reference/functions/renpy.context">renpy.context</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns an object that is unique to the current context, that participates in rollback and the like.</p>
+</div>
+<p><br /></p>
+<p><br />
+<span id="renpy.call_in_new_context" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.call_in_new_context.html" title="renpy/doc/reference/functions/renpy.call in new context">renpy.call_in_new_context</a></b></td>
+<td valign="top">(label):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This code creates a new context, and starts executing code from that label in the new context. Rollback is disabled in the new context. (Actually, it will just bring you back to the real context.)</p>
+<p>Use this to begin a second interaction with the user while inside an interaction.</p>
+</div>
+<p><br /></p>
+<p><span id="renpy.invoke_in_new_context" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.invoke_in_new_context.html" title="renpy/doc/reference/functions/renpy.invoke in new context">renpy.invoke_in_new_context</a></b></td>
+<td valign="top">(callable, *args, **kwargs):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This pushes the current context, and invokes the given python function in a new context. When that function returns or raises an exception, it removes the new context, and restores the current context.</p>
+<p>Additional arguments and keyword arguments are passed to the callable.</p>
+<p>Please note that the context so created cannot execute renpy code. So exceptions that change the flow of renpy code (like the one created by <a href="../reference/functions/renpy.jump.html" title="renpy/doc/reference/functions/renpy.jump">renpy.jump</a>) cause this context to terminate, and are handled by the next higher context.</p>
+<p>If you want to execute renpy code from the function, you can call it with <a href="../reference/functions/renpy.call_in_new_context.html" title="renpy/doc/reference/functions/renpy.call in new context">renpy.call_in_new_context</a>.</p>
+<p>Use this to begin a second interaction with the user while inside an interaction.</p>
+</div>
+<p><br /></p>
+<p><span id="renpy.jump_out_of_context" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.jump_out_of_context.html" title="renpy/doc/reference/functions/renpy.jump out of context">renpy.jump_out_of_context</a></b></td>
+<td valign="top">(label):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Causes control to leave the current context, and then to be transferred in the parent context to the given label.</p>
+</div>
+<p><br /></p>
+<p><a id="Debugging_Functions" name="Debugging_Functions"></a></p>
+<h3><span class="mw-headline">Debugging Functions</span></h3>
+<p><span id="renpy.log" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.log.html" title="renpy/doc/reference/functions/renpy.log">renpy.log</a></b></td>
+<td valign="top">(msg):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If <a href="../reference/Configuration_Variables#config.log" title="renpy/doc/reference/Configuration Variables">config.log</a> is not set, this does nothing. Otherwise, it opens the logfile (if not already open), formats the message to 70 columns, and prints it to the logfile.</p>
+</div>
+<p><br /></p>
+<p><span id="renpy.watch" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.watch.html" title="renpy/doc/reference/functions/renpy.watch">renpy.watch</a></b></td>
+<td valign="top">(expression, style='default', **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This watches the given python expression, by displaying it in the upper-left corner of the screen (although position properties can change that). The expression should always be defined, never throwing an exception.</p>
+<p>A watch will not persist through a save or restart.</p>
+</div>
+<p><br /></p>
+<p><span id="renpy.get_filename_line" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.get_filename_line.html" title="renpy/doc/reference/functions/renpy.get filename line">renpy.get_filename_line</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns a pair giving the filename and line number of the current statement.</p>
+</div>
+<p><br /></p>
+<p><a id="Ren.27Py_Statement_Functions" name="Ren.27Py_Statement_Functions"></a></p>
+<h3><span class="mw-headline">Ren'Py Statement Functions</span></h3>
+<p>These functions correspond to the equivalent core Ren'Py language statements.</p>
+<p><br />
+<span id="renpy.jump" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.jump.html" title="renpy/doc/reference/functions/renpy.jump">renpy.jump</a></b></td>
+<td valign="top">(label):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Transfers control to <i>label</i>. Note that this will terminate the python block it's in.</p>
+</div>
+<p><br /></p>
+<p><span id="renpy.image" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.image.html" title="renpy/doc/reference/functions/renpy.image">renpy.image</a></b></td>
+<td valign="top">(name, img):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is used to execute the image statment. It takes as arguments an image name and an image object, and associates the image name with the image object.</p>
+<p>Like the image statment, this function should only be executed in init blocks.</p>
+<p><i>name</i> - The image name, a tuple of strings.</p>
+<p><i>img</i> - The displayable that is associated with that name. If this is a string or tuple, it is interpreted as an argument to Image.</p>
+</div>
+<p><br /></p>
+<p><span id="renpy.scene" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.scene.html" title="renpy/doc/reference/functions/renpy.scene">renpy.scene</a></b></td>
+<td valign="top">(layer='master'):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This clears out the specified layer, or 'master' by default. This is used in the execution of the `scene` statement, but only to clear out the layer. If you want to then add something new, like the `scene` statement would normally do when an image parameter is given, call <a href="../reference/functions/renpy.show.html" title="renpy/doc/reference/functions/renpy.show">renpy.show</a> after this.</p>
+</div>
+<p><br /></p>
+<p><span id="renpy.show" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.show.html" title="renpy/doc/reference/functions/renpy.show">renpy.show</a></b></td>
+<td valign="top">(name, at_list=[], layer='master', what=None, zorder=0, tag=None, behind=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is used to execute the show statement, adding the named image to the screen.</p>
+<p><i>name</i> - The name of the image to add to the screen. This may be a tuple of strings, or a single string. In the latter case, it is split on whitespace to make a tuple.</p>
+<p><i>at_list</i> - The at list, a list of functions that are applied to the image when shown. The members of the at list need to be pickleable if sticky_positions is True.</p>
+<p><i>layer</i> - The layer the image will be shown on.</p>
+<p><i>what</i> - If not None, this is expected to be a displayable. That displayable is shown, instead of going through the normal lookup process.</p>
+<p><i>zorder</i> - The zorder of this image.</p>
+<p><i>tag</i> - The tag of this image. If None, the tag is taken from name.</p>
+<p><i>behind</i> - A list of tags this image will be shown behind, if they are present on the same layer at the same zorder, and an image with the same tag is not already present on the layer.</p>
+</div>
+<p><br /></p>
+<p><span id="renpy.hide" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.hide.html" title="renpy/doc/reference/functions/renpy.hide">renpy.hide</a></b></td>
+<td valign="top">(name, layer='master'):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This finds items in the given layer (or 'master' if no layer is given) that have the same name as the first component of the given name, and removes them from the layer. This is used to execute the hide statement.</p>
+<p><i>name</i> - The name of the image to hide from the screen. This may be a tuple of strings, or a single string. In the latter case, it is split on whitespace to make a tuple. Only the first element of the tuple is used.</p>
+<p><i>layer</i> - The layer this operates on.</p>
+</div>
+<p><br /></p>
+<p><span id="renpy.with_statement" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.with_statement.html" title="renpy/doc/reference/functions/renpy.with statement">renpy.with_statement</a></b></td>
+<td valign="top">(trans, paired=None, always=False, clear=True):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The programmatic equivalent of a with statement.</p>
+<p><i>trans</i> - The transition caused by the with statement.</p>
+<p><i>paired</i> - The paired transition that is passed into <a href="../reference/Configuration_Variables#config.with_callback" title="renpy/doc/reference/Configuration Variables">config.with_callback</a>.</p>
+<p><i>always</i> - Causes this transition to always occur, even if the user has transitions turned off.</p>
+<p><i>clear</i> - If True, the transient layer will be cleared at the end of the transition.</p>
+</div>
+<p><br /></p>
+<p><a id="Scene_List_Access" name="Scene_List_Access"></a></p>
+<h3><span class="mw-headline">Scene List Access</span></h3>
+<p>These functions let you query the scene lists.</p>
+<p><br />
+<span id="renpy.showing" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.showing.html" title="renpy/doc/reference/functions/renpy.showing">renpy.showing</a></b></td>
+<td valign="top">(name, layer='master'):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns True if <i>name</i> is a prefix of an image that's being shown on <i>layer</i>. <i>name</i> may be a tuple of strings, or a single string. In the latter case, it is split on whitespace to make a tuple.</p>
+<p>When called during image prediction, this uses the images that are predicted to be shown, rather than the images that are currently being shown.</p>
+</div>
+<p><br /></p>
+<p><span id="renpy.get_at_list" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.get_at_list.html" title="renpy/doc/reference/functions/renpy.get at list">renpy.get_at_list</a></b></td>
+<td valign="top">(name, layer='master'):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This gets the at_list that was used to show a given image tag. <i>name</i> is parsed to get out the image tag, and the at_list corresponding to that tag is retrieved. If no image with that tag has been shown on the given layer, then None is returned.</p>
+</div>
+<p><br /></p>
+<p><span id="renpy.layer_at_list" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.layer_at_list.html" title="renpy/doc/reference/functions/renpy.layer at list">renpy.layer_at_list</a></b></td>
+<td valign="top">(at_list, layer='master'):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This sets the layer_at_list, an at_list that is applied to the given layer as a whole. This can be used to do things like moving the layer around, or zooming it in and out.</p>
+<p>Note that this interacts poorly with <a href="../reference/functions/MoveTransition.html" title="renpy/doc/reference/functions/MoveTransition">MoveTransition</a>.</p>
+</div>
+<p><br /></p>
+<p><a id="Miscellaneous_Utility_Functions" name="Miscellaneous_Utility_Functions"></a></p>
+<h3><span class="mw-headline">Miscellaneous Utility Functions</span></h3>
+<p><span id="color" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/color.html" title="renpy/doc/reference/functions/color">color</a></b></td>
+<td valign="top">(s):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function converts hexcode string <i>s</i> into a color/alpha tuple. Leading # marks are ignored. Colors can be rgb or rgba, with each element having either one or two digits. (So the strings can be 3, 4, 6, or 8 digits long, not including the optional #.) A missing alpha is interpreted as 255, fully opaque.</p>
+<p>For example, color('#123a') returns (17, 34, 51, 170), while color('c0c0c0') returns (192, 192, 192, 255).</p>
+<p>Note that as of Ren'Py 5.6.0, functions requiring a color accept the hex string form of specification directly, with no need to use this color function.</p>
+</div>
+<p><br />
+<span id="renpy.cache_pin" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.cache_pin.html" title="renpy/doc/reference/functions/renpy.cache pin">renpy.cache_pin</a></b></td>
+<td valign="top">(*image_manipulators):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When this is called with one or more image manipulators, it causes those image manipulators to be "pinned" into the image cache. This means that they will be loaded soon after the game begins, and will never be removed from the cache.</p>
+<p>The usual use of this function is to preload images used in the game menu. Be careful with it, as it can increase Ren'Py's memory usage.</p>
+</div>
+<p><br />
+<span id="renpy.cache_unpin" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.cache_unpin.html" title="renpy/doc/reference/functions/renpy.cache unpin">renpy.cache_unpin</a></b></td>
+<td valign="top">(*image_manipulators):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This may be called with one or more image manipulators. It causes those manipulators to become unpinned and removed from the image cache.</p>
+</div>
+<p><br />
+<span id="renpy.curry" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.curry.html" title="renpy/doc/reference/functions/renpy.curry">renpy.curry</a></b></td>
+<td valign="top">(func):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Currying is an operation that allows a function to be called using a chain of calls, each providing some of the arguments. In Ren'Py, calling renpy.curry(<b>func</b>) returns a callable object. When this object is called with arguments, a second callable object is returned that stores <b>func</b> and the supplied arguments. When this second callable object is called, the original function is called with the stored arguments and the arguments supplied to the second call.</p>
+<p>Positional arguments from the first call are placed before positional arguments from the second call. If a keyword argument is given in both calls, the value from the second call takes priority.</p>
+<p>Curry objects can be pickled provided the original function remains available at its original name.</p>
+</div>
+<p><br />
+<span id="renpy.exists" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.exists.html" title="renpy/doc/reference/functions/renpy.exists">renpy.exists</a></b></td>
+<td valign="top">(filename):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns true if the given filename can be found in the searchpath. This only works if a physical file exists on disk. It won't find the file if it's inside of an archive.</p>
+</div>
+<p><br />
+<span id="renpy.file" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.file.html" title="renpy/doc/reference/functions/renpy.file">renpy.file</a></b></td>
+<td valign="top">(filename):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns a read-only file-like object that accesses filename. The file is accessed using Ren'Py's standard search method, and may reside in an archive. The object supports a wide subset of the fields and methods found on python's standard file object. (Basically, all of the methods that are sensible for a read-only object.)</p>
+</div>
+<p><br />
+<span id="renpy.free_memory" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.free_memory.html" title="renpy/doc/reference/functions/renpy.free memory">renpy.free_memory</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Attempts to free some memory. Useful before running a renpygame-based minigame.</p>
+</div>
+<p><br />
+<span id="renpy.get_all_labels" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.get_all_labels.html" title="renpy/doc/reference/functions/renpy.get all labels">renpy.get_all_labels</a></b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns the set of all labels defined in the program, including labels defined for internal use in the libraries.</p>
+</div>
+<p><br />
+<span id="renpy.get_placement" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.get_placement.html" title="renpy/doc/reference/functions/renpy.get placement">renpy.get_placement</a></b></td>
+<td valign="top">(d):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This gets the placement of displayable <i>d</i>. There's very little warranty on this information, as it might change when the displayable is rendered, and might not exist until the displayable is first rendered.</p>
+<p>This returns an object with the following fields, each corresponding to a style property:</p>
+<ul>
+<li>xpos</li>
+<li>xanchor</li>
+<li>xoffset</li>
+<li>ypos</li>
+<li>yanchor</li>
+<li>yoffset</li>
+<li>subpixel</li>
+</ul>
+</div>
+<p><br />
+<span id="renpy.loadable" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.loadable.html" title="renpy/doc/reference/functions/renpy.loadable">renpy.loadable</a></b></td>
+<td valign="top">(filename):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns True if the given filename is loadable, meaning that it can be loaded from the disk or from inside an archive. Returns False if this is not the case.</p>
+</div>
+<p><br />
+<span id="renpy.load_module" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.load_module.html" title="renpy/doc/reference/functions/renpy.load module">renpy.load_module</a></b></td>
+<td valign="top">(name):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This loads the Ren'Py module named <i>name</i>. A Ren'Py module consists of Ren'Py code that is loaded into the usual (store) namespace, contained in a file named <i>name</i>.rpym or <i>name</i>.rpymc. If a .rpym file exists, and is newer than the corresponding .rpymc file, it is loaded and a new .rpymc file is created.</p>
+<p>All init code in the module is run before this function returns. An error is raised if the module <i>name</i> cannot be found, or is ambiguous.</p>
+<p>Module loading may only occur from inside an init block.</p>
+</div>
+<p><br />
+<span id="renpy.seen_audio" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.seen_audio.html" title="renpy/doc/reference/functions/renpy.seen audio">renpy.seen_audio</a></b></td>
+<td valign="top">(filename):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns True if the given filename has been played at least once on the current user's system.</p>
+</div>
+<p><br />
+<span id="renpy.seen_image" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.seen_image.html" title="renpy/doc/reference/functions/renpy.seen image">renpy.seen_image</a></b></td>
+<td valign="top">(name):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns True if the named image has been seen at least once on the user's system. An image has been seen if it's been displayed using the <a href="../reference/The_Ren%27Py_Language#show" title="renpy/doc/reference/The Ren&apos;Py Language">show statement</a>, <a href="../reference/The_Ren%27Py_Language#scene" title="renpy/doc/reference/The Ren&apos;Py Language">scene statement</a>, or <a href="../reference/functions/renpy.show.html" title="renpy/doc/reference/functions/renpy.show">renpy.show</a> function. (Note that there are cases where the user won't actually see the image, like a show immediately followed by a hide.)</p>
+</div>
+<p><br />
+<span id="renpy.seen_label" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.seen_label.html" title="renpy/doc/reference/functions/renpy.seen label">renpy.seen_label</a></b></td>
+<td valign="top">(label):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns true if the named label has executed at least once on the current user's system, and false otherwise. This can be used to unlock scene galleries, for example.</p>
+</div>
+<p><br />
+<span id="renpy.random" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>renpy.random</b></td>
+<td valign="top">= ...</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This object is a random number generator that implements the <a class="external text" href="http://www.python.org/doc/2.3.4/lib/module-random.html" rel="nofollow" title="http://www.python.org/doc/2.3.4/lib/module-random.html">Python random number generation interface</a>. Randomness can be generated by calling the the various methods this object exposes. See the Python documentation for the full list, but the most useful are:</p>
+<p><br />
+<span id="renpy.random.random" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.random.random</b></td>
+<td valign="top">():</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Return the next random floating point number in the range (0.0, #0).</p>
+</div>
+<p><br />
+<span id="renpy.random.randint" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.random.randint</b></td>
+<td valign="top">(a, b):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Return a random integer such that <i>a</i> &lt;= <i>N</i> &lt;= <i>b</i>.</p>
+</div>
+<p><br />
+<span id="renpy.random.choice" /></p>
+<table>
+<tr>
+<td valign="top">Method:</td>
+<td valign="top"><b>renpy.random.choice</b></td>
+<td valign="top">(seq):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Return a random element from the non-empty sequence <i>seq</i>.</p>
+</div>
+<p><br />
+Unlike the standard Python random number generator, this object cooperates with rollback, generating the same numbers regardless of how many times we rollback. It should be used instead of the standard Python random module.</p>
+</div>
+<pre>
+<span class="slc"># return a random float between 0 and 1</span>
+$ randfloat <span class="sym">=</span> renpy<span class="sym">.</span>random<span class="sym">.</span><span class="kwd">random</span><span class="sym">()</span>
+
+<span class="slc"># return a random integer between 1 and 20</span>
+$ d20roll <span class="sym">=</span> renpy<span class="sym">.</span>random<span class="sym">.</span><span class="kwd">randint</span><span class="sym">(</span><span class="num">1</span><span class="sym">,</span> <span class="num">20</span><span class="sym">)</span>
+
+<span class="slc"># return a random element from a list</span>
+$ randfruit <span class="sym">=</span> renpy<span class="sym">.</span>random<span class="sym">.</span><span class="kwd">choice</span><span class="sym">([</span><span class="str">'apple'</span><span class="sym">,</span> <span class="str">'orange'</span><span class="sym">,</span> <span class="str">'plum'</span><span class="sym">])</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

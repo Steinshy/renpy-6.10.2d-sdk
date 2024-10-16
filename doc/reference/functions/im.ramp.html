@@ -1,0 +1,28 @@
+<html><head><title>im.ramp - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="im.ramp" name="im.ramp"></a></p>
+<h1><span class="mw-headline">im.ramp</span></h1>
+<p><span id="im.ramp" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">im.ramp</strong></b></td>
+<td valign="top">(start, end):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns a 256 character linear ramp, where the first character has the value start and the last character has the value end. Such a ramp can be used as a map argument of <a href="../../reference/functions/im.Map.html" title="renpy/doc/reference/functions/im.Map">im.Map</a>.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> cyan green <span class="sym">=</span> im<span class="sym">.</span><span class="kwd">Map</span><span class="sym">(</span><span class="str">"cyan.png"</span><span class="sym">,</span> bmap<span class="sym">=</span>im<span class="sym">.</span><span class="kwd">ramp</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">))</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

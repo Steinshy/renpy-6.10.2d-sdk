@@ -1,0 +1,181 @@
+<html><head><title>Saving, Loading, and Rollback - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><p><a id="Saving.2C_Loading.2C_and_Rollback" name="Saving.2C_Loading.2C_and_Rollback"></a></p>
+<h1><span class="mw-headline">Saving, Loading, and Rollback</span></h1>
+<p>Ren'Py supports saving a game to disk, loading that game back in from disk, and rolling back the game to a previous state. As these actions share infrastructure, we will discuss them all in this section, paying attention to what is required to support loading of a saved game when a script changes between saving and loading.</p>
+<p>Please note that save-game compatibility is not guaranteed between releases of Ren'Py, even between older and newer releases of Ren'Py. It may be necessary to take this into account when releasing a game with an updated version of Ren'Py.</p>
+<p>Saving, Loading, and Rollback can all be seen as operations that affect the game state. Saving is an operation that persists the game state out to disk, Loading consists of restoring the game state from disk, and Rollback reverts the game state to what it was at a previous point in time. This game state consists of two parts: The user state consists of variables and objects that have been changed by the user, while the internal state consists of information used by Ren'Py directly.</p>
+<p><b>Internal State.</b> Specifically, the internal state of Ren'Py consists of the following:</p>
+<ul>
+<li>The name of the currently-executing statement.</li>
+<li>The name of each statement on the return stack.</li>
+<li>The layers containing images that are shown on the screen.</li>
+<li>The music that Ren'Py has been requested to play.</li>
+<li>The time the game has been played for.</li>
+</ul>
+<p>These items are automatically saved, loaded, and rolled back when the appropriate commands are invoked by the user. You do not need do anything for this state to be handled, and there is no way to prevent these things from being saved.</p>
+<p><b>User State.</b> The other kind of state that Ren'Py can save and restore is user state. User state consists of all variables that have been changed after the end of the init phase, and all objects transitively reachable from such variables.</p>
+<p>It's important to clarify what it means for a variable to be changed. In Python and Ren'Py, variables reference objects. A variable changes when it is updated to reference a new object. A variable does not change when the object it references changes.</p>
+<p>For example, in the following code:</p>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+      $ a <span class="sym">=</span> <span class="num">0</span>
+      $ state <span class="sym">=</span> <span class="kwb">object</span><span class="sym">()</span>
+
+$ a <span class="sym">=</span> <span class="num">1</span>
+$ b <span class="sym">= [ ]</span>
+$ state<span class="sym">.</span>love_love_points <span class="sym">=</span> a <span class="sym">+</span> <span class="num">1</span>
+</pre>
+<p>In this example, the variables `a` and `b` are changed by the code outside of the init block (assuming that code executes), while state is not changed. In the code outside of the init block, `a` is assigned a different integer object, while `b` is assigned a new empty list. While a field on the object `state` refers to has changed, `state` itself still refers to the same object, and not considered to have changed. (Hence, state and its associated object are not considered part of user state.)</p>
+<p>User state is gathered by first finding all variables that have changed outside of init blocks. Ren'Py then finds all objects reachable from one of those variables through some combination of field access, iteration, or iteration over items (as in a dictionary). This combination of variable and object values comprises the user state.</p>
+<p>It's important to ensure that every object in the user state can be pickled (serialized) by the python pickle module. Most python constructs can be pickled, including booleans, integers, floating-point numbers, strings, lists, tuples, dictionaries, and most objects. You can also refer to your own classes and functions, provided that they are defined in a python block (not a python hide block) inside an init block, and always exist with the same name in later versions of the script. There are some python objects that cannot be pickled, such as files, iterators, and generators. These objects should not be used outside of python hide blocks.</p>
+<p>While these rules may seem to be complex, it's hoped that in practice they can be reduced to a simple heuristic: Any variable changed outside of an init block, and any object reachable from such a variable, will be saved, loaded, and rolled back properly.</p>
+<p><b>State that isn't Saved.</b> There is some state kept by Ren'Py that is not part of the interpreter state. This includes:</p>
+<ul>
+<li>Mappings of image names to displayables, created by the image statement.</li>
+<li>Configuration variables (config.varname).</li>
+<li>Styles (style.stylename).</li>
+</ul>
+<p>As a result, config variables and styles should be set up in init blocks, and then left alone for the rest of the game. As the image statement can only be run from inside an init block, it is impossible to set up a mapping from image name to displayable outside of an image block. To ensure compatibility between script version, once an image name or style is present in a released version of the game, it should be present in all future released versions of the game.</p>
+<p><b>Details.</b> As the game is played, Ren'Py logs all changes to user and interpreter state. When the game is saved, it writes this log out to disk, alongside the current state. When the game is loaded back in, the variables are reset to what the were when the init code in the current version of the script finished running. The saved user state is then merged with this, with saved user state overriding any variable that was also assigned in the init code. Finally, a rollback is triggered.</p>
+<p>The rollback that is triggered on load ends when it can find a statement that has the same name as it had when it was encountered in the log. When the script hasn't changed, all statements have the same name, so the effect of the rollback is to bring control back to the start of the statement that was executing when the user saved. When the script has changed, however, the only statements that retain their names are statements that have an explicit name specified. (These statements are labels, menu statements with an explicit name, and call ... from ... statements.) The game will rollback to the start of the most recent statement that exists in both the old and new games.</p>
+<p>When a rollback occurs, both user and interpreter state are restored to what they were when the statement that is being rolled back to began executing. The statement is then executed again, and play continues normally.</p>
+<p>Please note that we can only roll back the current statement, and not the return sites listed on the return stack. If the name of a return site changes, we will not be able to return from a procedure call, and the script will crash. If a return site has an explicit name, however, that name is returned to even if the script change. Because of this, it's important that every call site in a released game have a from clause associated with it, giving a name for the return site that can appear in both old scripts.</p>
+<p>Finally, if allowed, rollback can be invoked explicitly by the user. When such a rollback occurs, we first look for a previous statement that is a checkpoint (checkpoints are say and menu statements, as well as python blocks that called <a href="../reference/functions/renpy.checkpoint.html" title="renpy/doc/reference/functions/renpy.checkpoint">renpy.checkpoint</a>). Once a checkpoint is found, we look for a statement which has a name that exists in the current script (this is normally the same statement). We then rollback to that statement and begin executing again.</p>
+<p>What this means is that when a rollback occurs, the game is usually reverted to the start of the say or menu statement that executed before the currently executing statement.</p>
+<p>There is one variable that controls the behavior of loading and saving:</p>
+<p><span id="save_name" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>save_name</b></td>
+<td valign="top">=</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This is a name that will be associated with save files. It's expected that the game will update this on a regular basis with the name of the section of the script that is currently executing. When a save file is shown to the user, this name will be shown with it. Alternatively, never change this and no save name will be shown.</p>
+</div>
+<p><br />
+<b>Running code after a load.</b> If the after_load label exists, then it is called after a load has occured. It is responsible for updating variables that may have changed between script versions, and performing any other action that may need to be taken in response to the load. When a return statement is executed, execution is transferred to the point where the game was saved.</p>
+<p>Please note that when calling after_load, the return stack is not safe, and hence the user should not be allowed to save before control returns from after_load. To be safe, this means the after_load code should not be interactive.</p>
+<p><a id="Load.2FSave_Functions" name="Load.2FSave_Functions"></a></p>
+<h2><span class="mw-headline">Load/Save Functions</span></h2>
+<p>The following functions are useful for code that wants to manage loading and saving on its own.</p>
+<p><br />
+<span id="renpy.can_load" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.can_load.html" title="renpy/doc/reference/functions/renpy.can load">renpy.can_load</a></b></td>
+<td valign="top">(filename):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns true if filename can be loaded (by the load/save mechanism), or false otherwise. This is a very basic check, mostly ensuring that the file exists.</p>
+</div>
+<p><br />
+<span id="renpy.list_saved_games" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.list_saved_games.html" title="renpy/doc/reference/functions/renpy.list saved games">renpy.list_saved_games</a></b></td>
+<td valign="top">(regexp=r'.'):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This scans the savegames that we know about and returns information about them. It returns a list of tuples, where each tuple represents one savegame and consists of:</p>
+<ul>
+<li>The filename of the save.</li>
+<li>The extra_info that was passed to renpy.save.</li>
+<li>A displayable, the screenshot used to show the game.</li>
+<li>The time the game was saved at, seconds since 1/1/1970 UTC.</li>
+</ul>
+<p>The regexp matches at the start of the filename, and filters the list.</p>
+</div>
+<p><br />
+<span id="renpy.load" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.load.html" title="renpy/doc/reference/functions/renpy.load">renpy.load</a></b></td>
+<td valign="top">(filename):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Causes the load/save mechanism to load <i>filename</i>. This function never returns.</p>
+</div>
+<p><br />
+<span id="renpy.rename_save" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.rename_save.html" title="renpy/doc/reference/functions/renpy.rename save">renpy.rename_save</a></b></td>
+<td valign="top">(old, new):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Renames the save <i>old</i> to the save <i>new</i>, overwriting any existing save named <i>new</i>.</p>
+</div>
+<p><br />
+<span id="renpy.save" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.save.html" title="renpy/doc/reference/functions/renpy.save">renpy.save</a></b></td>
+<td valign="top">(filename, extra_info=""):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Saves the current game in <i>filename</i>.</p>
+<p><i>filename</i> - A string, giving the filename to save in. Note that this does not correspond to any particular file on disk, but should be treated as an arbitrary game identifier. Normal save slots are base-10 representations of integers, while other names will not show up in the file-picker.</p>
+<p><i>extra_info</i> - Additional information saved with the game. This is usually the value of save_name.</p>
+<p><a href="../reference/functions/renpy.take_screenshot.html" title="renpy/doc/reference/functions/renpy.take screenshot">renpy.take_screenshot</a> must be called before renpy.save, except when inside the game menu, where it has been automatically called.</p>
+</div>
+<p><br />
+<span id="renpy.scan_saved_game" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.scan_saved_game.html" title="renpy/doc/reference/functions/renpy.scan saved game">renpy.scan_saved_game</a></b></td>
+<td valign="top">(name):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This scans a single savegame, and returns information about it. If a savegame with the filename <i>name</i> does not exist, this function returns None. Otherwise, it returns a triple consisting of:</p>
+<ul>
+<li>The extra_info that was passed to renpy.save.</li>
+<li>A displayable, the screenshot used to show the game.</li>
+<li>The time the game was saved at, seconds since 1/1/1970 UTC.</li>
+</ul>
+</div>
+<p><br /></p>
+<p><span id="renpy.take_screenshot" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.take_screenshot.html" title="renpy/doc/reference/functions/renpy.take screenshot">renpy.take_screenshot</a></b></td>
+<td valign="top">(size=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This function should be called before <a href="../reference/functions/renpy.save.html" title="renpy/doc/reference/functions/renpy.save">renpy.save</a>, to take the screenshot that will be used as part of a savegame. This is called automatically when entering the game menu, but it may make sense to call it manually if you force a save.</p>
+<p><i>size</i> -- The size of the screenshot. If None, defaults to (<a href="../reference/Configuration_Variables#config.thumbnail_width" title="renpy/doc/reference/Configuration Variables">config.thumbnail_width</a>, <a href="../reference/Configuration_Variables#config.thumbnail_height" title="renpy/doc/reference/Configuration Variables">config.thumbnail_height</a>).</p>
+</div>
+<p><br />
+<span id="renpy.unlink_save" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><a href="../reference/functions/renpy.unlink_save.html" title="renpy/doc/reference/functions/renpy.unlink save">renpy.unlink_save</a></b></td>
+<td valign="top">(filename):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Unlinks (deletes) the save file with the given name. Throws an exception if the file can't be deleted.</p>
+</div>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

@@ -1,0 +1,29 @@
+<html><head><title>im.Alpha - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="im.Alpha" name="im.Alpha"></a></p>
+<h1><span class="mw-headline">im.Alpha</span></h1>
+<p><span id="im.Alpha" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">im.Alpha</strong></b></td>
+<td valign="top">(image, alpha, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>Returns an alpha-mapped version of the image. Alpha is the maximum alpha that this image can have, a number between 0.0 (fully transparent) and 1.0 (opaque).</p>
+<p>If an image already has an alpha channel, values in that alpha channel are reduced as appropriate.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    <span class="kwa">image</span> cyan alpha <span class="sym">=</span> im<span class="sym">.</span><span class="kwd">Alpha</span><span class="sym">(</span><span class="str">"cyan.png"</span><span class="sym">,</span> <span class="num">0.5</span><span class="sym">)</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

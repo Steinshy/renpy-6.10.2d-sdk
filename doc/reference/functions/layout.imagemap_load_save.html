@@ -1,0 +1,127 @@
+<html><head><title>layout.imagemap load save - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="layout.imagemap_load_save" name="layout.imagemap_load_save"></a></p>
+<h1><span class="mw-headline">layout.imagemap_load_save</span></h1>
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;"><a class="image" href="/wiki/File:imagemap_load_save.png.html" title="imagemap load save.png"><img alt="" border="0" class="thumbimage" height="135" src="../../images/180px-imagemap_load_save.png" width="180" /></a>
+<div class="thumbcaption">
+</div>
+</div>
+</div>
+<p><span id="layout.imagemap_load_save" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">layout.imagemap_load_save</strong></b></td>
+<td valign="top">(ground, idle, hover, selected_idle, selected_hover, hotspots, variant=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This layout uses an imagemap to handle loading and saving.</p>
+<p><i>ground</i> - The displayable used for disabled buttons, and areas that are not in a hotspot.</p>
+<p><i>idle</i> - The displayable used for unfocused unselected hotspots.</p>
+<p><i>hover</i> - The displayable used for focused unselected hotspots.</p>
+<p><i>selected_idle</i> - The displayable used for unfocused selected hotspots.</p>
+<p><i>selected_hover</i> - The displayable used for focused selected hotspots.</p>
+<p><i>hotspots</i> - A list of tuples defining the hotspots. Each tuple consists of</p>
+<ol>
+<li>The x-coordinate of the left side.</li>
+<li>The y-coordinate of the top side.</li>
+<li>The x-coordinate of the right side.</li>
+<li>The y-coordinate of the bottom side.</li>
+<li>The function of this hotspot.</li>
+</ol>
+<p>The function of the hotspot should be one of:</p>
+<ul>
+<li>"previous" - go to the previous page.</li>
+<li>"next" - go to the next page.</li>
+<li>"page_auto" - go to the auto-save page.</li>
+<li>"page_quick" - go to the quick-save page.</li>
+<li>"page_1", "page_2", "page_3", ... - go to the specified page. The page numbers must start with 1, and be dense (not skip any numbers).</li>
+<li>"slot_0", "slot_1", "slot_2", ... - a save/load slot. The slot numbers must start with 0, and be dense.</li>
+</ul>
+<p><i>variant</i> - Allows us to define only the save or load screens. This can be "save", "load", or None to define the save and load screens at once. If a save screen is defined, a load screen must be defined (perhaps with different parameters), and vice versa.</p>
+<p>Screenshots and slot text are placed inside windows that are laid out relative to the slot. Adjusting style.file_picker_ss_window controls the screenshot placement, and adjusting style.file_picker_text_window controls the placement of per-slot test. It will usually be necessary to adjust these styles, as the default places both in the upper left.</p>
+<p>Hotspot functions may also include the untranslated names of game menu buttons. If at least one such button is defined, the navigation is not shown, and the imagemap is expected to define all relevant game menu buttons.</p>
+<p>Despite the name, this function can take arbitrary displayables as well as images. The images or displayables used should be transparent to allow the navigation to show through, unless the game menu buttons are defined here.</p>
+<p><span id="config.disable_thumbnails" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.disable_thumbnails</b></td>
+<td valign="top">= False</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If True, thumbnails are not shown.</p>
+</div>
+<p><span id="config.load_save_empty_thumbnail" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.load_save_empty_thumbnail</b></td>
+<td valign="top">= None</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>If not None, this should be a displayable that will be shown with empty load/save slots.</p>
+</div>
+<p><span id="config.time_format" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.time_format</b></td>
+<td valign="top">= &quot;%b&#160;%d,&#160;%H:%M&quot;</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The format used for file times in the file entry slots.</p>
+</div>
+<p><span id="config.file_entry_format" /></p>
+<table>
+<tr>
+<td valign="top">Variable:</td>
+<td valign="top"><b>config.file_entry_format</b></td>
+<td valign="top">= "%(time)s\n%(save_name)s"</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>The format of file entries in the file entry slots.</p>
+</div>
+</div>
+<pre>
+<span class="kwa">init</span> <span class="sym">-</span><span class="num">2</span> <span class="kwa">python</span><span class="sym">:</span>
+    layout<span class="sym">.</span><span class="kwd">imagemap_load_save</span><span class="sym">(</span>
+        <span class="str">"loadsave_ground.png"</span><span class="sym">,</span>
+        <span class="str">"loadsave_idle.png"</span><span class="sym">,</span>
+        <span class="str">"loadsave_hover.png"</span><span class="sym">,</span>
+        <span class="str">"loadsave_selected_idle.png"</span><span class="sym">,</span>
+        <span class="str">"loadsave_selected_hover.png"</span><span class="sym">,</span>
+        <span class="sym">[</span>
+            <span class="sym">(</span><span class="num">58</span><span class="sym">,</span> <span class="num">26</span><span class="sym">,</span> <span class="num">140</span><span class="sym">,</span> <span class="num">103</span><span class="sym">,</span> <span class="str">"previous"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">140</span><span class="sym">,</span> <span class="num">26</span><span class="sym">,</span> <span class="num">227</span><span class="sym">,</span> <span class="num">103</span><span class="sym">,</span> <span class="str">"page_auto"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">227</span><span class="sym">,</span> <span class="num">26</span><span class="sym">,</span> <span class="num">310</span><span class="sym">,</span> <span class="num">103</span><span class="sym">,</span> <span class="str">"page_1"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">310</span><span class="sym">,</span> <span class="num">26</span><span class="sym">,</span> <span class="num">391</span><span class="sym">,</span> <span class="num">103</span><span class="sym">,</span> <span class="str">"page_2"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">391</span><span class="sym">,</span> <span class="num">26</span><span class="sym">,</span> <span class="num">474</span><span class="sym">,</span> <span class="num">103</span><span class="sym">,</span> <span class="str">"page_3"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">474</span><span class="sym">,</span> <span class="num">26</span><span class="sym">,</span> <span class="num">559</span><span class="sym">,</span> <span class="num">103</span><span class="sym">,</span> <span class="str">"page_4"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">559</span><span class="sym">,</span> <span class="num">26</span><span class="sym">,</span> <span class="num">640</span><span class="sym">,</span> <span class="num">103</span><span class="sym">,</span> <span class="str">"page_5"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">640</span><span class="sym">,</span> <span class="num">26</span><span class="sym">,</span> <span class="num">725</span><span class="sym">,</span> <span class="num">103</span><span class="sym">,</span> <span class="str">"next"</span><span class="sym">),</span>
+
+            <span class="sym">(</span><span class="num">32</span><span class="sym">,</span> <span class="num">134</span><span class="sym">,</span> <span class="num">271</span><span class="sym">,</span> <span class="num">344</span><span class="sym">,</span> <span class="str">"slot_0"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">271</span><span class="sym">,</span> <span class="num">134</span><span class="sym">,</span> <span class="num">512</span><span class="sym">,</span> <span class="num">344</span><span class="sym">,</span> <span class="str">"slot_1"</span><span class="sym">),</span>
+            <span class="sym">(</span><span class="num">512</span><span class="sym">,</span> <span class="num">134</span><span class="sym">,</span> <span class="num">754</span><span class="sym">,</span> <span class="num">344</span><span class="sym">,</span> <span class="str">"slot_2"</span><span class="sym">),</span>
+            <span class="sym">])</span>
+
+
+    style<span class="sym">.</span>file_picker_ss_window<span class="sym">.</span>xalign <span class="sym">=</span> <span class="num">0.5</span>
+    style<span class="sym">.</span>file_picker_ss_window<span class="sym">.</span>yalign <span class="sym">=</span> <span class="num">0.35</span>
+    style<span class="sym">.</span>file_picker_text_window<span class="sym">.</span>xalign <span class="sym">=</span> <span class="num">0.5</span>
+    style<span class="sym">.</span>file_picker_text_window<span class="sym">.</span>yalign <span class="sym">=</span> <span class="num">.85</span>
+    config<span class="sym">.</span>thumbnail_width <span class="sym">=</span> <span class="num">125</span>
+    config<span class="sym">.</span>thumbnail_height <span class="sym">=</span> <span class="num">93</span>
+</pre>
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

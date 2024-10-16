@@ -1,0 +1,45 @@
+<html><head><title>ui.grid - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="ui.grid" name="ui.grid"></a></p>
+<h1><span class="mw-headline">ui.grid</span></h1>
+<p><span id="ui.grid" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">ui.grid</strong></b></td>
+<td valign="top">(cols, rows, padding=0, transpose=False, **properties):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>This creates a layout that places widgets in an evenly spaced grid. New widgets are added to this grid until <a href="../../reference/functions/ui.close.html" title="renpy/doc/reference/functions/ui.close">ui.close</a> is called. Widgets are added by going from left to right within a single row, and down to the start of the next row when a row is full. All cells must be filled (that is, exactly col * rows widgets must be added to the grid.)</p>
+<p>The children of this widget should have a fixed size that does not vary based on the space allocated to them. Failure to observe this restriction could lead to really odd layouts, or things being rendered off screen. This condition is relaxed in the appropriate dimension if xfill or yfill is set.</p>
+<p>Each cell of the grid is exactly the same size. By default, the grid is the smallest size that can accommodate all of its children, but it can be expanded to consume all available space in a given dimension by setting xfill or yfill to True, as appropriate. (Otherwise, xfill and yfill are inherited from the style.)</p>
+<p><i>cols</i> - The number of columns in this grid.</p>
+<p><i>rows</i> - The number of rows in this grid.</p>
+<p><i>padding</i> - The amount of space to leave between rows and columns.</p>
+<p><i>xfill</i> - True if the grid should consume all available width.</p>
+<p><i>yfill</i> - True if the grid should consume all available height.</p>
+<p><i>transpose</i> - If True, grid will fill down columns before filling across rows.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">python</span><span class="sym">:</span>
+    <span class="slc"># Actually draw a slot.</span>
+    ui<span class="sym">.</span><span class="kwd">grid</span><span class="sym">(</span>config<span class="sym">.</span>file_page_cols<span class="sym">,</span>
+            config<span class="sym">.</span>file_page_rows<span class="sym">,</span>
+             style<span class="sym">=</span><span class="str">'file_picker_grid'</span><span class="sym">,</span>
+             transpose<span class="sym">=</span><span class="kwa">True</span><span class="sym">)</span> <span class="slc"># slots</span>
+
+    <span class="kwa">for</span> i <span class="kwa">in</span> <span class="kwb">range</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> file_page_length<span class="sym">):</span>
+        <span class="kwd">entry</span><span class="sym">(</span>i<span class="sym">)</span>
+
+    ui<span class="sym">.</span><span class="kwd">close</span><span class="sym">()</span> <span class="slc"># slots</span>
+</pre>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>

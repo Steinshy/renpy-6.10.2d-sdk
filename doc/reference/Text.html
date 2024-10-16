@@ -1,0 +1,134 @@
+<html><head><title>Text - Ren'Py Visual Novel Engine</title><link href="../shared.css" rel="stylesheet"><link href="../monobook.css" rel="stylesheet"><link href="../common.css" rel="stylesheet"><link href="../monobook2.css" rel="stylesheet"><link href="../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p><table class="toc" id="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1"><a href="#Text"><span class="tocnumber">1</span> <span class="toctext">Text</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Interpolation"><span class="tocnumber">1.1</span> <span class="toctext">Interpolation</span></a></li>
+<li class="toclevel-2"><a href="#Text_Tags"><span class="tocnumber">1.2</span> <span class="toctext">Text Tags</span></a></li>
+<li class="toclevel-2"><a href="#Fonts"><span class="tocnumber">1.3</span> <span class="toctext">Fonts</span></a></li>
+<li class="toclevel-2"><a href="#Image-Based_Fonts"><span class="tocnumber">1.4</span> <span class="toctext">Image-Based Fonts</span></a></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+//
+ if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } 
+//
+</script>
+<p><a id="Text" name="Text"></a></p>
+<h1><span class="mw-headline">Text</span></h1>
+<p>This section covers aspects of text in Ren'Py. It first covers interpolation, supported by the say and menu statements, which allows values to be substituted into text. It next discusses text tags, which allow the style of portions of strings of text to be customized. Finally, it covers how Ren'Py handles fonts.</p>
+<p><a id="Interpolation" name="Interpolation"></a></p>
+<h2><span class="mw-headline">Interpolation</span></h2>
+<p>Interpolation is supported by the `say` and `menu` statements. These statements support python string interpolation over the contents of the store. The strings used by the statements support conversion specifiers of the form `%(variable)s`, where `variable` is the name of a variable and `s` is a conversion. Useful conversions include 's', which interpolates a string; 'd', which interpolates an integer; and 'f', which interpolates a floating point number. Conversions may also include characters that modify how the string is converted. More information about conversions can be found at the <a class="external text" href="http://www.python.org/doc/2.3.5/lib/typesseq-strings.html" rel="nofollow" title="http://www.python.org/doc/2.3.5/lib/typesseq-strings.html">Python string formatting operations reference</a>.</p>
+<p>In strings where interpolation is supported, percent characters (%) must be duplicated (to&#160;%%) to prevent them from being interpreted as introducing interpolation.</p>
+<pre>
+$ name <span class="sym">=</span> <span class="str">'Samantha'</span>
+$ age <span class="sym">=</span> <span class="num">19</span>
+$ withyou <span class="sym">=</span> <span class="num">110</span>
+
+girl <span class="str">"My name is %(name)s, and I am %(age)d years old. I'm with you %(withyou)d%%"</span>
+</pre>
+<p>When interpolation is not supported, the effect can often be faked by formatting a string against the result of calling the globals() function.</p>
+<pre>
+ui<span class="sym">.</span><span class="kwd">text</span><span class="sym">(</span><span class="str">"%(name)s's Vital Statistics"</span> <span class="sym">%</span> <span class="kwb">globals</span><span class="sym">())</span>
+</pre>
+<p>Text tag processing is performed after interpolation, so it's important to ensure interpolation does not introduce text tags.</p>
+<div id="tags" />
+<p><a id="Text_Tags" name="Text_Tags"></a></p>
+<h2><span class="mw-headline">Text Tags</span></h2>
+<p>Text displayed by Ren'Py supports text tags. While styles can only be applied to an entire Text displayable, allow only a portion of the text in the displayable to be customized. As text tags are part of the Text displayable, they may be used in any string that is displayed on the screen. However, some of the text tags will only have effect if used in the appopriate context.</p>
+<p>Text tags should be used fairly sparingly. If you find you're using text tags on every line of the game, it's quite possible text tags are not the right solution for the problem at hand. Investigate text styles as a possible alternative to text tags.</p>
+<p>Text tags start with a left brace ({), and continue to the matching right brace (}). Immediately following the left brace is the tag name. The name may be followed by an argument, which is separated from the tag name by an equals sign (=). Some tags require an argument, while others require that the argument be omitted. Text tags are sensitive to case and white space.</p>
+<p>Some tags require a corresponding closing tag. A closing tag is any text tag where the name begins with a slash (/). Closing tags should be properly nested: "{b}{i}this is okay{/i}{/b}", while "{b}{i}this is wrong{/b}{/i}". While improper nesting of text tags will generally not cause an error, this problem may cause undesirable rendering results. The text between a tag and the corresponding closing tag is called the enclosed text. All tags must be closed by the end of the text string.</p>
+<p>To include a single left brace in text, two left braces ({{) musty be included instead.</p>
+<p>Ren'Py supports the following text tags:</p>
+<ul>
+<li>{a=<i>argument</i>} and {/a} cause their enclosed text to be rendered as a hyperlink. The enclosed text may contain text tags, but may not contain another hyperlink. A hyperlink is rendered as a button containing the enclosed text. The text in the button does not participate in line-breaking. Rather, if the text grows too big for the line it is on, the whole button is moved to the start of the next line.</li>
+</ul>
+<dl>
+<dd>When a a hyperlink is clicked, the callback function defined in <a href="../reference/Configuration_Variables#config.hyperlink_callback" title="renpy/doc/reference/Configuration Variables">config.hyperlink_callback</a> is called with the text of the argument of the hyperlink.</dd>
+</dl>
+<dl>
+<dd>The default hyperlink checks to see if the hyperlink begins with "http:". If it does, the link is opened in the user's web browser. If not, the hyperlink is interpreted as a label, which is called in a new context. This is an appropriate behavior when using hyperlinks to definitions of unfamiliar terms.</dd>
+</dl>
+<dl>
+<dd>Hyperlinks should not be used as a general control-flow tool, as they transfer control to a new context when clicked. If the user saves while inside that context, when he loads the game he will be returned to the screen containing the hyperlink.</dd>
+</dl>
+<pre>
+<span class="kwa">init</span><span class="sym">:</span>
+    $ definition <span class="sym">=</span> <span class="kwd">Character</span><span class="sym">(</span><span class="kwa">None</span><span class="sym">,</span> window_yfill<span class="sym">=</span><span class="kwa">True</span><span class="sym">,</span> window_xmargin<span class="sym">=</span><span class="num">20</span><span class="sym">,</span>
+                             window_ymargin<span class="sym">=</span><span class="num">20</span><span class="sym">,</span> window_background<span class="sym">=</span><span class="kwd">Solid</span><span class="sym">((</span><span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">0</span><span class="sym">,</span> <span class="num">192</span><span class="sym">)))</span>
+
+<span class="kwa">label</span> start<span class="sym">:</span>
+
+    <span class="str">"A game that instructs on how to make a game? Isn't that a sort of {a=define_quine}Quine{/a}?"</span>
+
+    <span class="slc"># ...</span>
+
+<span class="kwa">label</span> define_quine<span class="sym">:</span>
+
+    definition <span class="str">"Quine:</span><span class="esc">\n\n</span><span class="str">A program that prints itself to its output."</span>
+
+    <span class="kwa">return</span>
+</pre>
+<ul>
+<li>{b}text{/b} renders the enclosed text in a bold font.</li>
+<li>{color=spec}text{/color} changes the color of the enclosed text. The color may be a hex triple or a hex sextuple, optionally preceded by a hash mark. (The same format that color() accepts. f00, ff0000, #f00, and #ff0000 are all valid representations of red.)</li>
+<li>{fast} causes the immediated display of text before it. It can be used to specify where slow text shold begin to display from. It only has an effect if the text speed preference is not infinite. Use this if you have two lines of dialogue where the second is an extension of the first, as a variant of the pause effect that allows for changes to occur while paused. This tag does not take a closing tag.</li>
+<li>{font=filename.ttf}text{/font} renders the enclosed text in the supplied font.</li>
+<li>{i}text{/i} makes the enclosed text in an italic font.</li>
+<li>{image=filename} causes the supplied image to be loaded and included into text. The image should are treated as if they were text, and should not be taller than a single line of text. {image} does not take a closing tag.</li>
+<li>{nw}, at the end of a block of text, causes the current interaction to terminate immediately once the text is fully shown. It only makes sense to use this in dialogue text, where the effect is to cause slow text to dismiss the interaction once it has been fully displayed.</li>
+<li>{p} causes the display of text to be paused until the user clicks to continue, or until an auto-forward occurs. This allows text to be displayed incrementally. {p} does not take closing tags, and causes a newline to be inserted after the given text. The logic to handle pausing is implemented in the Character object, and may not work for other text widgets.</li>
+<li>{plain}text{/plain} makes the enclosed text plain, eliminating bold, italic, and underline styles</li>
+<li>{s}text{/s} makes the encolosed text struck-through. <i>(new in 6.6.2)</i></li>
+<li>{size=spec}text{/size} changes the size of the text. The supplied spec may be a number, in which case it is the number of pixels high that the text will be. If it is a number preceded by a plus (like "+10"), it means to increase the size by that number of pixels, while if it is preceded by a minus it means to decrease.</li>
+<li>{u}text{/u} renders the enclosed text with an underline.</li>
+<li>{w} is similar to {p}, except that it does not cause a newline. We also support the form {w=number}, which pauses for <i>number</i> seconds. (For example, {w=.5} pauses for .5 seconds before continuing.</li>
+<li>{=<i>style</i>}text{/=<i>style</i>}} applies the named style to the enclosed text. Think of this as a way to design your own text tags. <i>(new in 6.6.2)</i></li>
+</ul>
+<p>The last {fast} tag is the one that is used. {nw}, {p}, and {w} tags only take effect if they are after the last {fast} tag in the text.</p>
+<p>The following is an example of a say statement that uses many text tags. Use of this many text tags is not recommended in a high-quality game.</p>
+<pre>
+<span class="str">"Using text tags, we can make text {size=+12}bigger{/size} or</span>
+<span class="str"> {size=-8}smaller{/size}. We can make it {b}bold{/b}, {i}italic{/i},</span>
+<span class="str"> or {u}underlined{/u}. We can even change its {color=#f88}color{/color}."</span>
+</pre>
+<p><a id="Fonts" name="Fonts"></a></p>
+<h2><span class="mw-headline">Fonts</span></h2>
+<p>The <a href="../reference/functions/Text.html" title="renpy/doc/reference/functions/Text">Text</a> displayable attempts to find an an appropriate font using information about the font name, boldness, italics, underline and size. This information is supplied to the <a href="../reference/functions/Text.html" title="renpy/doc/reference/functions/Text">Text</a> displayable using style properties, but may then be modified using text tags. Ren'Py translates this into a font using the following algorithm.</p>
+<ul>
+<li>A (name, boldness, italics) triple is looked up in <a href="../reference/Configuration_Variables#config.font_replacement_map" title="renpy/doc/reference/Configuration Variables">config.font_replacement_map</a>. If present, it is expected to map to a triple giving replacement values for name, boldness, and italics. This lookup is not recursive, so only one lookup is performed. This lookup allows specific bold or italic font shapes to be used.</li>
+<li>If a SFont has been registered with the same name, size, boldness, italics, and underline, that SFont is used.</li>
+<li>Otherwise, Ren'Py interprets the font name as the filename of a truetype font. This filename is searched for in the searchpath and archives. If found, it is used as the font file.</li>
+<li>Otherwise, Ren'Py searches for a font with the given filename in the system font directory. If found, that file is used.</li>
+<li>Otherwise, Ren'Py interprets the filename as the name of a truetype font, which is loaded if found.</li>
+</ul>
+<p>The truetype font loading code will automatically scale and underline the font as required. If you have not provided bold and italic font mappings, it will also artificially thicken and slant the font when necessary.</p>
+<p>For best results, fonts should be truetype files that ship with the game. This ensures that required fonts are always present on the user's system.</p>
+<p>We support TrueType collections "0@font.ttc" is the first font in the collection, "1@font.ttc" the second, and so on. <i>(new in 6.10.0)</i></p>
+<p><a id="Image-Based_Fonts" name="Image-Based_Fonts"></a></p>
+<h2><span class="mw-headline">Image-Based Fonts</span></h2>
+<p>Along with the usual TrueType fonts, Ren'Py supports image-based SFonts, MudgeFonts, and BMFonts.</p>
+<p>Image-based fonts have several advantages and several disadvantages. One of the advantages is that these fonts are bitmap-based, which means it is easy to create custom fonts and to find free examples (in contrast, the licenses of high quality TrueType fonts rarely permit redistribution). Also, since the fonts are images, it's possible to apply effects to them that Ren'Py would not otherwise support. The downsides of image-based fonts come from the fact that Ren'Py doesn't render them, but instead merely copies characters out of them. Because of this, one needs to supply another image to Ren'Py if one wants the font to be scaled, made bold, made italic, or underlined. Ren'Py will recolor the image fonts, with white being mapped to the supplied color, and other colors interpolated on a channel-by-channel basis.</p>
+<p>Please note that you must register an image-based font for each combination of font, size, bold, italic, and underline your game uses. They can then be used by setting the font property of a style to the name of the font.</p>
+<p>To use SFonts, they must first be registered with Ren'Py using the <a href="../reference/functions/renpy.register_sfont.html" title="renpy/doc/reference/functions/renpy.register sfont">renpy.register_sfont</a> function. For more information about SFonts, see <a class="external autonumber" href="http://www.linux-games.com/sfont/" rel="nofollow" title="http://www.linux-games.com/sfont/">[1]</a>.</p>
+<p>To use MudgeFonts, they must be registered with the <a href="../reference/functions/renpy.register_mudgefont.html" title="renpy/doc/reference/functions/renpy.register mudgefont">renpy.register_mudgefont</a> function. For more information about MudgeFonts, see <a class="external autonumber" href="http://www.midwinter.com/~lch/programming/mudgefont/" rel="nofollow" title="http://www.midwinter.com/~lch/programming/mudgefont/">[2]</a>.</p>
+<p>To use BMFonts, they must be registered with the <a href="../reference/functions/renpy.register_bmfont.html" title="renpy/doc/reference/functions/renpy.register bmfont">renpy.register_bmfont</a> function. For more information about BMFonts, see <a class="external autonumber" href="http://www.angelcode.com/products/bmfont/" rel="nofollow" title="http://www.angelcode.com/products/bmfont/">[3]</a>. We recommend BMFont for bitmap fonts, as BMFonts support unicode and proper kerning.</p>
+<p>Legal issues regarding the use of copyrighted outline fonts in creating image-based fonts are discussed in <a href="/wiki/renpy/misc/Bitmap_Fonts_and_Copyright.html" title="renpy/misc/Bitmap Fonts and Copyright">Bitmap Fonts and Copyright</a>.</p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../index.html">documentation index</a> &#9702; <a href="Reference_Manual.html">reference manual</a> &#9702; <a href="Function_Index.html">function index</a></p></div>
+	</body></html>

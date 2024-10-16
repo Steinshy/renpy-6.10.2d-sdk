@@ -1,0 +1,34 @@
+<html><head><title>renpy.pause - Ren'Py Visual Novel Engine</title><link href="../../shared.css" rel="stylesheet"><link href="../../monobook.css" rel="stylesheet"><link href="../../common.css" rel="stylesheet"><link href="../../monobook2.css" rel="stylesheet"><link href="../../docs.css" rel="stylesheet" /></link></link></link></link></head><body><div id="bodyContent">
+			<p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p><p><a id="renpy.pause" name="renpy.pause"></a></p>
+<h1><span class="mw-headline">renpy.pause</span></h1>
+<p><span id="renpy.pause" /></p>
+<table>
+<tr>
+<td valign="top">Function:</td>
+<td valign="top"><b><strong class="selflink">renpy.pause</strong></b></td>
+<td valign="top">(delay=None, music=None):</td>
+</tr>
+</table>
+<div class="renpy-doc">
+<p>When called with no arguments, this pauses and waits for the user to click before advancing the script. If given a delay parameter, then Ren'Py will wait for that amount of time before continuing, unless a user clicks to interrupt the delay. This is useful to, for instance, show an image that will stay on screen for a certain amount of time and then proceed to the next script statement without waiting for a click forever.</p>
+<p><i>delay</i> - The number of seconds to delay.</p>
+<p><i>music</i> - If supplied, and music is playing, this takes precedence over the delay parameter. It gives a time, in seconds, into the currently playing music track. Ren'Py will pause until the music has played up to that point.</p>
+<p>Returns True if the pause was interrupted by the user hitting a key or clicking a mouse, or False if the pause was ended by the appointed time being reached.</p>
+</div>
+<p><a id="Example" name="Example"></a></p>
+<h2><span class="mw-headline">Example</span></h2>
+<pre>
+<span class="kwa">scene</span> black
+<span class="kwa">show</span> text <span class="str">"American Bishoujo Presents..."</span> <span class="kwa">with</span> dissolve
+$ renpy<span class="sym">.</span><span class="kwa">pause</span><span class="sym">(</span><span class="num">1.0</span><span class="sym">)</span>
+<span class="kwa">hide</span> text <span class="kwa">with</span> dissolve
+</pre>
+<p>TODO: music pause example.</p>
+<p><br /></p>
+
+
+
+
+<div class="visualClear" />
+		<hr /><p class="docnav"><a href="../../index.html">documentation index</a> &#9702; <a href="../Reference_Manual.html">reference manual</a> &#9702; <a href="../Function_Index.html">function index</a></p></div>
+	</body></html>
